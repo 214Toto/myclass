@@ -566,6 +566,13 @@ https://templatemo.com/tm-516-known
                     <div class="col-md-offset-1 col-md-4 col-sm-12">
                          <div class="containerz col-md-offset-1 col-md-4 col-sm-12" id="main-container">
                                    <!-- Course 1 -->
+                                    <div class="course-card">
+                                        <img src="images/math-6.jpg" alt="Anatomy Course">
+                                        <h1> Grade 12 & GCE </h1>
+                                        <button class="button" id="about-course-7">About Course</button>
+                                        <button class="button" id="start-course-7">Start Course</button>
+                                   </div>
+
                                    <div class="course-card">
                                         <img src="images/Biochem.png" alt="Anatomy Course">
                                         <h1> Natural Sciences 1st Year </h1>
@@ -613,6 +620,24 @@ https://templatemo.com/tm-516-known
                                         <button class="button" id="start-course-6">Start Course</button>
                                    </div>
                               </div>   
+
+
+
+                                                            <!-- Modals for 2nd year medicine and surgery -->
+                              <div class="modal" id="about-modal-7">
+                                   <p>This Program is all about introducing you to the world of medicine. It wil equip you with the strengthend foundation you'll need to start your medicine Journey..... All The Best !! </p>
+                                   <button class="close" id="about-close-7">Close</button>
+                              </div>
+                              
+                              <div class="modal" id="start-modal-7">
+                                   <p>You are About to Enter Medicine And Surgery 2nd Year:</p>
+                                   <div class="popup-buttons">
+                                             <!-- <button>Term 1: Biomolecules</button> -->
+                                             <!-- <button>Term 2: Enzymes & Metabolism</button> -->
+                                             <button><a onclick="viewPassword(7)" class="begin"> Begin Program </a></button>
+                                        </div>
+                                   <button class="close" id="start-close-7">Close</button>
+                              </div>
 
 
                                                             <!-- Modals for 2nd year medicine and surgery -->
@@ -1345,6 +1370,34 @@ https://templatemo.com/tm-516-known
         
           startClose3.addEventListener('click', () => {
             startModal3.style.display = 'none';
+            document.getElementById('main-container').classList.remove('blur');
+          });
+
+          // Modal Toggle Logic for Course 7
+          const aboutCourse7 = document.getElementById('about-course-7');
+          const startCourse7 = document.getElementById('start-course-7');
+          const aboutModal7 = document.getElementById('about-modal-7');
+          const startModal7 = document.getElementById('start-modal-7');
+          const aboutClose7 = document.getElementById('about-close-7');
+          const startClose7 = document.getElementById('start-close-7');
+        
+          aboutCourse7.addEventListener('click', () => {
+            aboutModal7.style.display = 'block';
+            document.getElementById('main-container').classList.add('blur');
+          });
+        
+          aboutClose7.addEventListener('click', () => {
+            aboutModal7.style.display = 'none';
+            document.getElementById('main-container').classList.remove('blur');
+          });
+        
+          startCourse7.addEventListener('click', () => {
+            startModal7.style.display = 'block';
+            document.getElementById('main-container').classList.add('blur');
+          });
+        
+          startClose7.addEventListener('click', () => {
+            startModal7.style.display = 'none';
             document.getElementById('main-container').classList.remove('blur');
           });
 
