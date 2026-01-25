@@ -546,9 +546,13 @@ https://templatemo.com/tm-516-known
 
                     <div class="col-md-4 col-sm-4">
                          <div class="feature-thumb hey3">
-                              <span>02</span>
-                              <h3>Books & Library</h3>
+                              <span>03</span>
+                              <h3> Secondary Education </h3>
                               <p> All the Books here are highly recommended as Trusted sources for CBU use.</p>
+                              <br> <ul>
+                                        <li> Grade 12  </li>
+                                        <li> GCE </li>
+                                   </ul>
                          </div>
                     </div>
 
@@ -566,7 +570,8 @@ https://templatemo.com/tm-516-known
                     <div class="col-md-offset-1 col-md-4 col-sm-12">
                          <div class="containerz col-md-offset-1 col-md-4 col-sm-12" id="main-container">
                                    <!-- Course 1 -->
-                                    <div class="course-card">
+
+                                   <div class="course-card">
                                         <img src="images/math-6.jpg" alt="Anatomy Course">
                                         <h1> Grade 12 & GCE </h1>
                                         <button class="button" id="about-course-7">About Course</button>
@@ -622,24 +627,6 @@ https://templatemo.com/tm-516-known
                               </div>   
 
 
-
-                                                            <!-- Modals for 2nd year medicine and surgery -->
-                              <div class="modal" id="about-modal-7">
-                                   <p>This Program is all about introducing you to the world of medicine. It wil equip you with the strengthend foundation you'll need to start your medicine Journey..... All The Best !! </p>
-                                   <button class="close" id="about-close-7">Close</button>
-                              </div>
-                              
-                              <div class="modal" id="start-modal-7">
-                                   <p>You are About to Enter Medicine And Surgery 2nd Year:</p>
-                                   <div class="popup-buttons">
-                                             <!-- <button>Term 1: Biomolecules</button> -->
-                                             <!-- <button>Term 2: Enzymes & Metabolism</button> -->
-                                             <button><a onclick="viewPassword(7)" class="begin"> Begin Program </a></button>
-                                        </div>
-                                   <button class="close" id="start-close-7">Close</button>
-                              </div>
-
-
                                                             <!-- Modals for 2nd year medicine and surgery -->
                               <div class="modal" id="about-modal-1">
                                    <p>This Program is all about introducing you to the world of medicine. It wil equip you with the strengthend foundation you'll need to start your medicine Journey..... All The Best !! </p>
@@ -656,6 +643,22 @@ https://templatemo.com/tm-516-known
                                    <button class="close" id="start-close-1">Close</button>
                               </div>
                               
+                              <!-- Modals for Course 1st year NS -->
+                              <div class="modal" id="about-modal-7">
+                                   <p>This Program focuses on testing your strengths and abilities so as to decide which program you will further venture into... So give it your all !! </p>
+                                   <button class="close" id="about-close-7">Close</button>
+                              </div>
+                              
+                              <div class="modal" id="start-modal-7">
+                                   <p>You are about to enter Secondary Education level</p>
+                                        <div class="popup-buttons">
+                                             <!-- <button>Term 1: Tissue & Staining</button> -->
+                                             <!-- <button>Term 2: Organ Systems</button> -->
+                                             <button><a onclick="viewPassword(7)" class="begin"> Begin Program </a></button>
+                                        </div>
+                                   <button class="close" id="start-close-7">Close</button>
+                              </div>
+
                               <!-- Modals for Course 1st year NS -->
                               <div class="modal" id="about-modal-2">
                                    <p>This Program focuses on testing your strengths and abilities so as to decide which program you will further venture into... So give it your all !! </p>
@@ -1170,17 +1173,13 @@ https://templatemo.com/tm-516-known
                          </div>
 
                          <div class="audio-panel" style="background:linear-gradient(135deg,var(--dark),#0e2226);border-radius:12px;padding:18px;color:#e6eef0;border:1px solid #274044;">
-                              <h3 style="margin-top:0;margin-bottom:8px;color:var(--accent)">Assignment: Amino Acids</h3>
-                              <p style="color:var(--secondary);margin-bottom:12px">Play the audio below for the assignment instructions. You can download the audio or the assignment PDF using the buttons on the right.</p>
+                              <h3 style="margin-top:0;margin-bottom:8px;color:var(--accent)">Assignment: Cell Membrane Transport </h3>
+                              <p style="color:var(--secondary);margin-bottom:12px"> Watch the videos and read the notes before you attmept the questions</p>
 
                               <div class="audio-controls" style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-                                   <audio id="assignmentAudio" controls preload="none" style="width:100%;max-width:640px;background:#071018;border-radius:8px;padding:6px;">
-                                   
-                                        Your browser does not support the audio element.
-                                   </audio>
-
+                                  
                                    <div style="min-width:180px;display:flex;flex-direction:column;gap:8px;margin-left:auto;">
-                                        <a href="physiology-questions.html" download="Assignment-Audio.mp3" class="btn" style="display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--light);border:1px solid rgba(255,255,255,0.06);">
+                                        <a href="physiology-questions.html" class="btn" style="display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--light);border:1px solid rgba(255,255,255,0.06);">
                                              <i class="fa fa-question-circle"></i> Begin Quiz
                                         </a>
                                         <!-- <a href="Amino acids (Njunju) Totoz Collection.pdf" download="Assignment.pdf" class="btn btn-default" style="display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--light);border:1px solid rgba(255,255,255,0.06);">
@@ -1345,6 +1344,34 @@ https://templatemo.com/tm-516-known
             document.getElementById('main-container').classList.remove('blur');
           });
 
+          // Modal Toggle Logic for Course 2
+          const aboutCourse7 = document.getElementById('about-course-7');
+          const startCourse7 = document.getElementById('start-course-7');
+          const aboutModal7 = document.getElementById('about-modal-7');
+          const startModal7 = document.getElementById('start-modal-7');
+          const aboutClose7 = document.getElementById('about-close-7');
+          const startClose7 = document.getElementById('start-close-7');
+        
+          aboutCourse7.addEventListener('click', () => {
+            aboutModal7.style.display = 'block';
+            document.getElementById('main-container').classList.add('blur');
+          });
+        
+          aboutClose7.addEventListener('click', () => {
+            aboutModal7.style.display = 'none';
+            document.getElementById('main-container').classList.remove('blur');
+          });
+        
+          startCourse7.addEventListener('click', () => {
+            startModal7.style.display = 'block';
+            document.getElementById('main-container').classList.add('blur');
+          });
+        
+          startClose7.addEventListener('click', () => {
+            startModal7.style.display = 'none';
+            document.getElementById('main-container').classList.remove('blur');
+          });
+
           // Modal Toggle Logic for Course 3
           const aboutCourse3 = document.getElementById('about-course-3');
           const startCourse3 = document.getElementById('start-course-3');
@@ -1370,34 +1397,6 @@ https://templatemo.com/tm-516-known
         
           startClose3.addEventListener('click', () => {
             startModal3.style.display = 'none';
-            document.getElementById('main-container').classList.remove('blur');
-          });
-
-          // Modal Toggle Logic for Course 7
-          const aboutCourse7 = document.getElementById('about-course-7');
-          const startCourse7 = document.getElementById('start-course-7');
-          const aboutModal7 = document.getElementById('about-modal-7');
-          const startModal7 = document.getElementById('start-modal-7');
-          const aboutClose7 = document.getElementById('about-close-7');
-          const startClose7 = document.getElementById('start-close-7');
-        
-          aboutCourse7.addEventListener('click', () => {
-            aboutModal7.style.display = 'block';
-            document.getElementById('main-container').classList.add('blur');
-          });
-        
-          aboutClose7.addEventListener('click', () => {
-            aboutModal7.style.display = 'none';
-            document.getElementById('main-container').classList.remove('blur');
-          });
-        
-          startCourse7.addEventListener('click', () => {
-            startModal7.style.display = 'block';
-            document.getElementById('main-container').classList.add('blur');
-          });
-        
-          startClose7.addEventListener('click', () => {
-            startModal7.style.display = 'none';
             document.getElementById('main-container').classList.remove('blur');
           });
 
@@ -1491,6 +1490,4 @@ https://templatemo.com/tm-516-known
           }
         </script>
 </body>
-
 </html>
-
