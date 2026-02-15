@@ -741,26 +741,26 @@
                     <h3> Chemistry (CH-110) </h3>
                     <p>High-quality video tutorials covering various medical specialties and procedures.</p>
                 </div> -->
-                <div class="feature-card active" id="feature-videos" data-tab="therapeutics" tabindex="0">
+                <div class="feature-card active" id="feature-videos" data-tab="micro" tabindex="0">
                     <i class="fas fa-hospital"></i>
-                    <h3> Therapeutics (MBS-330) </h3>
+                    <h3> Introduction To Microbiology (MBM-230) </h3>
                     <p>High-quality video tutorials covering various medical specialties and procedures.</p>
                 </div>
                 <div class="feature-card" id="feature-audio" data-tab="biochem" tabindex="0">
                     <i class="fas fa-dna"></i>
-                    <h3> Biochemistry (MBS-330)</h3>
+                    <h3> Biochemistry </h3>
                     <p>Downloadable audio content perfect for learning on the go during your commute.</p>
                 </div>
 
-                <div class="feature-card" id="feature-pdfs" data-tab="lab-science" tabindex="0">
+                <div class="feature-card" id="feature-pdfs" data-tab="biomed" tabindex="0">
                     <i class="fas fa-vials"></i>
-                    <h3> Laboratory Science ( MBS-340 ) </h3>
+                    <h3> Introduction To Biomedical Science </h3>
                     <p>Comprehensive study materials, research papers, and clinical guidelines.</p>
                 </div>
 
-                <div class="feature-card" id="feature-cases" data-tab="pathology" tabindex="0">
+                <div class="feature-card" id="feature-cases" data-tab="anatomy" tabindex="0">
                     <i class="fas fa-question-circle"></i>
-                    <h3> Pathology (MBS 320 )</h3>
+                    <h3> Anatomy </h3>
                     <p>Interactive clinical case discussions with expert analysis.</p>
                 </div>
 
@@ -770,7 +770,7 @@
                     <p>Test your knowledge with topic-based quizzes and instant feedback.</p>
                 </div>
 
-                <div class="feature-card" id="feature-soc-med" data-tab="soc-med" tabindex="0">
+                <!-- <div class="feature-card" id="feature-soc-med" data-tab="soc-med" tabindex="0">
                     <i class="fas fa-notes-medical"></i>
                     <h3> Society and Medicine </h3>
                     <p>Test your knowledge with topic-based quizzes and instant feedback.</p>
@@ -780,7 +780,7 @@
                     <i class="fas fa-chalkboard-teacher"></i>
                     <h3> Clinical Science (MCS-300 )</h3>
                     <p>Live and recorded webinars from leading medical professionals.</p>
-                </div>
+                </div> -->
 
                 <div class="feature-card" id="feature-webinars" data-tab="past-papers" tabindex="0">
                     <i class="fas fa-chalkboard-teacher"></i>
@@ -803,17 +803,17 @@
                 <!-- <button class="tab-btn active" data-tab="math"> Mathematics (MA 110) </button>
                 <button class="tab-btn active" data-tab="physics"> Physics (PH 110) </button>
                 <button class="tab-btn active" data-tab="chemistry">Chemistry (CH 110)</button> -->
-                <button class="tab-btn active" data-tab="therapeutics">Therapeutics</button>
+                <button class="tab-btn active" data-tab="micro">Microbiology</button>
                 <button class="tab-btn" data-tab="biochem">Biochemistry</button>
-                <button class="tab-btn" data-tab="lab-science">Laboratory Science</button>
-                <button class="tab-btn" data-tab="pathology">Pathology</button>
+                <button class="tab-btn" data-tab="biomed">Introduction To Biomedical Science</button>
+                <button class="tab-btn" data-tab="anatomy"> Anatomy </button>
                 <button class="tab-btn" data-tab="physiology">Physiology</button>
-                <button class="tab-btn" data-tab="soc-med">Society And Medicine</button>
-                <button class="tab-btn" data-tab="clinical">Clinical Science</button>
+                <!-- <button class="tab-btn" data-tab="soc-med">Society And Medicine</button>
+                <button class="tab-btn" data-tab="clinical">Clinical Science</button> -->
                 <button class="tab-btn" data-tab="past-papers">Past Papers</button>
             </div>
               
-            <div class="tab-content active" id="therapeutics">
+            <div class="tab-content active" id="micro">
                 <div class="resource-grid">
 
                     <div class="resource-card">
@@ -821,22 +821,22 @@
                             <img src="images/fertility.webp" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
-                            <h3>Drugs affecting fertility and reproduction</h3>
-                            <p>Updated evidence-based guidelines for common medical conditions.</p>
+                            <h3>Professional Code of Conduct</h3>
+                            <p>Ethical guidelines and standards of behavior expected of biomedical professionals in clinical practice.</p>
                             <div class="buttonz">
-                                <a href="lac-science.html" class="pdf-download">
+                                <a onclick="viewBiomed(19)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a href="professional-conduct.html" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
-                                <a href="not-yet-ready.html" class="pdf-download">
+                                <a href="quiz.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
                                 </a>
                             </div>
                             <div class="resource-meta">
                                 <span><i class="far fa-file-pdf"></i> CBU - SOM</span>
-                                <span><i class="fas fa-user-md"></i> Term 1</span>
+                                <span><i class="fas fa-user-md"></i> Term 2</span>
                             </div>
                         </div>
                     </div>
@@ -852,7 +852,7 @@
                                 <a href="lac-science.html" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a onclick="viewTherapeutics(2)" class="pdf-download">
+                                <a onclick="viewmicro(2)" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -877,7 +877,7 @@
                                 <a href="pdf.html" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a onclick="viewTherapeutics(3)" class="pdf-download">
+                                <a onclick="viewmicro(3)" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -902,7 +902,7 @@
                                 <a href="pdf.html" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a onclick="viewTherapeutics(4)" class="pdf-download">
+                                <a onclick="viewmicro(4)" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -927,7 +927,7 @@
                                 <a href="pdf.html" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a onclick="viewTherapeutics(5)" class="pdf-download">
+                                <a onclick="viewmicro(5)" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -952,7 +952,7 @@
                                 <a href="pdf.html" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a onclick="viewTherapeutics(6)" class="pdf-download">
+                                <a onclick="viewmicro(6)" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -977,7 +977,7 @@
                                 <a href="pdf.html" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a onclick="viewTherapeutics(7)" class="pdf-download">
+                                <a onclick="viewmicro(7)" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -1002,7 +1002,7 @@
                                 <a href="pdf.html" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a onclick="viewTherapeutics(8)" class="pdf-download">
+                                <a onclick="viewmicro(8)" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -1027,7 +1027,7 @@
                                 <a  class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a onclick="viewTherapeutics(9)" class="pdf-download">
+                                <a onclick="viewmicro(9)" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -1052,7 +1052,7 @@
                                 <a  class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a onclick="viewTherapeutics(10)" class="pdf-download">
+                                <a onclick="viewmicro(10)" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -1077,7 +1077,7 @@
                                 <a  class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a onclick="viewTherapeutics(11)" class="pdf-download">
+                                <a onclick="viewmicro(11)" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -1127,7 +1127,7 @@
                                 <a  class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a onclick="viewTherapeutics(13)" class="pdf-download">
+                                <a onclick="viewmicro(13)" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -1152,7 +1152,7 @@
                                 <a  class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a onclick="viewTherapeutics(14)" class="pdf-download">
+                                <a onclick="viewmicro(14)" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -1177,7 +1177,7 @@
                                 <a  class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a onclick="viewTherapeutics(15)" class="pdf-download">
+                                <a onclick="viewmicro(15)" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -1202,7 +1202,7 @@
                                 <a  class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a onclick="viewTherapeutics(16)" class="pdf-download">
+                                <a onclick="viewmicro(16)" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -1227,7 +1227,7 @@
                                 <a  class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a onclick="viewTherapeutics(17)" class="pdf-download">
+                                <a onclick="viewmicro(17)" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -1252,7 +1252,7 @@
                                 <a  class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a onclick="viewTherapeutics(18)" class="pdf-download">
+                                <a onclick="viewmicro(18)" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -1277,7 +1277,7 @@
                                 <a  class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a onclick="viewTherapeutics(19)" class="pdf-download">
+                                <a onclick="viewmicro(19)" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -1302,7 +1302,7 @@
                                 <a  class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a onclick="viewTherapeutics(20)" class="pdf-download">
+                                <a onclick="viewmicro(20)" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -1327,7 +1327,7 @@
                                 <a  class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a onclick="viewTherapeutics(21)" class="pdf-download">
+                                <a onclick="viewmicro(21)" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -1341,9 +1341,36 @@
                         </div>
                     </div>
 
+                    <div class="resource-card">
+                        <div class="resource-img">
+                            <img src="images/fertility.webp" alt="Clinical Guidelines">
+                        </div>
+                        <div class="resource-info">
+                            <h3>Professional Code of Conduct</h3>
+                            <p>Ethical guidelines and standards of behavior expected of biomedical professionals in clinical practice.</p>
+                            <div class="buttonz">
+                                <a onclick="viewBiomed(19)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Checkout Video
+                                </a>
+                                <a href="professional-conduct.html" class="pdf-download">
+                                    <i class="fas fa-map-signs"></i> Document
+                                </a>
+                                <a href="quiz.html" class="pdf-download">
+                                    <i class="fas fa-question-circle"></i> Try The Quiz
+                                </a>
+                            </div>
+                            <div class="resource-meta">
+                                <span><i class="far fa-file-pdf"></i> CBU - SOM</span>
+                                <span><i class="fas fa-user-md"></i> Term 2</span>
+                            </div>
+                        </div>
+                    </div>
+
 
                 </div>
             </div>
+
+
             
             <div class="tab-content" id="biochem">
                 <div class="resource-grid">
@@ -1355,7 +1382,7 @@
                             <h3>Introduction to or Overview of Metabolism</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -1380,7 +1407,7 @@
                             <h3>ETC and Oxidative Phosphorylation</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -1405,7 +1432,7 @@
                             <h3>Carbohydrate Metabolism Glycolysis</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -1430,7 +1457,7 @@
                             <h3>HMP shunt (Pentose Phosphate Pathway)</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -1455,7 +1482,7 @@
                             <h3>TCA Cycle</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -1480,7 +1507,7 @@
                             <h3>Galactose and Fructose metabolism</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -1505,7 +1532,7 @@
                             <h3>Gluconeogenesis</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -1530,7 +1557,7 @@
                             <h3>Blood Glucose Homeostasis</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -1555,7 +1582,7 @@
                             <h3>Alcohol Metabolism</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -1580,7 +1607,7 @@
                             <h3>Uronic acid pathway</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -1605,7 +1632,7 @@
                             <h3>Glycogen Metabolism & Glycogen Storage Diseases</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -1630,7 +1657,7 @@
                             <h3>Fatty Acid Sythesis</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -1655,7 +1682,7 @@
                             <h3>Beta Oxidation </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -1680,7 +1707,7 @@
                             <h3>Lipoproteines</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -1705,7 +1732,7 @@
                             <h3>STEROID AND BILE METABOLISM</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -1730,7 +1757,7 @@
                             <h3> KETOGENESIS </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -1755,7 +1782,7 @@
                             <h3> Urea Cycle </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -1780,7 +1807,7 @@
                             <h3> Nucleotide Metabolism </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -1805,7 +1832,7 @@
                             <h3> Central Dogma of Cell and DNA Replication </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -1830,7 +1857,7 @@
                             <h3> Transcription and Post-Transcriptional Processes </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -1855,7 +1882,7 @@
                             <h3> Translation and Post-Translational Processes </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -1880,7 +1907,7 @@
                             <h3> DNA Damage and Repair Mechanism </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -1905,7 +1932,7 @@
                             <h3> Gene Expression and Control </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -1930,7 +1957,7 @@
                             <h3> Genetic Engeneering & Wobble Hypothesis </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -1955,7 +1982,7 @@
                             <h3> Techniques in Genetic Engeneering </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -1980,7 +2007,7 @@
                             <h3> Genetic Engeneering and Medicine </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -2000,7 +2027,7 @@
                 </div>
             </div>
             
-            <div class="tab-content" id="lab-science">
+            <div class="tab-content" id="biomed">
                 <div class="resource-grid">
 
                     <div class="resource-card">
@@ -2011,7 +2038,7 @@
                             <h3> Labopratory Investigation of infectious diseases of the male Reproductive System  </h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
 
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
@@ -2037,7 +2064,7 @@
                             <h3>Laboratory diagnosis of non-infectious disorders/conditions of the male reproductive system</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="Sensory-receptors.html" class="pdf-download">
@@ -2062,7 +2089,7 @@
                             <h3>Laboratory diagnosis of non-infectious diseases/conditions of the female reproductive system and the breast.</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="Sensory-receptors.html" class="pdf-download">
@@ -2088,7 +2115,7 @@
                             <h3>Laboratory investigations for infectious diseases of the female reproductive system</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="Sensory-receptors.html" class="pdf-download">
@@ -2113,7 +2140,7 @@
                             <h3>Principles of Hormonal Assay</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="Sensory-receptors.html" class="pdf-download">
@@ -2138,7 +2165,7 @@
                             <h3>Laboratory Investigations for Infectious Diseases of the Skin</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="Sensory-receptors.html" class="pdf-download">
@@ -2163,7 +2190,7 @@
                             <h3>Laboratory Diagnosis of Non-Infectious Skin Conditions</h3>
                             <p>Comprehensive review of groundbreaking immunological research.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="Sensory-receptors.html" class="pdf-download">
@@ -2188,7 +2215,7 @@
                             <h3>Examination of the Synovial Fluid</h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="Sensory-receptors.html" class="pdf-download">
@@ -2213,7 +2240,7 @@
                             <h3>Laboratory Diagnosis of Musculoskeletal System Diseases</h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="Sensory-receptors.html" class="pdf-download">
@@ -2232,7 +2259,7 @@
                 </div>
             </div>
             
-            <div class="tab-content" id="pathology">
+            <div class="tab-content" id="anatomy">
                 <div class="resource-grid">
 
                     <div class="resource-card">
@@ -2243,10 +2270,10 @@
                             <h3> Disorders of the Male Reproductive System </h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a href="pathology/renal-pathology.html" class="pdf-download">
+                                <a href="anatomy/renal-anatomy.html" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -2265,13 +2292,13 @@
                             <img src="images/renal.png" alt="Case Studies">
                         </div>
                         <div class="resource-info">
-                            <h3> Liver Pathology </h3>
+                            <h3> Liver anatomy </h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a href="pathology/renal-pathology.html" class="pdf-download">
+                                <a href="anatomy/renal-anatomy.html" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -2290,13 +2317,13 @@
                             <img src="images/renal.png" alt="Case Studies">
                         </div>
                         <div class="resource-info">
-                            <h3> Female Reproductive System Pathology </h3>
+                            <h3> Female Reproductive System anatomy </h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a href="pathology/renal-pathology.html" class="pdf-download">
+                                <a href="anatomy/renal-anatomy.html" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -2318,10 +2345,10 @@
                             <h3> Uterus - Endometrium and Myometrium </h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a href="pathology/renal-pathology.html" class="pdf-download">
+                                <a href="anatomy/renal-anatomy.html" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -2343,10 +2370,10 @@
                             <h3> Ovary </h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a href="pathology/renal-pathology.html" class="pdf-download">
+                                <a href="anatomy/renal-anatomy.html" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -2368,10 +2395,10 @@
                             <h3> Ovarian Tumors </h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a href="pathology/renal-pathology.html" class="pdf-download">
+                                <a href="anatomy/renal-anatomy.html" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -2390,13 +2417,13 @@
                             <img src="images/renal.png" alt="Case Studies">
                         </div>
                         <div class="resource-info">
-                            <h3> Breast Pathology </h3>
+                            <h3> Breast anatomy </h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a href="pathology/renal-pathology.html" class="pdf-download">
+                                <a href="anatomy/renal-anatomy.html" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -2418,10 +2445,10 @@
                             <h3> Benign Breast Lesions </h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a href="pathology/renal-pathology.html" class="pdf-download">
+                                <a href="anatomy/renal-anatomy.html" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -2440,13 +2467,13 @@
                             <img src="images/renal.png" alt="Case Studies">
                         </div>
                         <div class="resource-info">
-                            <h3> Gestational Pathology</h3>
+                            <h3> Gestational anatomy</h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a href="pathology/renal-pathology.html" class="pdf-download">
+                                <a href="anatomy/renal-anatomy.html" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -2465,13 +2492,13 @@
                             <img src="images/renal.png" alt="Case Studies">
                         </div>
                         <div class="resource-info">
-                            <h3>Renal Pathology</h3>
+                            <h3>Renal anatomy</h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a href="pathology/renal-pathology.html" class="pdf-download">
+                                <a href="anatomy/renal-anatomy.html" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -2490,13 +2517,13 @@
                             <img src="images/skin.JPG" alt="Case Studies">
                         </div>
                         <div class="resource-info">
-                            <h3> Skin Pathology </h3>
+                            <h3> Skin anatomy </h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a href="skin-pathology-roadmap.html" class="pdf-download">
+                                <a href="skin-anatomy-roadmap.html" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -2515,13 +2542,13 @@
                             <img src="images/skin.JPG" alt="Case Studies">
                         </div>
                         <div class="resource-info">
-                            <h3> Pathology of Bones, Joints, Muscles & Soft Tissues </h3>
+                            <h3> anatomy of Bones, Joints, Muscles & Soft Tissues </h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a href="skin-pathology-roadmap.html" class="pdf-download">
+                                <a href="skin-anatomy-roadmap.html" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -2540,13 +2567,13 @@
                             <img src="images/skin.JPG" alt="Case Studies">
                         </div>
                         <div class="resource-info">
-                            <h3> Pathology of Joints and Soft Tissues </h3>
+                            <h3> anatomy of Joints and Soft Tissues </h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a href="skin-pathology-roadmap.html" class="pdf-download">
+                                <a href="skin-anatomy-roadmap.html" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -2565,13 +2592,13 @@
                             <img src="images/skin.JPG" alt="Case Studies">
                         </div>
                         <div class="resource-info">
-                            <h3> CNS Pathology </h3>
+                            <h3> CNS anatomy </h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a href="skin-pathology-roadmap.html" class="pdf-download">
+                                <a href="skin-anatomy-roadmap.html" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -3129,10 +3156,10 @@
                             <h3> Professional Code of Ethics  </h3>
                             <p>Understanding lung function and gas exchange.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -3154,7 +3181,7 @@
                             <h3>The Complete Guide to Communication Skills in Clinical Practice</h3>
                             <p>This guide outlines structured protocols for effective communication in clinical practice, covering medical interviews, breaking bad news, discussing errors, cultural competence, and handling emotional or challenging conversations. It provides step-by-step frameworks like C-L-A-S-S, S-P-I-K-E-S, and B-A-L-A-N-C-E to enhance empathy, clarity, and professionalism with patients, families, and colleagues.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="guide-to-com-roadmap.html" class="pdf-download">
@@ -3179,10 +3206,10 @@
                             <h3>Renal Physiology</h3>
                             <p>Kidney function and fluid balance mechanisms.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -3689,10 +3716,10 @@
                             <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
-                            <h3>Therapeutics </h3>
+                            <h3>micro </h3>
                             <p>The one with 62 slides.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Test 1 
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -3720,7 +3747,7 @@
                             <h3> Biochemistry </h3>
                             <p> The one with 53 slides.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Test 1 
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -3745,10 +3772,10 @@
                             <img src="images/renal.png" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
-                            <h3> Pathology </h3>
+                            <h3> anatomy </h3>
                             <p>The one with 48 slides.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Test 1 
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -3776,7 +3803,7 @@
                             <h3> Clinical Science </h3>
                             <p>The one with 56 slides.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Test 1 
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -3804,7 +3831,7 @@
                             <h3>Physiology</h3>
                             <p>The one with 160 slides.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Test 1 
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -3832,7 +3859,7 @@
                             <h3> Lab Science </h3>
                             <p>The one with 160 slides.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Test 1 
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -3860,7 +3887,7 @@
                             <h3>Medical terminologies</h3>
                             <p>The one with 160 slides.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewmicro(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -4166,7 +4193,7 @@
                     
                     // Show all tabs but only activate the default one
                     tabContents.forEach(tab => {
-                        tab.style.display = tab.id === 'therapeutics' ? 'block' : 'none';
+                        tab.style.display = tab.id === 'micro' ? 'block' : 'none';
                         tab.classList.remove('active');
                         const cards = tab.querySelectorAll('.resource-card');
                         cards.forEach(card => {
@@ -4183,7 +4210,7 @@
                     // Reset tab buttons
                     tabBtns.forEach(btn => {
                         btn.classList.remove('active');
-                        if (btn.getAttribute('data-tab') === 'therapeutics') {
+                        if (btn.getAttribute('data-tab') === 'micro') {
                             btn.classList.add('active');
                         }
                     });
@@ -4191,7 +4218,7 @@
                     // Reset feature cards
                     featureCards.forEach(card => {
                         card.classList.remove('active');
-                        if (card.getAttribute('data-tab') === 'therapeutics') {
+                        if (card.getAttribute('data-tab') === 'micro') {
                             card.classList.add('active');
                         }
                     });
@@ -4465,13 +4492,13 @@ featureCards.forEach(card => {
         window.location.href = "pdf.html";
         }
 
-        function viewTherapeutics(pdfNum) {
-        localStorage.setItem("showTherapeutics", pdfNum);
-        window.location.href = "MBS-330-T/Therapeutics-PDF.html";
+        function viewmicro(pdfNum) {
+        localStorage.setItem("showmicro", pdfNum);
+        window.location.href = "MBS-330-T/micro-PDF.html";
         }
 
         function viewPhysiology(pdfNum) {
-        localStorage.setItem("showTherapeutics", pdfNum);
+        localStorage.setItem("showmicro", pdfNum);
         window.location.href = "MBS-310/physiology-pdf.html";
         }
 

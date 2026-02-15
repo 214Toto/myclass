@@ -372,6 +372,21 @@
             text-decoration: none;
             transition: all 0.3s ease;
         }
+
+        .pdf-special {
+            display: inline-block;
+            margin-top: 1rem;
+            width: 100%;
+            color: white;
+            font-weight: 600;
+            background-color: #0097a7;
+            padding: 2px;
+
+            margin-bottom: 2rem;
+            border: #005b96 solid 2px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
         
         .pdf-download:hover {
             color: var(--primary);
@@ -816,7 +831,10 @@
             </div>
 
             <div class="tab-content active" id="biochem">
-                <div class="resource-grid">
+                <a onclick="viespecial(1)" class="pdf-special">
+                    <i style="padding-left: 35%; " class="fas fa-book"></i> Checkout Recomended Books
+                </a>
+                <div class="resource-grid">                    
                     <div class="resource-card">
                         <div class="resource-img">
                             <img src="images/overview.jpeg" alt="Clinical Guidelines">
@@ -825,11 +843,11 @@
                             <h3>Introduction to or Overview of Metabolism</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -850,11 +868,11 @@
                             <h3>ETC and Oxidative Phosphorylation</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -875,11 +893,11 @@
                             <h3>Carbohydrate Metabolism Glycolysis</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -900,11 +918,11 @@
                             <h3>HMP shunt (Pentose Phosphate Pathway)</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -925,11 +943,11 @@
                             <h3>TCA Cycle</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -950,11 +968,11 @@
                             <h3>Galactose and Fructose metabolism</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -975,11 +993,11 @@
                             <h3>Gluconeogenesis</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -994,17 +1012,17 @@
                     
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Blood Glucose Homeostasis</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1025,11 +1043,11 @@
                             <h3>Alcohol Metabolism</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1044,17 +1062,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Uronic acid pathway</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1069,17 +1087,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="images-1/glycogen.jpeg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Glycogen Metabolism & Glycogen Storage Diseases</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1094,17 +1112,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="images-1/FA-synthesis.jpeg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Fatty Acid Sythesis</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1119,17 +1137,17 @@
                     
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="images-1/beta-oxidation.jpeg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Beta Oxidation </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1144,17 +1162,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="images-1/lipoproteins.jpeg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Lipoproteines</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1169,17 +1187,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>STEROID AND BILE METABOLISM</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1194,17 +1212,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="images-1/ketogenesis.jpeg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3> KETOGENESIS </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1219,17 +1237,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3> Urea Cycle </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1244,17 +1262,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/nucleotide.avif" alt="Clinical Guidelines">
+                            <img src="images-1/nucleotide.jpeg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3> Nucleotide Metabolism </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1269,17 +1287,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/nucleotide.avif" alt="Clinical Guidelines">
+                            <img src="images-1/central-dogma.jpeg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3> Central Dogma of Cell and DNA Replication </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1294,17 +1312,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/nucleotide.avif" alt="Clinical Guidelines">
+                            <img src="images-1/transcription.jpeg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3> Transcription and Post-Transcriptional Processes </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1319,17 +1337,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/nucleotide.avif" alt="Clinical Guidelines">
+                            <img src="images-1/translation.jpeg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3> Translation and Post-Translational Processes </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1344,17 +1362,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/nucleotide.avif" alt="Clinical Guidelines">
+                            <img src="images-1/dna-damage.jpeg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3> DNA Damage and Repair Mechanism </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1369,17 +1387,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/nucleotide.avif" alt="Clinical Guidelines">
+                            <img src="images-1/gene-expre.jpeg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3> Gene Expression and Control </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1394,17 +1412,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/nucleotide.avif" alt="Clinical Guidelines">
+                            <img src="images-1/genetic-eng.jpeg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3> Genetic Engeneering & Wobble Hypothesis </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1419,42 +1437,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/nucleotide.avif" alt="Clinical Guidelines">
+                            <img src="images-1/technique.jpeg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3> Techniques in Genetic Engeneering </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
-                                </a>
-                                <a href="not-yet-ready.html" class="pdf-download">
-                                    <i class="fas fa-question-circle"></i> Try The Quiz
-                                </a>
-                            </div>
-                            <div class="resource-meta">
-                                <span><i class="far fa-file-pdf"></i> CBU - SOM</span>
-                                <span><i class="fas fa-user-md"></i> Term 3</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="resource-card">
-                        <div class="resource-img">
-                            <img src="images/nucleotide.avif" alt="Clinical Guidelines">
-                        </div>
-                        <div class="resource-info">
-                            <h3> Genetic Engeneering and Medicine </h3>
-                            <p>Updated evidence-based guidelines for common medical conditions.</p>
-                            <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
-                                </a>
-                                <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1471,54 +1464,81 @@
             </div>
             
             <div class="tab-content" id="histology">
+                <a onclick="viewbiochem(1)" class="pdf-special">
+                    <i style="padding-left: 35%; " class="fas fa-book"></i> Checkout Recomended Books
+                </a>
                 <div class="resource-grid">
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/male.jpeg" alt="Case Studies">
+                            <img src="img/intro-to-histology.png" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
-                            <h3> Introduction To Histology </h3>
-                            <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
+                            <h3>Introduction To Histology </h3>
+                            <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
-                                <a href="Sensory-receptors.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                <a onclick="viewhistology(1)" class="pdf-download">
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
                                 </a>
                             </div>
                             <div class="resource-meta">
-                                <span><i class="far fa-file-pdf"></i> CBU - SOM</span>
-                                <span><i class="fas fa-hospital"></i> Teaching Hospital Archives</span>
+                                <span><i class="far fa-file-pdf"></i> CBU-Som </span>
+                                <span><i class="fas fa-user-md"></i> Term 1</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/male-1.jpeg" alt="Clinical Guidelines">
+                            <img src="img/cytology.jpeg" alt="Clinical Guidelines">
+                        </div>
+                        <div class="resource-info">
+                            <h3> Cytology </h3>
+                            <p>Updated evidence-based guidelines for common medical conditions.</p>
+                            <div class="buttonz">
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
+                                </a>
+                                <a onclick="viewhistology(2)" class="pdf-download">
+                                    <i class="fas fa-map-signs"></i> Check out Video
+                                </a>
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-question-circle"></i> Try The Quiz
+                                </a>
+                            </div>
+                            <div class="resource-meta">
+                                <span><i class="far fa-file-pdf"></i> CBU-Som </span>
+                                <span><i class="fas fa-user-md"></i> Term 1</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-img">
+                            <img src="img/epithelial.jpeg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3> Epithelial Tissue </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
-                                <a href="Sensory-receptors.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                <a onclick="viewhistology(3)" class="pdf-download">
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
                                 </a>
                             </div>
                             <div class="resource-meta">
-                                <span><i class="far fa-file-pdf"></i> CBU - SOM</span>
+                                <span><i class="far fa-file-pdf"></i> CBU-Som </span>
                                 <span><i class="fas fa-user-md"></i> Term 1</span>
                             </div>
                         </div>
@@ -1526,50 +1546,24 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/female-1.png" alt="Clinical Guidelines">
+                            <img src="img/connective.jpeg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
-                            <h3>Laboratory diagnosis of non-infectious diseases/conditions of the female reproductive system and the breast.</h3>
+                            <h3> Connective Tissue </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
-                                <a href="Sensory-receptors.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                <a onclick="viewhistology(4)" class="pdf-download">
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
                                 </a>
                             </div>
                             <div class="resource-meta">
-                                <span><i class="far fa-file-pdf"></i> CBU - SOM</span>
-                                <span><i class="fas fa-user-md"></i> Term 1</span>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="resource-card">
-                        <div class="resource-img">
-                            <img src="images/female-2.png" alt="Clinical Guidelines">
-                        </div>
-                        <div class="resource-info">
-                            <h3>Laboratory investigations for infectious diseases of the female reproductive system</h3>
-                            <p>Updated evidence-based guidelines for common medical conditions.</p>
-                            <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
-                                </a>
-                                <a href="Sensory-receptors.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
-                                </a>
-                                <a href="not-yet-ready.html" class="pdf-download">
-                                    <i class="fas fa-question-circle"></i> Try The Quiz
-                                </a>
-                            </div>
-                            <div class="resource-meta">
-                                <span><i class="far fa-file-pdf"></i> CBU - SOM</span>
+                                <span><i class="far fa-file-pdf"></i> CBU-Som </span>
                                 <span><i class="fas fa-user-md"></i> Term 1</span>
                             </div>
                         </div>
@@ -1577,24 +1571,24 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/infectious.png" alt="Clinical Guidelines">
+                            <img src="img/cartilage.jpeg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
-                            <h3>Principles of Hormonal Assay</h3>
+                            <h3> Cartilage Tissue </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
-                                <a href="Sensory-receptors.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                <a onclick="viewhistology(5)" class="pdf-download">
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
                                 </a>
                             </div>
                             <div class="resource-meta">
-                                <span><i class="far fa-file-pdf"></i> CBU - SOM</span>
+                                <span><i class="far fa-file-pdf"></i> CBU-Som </span>
                                 <span><i class="fas fa-user-md"></i> Term 1</span>
                             </div>
                         </div>
@@ -1602,24 +1596,49 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/infectious.png" alt="Clinical Guidelines">
+                            <img src="img/bone.jpeg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
-                            <h3>Laboratory Investigations for Infectious Diseases of the Skin</h3>
+                            <h3> Bone Tissue  </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
-                                <a href="Sensory-receptors.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                <a onclick="viewhistology(6)" class="pdf-download">
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
                                 </a>
                             </div>
                             <div class="resource-meta">
-                                <span><i class="far fa-file-pdf"></i> CBU - SOM</span>
+                                <span><i class="far fa-file-pdf"></i> CBU-Som </span>
+                                <span><i class="fas fa-user-md"></i> Term 1</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-img">
+                            <img src="img/adipose.jpeg" alt="Clinical Guidelines">
+                        </div>
+                        <div class="resource-info">
+                            <h3> Adipose Tissue </h3>
+                            <p>Updated evidence-based guidelines for common medical conditions.</p>
+                            <div class="buttonz">
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
+                                </a>
+                                <a onclick="viewhistology(7)" class="pdf-download">
+                                    <i class="fas fa-map-signs"></i> Check out Video
+                                </a>
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-question-circle"></i> Try The Quiz
+                                </a>
+                            </div>
+                            <div class="resource-meta">
+                                <span><i class="far fa-file-pdf"></i> CBU-Som </span>
                                 <span><i class="fas fa-user-md"></i> Term 1</span>
                             </div>
                         </div>
@@ -1627,78 +1646,279 @@
                     
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/home-slider (1).jpg" alt="Research Paper">
+                            <img src="img/nerve.jpeg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
-                            <h3>Laboratory Diagnosis of Non-Infectious Skin Conditions</h3>
-                            <p>Comprehensive review of groundbreaking immunological research.</p>
+                            <h3> Nerve Tissue </h3>
+                            <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
-                                <a href="Sensory-receptors.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                <a onclick="viewhistology(8)" class="pdf-download">
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
                                 </a>
                             </div>
                             <div class="resource-meta">
-                                <span><i class="far fa-file-pdf"></i> CBU - SOM</span>
-                                <span><i class="fas fa-university"></i> Journal of Medical Research</span>
+                                <span><i class="far fa-file-pdf"></i> CBU-Som </span>
+                                <span><i class="fas fa-user-md"></i> Term 1</span>
                             </div>
                         </div>
                     </div>
                     
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/synovial.png" alt="Case Studies">
+                            <img src="img/muscle.jpeg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
-                            <h3>Examination of the Synovial Fluid</h3>
-                            <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
+                            <h3> Muscle Tissue </h3>
+                            <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
-                                <a href="Sensory-receptors.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                <a onclick="viewhistology(9)" class="pdf-download">
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
                                 </a>
                             </div>
                             <div class="resource-meta">
-                                <span><i class="far fa-file-pdf"></i> CBU - SOM</span>
-                                <span><i class="fas fa-hospital"></i> Teaching Hospital Archives</span>
+                                <span><i class="far fa-file-pdf"></i> CBU-Som </span>
+                                <span><i class="fas fa-user-md"></i> Term 1</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-img">
+                            <img src="img/lymph.jpeg" alt="Clinical Guidelines">
+                        </div>
+                        <div class="resource-info">
+                            <h3> Lymphoid Tissue</h3>
+                            <p>Updated evidence-based guidelines for common medical conditions.</p>
+                            <div class="buttonz">
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
+                                </a>
+                                <a onclick="viewhistology(10)" class="pdf-download">
+                                    <i class="fas fa-map-signs"></i> Check out Video
+                                </a>
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-question-circle"></i> Try The Quiz
+                                </a>
+                            </div>
+                            <div class="resource-meta">
+                                <span><i class="far fa-file-pdf"></i> CBU-Som </span>
+                                <span><i class="fas fa-user-md"></i> Term 1</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/biochem.jpg" alt="Case Studies">
+                            <img src="img/skin.jpeg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
-                            <h3>Laboratory Diagnosis of Musculoskeletal System Diseases</h3>
-                            <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
+                            <h3> Skin Histology </h3>
+                            <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
-                                <a href="Sensory-receptors.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                <a onclick="viewhistology(11)" class="pdf-download">
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
                                 </a>
                             </div>
                             <div class="resource-meta">
-                                <span><i class="far fa-file-pdf"></i> CBU - SOM</span>
-                                <span><i class="fas fa-hospital"></i> Teaching Hospital Archives</span>
+                                <span><i class="far fa-file-pdf"></i> CBU-Som </span>
+                                <span><i class="fas fa-user-md"></i> Term 1</span>
                             </div>
                         </div>
                     </div>
+
+                    <div class="resource-card">
+                        <div class="resource-img">
+                            <img src="images-1/CVS.jpeg" alt="Clinical Guidelines">
+                        </div>
+                        <div class="resource-info">
+                            <h3> Cardiovascular System </h3>
+                            <p>Updated evidence-based guidelines for common medical conditions.</p>
+                            <div class="buttonz">
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
+                                </a>
+                                <a onclick="viewhistology(11)" class="pdf-download">
+                                    <i class="fas fa-map-signs"></i> Check out Video
+                                </a>
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-question-circle"></i> Try The Quiz
+                                </a>
+                            </div>
+                            <div class="resource-meta">
+                                <span><i class="far fa-file-pdf"></i> CBU-Som </span>
+                                <span><i class="fas fa-user-md"></i> Term 1</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-img">
+                            <img src="images-1/respiratory.jpeg" alt="Clinical Guidelines">
+                        </div>
+                        <div class="resource-info">
+                            <h3> Respiratory System </h3>
+                            <p>Updated evidence-based guidelines for common medical conditions.</p>
+                            <div class="buttonz">
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
+                                </a>
+                                <a onclick="viewhistology(11)" class="pdf-download">
+                                    <i class="fas fa-map-signs"></i> Check out Video
+                                </a>
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-question-circle"></i> Try The Quiz
+                                </a>
+                            </div>
+                            <div class="resource-meta">
+                                <span><i class="far fa-file-pdf"></i> CBU-Som </span>
+                                <span><i class="fas fa-user-md"></i> Term 1</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-img">
+                            <img src="images-1/git.jpeg" alt="Clinical Guidelines">
+                        </div>
+                        <div class="resource-info">
+                            <h3> GIT Histolgoy </h3>
+                            <p>Updated evidence-based guidelines for common medical conditions.</p>
+                            <div class="buttonz">
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
+                                </a>
+                                <a onclick="viewhistology(11)" class="pdf-download">
+                                    <i class="fas fa-map-signs"></i> Check out Video
+                                </a>
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-question-circle"></i> Try The Quiz
+                                </a>
+                            </div>
+                            <div class="resource-meta">
+                                <span><i class="far fa-file-pdf"></i> CBU-Som </span>
+                                <span><i class="fas fa-user-md"></i> Term 1</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-img">
+                            <img src="images-1/urinary.jpeg" alt="Clinical Guidelines">
+                        </div>
+                        <div class="resource-info">
+                            <h3> Urinary System </h3>
+                            <p>Updated evidence-based guidelines for common medical conditions.</p>
+                            <div class="buttonz">
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
+                                </a>
+                                <a onclick="viewhistology(11)" class="pdf-download">
+                                    <i class="fas fa-map-signs"></i> Check out Video
+                                </a>
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-question-circle"></i> Try The Quiz
+                                </a>
+                            </div>
+                            <div class="resource-meta">
+                                <span><i class="far fa-file-pdf"></i> CBU-Som </span>
+                                <span><i class="fas fa-user-md"></i> Term 1</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-img">
+                            <img src="images-1/reproductive.jpeg" alt="Clinical Guidelines">
+                        </div>
+                        <div class="resource-info">
+                            <h3> Reproductive System </h3>
+                            <p>Updated evidence-based guidelines for common medical conditions.</p>
+                            <div class="buttonz">
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
+                                </a>
+                                <a onclick="viewhistology(11)" class="pdf-download">
+                                    <i class="fas fa-map-signs"></i> Check out Video
+                                </a>
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-question-circle"></i> Try The Quiz
+                                </a>
+                            </div>
+                            <div class="resource-meta">
+                                <span><i class="far fa-file-pdf"></i> CBU-Som </span>
+                                <span><i class="fas fa-user-md"></i> Term 1</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-img">
+                            <img src="images-1/endocrine.jpeg" alt="Clinical Guidelines">
+                        </div>
+                        <div class="resource-info">
+                            <h3> Endocrine System </h3>
+                            <p>Updated evidence-based guidelines for common medical conditions.</p>
+                            <div class="buttonz">
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
+                                </a>
+                                <a onclick="viewhistology(11)" class="pdf-download">
+                                    <i class="fas fa-map-signs"></i> Check out Video
+                                </a>
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-question-circle"></i> Try The Quiz
+                                </a>
+                            </div>
+                            <div class="resource-meta">
+                                <span><i class="far fa-file-pdf"></i> CBU-Som </span>
+                                <span><i class="fas fa-user-md"></i> Term 1</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-img">
+                            <img src="images-1/special.jpeg" alt="Clinical Guidelines">
+                        </div>
+                        <div class="resource-info">
+                            <h3> Special Sensory Organs </h3>
+                            <p>Updated evidence-based guidelines for common medical conditions.</p>
+                            <div class="buttonz">
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
+                                </a>
+                                <a onclick="viewhistology(11)" class="pdf-download">
+                                    <i class="fas fa-map-signs"></i> Check out Video
+                                </a>
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-question-circle"></i> Try The Quiz
+                                </a>
+                            </div>
+                            <div class="resource-meta">
+                                <span><i class="far fa-file-pdf"></i> CBU-Som </span>
+                                <span><i class="fas fa-user-md"></i> Term 1</span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             
@@ -1713,11 +1933,11 @@
                             <h3> Disorders of the Male Reproductive System </h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="pathology/renal-pathology.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1738,11 +1958,11 @@
                             <h3> Liver Pathology </h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="pathology/renal-pathology.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1763,11 +1983,11 @@
                             <h3> Female Reproductive System Pathology </h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="pathology/renal-pathology.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1788,11 +2008,11 @@
                             <h3> Uterus - Endometrium and Myometrium </h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="pathology/renal-pathology.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1813,11 +2033,11 @@
                             <h3> Ovary </h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="pathology/renal-pathology.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1838,11 +2058,11 @@
                             <h3> Ovarian Tumors </h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="pathology/renal-pathology.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1863,11 +2083,11 @@
                             <h3> Breast Pathology </h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="pathology/renal-pathology.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1888,11 +2108,11 @@
                             <h3> Benign Breast Lesions </h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="pathology/renal-pathology.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1913,11 +2133,11 @@
                             <h3> Gestational Pathology</h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="pathology/renal-pathology.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1938,11 +2158,11 @@
                             <h3>Renal Pathology</h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="pathology/renal-pathology.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1963,11 +2183,11 @@
                             <h3> Skin Pathology </h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="skin-pathology-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -1988,11 +2208,11 @@
                             <h3> Pathology of Bones, Joints, Muscles & Soft Tissues </h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="skin-pathology-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2013,11 +2233,11 @@
                             <h3> Pathology of Joints and Soft Tissues </h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="skin-pathology-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2038,11 +2258,11 @@
                             <h3> CNS Pathology </h3>
                             <p>Detailed analysis of challenging clinical cases with expert commentary.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="skin-pathology-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2069,10 +2289,10 @@
                             <p>Understanding lung function and gas exchange.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewPhysiology(1)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2094,10 +2314,10 @@
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewPhysiology(2)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2119,10 +2339,10 @@
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewPhysiology(3)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2144,10 +2364,10 @@
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewPhysiology(4)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2169,10 +2389,10 @@
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewPhysiology(5)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2194,10 +2414,10 @@
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewPhysiology(6)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2219,10 +2439,10 @@
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewPhysiology(7)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2244,10 +2464,10 @@
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewPhysiology(8)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2269,10 +2489,10 @@
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewPhysiology(9)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2294,10 +2514,10 @@
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewPhysiology(10)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2319,10 +2539,10 @@
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewPhysiology(11)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2344,10 +2564,10 @@
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewPhysiology(12)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2369,10 +2589,10 @@
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewPhysiology(13)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2394,10 +2614,10 @@
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewPhysiology(14)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2419,10 +2639,10 @@
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewPhysiology(15)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2444,10 +2664,10 @@
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewPhysiology(16)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2469,10 +2689,10 @@
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewPhysiology(17)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2494,10 +2714,10 @@
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewPhysiology(18)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2519,10 +2739,10 @@
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewPhysiology(19)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2544,10 +2764,10 @@
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewPhysiology(20)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2569,10 +2789,10 @@
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewPhysiology(21)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2599,11 +2819,11 @@
                             <h3> Professional Code of Ethics  </h3>
                             <p>Understanding lung function and gas exchange.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2624,11 +2844,11 @@
                             <h3>The Complete Guide to Communication Skills in Clinical Practice</h3>
                             <p>This guide outlines structured protocols for effective communication in clinical practice, covering medical interviews, breaking bad news, discussing errors, cultural competence, and handling emotional or challenging conversations. It provides step-by-step frameworks like C-L-A-S-S, S-P-I-K-E-S, and B-A-L-A-N-C-E to enhance empathy, clarity, and professionalism with patients, families, and colleagues.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="guide-to-com-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2643,17 +2863,17 @@
                     
                      <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Renal Physiology</h3>
                             <p>Kidney function and fluid balance mechanisms.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2672,17 +2892,17 @@
                 <div class="resource-grid">
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Medical Terminologies</h3>
                             <p>The one with 62 slides.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewClinical(1)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2697,17 +2917,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Vital Signs</h3>
                             <p> The one with 53 slides.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewClinical(2)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2722,17 +2942,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Glassgow Coma Scale</h3>
                             <p> The one with 53 slides.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewClinical(3)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2747,17 +2967,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3> Blood Pressure</h3>
                             <p> The one with 53 slides.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewClinical(4)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2772,17 +2992,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Patient History Taking</h3>
                             <p> The one with 53 slides.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewClinical(5)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2797,17 +3017,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3> Pulse Part 1</h3>
                             <p> The one with 53 slides.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewClinical(6)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2822,17 +3042,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Pulse Part 2 </h3>
                             <p> The one with 53 slides.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewClinical(7)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2847,17 +3067,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Breathing Patterns </h3>
                             <p> The one with 53 slides.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewClinical(8)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2872,17 +3092,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>General Physical Examination </h3>
                             <p> The one with 53 slides.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewClinical(9)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2897,17 +3117,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Cardiovascular System </h3>
                             <p> The one with 53 slides.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewClinical(10)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2922,17 +3142,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Examination of the Nervous System Part 1</h3>
                             <p> The one with 53 slides.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewClinical(11)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2947,17 +3167,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Examination of the Nervous System Part 2 </h3>
                             <p> The one with 53 slides.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewClinical(12)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2972,17 +3192,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Examination of the Nervous System Part 3 </h3>
                             <p> The one with 53 slides.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewClinical(13)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -2997,17 +3217,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Examination of the Nervous System Part 4 </h3>
                             <p> The one with 53 slides.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewClinical(14)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -3022,17 +3242,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3> GIT Examination</h3>
                             <p> The one with 53 slides.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewClinical(15)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -3047,17 +3267,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Nervous System</h3>
                             <p> The one with 53 slides.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewClinical(16)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -3072,17 +3292,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Abdominal Examination</h3>
                             <p> The one with 53 slides.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewClinical(17)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -3097,17 +3317,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Skin, Nails and Hair</h3>
                             <p> The one with 53 slides.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewClinical(18)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -3122,17 +3342,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>PHYSICAL EXAMINATION OF THE RESPIRATORY SYSTEM</h3>
                             <p> The one with 53 slides.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a onclick="viewClinical(19)" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -3156,13 +3376,13 @@
                 <div class="resource-grid">
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Therapeutics </h3>
                             <p>The one with 62 slides.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewbiochem(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Test 1 
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -3190,7 +3410,7 @@
                             <h3> Biochemistry </h3>
                             <p> The one with 53 slides.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewbiochem(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Test 1 
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -3218,7 +3438,7 @@
                             <h3> Pathology </h3>
                             <p>The one with 48 slides.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewbiochem(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Test 1 
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -3246,7 +3466,7 @@
                             <h3> Clinical Science </h3>
                             <p>The one with 56 slides.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewbiochem(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Test 1 
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -3274,7 +3494,7 @@
                             <h3>Physiology</h3>
                             <p>The one with 160 slides.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewbiochem(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Test 1 
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -3302,7 +3522,7 @@
                             <h3> Lab Science </h3>
                             <p>The one with 160 slides.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
+                                <a onclick="viewbiochem(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Test 1 
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
@@ -3324,17 +3544,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Medical terminologies</h3>
                             <p>The one with 160 slides.</p>
                             <div class="buttonz">
-                                <a onclick="viewTherapeutics(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                <a onclick="viewbiochem(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -3349,42 +3569,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
-                        </div>
-                        <div class="resource-info">
-                            <h3>Medical terminologies</h3>
-                            <p>The one with 160 slides.</p>
-                            <div class="buttonz">
-                                <a onclick="(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
-                                </a>
-                                <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
-                                </a>
-                                <a href="not-yet-ready.html" class="pdf-download">
-                                    <i class="fas fa-question-circle"></i> Try The Quiz
-                                </a>
-                            </div>
-                            <div class="resource-meta">
-                                <span><i class="far fa-file-pdf"></i> CBU - SOM</span>
-                                <span><i class="fas fa-user-md"></i> Term 1 </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="resource-card">
-                        <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Medical terminologies</h3>
                             <p>The one with 160 slides.</p>
                             <div class="buttonz">
                                 <a onclick="(1)" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -3399,17 +3594,42 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
+                        </div>
+                        <div class="resource-info">
+                            <h3>Medical terminologies</h3>
+                            <p>The one with 160 slides.</p>
+                            <div class="buttonz">
+                                <a onclick="(1)" class="pdf-download">
+                                    <i class="fas fa-video"></i> Document
+                                </a>
+                                <a href="antibacterial-roadmap.html" class="pdf-download">
+                                    <i class="fas fa-map-signs"></i> Check out Video
+                                </a>
+                                <a href="not-yet-ready.html" class="pdf-download">
+                                    <i class="fas fa-question-circle"></i> Try The Quiz
+                                </a>
+                            </div>
+                            <div class="resource-meta">
+                                <span><i class="far fa-file-pdf"></i> CBU - SOM</span>
+                                <span><i class="fas fa-user-md"></i> Term 1 </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-img">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Medical terminologies</h3>
                             <p>The one with 160 slides.</p>
                             <div class="buttonz">
                                 <a  class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="antibacterial-roadmap.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -3424,17 +3644,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>History taking</h3>
                             <p>The one with 160 slides.</p>
                             <div class="buttonz">
                                 <a href="MCS-300/history-taking-video.html" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="MCS-300/history-taking-pdf.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.htmlistory-taking-quiz.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -3449,17 +3669,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Breathing pattern</h3>
                             <p>The one with 160 slides.</p>
                             <div class="buttonz">
                                 <a href="MCS-300/medical-terms-video.html" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="MCS-300/breathing-pattern-pdf.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.htmlreathing-patterns-quiz.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -3474,17 +3694,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Medical terminologies</h3>
                             <p>The one with 160 slides.</p>
                             <div class="buttonz">
                                 <a href="MCS-300/medical-terms-video.html" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="MCS-300/medical-terms-pdf.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.htmledical-terms-quiz.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -3499,17 +3719,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>General physical examination </h3>
                             <p>The one with 160 slides.</p>
                             <div class="buttonz">
                                 <a href="MCS-300/general-video.html" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="MCS-300/general-exam-pdf.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.htmleneral-quiz.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -3524,17 +3744,17 @@
 
                     <div class="resource-card">
                         <div class="resource-img">
-                            <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
+                            <img src="toto.jpg" alt="Clinical Guidelines">
                         </div>
                         <div class="resource-info">
                             <h3>Cardiovascular system</h3>
                             <p>The one with 160 slides.</p>
                             <div class="buttonz">
                                 <a href="MCS-300/CVS-video.html" class="pdf-download">
-                                    <i class="fas fa-video"></i> Checkout Video
+                                    <i class="fas fa-video"></i> Document
                                 </a>
                                 <a href="MCS-300/CVS-pdf.html" class="pdf-download">
-                                    <i class="fas fa-map-signs"></i> Document
+                                    <i class="fas fa-map-signs"></i> Check out Video
                                 </a>
                                 <a href="not-yet-ready.htmlVS-quiz.html" class="pdf-download">
                                     <i class="fas fa-question-circle"></i> Try The Quiz
@@ -3935,9 +4155,9 @@ featureCards.forEach(card => {
         window.location.href = "pdf.html";
         }
 
-        function viewTherapeutics(pdfNum) {
-        localStorage.setItem("showTherapeutics", pdfNum);
-        window.location.href = "MBS-330-T/Therapeutics-PDF.html";
+        function viewbiochem(pdfNum) {
+        localStorage.setItem("showBiochem", pdfNum);
+        window.location.href = "MBS-330-B/biochemistry-PDF.html";
         }
 
         function viewPhysiology(pdfNum) {
