@@ -993,7 +993,7 @@
                             <h3> Epithelial Tissue </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a href="video.html" class="pdf-download">
+                                <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a onclick="viewhistology(3)" class="pdf-download">
@@ -1489,7 +1489,7 @@
                 </div>
             </div>
             
-            <div class="tab-content" id="lab-science">
+            <!-- <div class="tab-content" id="lab-science">
                 <a href="MBS-240/labscience2-outline.html" class="pdf-recommended">
                     <i class="fas fa-book"></i> Course Outline
                 </a>
@@ -1503,7 +1503,7 @@
                             <h3> Plasma Proteins </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a href="not-yet-ready.html" class="pdf-download">
+                                <a onclick="viewBiochemVideo2(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a onclick="viewBiochem2(1)" class="pdf-download">
@@ -1528,7 +1528,7 @@
                             <h3> Enzymes </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a href="not-yet-ready.html" class="pdf-download">
+                                <a onclick="viewBiochemVideo2(2)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a onclick="viewBiochem2(2)" class="pdf-download">
@@ -1553,7 +1553,7 @@
                             <h3> Amino Acids </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a href="not-yet-ready.html" class="pdf-download">
+                                <a onclick="viewBiochemVideo2(3)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a onclick="viewBiochem2(3)" class="pdf-download">
@@ -1873,7 +1873,7 @@
 
                 
                 </div>
-            </div>
+            </div> -->
 
             <div class="tab-content" id="biochem">
                 <a href="https://drive.google.com/drive/folders/1NIB0oOfXY-7XPtWQ6C32GFBr52yPdx_1?usp=drive_link" class="pdf-recommended">
@@ -1888,7 +1888,7 @@
                             <h3> Plasma Proteins </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a href="not-yet-ready.html" class="pdf-download">
+                                <a onclick="viewBiochemVideo2(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a onclick="viewBiochem2(1)" class="pdf-download">
@@ -1913,7 +1913,7 @@
                             <h3> Enzymes </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a href="not-yet-ready.html" class="pdf-download">
+                                <a onclick="viewBiochemVideo2(2)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a onclick="viewBiochem2(2)" class="pdf-download">
@@ -1938,7 +1938,7 @@
                             <h3> Amino Acids </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a href="not-yet-ready.html" class="pdf-download">
+                                <a onclick="viewBiochemVideo2(3)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a onclick="viewBiochem2(3)" class="pdf-download">
@@ -1963,7 +1963,7 @@
                             <h3> Peptides & Proteins </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a href="not-yet-ready.html" class="pdf-download">
+                                <a onclick="viewBiochemVideo2(4)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a onclick="viewBiochem2(4)" class="pdf-download">
@@ -2064,7 +2064,7 @@
                             <h3> Lipids Metabolism </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a href="video.html" class="pdf-download">
+                                <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -4973,6 +4973,11 @@ featureCards.forEach(card => {
         function viewBiochem2(pdfNum) {
         localStorage.setItem("showBiochem2", pdfNum);
         window.location.href = "MBS-230-B/biochem-pdf.html";
+        }
+
+        function viewBiochemVideo2(pdfNum) {
+        localStorage.setItem("showBiochemVideo2", pdfNum);
+        window.location.href = "MBS-230-B/biochem2-video.html";
         }
 
         function viewEmbryology(pdfNum) {
