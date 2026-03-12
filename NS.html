@@ -46,21 +46,13 @@
             align-items: center;
         }
         
-        .logo {
+        /* .logo {
             display: flex;
             align-items: center;
-        }
+        } */
         
-        .logo i {
-            font-size: 2rem;
-            margin-right: 1rem;
-            color: var(--accent);
-        }
-        
-        .logo h1 {
-            font-weight: 700;
-            font-size: 1.8rem;
-        }
+        .logo i { font-size:28px; color:var(--accent); }
+       .logo h1 { color:#fff; margin:0; font-size:1.6rem; font-weight:800; }
         
         nav ul {
             display: flex;
@@ -136,6 +128,7 @@
         .btn:hover {
             background-color: #0097a7;
             transform: translateY(-2px);
+            cursor: pointer;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         
@@ -382,6 +375,7 @@
         
         .pdf-download:hover {
             color: var(--primary);
+            cursor: pointer;
         }
         
         .pdf-download i {
@@ -545,6 +539,51 @@
         .search-container button:hover {
             background: var(--primary);
         }
+
+        .header-container { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+       .user-wrap { order: 1; display:flex; align-items:center; gap:12px; }
+       .logo { order: 2; display:flex; align-items:center; gap:12px; }
+
+        .user-profile {
+           display:inline-flex;
+           align-items:center;
+           gap:10px;
+           padding:6px 10px;
+           background: linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+           border-radius: 10px;
+           border: 1px solid rgba(255,255,255,0.06);
+       }
+       .user-avatar { width:46px; height:46px; border-radius:50%; object-fit:cover; border:2px solid rgba(255,255,255,0.12); }
+       .user-name { color: #fff; font-weight:700; font-size:0.98rem; margin-left:6px; }
+
+       /* small dropdown editor */
+       #profileEditor {
+           position: absolute;
+           right: 18px;
+           top: 72px;
+           background: linear-gradient(180deg, #fff, #fbfeff);
+           border-radius: 12px;
+           padding: 12px;
+           width: 260px;
+           box-shadow: 0 10px 30px rgba(18,38,63,0.12);
+           display: none;
+           z-index: 1100;
+       }
+       #profileEditor label { display:block; font-size:0.85rem; color:#0f172a; margin-bottom:6px; }
+       #profileEditor input[type="text"]{
+         width:100%; padding:8px 10px; border-radius:8px; border:1px solid #e6eef0; margin-bottom:8px;
+       }
+       #profileEditor input[type="file"]{ display:block; margin-bottom:8px; }
+       #profileEditor .editor-actions { display:flex; gap:8px; justify-content:flex-end; }
+       #profileEditor .editor-actions button{
+         padding:8px 10px; border-radius:8px; border:none; cursor:pointer; font-weight:600;
+       }
+       #profileSave { background: linear-gradient(90deg,#3aafa9,#2b7a78); color:#fff; }
+       #profileCancel { background: transparent; border:1px solid #d7e6e6; color:#0f172a; }
+       @media (max-width: 720px) {
+         .header-container { flex-direction:row; }
+          .user-name { display:none; }
+       }
         
         @media (max-width: 768px) {
             .header-content {
@@ -628,12 +667,31 @@
 </head>
 <body>
     <header>
-        <div class="container" style="display: flex; align-items: center; justify-content: space-between;">
+         <div class="container" style="display: flex; align-items: center; justify-content: space-between;">
+         <div class="container header-container">
             <div class="logo">
                 <i class="fas fa-heartbeat"></i>
                 <h1>ToToZ Collection</h1>
             </div>
-        </div>
+                <div id="userProfile" class="user-profile" aria-haspopup="true" aria-expanded="false" title="Profile">
+                    <img id="userAvatar" class="user-avatar" src="images/default-avatar.png" alt="User avatar">
+                    <span id="userName" class="user-name" style="display:none;"></span>
+                </div>
+
+                <div id="profileEditor" role="dialog" aria-label="Edit profile">
+                    <label for="profileName">Display name</label>
+                    <input id="profileName" type="text" placeholder="Your name">
+
+                    <label for="profileImage">Profile picture (jpg, png)</label>
+                    <input id="profileImage" type="file" accept="image/*">
+
+                    <div class="editor-actions">
+                        <button id="profileCancel" type="button">Cancel</button>
+                        <button id="profileSave" type="button">Save</button>
+                    </div>
+                </div>
+            </div>
+         </div>
     </header>
 
     <section class="features">
@@ -716,10 +774,10 @@
             <div id="searchResultsCount" class="search-results-count" style="display: none;"></div>
             
             <div class="resource-tabs">
-                <button class="tab-btn active" data-tab="math"> Mathematics (MA 110) </button>
-                <button class="tab-btn" data-tab="physics"> Physics (PH 110) </button>
+                <button class="tab-btn" data-tab="math"> Mathematics (MA 110) </button>
+                <button class="tab-btn active" data-tab="physics"> Physics (PH 110) </button>
                 <button class="tab-btn" data-tab="chemistry">Chemistry (CH 110)</button>
-                <!-- <button class="tab-btn active" data-tab="therapeutics">Therapeutics</button>
+                <!-- <button class="tab-btn" data-tab="therapeutics">Therapeutics</button>
                 <button class="tab-btn" data-tab="biochem">Biochemistry</button>
                 <button class="tab-btn" data-tab="lab-science">Laboratory Science</button>
                 <button class="tab-btn" data-tab="pathology">Pathology</button>
@@ -828,10 +886,10 @@
                             <h3>Linear Momentum and Collisions.</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a href="Non-qota/units.html" class="pdf-download">
+                                <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-file-alt"></i> Past Papaer
                                 </a>
-                                <a href="Non-qota/units-Tutorials.html" class="pdf-download">
+                                <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-book-open"></i> Tutorial Sheets
                                 </a>
                             </div>
@@ -850,10 +908,10 @@
                             <h3>Work, Energy, Power</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a href="Non-qota/units.html" class="pdf-download">
+                                <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-file-alt"></i> Past Papaer
                                 </a>
-                                <a href="Non-qota/units-Tutorials.html" class="pdf-download">
+                                <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-book-open"></i> Tutorial Sheets
                                 </a>
                             </div>
@@ -872,10 +930,10 @@
                             <h3>Circular Motion & Gravitational Field</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a href="Non-qota/units.html" class="pdf-download">
+                                <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-file-alt"></i> Past Papaer
                                 </a>
-                                <a href="Non-qota/units-Tutorials.html" class="pdf-download">
+                                <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-book-open"></i> Tutorial Sheets
                                 </a>
                             </div>
@@ -894,10 +952,10 @@
                             <h3> Rotational Motion.</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a href="Non-qota/units.html" class="pdf-download">
+                                <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-file-alt"></i> Past Papaer
                                 </a>
-                                <a href="Non-qota/units-Tutorials.html" class="pdf-download">
+                                <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-book-open"></i> Tutorial Sheets
                                 </a>
                             </div>
@@ -913,6 +971,25 @@
 
             <div class="tab-content" id="math">
                 <div class="resource-grid">
+
+                    <div class="resource-card">
+                        <div class="resource-img">
+                            <img src="images/math-9.png" alt="Clinical Guidelines">
+                        </div>
+                        <div class="resource-info">
+                            <h3> 2025 Test 1  </h3>
+                            <p>Updated evidence-based guidelines for common medical conditions.</p>
+                            <div class="buttonz">
+                                <a href="Non-qota/2025-test1.html" class="pdf-download">
+                                    <i class="fas fa-file-alt"></i> Past Papaer
+                                </a>
+                            </div>
+                            <div class="resource-meta">
+                                <span><i class="far fa-file-pdf"></i> CBU - SOM</span>
+                                <span><i class="fas fa-user-md"></i> Solved</span>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="resource-card">
                         <div class="resource-img">
@@ -1017,7 +1094,7 @@
                             <h3> 2017 Test 1 </h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a href="Non-qota/2024-test1.html" class="pdf-download">
+                                <a href="Non-qota/2017-Test1.html" class="pdf-download">
                                     <i class="fas fa-file-alt"></i> Past Papaer
                                 </a>
                             </div>
@@ -1206,10 +1283,10 @@
                             <h3>THERMOCHEMISTRY</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a href="Non-qota/thermochemistry-papers.html" class="pdf-download">
+                                <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-file-alt"></i> Past Papaer
                                 </a>
-                                <a href="Non-qota/thermochemistry-tutorials.html" class="pdf-download">
+                                <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-book-open"></i> Tutorial Sheets
                                 </a>
                             </div>
@@ -1228,10 +1305,10 @@
                             <h3>ATOMIC STRUCTURE AND PERIODICITY</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a href="Non-qota/atomic-structure-papers.html" class="pdf-download">
+                                <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-file-alt"></i> Past Papaer
                                 </a>
-                                <a href="Non-qota/atomic-structure-tutorials.html" class="pdf-download">
+                                <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-book-open"></i> Tutorial Sheets
                                 </a>
                             </div>
@@ -1250,10 +1327,10 @@
                             <h3>ORGANIC CHEMISTRY</h3>
                             <p>Updated evidence-based guidelines for common medical conditions.</p>
                             <div class="buttonz">
-                                <a href="Non-qota/organic-papers.html" class="pdf-download">
+                                <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-file-alt"></i> Past Papaer
                                 </a>
-                                <a href="Non-qota/organic-tutorials.html" class="pdf-download">
+                                <a href="not-yet-ready.html" class="pdf-download">
                                     <i class="fas fa-book-open"></i> Tutorial Sheets
                                 </a>
                             </div>
@@ -1567,6 +1644,83 @@ featureCards.forEach(card => {
             // Initialize with default view
             searchTopics();
         });
+
+        (function(){
+           const userProfileBtn = document.getElementById('userProfile');
+           const profileEditor = document.getElementById('profileEditor');
+           const profileNameInput = document.getElementById('profileName');
+           const profileImageInput = document.getElementById('profileImage');
+           const userNameEl = document.getElementById('userName');
+           const userAvatarEl = document.getElementById('userAvatar');
+           const saveBtn = document.getElementById('profileSave');
+           const cancelBtn = document.getElementById('profileCancel');
+
+           // load saved profile
+           const savedName = localStorage.getItem('toc_user_name');
+           const savedAvatar = localStorage.getItem('toc_user_avatar');
+           if (savedAvatar) userAvatarEl.src = savedAvatar;
+           if (savedName) {
+               userNameEl.textContent = savedName;
+               userNameEl.style.display = 'inline-block';
+           } else {
+               userNameEl.style.display = 'none';
+           }
+
+           // toggle editor
+           userProfileBtn.addEventListener('click', (e) => {
+               e.stopPropagation();
+               profileEditor.style.display = profileEditor.style.display === 'block' ? 'none' : 'block';
+               profileNameInput.value = localStorage.getItem('toc_user_name') || '';
+           });
+
+           // close when clicking outside
+           document.addEventListener('click', (e) => {
+               if (!profileEditor.contains(e.target) && !userProfileBtn.contains(e.target)) {
+                   profileEditor.style.display = 'none';
+               }
+           });
+
+           // preview uploaded image
+           profileImageInput.addEventListener('change', (e) => {
+               const f = e.target.files[0];
+               if (!f) return;
+               const reader = new FileReader();
+               reader.onload = () => { userAvatarEl.src = reader.result; };
+               reader.readAsDataURL(f);
+           });
+
+           // save profile
+           saveBtn.addEventListener('click', () => {
+               const name = profileNameInput.value.trim();
+               if (name) {
+                   localStorage.setItem('toc_user_name', name);
+                   userNameEl.textContent = name;
+                   userNameEl.style.display = 'inline-block';
+               } else {
+                   localStorage.removeItem('toc_user_name');
+                   userNameEl.textContent = '';
+                   userNameEl.style.display = 'none';
+               }
+               const file = profileImageInput.files[0];
+               if (file) {
+                   const reader = new FileReader();
+                   reader.onload = () => {
+                       localStorage.setItem('toc_user_avatar', reader.result);
+                       userAvatarEl.src = reader.result;
+                       profileEditor.style.display = 'none';
+                   };
+                   reader.readAsDataURL(file);
+               } else {
+                   profileEditor.style.display = 'none';
+               }
+           });
+
+           cancelBtn.addEventListener('click', () => {
+               profileEditor.style.display = 'none';
+               const saved = localStorage.getItem('toc_user_avatar');
+               if (saved) userAvatarEl.src = saved;
+           });
+       })();
     </script>
 </body>
 </html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCQ Quiz | ToToZ Collection</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root {
+--primary:#2b7a78;
+--secondary:#afc4c4;
+--accent:#3aafa9;
+--dark:#17252a;
+--light:#f8f9fa;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,var(--dark),#0e1c21);
+color:var(--light);
+min-height:100vh;
+display:flex;
+flex-direction:column;
+align-items:center;
+}
+
+header{
+width:100%;
+padding:25px;
+text-align:center;
+font-size:28px;
+font-weight:600;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+.container{
+width:90%;
+max-width:900px;
+margin-top:40px;
+}
+
+.container h2{
+text-align:center;
+}
+
+.level-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+gap:20px;
+}
+
+.level-card{
+background:rgba(255,255,255,0.08);
+border-radius:15px;
+padding:30px;
+text-align:center;
+cursor:pointer;
+transition:0.3s;
+border:1px solid rgba(255,255,255,0.1);
+}
+
+.level-card:hover{
+transform:translateY(-6px);
+background:var(--accent);
+}
+
+.level-card h3{
+font-size:20px;
+}
+
+.quiz-box{
+margin-top:30px;
+display:none;
+}
+
+.question{
+background:rgba(255,255,255,0.08);
+padding:20px;
+border-radius:12px;
+margin-bottom:20px;
+border:1px solid rgba(255,255,255,0.1);
+}
+
+.options label{
+display:block;
+background:rgba(255,255,255,0.05);
+padding:10px;
+margin:8px 0;
+border-radius:8px;
+cursor:pointer;
+transition:0.2s;
+}
+
+.options label:hover{
+background:var(--accent);
+}
+
+.options input{
+margin-right:8px;
+}
+
+.progress-bar{
+width:100%;
+height:8px;
+background:#222;
+border-radius:10px;
+margin:20px 0;
+overflow:hidden;
+}
+
+.progress{
+height:100%;
+width:0%;
+background:var(--accent);
+transition:0.3s;
+}
+
+.submit-btn{
+padding:15px 30px;
+font-size:18px;
+border:none;
+border-radius:8px;
+background:var(--primary);
+color:white;
+cursor:pointer;
+transition:0.3s;
+}
+
+.submit-btn:hover{
+background:var(--accent);
+}
+
+.result-box{
+display:none;
+text-align:center;
+margin-top:40px;
+}
+
+.circle{
+width:180px;
+height:180px;
+border-radius:50%;
+background:conic-gradient(var(--accent) 0deg,#333 0deg);
+display:flex;
+align-items:center;
+justify-content:center;
+margin:auto;
+font-size:40px;
+font-weight:600;
+}
+
+.result-buttons{
+margin-top:25px;
+}
+
+.result-buttons button{
+padding:12px 22px;
+margin:10px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-size:16px;
+}
+
+.answers-btn{
+background:var(--accent);
+color:white;
+}
+
+.quit-btn{
+background:#d9534f;
+color:white;
+}
+
+.answers{
+display:none;
+margin-top:30px;
+text-align:center;
+}
+
+.answers p{
+margin-bottom:10px;
+}
+
+.correct{
+color:lightgreen;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>ToToZ Collection MCQ Exam</header>
+
+<div class="container">
+
+<h2>Select Difficulty Level</h2>
+
+<div class="level-grid">
+
+<div class="level-card" onclick="startQuiz()">Level 1</div>
+<div class="level-card" onclick="startQuiz()">Level 2</div>
+<div class="level-card" onclick="startQuiz()">Level 3</div>
+<div class="level-card" onclick="startQuiz()">Level 4</div>
+<div class="level-card" onclick="startQuiz()">Level 5</div>
+
+</div>
+
+<div class="quiz-box" id="quizBox">
+
+<div class="progress-bar">
+<div class="progress" id="progress"></div>
+</div>
+
+<div id="quiz"></div>
+
+<button class="submit-btn" onclick="submitQuiz()">Submit Answers</button>
+
+</div>
+
+<div class="result-box" id="resultBox">
+
+<div class="circle" id="scoreCircle">0%</div>
+
+<div class="result-buttons">
+<button class="answers-btn" onclick="showAnswers()">View Answers</button>
+<button class="quit-btn" onclick="quitQuiz()">Quit</button>
+</div>
+
+<div class="answers" id="answers"></div>
+
+</div>
+
+</div>
+
+<script>
+
+const questions=[
+{q:"Which organ pumps blood?",options:["Brain","Heart","Kidney","Liver"],answer:1},
+{q:"How many bones are in the adult body?",options:["206","300","150","120"],answer:0},
+{q:"Largest planet?",options:["Mars","Earth","Jupiter","Saturn"],answer:2},
+{q:"Which vitamin from sunlight?",options:["A","B","C","D"],answer:3},
+{q:"Gas inhaled by humans?",options:["Oxygen","CO2","Nitrogen","Hydrogen"],answer:0},
+{q:"Cell control center?",options:["Membrane","Nucleus","Cytoplasm","Ribosome"],answer:1},
+{q:"Which cell fights infection?",options:["RBC","WBC","Platelets","Plasma"],answer:1},
+{q:"Organ detoxification?",options:["Liver","Brain","Heart","Kidney"],answer:0},
+{q:"Hormone system?",options:["Digestive","Endocrine","Respiratory","Skeletal"],answer:1},
+{q:"DNA located in?",options:["Membrane","Nucleus","Ribosome","Golgi"],answer:1}
+]
+
+function startQuiz(){
+
+document.querySelector(".level-grid").style.display="none"
+document.getElementById("quizBox").style.display="block"
+
+let quiz=document.getElementById("quiz")
+quiz.innerHTML=""
+
+questions.forEach((q,i)=>{
+
+quiz.innerHTML+=`
+<div class="question">
+<h3>${i+1}. ${q.q}</h3>
+
+<div class="options">
+${q.options.map((opt,index)=>
+`<label><input type="radio" name="q${i}" value="${index}" onclick="updateProgress()"> ${opt}</label>`
+).join("")}
+</div>
+
+</div>
+`
+
+})
+
+}
+
+function updateProgress(){
+
+let answered=document.querySelectorAll("input[type=radio]:checked").length
+let percent=(answered/questions.length)*100
+document.getElementById("progress").style.width=percent+"%"
+
+}
+
+function submitQuiz(){
+
+let score=0
+
+questions.forEach((q,i)=>{
+
+let selected=document.querySelector(`input[name=q${i}]:checked`)
+
+if(selected && Number(selected.value)===q.answer){
+score++
+}
+
+})
+
+let percent=Math.round((score/questions.length)*100)
+
+showScore(percent)
+generateAnswers()
+
+}
+
+function showScore(score){
+
+document.getElementById("resultBox").style.display="block"
+
+let circle=document.getElementById("scoreCircle")
+
+let deg=0
+let target=(score/100)*360
+
+let anim=setInterval(()=>{
+
+deg+=3
+
+circle.style.background=`conic-gradient(var(--accent) ${deg}deg,#333 ${deg}deg)`
+
+circle.innerHTML=score+"%"
+
+if(deg>=target)clearInterval(anim)
+
+},10)
+
+}
+
+function generateAnswers(){
+
+let div=document.getElementById("answers")
+
+questions.forEach((q,i)=>{
+
+div.innerHTML+=`<p><b>${i+1}. ${q.q}</b><br>
+<span class="correct">Correct Answer: ${q.options[q.answer]}</span></p>`
+
+})
+
+}
+
+function showAnswers(){
+document.getElementById("answers").style.display="block"
+}
+
+function quitQuiz(){
+window.location.href="index.html"
+}
+
+</script>
+
+</body>
+</html>

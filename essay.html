@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Short Essay Quiz | ToToZ Collection</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+:root {
+--primary:#2b7a78;
+--secondary:#afc4c4;
+--accent:#3aafa9;
+--dark:#17252a;
+--light:#f8f9fa;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,var(--dark),#0e1c21);
+color:var(--light);
+min-height:100vh;
+display:flex;
+flex-direction:column;
+align-items:center;
+}
+
+header{
+width:100%;
+padding:25px;
+text-align:center;
+font-size:26px;
+font-weight:600;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+.container{
+width:90%;
+max-width:900px;
+margin-top:40px;
+}
+
+.level-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+gap:20px;
+}
+
+.level-card{
+background:rgba(255,255,255,0.08);
+border-radius:15px;
+padding:25px;
+text-align:center;
+cursor:pointer;
+transition:0.3s;
+border:1px solid rgba(255,255,255,0.1);
+}
+
+.level-card:hover{
+background:var(--accent);
+transform:translateY(-6px);
+}
+
+.quiz-box{
+margin-top:30px;
+display:none;
+}
+
+.question{
+background:rgba(255,255,255,0.08);
+padding:20px;
+border-radius:12px;
+margin-bottom:25px;
+border:1px solid rgba(255,255,255,0.1);
+}
+
+textarea{
+width:100%;
+height:120px;
+margin-top:10px;
+padding:10px;
+border-radius:8px;
+border:none;
+resize:vertical;
+font-family:'Poppins',sans-serif;
+}
+
+.word-count{
+font-size:13px;
+opacity:0.7;
+margin-top:5px;
+}
+
+.submit-btn{
+padding:15px 30px;
+font-size:18px;
+border:none;
+border-radius:8px;
+background:var(--primary);
+color:white;
+cursor:pointer;
+margin-top:20px;
+}
+
+.submit-btn:hover{
+background:var(--accent);
+}
+
+.result-box{
+display:none;
+text-align:center;
+margin-top:40px;
+}
+
+.circle{
+width:180px;
+height:180px;
+border-radius:50%;
+background:conic-gradient(var(--accent) 0deg,#333 0deg);
+display:flex;
+align-items:center;
+justify-content:center;
+margin:auto;
+font-size:40px;
+font-weight:600;
+}
+
+.buttons{
+margin-top:25px;
+}
+
+.buttons button{
+padding:12px 22px;
+margin:10px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-size:16px;
+}
+
+.answers-btn{
+background:var(--accent);
+color:white;
+}
+
+.quit-btn{
+background:#d9534f;
+color:white;
+}
+
+.answers{
+display:none;
+margin-top:30px;
+text-align:left;
+}
+
+.model{
+color:lightgreen;
+margin-bottom:15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>Short Essay Questions</header>
+
+<div class="container">
+
+<h2>Select Level</h2>
+
+<div class="level-grid">
+
+<div class="level-card" onclick="startQuiz()">Level 1</div>
+<div class="level-card" onclick="startQuiz()">Level 2</div>
+<div class="level-card" onclick="startQuiz()">Level 3</div>
+<div class="level-card" onclick="startQuiz()">Level 4</div>
+<div class="level-card" onclick="startQuiz()">Level 5</div>
+
+</div>
+
+<div class="quiz-box" id="quizBox">
+
+<div id="quiz"></div>
+
+<button class="submit-btn" onclick="submitEssay()">Submit Answers</button>
+
+</div>
+
+<div class="result-box" id="resultBox">
+
+<div class="circle" id="scoreCircle">0%</div>
+
+<div class="buttons">
+<button class="answers-btn" onclick="showAnswers()">View Model Answers</button>
+<button class="quit-btn" onclick="quitQuiz()">Quit</button>
+</div>
+
+<div class="answers" id="answers"></div>
+
+</div>
+
+</div>
+
+<script>
+
+const questions=[
+
+{
+q:"Define homeostasis.",
+model:"Homeostasis is the ability of the body to maintain a stable internal environment despite external changes."
+},
+
+{
+q:"Explain the function of red blood cells.",
+model:"Red blood cells transport oxygen from the lungs to tissues and carry carbon dioxide back to the lungs."
+},
+
+{
+q:"Describe the role of enzymes in metabolism.",
+model:"Enzymes act as biological catalysts that accelerate chemical reactions in the body without being consumed."
+},
+
+{
+q:"What is the function of the liver?",
+model:"The liver detoxifies chemicals, metabolizes drugs, produces bile, and stores glycogen."
+},
+
+{
+q:"Explain the process of diffusion.",
+model:"Diffusion is the movement of molecules from a region of higher concentration to a region of lower concentration."
+},
+
+{
+q:"What is the role of the kidney?",
+model:"The kidney filters blood, removes waste products, and regulates fluid and electrolyte balance."
+},
+
+{
+q:"Describe the function of the nervous system.",
+model:"The nervous system coordinates body activities by transmitting electrical signals between different parts of the body."
+},
+
+{
+q:"Define metabolism.",
+model:"Metabolism is the sum of all chemical reactions occurring in the body."
+},
+
+{
+q:"What is ATP?",
+model:"ATP (adenosine triphosphate) is the primary energy currency of the cell."
+},
+
+{
+q:"Explain the function of white blood cells.",
+model:"White blood cells defend the body against infections and foreign invaders."
+}
+
+]
+
+function startQuiz(){
+
+document.querySelector(".level-grid").style.display="none"
+document.getElementById("quizBox").style.display="block"
+
+let quiz=document.getElementById("quiz")
+quiz.innerHTML=""
+
+questions.forEach((q,i)=>{
+
+quiz.innerHTML+=`
+
+<div class="question">
+
+<h3>${i+1}. ${q.q}</h3>
+
+<textarea id="answer${i}" oninput="countWords(${i})" placeholder="Type your answer here..."></textarea>
+
+<div class="word-count" id="count${i}">0 words</div>
+
+</div>
+
+`
+
+})
+
+}
+
+function countWords(i){
+
+let text=document.getElementById("answer"+i).value.trim()
+
+let words=text.split(/\s+/).filter(word=>word.length>0)
+
+document.getElementById("count"+i).innerText=words.length+" words"
+
+}
+
+function submitEssay(){
+
+let filled=0
+
+questions.forEach((q,i)=>{
+
+let text=document.getElementById("answer"+i).value
+
+if(text.trim().length>0) filled++
+
+})
+
+let percent=Math.round((filled/questions.length)*100)
+
+showScore(percent)
+
+generateAnswers()
+
+}
+
+function showScore(score){
+
+document.getElementById("resultBox").style.display="block"
+
+let circle=document.getElementById("scoreCircle")
+
+let deg=0
+let target=(score/100)*360
+
+let anim=setInterval(()=>{
+
+deg+=3
+
+circle.style.background=`conic-gradient(var(--accent) ${deg}deg,#333 ${deg}deg)`
+
+circle.innerHTML=score+"%"
+
+if(deg>=target) clearInterval(anim)
+
+},10)
+
+}
+
+function generateAnswers(){
+
+let div=document.getElementById("answers")
+
+questions.forEach((q,i)=>{
+
+div.innerHTML+=`
+
+<p><b>${i+1}. ${q.q}</b></p>
+
+<p class="model">Model Answer: ${q.model}</p>
+
+`
+
+})
+
+}
+
+function showAnswers(){
+document.getElementById("answers").style.display="block"
+}
+
+function quitQuiz(){
+window.location.href="index.html"
+}
+
+</script>
+
+</body>
+</html>
