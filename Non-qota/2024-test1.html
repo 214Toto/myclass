@@ -142,14 +142,13 @@ h2, h3 {
   </style>
 </head>
 <body>
-  <div class="pamulu">
-    <a href="../index.html" class="logo" style="text-decoration: underline;"> 2024 Test 1 </a>
+<div class="pamulu">
+  <a href="../NS.html" class="logo" style="text-decoration: underline;">  MA 110 Tutorial Sheets </a>
 
-    
-    <h2> Totoz Collection ! </h2>
+        <h2> Totoz Collection ! </h2>
 
-<a href="../NS.html" class="nav" style="color: #000000; font-weight: bolder;" > &Leftarrow; Back </a>
-  </div>
+  <a id="backBtn" href="#" class="nav" style="color: #000000; font-weight: bolder; background-color: #7b7797; border-radius: 6px;" > &Leftarrow; Back </a>
+</div>
 
 
   <div id="question-container">
@@ -675,6 +674,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (index !== 0) question.style.display = 'none';
     });
 });
+
+const backBtn = document.getElementById('backBtn');
+      if (backBtn) {
+        backBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          if (history.length > 1) {
+            history.back();
+          } else {
+            window.location.href = 'NS.html';
+          }
+        });
+      }
 
   </script>
 </body>

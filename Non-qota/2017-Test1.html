@@ -143,15 +143,13 @@ h2, h3 {
 </head>
 <body>
 
- <div class="pamulu">
-    <a href="../index.html" class="logo" style="text-decoration: underline;"> 2017 Test 1 </a>
-
+  <div class="pamulu">
+    <a href="../NS.html" class="logo" style="text-decoration: underline;"> 2017 Test 1  </a>
     
-    <h2> Totoz Collection ! </h2>
+      <h2> Totoz Collection ! </h2>
 
-    <a href="../NS.html" class="nav" style="color: #000000; font-weight: bolder;" > &Leftarrow; Back </a>
- 
- </div>
+  <a id="backBtn" href="#" class="nav" style="color: #000000; font-weight: bolder; background-color: #7b7797; border-radius: 6px;" > &Leftarrow; Back </a>
+  </div>
 
   
 
@@ -992,6 +990,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (index !== 0) question.style.display = 'none';
     });
 });
+
+const backBtn = document.getElementById('backBtn');
+            if (backBtn) {
+                backBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (history.length > 1) {
+                        history.back();
+                    } else {
+                        // fallback target — change if you have a specific portal page
+                        window.location.href = 'index.html';
+                    }
+                });
+            }
+
 
   </script>
 </body>

@@ -9,7 +9,7 @@
       font-family: 'Arial', sans-serif;
       margin: 0;
       padding: 0;
-      background: url(../ns-images/physics.jpeg);
+      background: url(../images/math-1.jpg);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -23,46 +23,46 @@
         border-radius: 6px;
     }
     header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 10px 20px;
-  background: #060625;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 100;
-}
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 10px 20px;
+      background: #060625;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+    }
 
-.nav {
-  color: #ffffff;
-  text-align: center;
-  padding-left: 1.7rem;
-  text-decoration: none;
-  /* border-left: 2px solid #ffffff; */
-}
+    .nav {
+      color: #ffffff;
+      text-align: center;
+      padding-left: 1.7rem;
+      text-decoration: none;
+      /* border-left: 2px solid #ffffff; */
+    }
 
-.logo {
-  color: #ffffff;
-  font-size: 28px;
-  text-decoration: none;
-  font-weight: bold;
-}
+    .logo {
+      color: #ffffff;
+      font-size: 28px;
+      text-decoration: none;
+      font-weight: bold;
+    }
 
-.header h2 {
-  color: #ffffff;
-  text-align: center;
-  padding-left: 1.7rem;
-  border-left: 2px solid #ffffff;
-}
+    .header h2 {
+      color: #ffffff;
+      text-align: center;
+      padding-left: 1.7rem;
+      border-left: 2px solid #ffffff;
+    }
 
 
     #question-container {
     width: 80%;
     margin: 20px auto;
     background: rgb(70,195,191);
-background: linear-gradient(90deg, rgba(70,195,191,1) 10%, rgba(29,83,253,0.819672131147541) 50%, rgba(252,176,69,1) 100%);
+    background: linear-gradient(90deg, rgba(70,195,191,1) 10%, rgba(29,83,253,0.819672131147541) 50%, rgba(252,176,69,1) 100%);
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     padding: 20px;
@@ -143,19 +143,141 @@ h2, h3 {
 <body>
 
   <div class="pamulu">
-    <a href="../index.html" class="logo" style="text-decoration: underline;"> Scalars and Vectors </a>
-
+    <a href="../NS.html" class="logo" style="text-decoration: underline;"> Scalars and Vectors </a>
     
-        <h2> Totoz Collection ! </h2>
+      <h2> Totoz Collection ! </h2>
 
-  <a href="../Non-qota/PH-topics.html" class="nav" style="color: #000000; font-weight: bolder;" > &Leftarrow; Back </a>
+    <a id="backBtn" href="#" class="nav" style="color: #000000; font-weight: bolder; background-color: #7b7797; border-radius: 6px;" > &Leftarrow; Back </a>
   </div>
 
   
 
   <div id="question-container">
 
-    <div class="question" id="question-2">
+    <div class="question" id="question-1">
+      <h2 style="text-align: center;"> 2025 Test 1 </h2>
+      <div class="subquestion">
+        <h3> <img width="100%" src="../PH-110-vectors/2025-q1a.PNG" alt="Solution for Subquestion 1"> </h3>
+        <div id="buttons-container">
+          <button class="btn-1" onclick="toggleContent('solution10_1')"><span>Solution</span> </button>
+          <button class="btn-1" onclick="toggleContent('audio10_1')">Explanation</button>
+          <button class="btn-1" onclick="toggleContent('video10_1')">Video</button>
+        </div>
+        <div id="solution10_1" class="hidden" style="text-align: center;">
+          <img width="100%" src="../PH-110- unit2024-a.png" alt="Solution for Subquestion 1">
+        </div>
+        <div id="audio10_1" class="hidden" style="text-align: center;">
+          <audio controls>
+            <source src="explanation1_1.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div id="video10_1" class="hidden" style="text-align: center;">
+          <video controls>
+            <source src="explanation1_1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
+      <div class="subquestion">
+        <h3> <img width="100%" src="../PH-110-vectors/2025-q1b.PNG" alt="Solution for Subquestion 1"> </h3>
+        <div id="buttons-container">
+          <button class="btn-1" onclick="toggleContent('solution10_2')"><span>Solution</span> </button>
+          <button class="btn-1" onclick="toggleContent('audio10_2')">Explanation</button>
+          <button class="btn-1" onclick="toggleContent('video10_2')">Video</button>
+        </div>
+        <div id="solution10_2" class="hidden" style="text-align: center;">
+          <img width="100%" src="../PH-110- units024-b.jpg" alt="Solution for Subquestion 1">
+        </div>
+        <div id="audio10_2" class="hidden" style="text-align: center;">
+          <audio controls>
+            <source src="explanation10_1.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div id="video10_2" class="hidden" style="text-align: center;">
+          <video controls>
+            <source src="explanation1_1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
+      <div class="subquestion">
+        <h3> <img width="100%" src="../PH-110-vectors/2025-q1c.PNG" alt="Solution for Subquestion 1"> </h3>
+        <div id="buttons-container">
+          <button class="btn-1" onclick="toggleContent('solution10_3')"><span>Solution</span> </button>
+          <button class="btn-1" onclick="toggleContent('audio10_3')">Explanation</button>
+          <button class="btn-1" onclick="toggleContent('video10_3')">Video</button>
+        </div>
+        <div id="solution10_3" class="hidden" style="text-align: center;">
+          <img width="100%" src="../PH-110- unit24-c-i.jpg" alt="Solution for Subquestion 1">
+        </div>
+        <div id="audio10_3" class="hidden" style="text-align: center;">
+          <audio controls>
+            <source src="explanation1_1.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div id="video10_3" class="hidden" style="text-align: center;">
+          <video controls>
+            <source src="explanation1_1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
+      <div class="subquestion">
+        <h3> <img width="100%" src="../PH-110-vectors/2025-q1d.PNG" alt="Solution for Subquestion 1"> </h3>
+        <div id="buttons-container">
+          <button class="btn-1" onclick="toggleContent('solution10_4')"><span>Solution</span> </button>
+          <button class="btn-1" onclick="toggleContent('audio10_4')">Explanation</button>
+          <button class="btn-1" onclick="toggleContent('video10_4')">Video</button>
+        </div>
+        <div id="solution10_4" class="hidden" style="text-align: center;">
+          <img width="100%" src="../PH-110- unit4-c-ii.jpg" alt="Solution for Subquestion 1">
+        </div>
+        <div id="audio10_4" class="hidden" style="text-align: center;">
+          <audio controls>
+            <source src="explanation1_1.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div id="video10_4" class="hidden" style="text-align: center;">
+          <video controls>
+            <source src="explanation1_1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
+      <div class="subquestion">
+        <h3> <img width="100%" src="../PH-110-vectors/2025-q1e.PNG" alt="Solution for Subquestion 1"> </h3>
+        <div id="buttons-container">
+          <button class="btn-1" onclick="toggleContent('solution10_5')"><span>Solution</span> </button>
+          <button class="btn-1" onclick="toggleContent('audio10_5')">Explanation</button>
+          <button class="btn-1" onclick="toggleContent('video10_5')">Video</button>
+        </div>
+        <div id="solution10_5" class="hidden" style="text-align: center;">
+          <img width="100%" src="../PH-110- unit24-c-iii.jpg" alt="Solution for Subquestion 1">
+        </div>
+        <div id="audio10_5" class="hidden" style="text-align: center;">
+          <audio controls>
+            <source src="explanation1_1.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div id="video10_5" class="hidden" style="text-align: center;">
+          <video controls>
+            <source src="explanation1_1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <div class="question hidden" id="question-2">
       <h2 style="text-align: center;"> 2024 Test 1 </h2>
       <div class="subquestion">
         <h3>(a) Distinguish between a scalar quantity and a vector quantity.       [2]</h3>
@@ -480,10 +602,10 @@ h2, h3 {
       </div>
     </div>
 
-    <div class="question hidden" id="question-2">
+    <div class="question hidden" id="question-3">
       <h2 style="text-align: center;" > 2022 Test 1 </h2>
       <div class="subquestion">
-        <h3> <img width="100%" src="../05.img-ph110-past-papers/2022-KInematics-a.jpg" alt="Solution for Subquestion 1"> </h3>
+        <h3> <img width="100%" src="../PH-110-vectors/2022-a.jpeg" alt="Solution for Subquestion 1"> </h3>
         <div id="buttons-container">
           <button class="btn-1" onclick="toggleContent('solution3_1')"><span>Solution</span> </button>
           <button class="btn-1" onclick="toggleContent('audio3_1')">Explanation</button>
@@ -507,7 +629,7 @@ h2, h3 {
       </div>
 
       <div class="subquestion">
-        <h3> <img width="100%" src="../05.img-ph110-past-papers/2022-KInematics-b.jpg" alt="Solution for Subquestion 1"> </h3>
+        <h3> <img width="100%" src="../PH-110-vectors/2022-b.jpeg" alt="Solution for Subquestion 1"> </h3>
         <div id="buttons-container">
           <button class="btn-1" onclick="toggleContent('solution3_2')"><span>Solution</span> </button>
           <button class="btn-1" onclick="toggleContent('audio3_2')">Explanation</button>
@@ -531,7 +653,7 @@ h2, h3 {
       </div>
 
       <div class="subquestion">
-        <h3> <img width="100%" src="../05.img-ph110-past-papers/2022-KInematics-c.jpg" alt="Solution for Subquestion 1"> </h3>
+        <h3> <img width="100%" src="../PH-110-vectors/2022-c.jpeg" alt="Solution for Subquestion 1"> </h3>
         <div id="buttons-container">
           <button class="btn-1" onclick="toggleContent('solution3_3')"><span>Solution</span> </button>
           <button class="btn-1" onclick="toggleContent('audio3_3')">Explanation</button>
@@ -555,7 +677,7 @@ h2, h3 {
       </div>
 
       <div class="subquestion">
-        <h3> <img width="100%" src="../05.img-ph110-past-papers/2022-KInematics-d.jpg" alt="Solution for Subquestion 1"> </h3>
+        <h3> <img width="100%" src="../PH-110-vectors/2022-d.jpeg" alt="Solution for Subquestion 1"> </h3>
         <div id="buttons-container">
           <button class="btn-1" onclick="toggleContent('solution3_4')"><span>Solution</span> </button>
           <button class="btn-1" onclick="toggleContent('audio3_4')">Explanation</button>
@@ -584,7 +706,7 @@ h2, h3 {
     <div class="question hidden" id="question-5">
       <h2 style="text-align: center;" > 2022 Sessional </h2>
       <div class="subquestion">
-        <h3> <img width="100%" src="../00.vectors/sessional-2022-d.JPG" alt="Solution for Subquestion 1"> </h3>
+        <h3> <img width="100%" src="../PH-110-vectors/2022-sessional-a.jpeg" alt="Solution for Subquestion 1"> </h3>
         <div id="buttons-container">
           <button class="btn-1" onclick="toggleContent('solution5_1')"><span>Solution</span> </button>
           <button class="btn-1" onclick="toggleContent('audio5_1')">Explanation</button>
@@ -608,7 +730,7 @@ h2, h3 {
       </div>
 
       <div class="subquestion">
-        <h3> <img width="100%" src="../00.vectors/sessional-2022-e.JPG" alt="Solution for Subquestion 1"> </h3>
+        <h3> <img width="100%" src="../PH-110-vectors/2022-sessional-b.jpeg" alt="Solution for Subquestion 1"> </h3>
         <div id="buttons-container">
           <button class="btn-1" onclick="toggleContent('solution5_2')"><span>Solution</span> </button>
           <button class="btn-1" onclick="toggleContent('audio5_2')">Explanation</button>
@@ -634,10 +756,10 @@ h2, h3 {
 
     </div>
 
-    <div class="question hidden" id="question-3">
+    <div class="question hidden" id="question-4">
       <h2 style="text-align: center;" > 2021 Test 1 </h2>
       <div class="subquestion">
-        <h3> <img width="100%" src="../05.img-ph110-past-papers/2021-vectors-a.jpg" alt="Solution for Subquestion 1"> </h3>
+        <h3> <img width="100%" src="../PH-110-vectors/2021-a.jpeg" alt="Solution for Subquestion 1"> </h3>
         <div id="buttons-container">
           <button class="btn-1" onclick="toggleContent('solution4_1')"><span>Solution</span> </button>
           <button class="btn-1" onclick="toggleContent('audio4_1')">Explanation</button>
@@ -661,7 +783,7 @@ h2, h3 {
       </div>
 
       <div class="subquestion">
-        <h3> <img width="100%" src="../05.img-ph110-past-papers/2021-vectors-b.jpg" alt="Solution for Subquestion 1"> </h3>
+        <h3> <img width="100%" src="../PH-110-vectors/2021-b.jpeg" alt="Solution for Subquestion 1"> </h3>
         <div id="buttons-container">
           <button class="btn-1" onclick="toggleContent('solution4_2')"><span>Solution</span> </button>
           <button class="btn-1" onclick="toggleContent('audio4_2')">Explanation</button>
@@ -685,7 +807,7 @@ h2, h3 {
       </div>
 
       <div class="subquestion">
-        <h3> <img width="100%" src="../05.img-ph110-past-papers/2021-vectors-c.jpg" alt="Solution for Subquestion 1"> </h3>
+        <h3> <img width="100%" src="../PH-110-vectors/2021-c.jpeg" alt="Solution for Subquestion 1"> </h3>
         <div id="buttons-container">
           <button class="btn-1" onclick="toggleContent('solution4_3')"><span>Solution</span> </button>
           <button class="btn-1" onclick="toggleContent('audio4_3')">Explanation</button>
@@ -711,11 +833,11 @@ h2, h3 {
     </div>
 
     <div class="question hidden" id="question-6">
-      <h2 style="text-align: center;" > 2021 Sessional </h2>
+      <h2 style="text-align: center;" > 2021 Deffered </h2>
       <div class="subquestion">
-        <h3> <img width="100%" src="../00.vectors/sessional-2021.JPG" alt="Solution for Subquestion 1"> </h3>
+        <h3> <img width="100%" src="../PH-110-vectors/2021-deffered-a.jpeg" alt="Solution for Subquestion 1"> </h3>
         <div id="buttons-container">
-          <button class="btn-1" onclick="toggleContent('solution6_1')"><span>Solution</span> </button>
+          <button class="btn-1" onclick="toggleContent('solution6_1')"><span>Solution</span></button>
           <button class="btn-1" onclick="toggleContent('audio6_1')">Explanation</button>
           <button class="btn-1" onclick="toggleContent('video6_1')">Video</button>
         </div>
@@ -736,27 +858,127 @@ h2, h3 {
         </div>
       </div>
 
+      <div class="subquestion">
+        <h3> <img width="100%" src="../PH-110-vectors/2021-deffered-b.jpeg" alt="Solution for Subquestion 1"> </h3>
+        <div id="buttons-container">
+          <button class="btn-1" onclick="toggleContent('solution6_2')"><span>Solution</span></button>
+          <button class="btn-1" onclick="toggleContent('audio6_2')">Explanation</button>
+          <button class="btn-1" onclick="toggleContent('video6_2')">Video</button>
+        </div>
+        <div id="solution6_2" class="hidden" style="text-align: center;">
+          <img width="100%" src="../images/PH110/vectors/5.jpg" alt="Solution for Subquestion 1">
+        </div>
+        <div id="audio6_2" class="hidden" style="text-align: center;">
+          <audio controls>
+            <source src="explanation2_1.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div id="video6_2" class="hidden" style="text-align: center;">
+          <video controls>
+            <source src="explanation2_1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
+      <div class="subquestion">
+        <h3> <img width="100%" src="../PH-110-vectors/2021-deffered-c.jpeg" alt="Solution for Subquestion 1"> </h3>
+        <div id="buttons-container">
+          <button class="btn-1" onclick="toggleContent('solution6_3')"><span>Solution</span></button>
+          <button class="btn-1" onclick="toggleContent('audio6_3')">Explanation</button>
+          <button class="btn-1" onclick="toggleContent('video6_3')">Video</button>
+        </div>
+        <div id="solution6_3" class="hidden" style="text-align: center;">
+          <img width="100%" src="../images/PH110/vectors/5.jpg" alt="Solution for Subquestion 1">
+        </div>
+        <div id="audio6_3" class="hidden" style="text-align: center;">
+          <audio controls>
+            <source src="explanation2_1.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div id="video6_3" class="hidden" style="text-align: center;">
+          <video controls>
+            <source src="explanation2_1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
+      <div class="subquestion">
+        <h3> <img width="100%" src="../PH-110-vectors/2021-deffered-a.jpeg" alt="Solution for Subquestion 1"> </h3>
+        <div id="buttons-container">
+          <button class="btn-1" onclick="toggleContent('solution6_4')"><span>Solution</span></button>
+          <button class="btn-1" onclick="toggleContent('audio6_4')">Explanation</button>
+          <button class="btn-1" onclick="toggleContent('video6_4')">Video</button>
+        </div>
+        <div id="solution6_4" class="hidden" style="text-align: center;">
+          <img width="100%" src="../images/PH110/vectors/5.jpg" alt="Solution for Subquestion 1">
+        </div>
+        <div id="audio6_4" class="hidden" style="text-align: center;">
+          <audio controls>
+            <source src="explanation2_1.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div id="video6_4" class="hidden" style="text-align: center;">
+          <video controls>
+            <source src="explanation2_1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
     </div>
 
-    <div class="question hidden" id="question-4">
+    <div class="question hidden" id="question-7">
+      <h2 style="text-align: center;" > 2021 Sessional </h2>
+      <div class="subquestion">
+        <h3> <img width="100%" src="../PH-110-vectors/2021-sessional.jpeg" alt="Solution for Subquestion 1"> </h3>
+        <div id="buttons-container">
+          <button class="btn-1" onclick="toggleContent('solution7_1')"><span>Solution</span></button>
+          <button class="btn-1" onclick="toggleContent('audio7_1')">Explanation</button>
+          <button class="btn-1" onclick="toggleContent('video7_1')">Video</button>
+        </div>
+        <div id="solution7_1" class="hidden" style="text-align: center;">
+          <img width="100%" src="../images/PH110/vectors/5.jpg" alt="Solution for Subquestion 1">
+        </div>
+        <div id="audio7_1" class="hidden" style="text-align: center;">
+          <audio controls>
+            <source src="explanation2_1.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div id="video7_1" class="hidden" style="text-align: center;">
+          <video controls>
+            <source src="explanation2_1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="question hidden" id="question-8">
       <h2 style="text-align: center;" > 2020 Test 1 </h2>
       <div class="subquestion">
-        <h3> <img width="100%" src="../05.img-ph110-past-papers/2020-vectors-a.jpg" alt="Solution for Subquestion 1"> </h3>
+        <h3> <img width="100%" src="../PH-110-vectors/2020-a.jpeg" alt="Solution for Subquestion 1"> </h3>
         <div id="buttons-container">
-          <button class="btn-1" onclick="toggleContent('solution5_1')"><span>Solution</span> </button>
-          <button class="btn-1" onclick="toggleContent('audio5_1')">Explanation</button>
-          <button class="btn-1" onclick="toggleContent('video5_1')">Video</button>
+          <button class="btn-1" onclick="toggleContent('solution8_1')"><span>Solution</span> </button>
+          <button class="btn-1" onclick="toggleContent('audio8_1')">Explanation</button>
+          <button class="btn-1" onclick="toggleContent('video8_1')">Video</button>
         </div>
-        <div id="solution5_1" class="hidden" style="text-align: center;">
-          <img width="100%" src="../05.img-ph110-past-papers/2020-vectors-a-answer.JPG" alt="Solution for Subquestion 1">
+        <div id="solution8_1" class="hidden" style="text-align: center;">
+          <img width="100%" src="../PH-110-vectors/2020-vectors-a-answer.JPG" alt="Solution for Subquestion 1">
         </div>
-        <div id="audio5_1" class="hidden" style="text-align: center;">
+        <div id="audio8_1" class="hidden" style="text-align: center;">
           <audio controls>
             <source src="explanation2_1.mp3" type="audio/mpeg">
             Your browser does not support the audio element.
           </audio>
         </div>
-        <div id="video5_1" class="hidden" style="text-align: center;">
+        <div id="video8_1" class="hidden" style="text-align: center;">
           <video controls>
             <source src="explanation2_1.mp4" type="video/mp4">
             Your browser does not support the video tag.
@@ -765,22 +987,22 @@ h2, h3 {
       </div>
 
       <div class="subquestion">
-        <h3> <img width="100%" src="../05.img-ph110-past-papers/2020-vectors-b.jpg" alt="Solution for Subquestion 1"> </h3>
+        <h3> <img width="100%" src="../PH-110-vectors/2020-b.jpeg" alt="Solution for Subquestion 1"> </h3>
         <div id="buttons-container">
-          <button class="btn-1" onclick="toggleContent('solution5_2')"><span>Solution</span> </button>
-          <button class="btn-1" onclick="toggleContent('audio5_2')">Explanation</button>
-          <button class="btn-1" onclick="toggleContent('video5_2')">Video</button>
+          <button class="btn-1" onclick="toggleContent('solution8_2')"><span>Solution</span> </button>
+          <button class="btn-1" onclick="toggleContent('audio8_2')">Explanation</button>
+          <button class="btn-1" onclick="toggleContent('video8_2')">Video</button>
         </div>
-        <div id="solution5_2" class="hidden" style="text-align: center;">
-          <img width="100%" src="../05.img-ph110-past-papers/2020-vectors-b-answer.JPG" alt="Solution for Subquestion 1">
+        <div id="solution8_2" class="hidden" style="text-align: center;">
+          <img width="100%" src="../PH-110-vectors/2020-vectors-b-answer.JPG" alt="Solution for Subquestion 1">
         </div>
-        <div id="audio5_2" class="hidden" style="text-align: center;">
+        <div id="audio8_2" class="hidden" style="text-align: center;">
           <audio controls>
             <source src="explanation2_1.mp3" type="audio/mpeg">
             Your browser does not support the audio element.
           </audio>
         </div>
-        <div id="video5_2" class="hidden" style="text-align: center;">
+        <div id="video8_2" class="hidden" style="text-align: center;">
           <video controls>
             <source src="explanation2_1.mp4" type="video/mp4">
             Your browser does not support the video tag.
@@ -789,22 +1011,22 @@ h2, h3 {
       </div>
 
       <div class="subquestion">
-        <h3> <img width="100%" src="../05.img-ph110-past-papers/2020-vectors-c.jpg" alt="Solution for Subquestion 1"> </h3>
+        <h3> <img width="100%" src="../PH-110-vectors/2020-c.jpeg" alt="Solution for Subquestion 1"> </h3>
         <div id="buttons-container">
-          <button class="btn-1" onclick="toggleContent('solution5_3')"><span>Solution</span> </button>
-          <button class="btn-1" onclick="toggleContent('audio5_3')">Explanation</button>
-          <button class="btn-1" onclick="toggleContent('video5_3')">Video</button>
+          <button class="btn-1" onclick="toggleContent('solution8_3')"><span>Solution</span> </button>
+          <button class="btn-1" onclick="toggleContent('audio8_3')">Explanation</button>
+          <button class="btn-1" onclick="toggleContent('video8_3')">Video</button>
         </div>
-        <div id="solution5_3" class="hidden" style="text-align: center;">
-          <img width="100%" src="../05.img-ph110-past-papers/2020-vectors-c-answer.JPG" alt="Solution for Subquestion 1">
+        <div id="solution8_3" class="hidden" style="text-align: center;">
+          <img width="100%" src="../PH-110-vectors/2020-vectors-c-answer.JPG" alt="Solution for Subquestion 1">
         </div>
-        <div id="audio5_3" class="hidden" style="text-align: center;">
+        <div id="audio8_3" class="hidden" style="text-align: center;">
           <audio controls>
             <source src="explanation2_1.mp3" type="audio/mpeg">
             Your browser does not support the audio element.
           </audio>
         </div>
-        <div id="video5_3" class="hidden" style="text-align: center;">
+        <div id="video8_3" class="hidden" style="text-align: center;">
           <video controls>
             <source src="explanation2_1.mp4" type="video/mp4">
             Your browser does not support the video tag.
@@ -858,6 +1080,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (index !== 0) question.style.display = 'none';
     });
 });
+
+const backBtn = document.getElementById('backBtn');
+            if (backBtn) {
+                backBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (history.length > 1) {
+                        history.back();
+                    } else {
+                        // fallback target — change if you have a specific portal page
+                        window.location.href = 'index.html';
+                    }
+                });
+            }
 
   </script>
 </body>
