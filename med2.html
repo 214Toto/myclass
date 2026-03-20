@@ -2545,6 +2545,9 @@
             </div>
             
             <div class="tab-content" id="pathology">
+                <a href="MBS-220/pathology2-outline.html" class="pdf-recommended">
+                    <i class="fas fa-book"></i> Course Outline
+                </a>
                 <div class="resource-grid">
                     <div class="resource-card"> 
                         <div style="width: 100%;" class="resource-img">
@@ -2554,10 +2557,10 @@
                             <h3>Introduction to Pathology</h3>
                             <p>Fundamental concepts of pathology including disease mechanisms, causes of disease and basic terminology.</p>
                             <div class="buttonz">
-                                <a href="not-yet-ready.html" class="pdf-download">
+                                <a onclick="viewPathoVideo2(1)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a onclick="viewBiochem2()" class="pdf-download">
+                                <a onclick="viewPatho2(1)" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -2579,10 +2582,10 @@
                             <h3>Cellular Adaptation, Injury & Death</h3>
                             <p>Study of cellular responses to stress including adaptation, reversible injury, irreversible injury and cell death.</p>
                             <div class="buttonz">
-                                <a href="not-yet-ready.html" class="pdf-download">
+                                <a onclick="viewPathoVideo2(2)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a href="not-yet-ready.html" class="pdf-download">
+                                <a onclick="viewPatho2(2)" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -2604,10 +2607,10 @@
                             <h3>Acute and Chronic Inflammation</h3>
                             <p>Mechanisms, mediators and cellular events involved in acute and chronic inflammatory responses.</p>
                             <div class="buttonz">
-                                <a href="not-yet-ready.html" class="pdf-download">
+                                <a onclick="viewPathoVideo2(3)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a href="not-yet-ready.html" class="pdf-download">
+                                <a onclick="viewPatho2(3)" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -2616,7 +2619,7 @@
                             </div>
                             <div class="resource-meta">
                                 <span><i class="far fa-file-pdf"></i> CBU - SOM</span>
-                                <span><i class="fas fa-hospital"></i> Mr. Machiko</span>
+                                <span><i class="fas fa-hospital"></i> Mr. Manyepa</span>
                             </div>
                         </div>
                     </div>
@@ -2629,10 +2632,10 @@
                             <h3>Tissue Renewal, Regeneration and Repair</h3>
                             <p>Processes involved in healing including regeneration, fibrosis, scar formation and tissue remodeling.</p>
                             <div class="buttonz">
-                                <a href="not-yet-ready.html" class="pdf-download">
+                                <a onclick="viewPathoVideo2(3)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a href="not-yet-ready.html" class="pdf-download">
+                                <a onclick="viewPatho2(3)" class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -2641,7 +2644,7 @@
                             </div>
                             <div class="resource-meta">
                                 <span><i class="far fa-file-pdf"></i> CBU - SOM</span>
-                                <span><i class="fas fa-hospital"></i> Mr. Machiko</span>
+                                <span><i class="fas fa-hospital"></i> Mr. Manyepa</span>
                             </div>
                         </div>
                     </div>
@@ -2654,10 +2657,10 @@
                             <h3>Haemodynamic Disorders, Thromboembolic Disease and Shock</h3>
                             <p>Understanding edema, thrombosis, embolism, infarction and the pathophysiology of shock.</p>
                             <div class="buttonz">
-                                <a href="not-yet-ready.html" class="pdf-download">
+                                <a onclick="viewPathoVideo2(4)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
-                                <a href="not-yet-ready.html" class="pdf-download">
+                                <a  onclick="viewPatho2(4)"  class="pdf-download">
                                     <i class="fas fa-map-signs"></i> Document
                                 </a>
                                 <a href="not-yet-ready.html" class="pdf-download">
@@ -2666,7 +2669,7 @@
                             </div>
                             <div class="resource-meta">
                                 <span><i class="far fa-file-pdf"></i> CBU - SOM</span>
-                                <span><i class="fas fa-hospital"></i> Mr. Machiko</span>
+                                <span><i class="fas fa-hospital"></i> Mr. Petrenko</span>
                             </div>
                         </div>
                     </div>
@@ -5038,6 +5041,16 @@ featureCards.forEach(card => {
         function viewBiochemVideo2(pdfNum) {
         localStorage.setItem("showBiochemVideo2", pdfNum);
         window.location.href = "MBS-230-B/biochem2-video.html";
+        }
+
+        function viewPatho2(pdfNum) {
+        localStorage.setItem("showPatho2", pdfNum);
+        window.location.href = "MBS-220/pathology-pdf.html";
+        }
+
+        function viewPathoVideo2(pdfNum) {
+        localStorage.setItem("showPathoVideo2", pdfNum);
+        window.location.href = "MBS-220/patholog-video.html";
         }
 
         function viewEmbryology(pdfNum) {
