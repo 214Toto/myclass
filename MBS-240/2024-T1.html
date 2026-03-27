@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exam 2024 | ToToZ Collection</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2b7a78;
+      --accent: #3aafa9;
+      --dark: #17252a;
+      --light: #f8f9fa;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #f5f7fb, #eef6f6);
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--dark));
+      color: white;
+      padding: 1.1rem 0;
+      box-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* Improved heading styling */
+    header h1 {
+      font-size: 1.25rem;
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: 0.35px;
+      color: #ffffff;
+      text-transform: none;
+      display: inline-block;
+      line-height: 1;
+      text-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* logo heading (keeps icon + title aligned) */
+    .logo h1 {
+      font-size: 1.25rem;
+      margin: 0 0 0 6px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1.5rem 0;
+    }
+
+    h2 {
+      color: var(--primary);
+      margin: 0 0 0.85rem 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    /* responsive tweaks for small screens */
+    @media (max-width: 520px) {
+      header h1, .logo h1 { font-size: 1rem; }
+      h2 { font-size: 1rem; }
+    }
+
+    .question {
+      margin-bottom: 1.5rem;
+    }
+
+    .question p {
+      font-weight: 600;
+    }
+
+    .options label {
+      display: block;
+      background: #f8fafc;
+      border: 1px solid #d9e2ec;
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      margin-top: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .options label:hover {
+      background: #e0f7f6;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .result {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #f1faf9;
+      border-radius: var(--radius);
+      text-align: center;
+      display: none;
+    }
+
+    .score {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin-top: 0.5rem;
+    }
+
+    /* --- Styles for answer feedback --- */
+    .answer-list { text-align: left; margin-top: 12px; }
+    .answer-item {
+      display: block;
+      padding: 8px 10px;
+      border-radius: 8px;
+      margin: 6px 0;
+      border: 1px solid #e6eef3;
+      background: #ffffff;
+      color: var(--dark);
+      font-weight: 600;
+    }
+    .answer-correct {
+      background: #ecfdf5;       /* light green */
+      border-color: #bbf7d0;
+      color: #065f46;           /* dark green text */
+      box-shadow: 0 6px 18px rgba(16,185,129,0.06);
+    }
+    .answer-wrong {
+      background: #fff1f2;       /* light red */
+      border-color: #fca5a5;
+      color: #9f1239;           /* dark red text */
+      box-shadow: 0 6px 18px rgba(239,68,68,0.06);
+    }
+    .user-choice { outline: 2px dashed rgba(0,0,0,0.04); }
+
+    /* Essay Section */
+    textarea {
+      width: 80%;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.75rem;
+      resize: vertical;
+      min-height: 50px;
+      font-size: 1rem;
+    }
+
+    .essay-answer {
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-top: 0.75rem;
+      display: none;
+    }
+
+    .back-btn {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    /* Explanation box shown under each question in feedback */
+    .explanation {
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: #ecfdf5;           /* subtle greenish background */
+      color: #065f46;                /* dark green text */
+      font-size: 0.95rem;
+      line-height: 1.4;
+      border: 1px solid #bbf7d0;
+    }
+
+    /* For incorrect explanation (when needed) */
+    .explanation.wrong {
+      background: #fff1f2;
+      color: #7f1d1d;
+      border-color: #fca5a5;
+    }
+
+    /* small label styling for feedback header */
+    .answer-block { margin-bottom: 12px; }
+    .answer-block strong { display:block; margin-bottom:8px; color:var(--primary); }
+
+    /* Essay card styles (compact, readable) */
+    #essay-section { padding-top: 0; }
+    #essay-section .card {
+      background: linear-gradient(180deg, #ffffff, #fbfeff);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(18,38,63,0.06);
+      border: 1px solid rgba(43,122,120,0.06);
+      max-width: 900px;
+      margin: 0 auto 1rem auto;
+    }
+    #essay-section .card h3 {
+      margin: 0 0 10px 0;
+      font-size: 1.02rem;
+      color: var(--dark);
+      font-weight: 700;
+    }
+    #essay-section .subquestion { margin-bottom: 12px; }
+    #essay-section .subquestion label {
+      display:block;
+      font-weight:700;
+      margin-bottom:6px;
+      color:var(--dark);
+    }
+    #essay-section textarea {
+      width:100%;
+      min-height:90px;
+      border-radius:8px;
+      border:1px solid #d1dbe0;
+      padding:10px;
+      resize:vertical;
+      font-family:inherit;
+    }
+    #essay-section .answers {
+      display:none;
+      margin-top:14px;
+      background:#f1faf9;
+      border-radius:8px;
+      padding:12px;
+      border:1px solid #cfeee6;
+      color:var(--dark);
+    }
+    #essay-section .answers h3 { margin-top:0; }
+    #essay-section .card .btn { margin-top:8px; }
+    /* make answers visible area stand out when shown */
+    #essay-section .answers.visible { display:block; }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;">
+      <div class="logo">
+        <i class="fas fa-book-medical"></i>
+        <h1>2024 Exam | ToToZ Collection</h1>
+      </div>
+      <button id="backBtn" class="btn"><i class="fas fa-arrow-left"></i> Back</button>
+    </div>
+  </header>
+
+<div class="container" id="mcq-section">
+  <h2>Multiple Choice Questions</h2>
+
+  <form id="quizForm">
+
+    <div class="question">
+  <p>1. In the definition of Evidence Based Medicine (EBM) the word "best" means:</p>
+  <div class="options">
+    <label><input type="radio" name="q1" value="a"> Being honest</label>
+    <label><input type="radio" name="q1" value="b"> Stating something exactly</label>
+    <label><input type="radio" name="q1" value="c"> Necessity for critical appraisal</label>
+    <label><input type="radio" name="q1" value="d"> Having sense of good judgment</label>
+    <label><input type="radio" name="q1" value="e"> Any of the above</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>2. Which question in Laboratory Medicine would address the risk of a condition in a patient?</p>
+  <div class="options">
+    <label><input type="radio" name="q2" value="a"> What is the diagnosis?</label>
+    <label><input type="radio" name="q2" value="b"> What is the patient’s prognosis?</label>
+    <label><input type="radio" name="q2" value="c"> How is the patient doing?</label>
+    <label><input type="radio" name="q2" value="d"> Anything else wrong with the patient?</label>
+    <label><input type="radio" name="q2" value="e"> None of the above</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>3. Which one of the following is FALSE about Class III Biosafety cabinet?</p>
+  <div class="options">
+    <label><input type="radio" name="q3" value="a"> It is most suitable for work with biohazardous agents</label>
+    <label><input type="radio" name="q3" value="b"> The cabinet is not completely enclosed</label>
+    <label><input type="radio" name="q3" value="c"> The cabinet is HEPA filter-ventilated</label>
+    <label><input type="radio" name="q3" value="d"> The cabinet offers the highest degree of personal protection</label>
+    <label><input type="radio" name="q3" value="e"> None of the above</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>4. One of the following is NOT a Tissue change due to parasitic infection?</p>
+  <div class="options">
+    <label><input type="radio" name="q4" value="a"> Fatty degeneration</label>
+    <label><input type="radio" name="q4" value="b"> Hyperplasia</label>
+    <label><input type="radio" name="q4" value="c"> Hypertrophy</label>
+    <label><input type="radio" name="q4" value="d"> Neoplasia</label>
+    <label><input type="radio" name="q4" value="e"> None of the above</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>5. Entomology is the study of:</p>
+  <div class="options">
+    <label><input type="radio" name="q5" value="a"> Ticks</label>
+    <label><input type="radio" name="q5" value="b"> Mites</label>
+    <label><input type="radio" name="q5" value="c"> Crabs</label>
+    <label><input type="radio" name="q5" value="d"> Insects</label>
+    <label><input type="radio" name="q5" value="e"> All of the above</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>6. The most commonly used anticoagulant in haematological examinations is:</p>
+  <div class="options">
+    <label><input type="radio" name="q6" value="a"> Warfarin</label>
+    <label><input type="radio" name="q6" value="b"> Heparin</label>
+    <label><input type="radio" name="q6" value="c"> Ethylene Diamine Tetra Acetic Acid (EDTA)</label>
+    <label><input type="radio" name="q6" value="d"> Trisodium citrate</label>
+    <label><input type="radio" name="q6" value="e"> None of the above</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>7. Blood cells that play an important role in parasitic infections are:</p>
+  <div class="options">
+    <label><input type="radio" name="q7" value="a"> Platelets</label>
+    <label><input type="radio" name="q7" value="b"> Eosinophils</label>
+    <label><input type="radio" name="q7" value="c"> Lymphocytes</label>
+    <label><input type="radio" name="q7" value="d"> Red blood cells</label>
+    <label><input type="radio" name="q7" value="e"> Any of the above</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>8. One of the following is FALSE about requesting laboratory tests for Biochemical disorders in the Resting state:</p>
+  <div class="options">
+    <label><input type="radio" name="q8" value="a"> Secretory organ function can be assessed</label>
+    <label><input type="radio" name="q8" value="b"> Excretory organ function can be assessed</label>
+    <label><input type="radio" name="q8" value="c"> Minor abnormality can be detected</label>
+    <label><input type="radio" name="q8" value="d"> Major abnormality can be detected</label>
+    <label><input type="radio" name="q8" value="e"> None of the above</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>9. The modern virus classification was developed by:</p>
+  <div class="options">
+    <label><input type="radio" name="q9" value="a"> Martinus Willem Beijerinck</label>
+    <label><input type="radio" name="q9" value="b"> David Baltimore</label>
+    <label><input type="radio" name="q9" value="c"> Good pasture</label>
+    <label><input type="radio" name="q9" value="d"> Dmitri Ivanowsky</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>10. Which one of the following is the largest virus?</p>
+  <div class="options">
+    <label><input type="radio" name="q10" value="a"> Influenza virus</label>
+    <label><input type="radio" name="q10" value="b"> Tobacco mosaic virus</label>
+    <label><input type="radio" name="q10" value="c"> Poxvirus</label>
+    <label><input type="radio" name="q10" value="d"> Parvovirus</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>11. Which one of the following viruses produces Negri bodies?</p>
+  <div class="options">
+    <label><input type="radio" name="q11" value="a"> Herpes simplex virus</label>
+    <label><input type="radio" name="q11" value="b"> Adenovirus</label>
+    <label><input type="radio" name="q11" value="c"> Influenza virus</label>
+    <label><input type="radio" name="q11" value="d"> Rabies virus</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>12. The following is TRUE about Bacteria, except:</p>
+  <div class="options">
+    <label><input type="radio" name="q12" value="a"> They are single celled</label>
+    <label><input type="radio" name="q12" value="b"> They have mitochondria</label>
+    <label><input type="radio" name="q12" value="c"> They reproduce sexually</label>
+    <label><input type="radio" name="q12" value="d"> They reproduce asexually</label>
+    <label><input type="radio" name="q12" value="e"> They are unicellular</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>13. The following bacteria do not produce endospores, except:</p>
+  <div class="options">
+    <label><input type="radio" name="q13" value="a"> E.coli</label>
+    <label><input type="radio" name="q13" value="b"> Mycobacterium tuberculosis</label>
+    <label><input type="radio" name="q13" value="c"> Clostridium</label>
+    <label><input type="radio" name="q13" value="d"> Vibrio cholerae</label>
+    <label><input type="radio" name="q13" value="e"> Treponema pallidum</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>14. The following is True about bacteria oxygen requirements, except:</p>
+  <div class="options">
+    <label><input type="radio" name="q14" value="a"> Obligate aerobes require O2 for growth & metabolism</label>
+    <label><input type="radio" name="q14" value="b"> Capnophilic grow in high concentration of oxygen</label>
+    <label><input type="radio" name="q14" value="c"> Obligate anaerobes cannot grow in the presence of O2</label>
+    <label><input type="radio" name="q14" value="d"> Facultative anaerobes grow in either the presence or absence of O2</label>
+    <label><input type="radio" name="q14" value="e"> Microaerophilic grow in reduced Oxygen concentration</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>17. Which of the following statements on the parts of the microscope is correct?</p>
+  <div class="options">
+    <label><input type="radio" name="q17" value="a"> The condenser magnifies the specimen.</label>
+    <label><input type="radio" name="q17" value="b"> The ocular lenses on the light microscope typically have a magnification of 100x.</label>
+    <label><input type="radio" name="q17" value="c"> The magnification of a microscope is determined by the power of the ocular and objective lenses.</label>
+    <label><input type="radio" name="q17" value="d"> The phase contrast uses a mercury lamp as a light source.</label>
+    <label><input type="radio" name="q17" value="e"> All of the above.</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>18. What type of immune cell is responsible for producing antibodies?</p>
+  <div class="options">
+    <label><input type="radio" name="q18" value="a"> T cell</label>
+    <label><input type="radio" name="q18" value="b"> B cell</label>
+    <label><input type="radio" name="q18" value="c"> Macrophage</label>
+    <label><input type="radio" name="q18" value="d"> Natural killer cell</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>19. Which type of immunity is acquired through vaccination?</p>
+  <div class="options">
+    <label><input type="radio" name="q19" value="a"> Innate immunity</label>
+    <label><input type="radio" name="q19" value="b"> Adaptive immunity</label>
+    <label><input type="radio" name="q19" value="c"> Passive immunity</label>
+    <label><input type="radio" name="q19" value="d"> Natural immunity</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>20. Which immune cell is responsible for cell-mediated immunity?</p>
+  <div class="options">
+    <label><input type="radio" name="q20" value="a"> B cell</label>
+    <label><input type="radio" name="q20" value="b"> T cell</label>
+    <label><input type="radio" name="q20" value="c"> Macrophage</label>
+    <label><input type="radio" name="q20" value="d"> Natural killer cell</label>
+  </div>
+</div>
+
+    
+
+    
+
+    <button type="button" class="btn" onclick="submitQuiz()">Submit</button>
+  </form>
+
+  <div class="result" id="resultBox">
+    <h3>Your Score:</h3>
+    <div class="score" id="score">0%</div>
+    <div id="answers"></div>
+  </div>
+</div>
+
+<!-- Short Essay Section (card style with sub-questions) -->
+<section id="essay-section" class="container" style="display:none;">
+  <h2 style="margin-bottom:1rem;color:var(--dark)">Short Essay Questions</h2>
+
+  <div class="card">
+    <h3>1. Describe the physiological responses that occur following an acute loss of blood volume.</h3>
+
+    <div class="subquestion">
+      <label>a) Immediate cardiovascular compensations</label>
+      <textarea id="ans1a" placeholder="Describe immediate changes (heart rate, vascular tone, etc.)"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>b) Neurohormonal responses</label>
+      <textarea id="ans1b" placeholder="Describe catecholamines, ADH, RAAS, etc."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>c) Longer-term hematologic / renal compensation</label>
+      <textarea id="ans1c" placeholder="Describe erythropoiesis, fluid retention, renal changes"></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('1')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers1" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>a)</b> Rapid sympathetic activation increases heart rate and contractility; peripheral vasoconstriction raises systemic vascular resistance to maintain perfusion.</p>
+      <p><b>b)</b> Release of catecholamines, ADH secretion and activation of RAAS promote vasoconstriction and fluid retention to support blood pressure.</p>
+      <p><b>c)</b> Kidneys increase erythropoietin to stimulate erythropoiesis; renal sodium/water retention and mobilization of interstitial fluid restore plasma volume over days to weeks.</p>
+    </div>
+
+  </div>
+
+  <!-- New short essay question (added) -->
+  <div class="card">
+    <h3>2. Explain the kidney's role in maintaining electrolyte and fluid balance.</h3>
+
+    <div class="subquestion">
+      <label>a) Describe how the proximal tubule handles sodium and water.</label>
+      <textarea id="ans2a" placeholder="Answer A — proximal tubule handling..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>b) Explain the role of aldosterone in distal nephron sodium handling.</label>
+      <textarea id="ans2b" placeholder="Answer B — aldosterone actions..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>c) Outline how the kidney adapts to changes in body hydration (antidiuretic hormone/ADH).</label>
+      <textarea id="ans2c" placeholder="Answer C — ADH and urine concentration..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('2')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers2" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>a)</b> The proximal tubule reabsorbs the bulk of filtered sodium and water via coupled transporters and passive water movement; most solute and isoosmotic fluid is reclaimed here.</p>
+      <p><b>b)</b> Aldosterone acts on distal tubule and collecting duct principal cells to increase expression of ENaC and Na+/K+ ATPase, enhancing sodium reabsorption and potassium secretion.</p>
+      <p><b>c)</b> ADH increases water permeability of the collecting duct by inserting aquaporin-2 channels, concentrating urine when the body is dehydrated and reducing free-water excretion.</p>
+    </div>
+  </div>
+ </section>
+
+<script>
+  // Short explanation text for each question (keyed by question id)
+ const answerExplanations = {
+  q1: "In EBM, 'best' refers to the use of current, high-quality evidence which necessitates critical appraisal to determine its validity and clinical relevance.",
+  q2: "Prognosis relates to the likely course of a disease or the risk of future clinical outcomes for a patient.",
+  q3: "A Class III Biosafety cabinet is a 'glove box' design that is completely enclosed and gas-tight, providing the highest level of protection.",
+  q4: "While parasites can cause hyperplasia, hypertrophy, and even neoplasia, 'None of the above' is the most appropriate technical answer if all listed can theoretically be associated with different parasitic pathologies.",
+  q5: "Entomology is specifically the scientific study of insects.",
+  q6: "EDTA is the preferred anticoagulant for hematology because it preserves cellular morphology and prevents platelet aggregation.",
+  q7: "Eosinophils are a type of white blood cell specifically elevated in response to parasitic infections and allergic reactions.",
+  q8: "In a resting state, minor abnormalities are often missed because the organ is not under stress; therefore, saying they *can* be easily detected is typically false.",
+  q9: "The Baltimore classification system, developed by David Baltimore, categorizes viruses based on their manner of mRNA synthesis.",
+  q10: "Poxviruses, such as the Variola virus, are among the largest and most complex viruses, visible even under a high-quality light microscope.",
+  q11: "Negri bodies are pathognomonic cytoplasmic inclusion bodies found in neurons infected with the Rabies virus.",
+  q12: "Bacteria are prokaryotes; they lack membrane-bound organelles like mitochondria. While they can exchange genetic material, they typically reproduce asexually via binary fission.",
+  q13: "Endospores are highly resistant structures produced primarily by the genera Bacillus and Clostridium.",
+  q14: "Capnophiles require high concentrations of carbon dioxide (CO2), not oxygen, for optimal growth.",
+  q17: "Total magnification is the product of the magnification of the ocular lens and the objective lens. The condenser simply focuses light rather than magnifying.",
+  q18: "B cells differentiate into plasma cells, which are the 'factories' that produce and secrete antibodies.",
+  q19: "Vaccination triggers an adaptive (specifically active) immune response, creating immunological memory without causing the full disease.",
+  q20: "T cells (specifically cytotoxic T cells and helper T cells) are the primary drivers of the cell-mediated branch of the adaptive immune system."
+};
+
+const correctAnswers = {
+  q1: "c",
+  q2: "b",
+  q3: "b",
+  q4: "e",
+  q5: "d", 
+  q6: "c",
+  q7: "b",
+  q8: "c",
+  q9: "b",
+  q10: "c",
+  q11: "d",
+  q12: "b",
+  q13: "c",
+  q14: "b",
+  q17: "c",
+  q18: "b",
+  q19: "b",
+  q20: "b"
+};
+ 
+  function submitQuiz() {
+     let score = 0;
+     const total = Object.keys(correctAnswers).length;
+ 
+     // Build detailed feedback with colored items
+     let feedbackHTML = '';
+ 
+     for (let key in correctAnswers) {
+       const radios = Array.from(document.querySelectorAll(`input[name="${key}"]`));
+       const selected = radios.find(r => r.checked);
+       const correct = correctAnswers[key];
+ 
+       // Score calc
+       if (selected && selected.value === correct) score++;
+ 
+       // Per-question header
+       feedbackHTML += `<div class="answer-block"><strong>${key.toUpperCase()}</strong><div class="answer-list">`;
+ 
+       // For each option, show styled answer item
+       radios.forEach(r => {
+         // find label text (parent label) or nearby text
+         let label = r.parentElement;
+         let text = label ? label.textContent.trim() : r.value;
+ 
+         // determine classes
+         let classes = ['answer-item'];
+         if (r.value === correct) classes.push('answer-correct');
+         if (r.checked && r.value !== correct) classes.push('answer-wrong', 'user-choice');
+         if (r.checked && r.value === correct) classes.push('user-choice');
+ 
+         feedbackHTML += `<div class="${classes.join(' ')}">${text}${r.checked ? ' ◀' : ''}</div>`;
+       });
+ 
+      feedbackHTML += `</div>`; // close answer-list
+ 
+      // explanation + indicate correct answer
+      const correctRadio = radios.find(rr => rr.value === correct);
+      const correctText = correctRadio && correctRadio.parentElement ? correctRadio.parentElement.textContent.trim() : correct;
+      const explanationText = answerExplanations[key] || '';
+ 
+      if (selected) {
+        if (selected.value === correct) {
+          feedbackHTML += `<div class="explanation">✅ Correct — ${explanationText}</div>`;
+        } else {
+          feedbackHTML += `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+        }
+      } else {
+        feedbackHTML += `<div class="explanation wrong">No answer selected. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+      }
+ 
+      feedbackHTML += `</div>`; // close answer-block
+     }
+ 
+     const percentage = Math.round((score / total) * 100);
+     document.getElementById("score").innerText = "0%";
+     const resultBox = document.getElementById("resultBox");
+     resultBox.style.display = "block";
+     document.getElementById("answers").innerHTML = feedbackHTML;
+ 
+     // Animate score
+     let start = 0;
+     const timer = setInterval(() => {
+       if (start >= percentage) clearInterval(timer);
+       document.getElementById("score").innerText = start + "%";
+       start++;
+     }, 20);
+    
+    // optional: disable inputs after showing answers to prevent changing answers
+    document.querySelectorAll('#quizForm input').forEach(i => i.disabled = true);
+   }
+ 
+   // Essay Section
+   function showEssayAnswers() {
+     document.querySelectorAll(".essay-answer").forEach(a => a.style.display = "block");
+   }
+
+   // Show/hide model answers for an essay card
+   function showAnswers(id) {
+     const el = document.getElementById('answers' + id);
+     if (!el) return;
+     const isVisible = el.classList.toggle('visible');
+     el.setAttribute('aria-hidden', !isVisible);
+     if (isVisible) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+   }
+ 
+   // Mode switching (from first file)
+   const mode = localStorage.getItem("examMode"); // "mcq" or "essay"
+   if (mode === "essay") {
+     document.getElementById("mcq-section").style.display = "none";
+     document.getElementById("essay-section").style.display = "block";
+   }
+ 
+   // Navigate to the previous page if available, otherwise fall back to index.html
+   function goBack() {
+     if (history.length > 1) {
+       history.back();
+     } else {
+       window.location.href = "index.html";
+     }
+   }
+ 
+   // header back button hookup (same behaviour)
+   const backBtn = document.getElementById('backBtn');
+   if (backBtn) backBtn.addEventListener('click', (e) => { e.preventDefault(); goBack(); });
+ </script>
+
+</body>
+</html>
