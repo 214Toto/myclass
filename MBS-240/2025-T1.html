@@ -198,6 +198,17 @@
     /* small label styling for feedback header */
     .answer-block { margin-bottom: 12px; }
     .answer-block strong { display:block; margin-bottom:8px; color:var(--primary); }
+    .question-feedback {
+      margin-top: 14px;
+      padding: 14px 16px;
+      color: white;
+      border-radius: 12px;
+      background: #5e5a5a;
+      border: 1px solid #d6e7eb;
+    }
+    .question-feedback .answer-list {
+      margin-top: 10px;
+    }
 
     /* Essay card styles (compact, readable) */
     #essay-section { padding-top: 0; }
@@ -247,6 +258,7 @@
     #essay-section .answers.visible { display:block; }
 
   </style>
+
 </head>
 <body>
 
@@ -254,233 +266,253 @@
     <div class="container" style="display:flex;align-items:center;justify-content:space-between;">
       <div class="logo">
         <i class="fas fa-book-medical"></i>
-        <h1>2024 Exam | ToToZ Collection</h1>
+        <h1>2025 Exam | ToToZ Collection</h1>
       </div>
       <button id="backBtn" class="btn"><i class="fas fa-arrow-left"></i> Back</button>
     </div>
   </header>
-
+  
 <div class="container" id="mcq-section">
   <h2>Multiple Choice Questions</h2>
 
   <form id="quizForm">
 
     <div class="question">
-  <p>1. In Laboratory Medicine what information is obtained from the question “What is the patient’s prognosis”?</p>
-  <div class="options">
-    <label><input type="radio" name="q1" value="a"> Exclude a diagnosis</label>
-    <label><input type="radio" name="q1" value="b"> A diagnosis is being sought</label>
-    <label><input type="radio" name="q1" value="c"> Rule out a condition</label>
-    <label><input type="radio" name="q1" value="d"> Assess the outlook of the patient</label>
-    <label><input type="radio" name="q1" value="e"> Concerns about the patient management.</label>
-  </div>
-</div>
+      <p>1. In Laboratory Medicine what information is obtained from the question “What is the patient’s prognosis”?</p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="a"> Exclude a diagnosis</label>
+        <label><input type="radio" name="q1" value="b"> A diagnosis is being sought</label>
+        <label><input type="radio" name="q1" value="c"> Rule out a condition</label>
+        <label><input type="radio" name="q1" value="d"> Assess the outlook of the patient</label>
+        <label><input type="radio" name="q1" value="e"> Concerns about the patient management.</label>
+      </div>
+      <div class="question-feedback" id="feedback-q1"></div>
+    </div>
 
-<div class="question">
-  <p>2. Which one of the following is not an essential feature of a medical laboratory Standard Operating Procedure Manual?</p>
-  <div class="options">
-    <label><input type="radio" name="q2" value="a"> It is strictly adhered by all in the laboratory</label>
-    <label><input type="radio" name="q2" value="b"> It is periodically reviewed and updated</label>
-    <label><input type="radio" name="q2" value="c"> It has laboratory Safety Instructions</label>
-    <label><input type="radio" name="q2" value="d"> It is accurate</label>
-    <label><input type="radio" name="q2" value="e"> It is readily available</label>
-  </div>
-</div>
+    <div class="question">
+      <p>2. Which one of the following is not an essential feature of a medical laboratory Standard Operating Procedure Manual?</p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="a"> It is strictly adhered by all in the laboratory</label>
+        <label><input type="radio" name="q2" value="b"> It is periodically reviewed and updated</label>
+        <label><input type="radio" name="q2" value="c"> It has laboratory Safety Instructions</label>
+        <label><input type="radio" name="q2" value="d"> It is accurate</label>
+        <label><input type="radio" name="q2" value="e"> It is readily available</label>
+      </div>
+      <div class="question-feedback" id="feedback-q2"></div>
+    </div>
 
-<div class="question">
-  <p>3. Which one of the following is NOT correct about requesting a laboratory test in a resting state?</p>
-  <div class="options">
-    <label><input type="radio" name="q3" value="a"> It is useful in detecting minor abnormalities of a system</label>
-    <label><input type="radio" name="q3" value="b"> It is useful in investigating secretory function of an organ</label>
-    <label><input type="radio" name="q3" value="c"> It is useful in investigating excretory function of an organ</label>
-    <label><input type="radio" name="q3" value="d"> It is useful in detecting major abnormalities of a system</label>
-    <label><input type="radio" name="q3" value="e"> None of the above</label>
-  </div>
-</div>
+    <div class="question">
+      <p>3. Which one of the following is NOT correct about requesting a laboratory test in a resting state?</p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="a"> It is useful in detecting minor abnormalities of a system</label>
+        <label><input type="radio" name="q3" value="b"> It is useful in investigating secretory function of an organ</label>
+        <label><input type="radio" name="q3" value="c"> It is useful in investigating excretory function of an organ</label>
+        <label><input type="radio" name="q3" value="d"> It is useful in detecting major abnormalities of a system</label>
+        <label><input type="radio" name="q3" value="e"> None of the above</label>
+      </div>
+      <div class="question-feedback" id="feedback-q3"></div>
+    </div>
 
-<div class="question">
-  <p>4. Which is the main body compartment in the analysis of chemical changes responsible for a Biochemical disorder?</p>
-  <div class="options">
-    <label><input type="radio" name="q4" value="a"> Intracellular fluids</label>
-    <label><input type="radio" name="q4" value="b"> Lymph</label>
-    <label><input type="radio" name="q4" value="c"> Intestinal content</label>
-    <label><input type="radio" name="q4" value="d"> Plasma</label>
-    <label><input type="radio" name="q4" value="e"> None of the above</label>
-  </div>
-</div>
+    <div class="question">
+      <p>4. Which is the main body compartment in the analysis of chemical changes responsible for a Biochemical disorder?</p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="a"> Intracellular fluids</label>
+        <label><input type="radio" name="q4" value="b"> Lymph</label>
+        <label><input type="radio" name="q4" value="c"> Intestinal content</label>
+        <label><input type="radio" name="q4" value="d"> Plasma</label>
+        <label><input type="radio" name="q4" value="e"> None of the above</label>
+      </div>
+      <div class="question-feedback" id="feedback-q4"></div>
+    </div>
 
-<div class="question">
-  <p>5. One of the following falls within the normal proportion of HbA2 in adult humans:</p>
-  <div class="options">
-    <label><input type="radio" name="q5" value="a"> 10%</label>
-    <label><input type="radio" name="q5" value="b"> 5%</label>
-    <label><input type="radio" name="q5" value="c"> 2%</label>
-    <label><input type="radio" name="q5" value="d"> 1%</label>
-    <label><input type="radio" name="q5" value="e"> None of the above</label>
-  </div>
-</div>
+    <div class="question">
+      <p>5. One of the following falls within the normal proportion of HbA2 in adult humans:</p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="a"> 10%</label>
+        <label><input type="radio" name="q5" value="b"> 5%</label>
+        <label><input type="radio" name="q5" value="c"> 2%</label>
+        <label><input type="radio" name="q5" value="d"> 1%</label>
+        <label><input type="radio" name="q5" value="e"> None of the above</label>
+      </div>
+      <div class="question-feedback" id="feedback-q5"></div>
+    </div>
 
-<div class="question">
-  <p>6. Which is the commonly used anticoagulant in haematology?</p>
-  <div class="options">
-    <label><input type="radio" name="q6" value="a"> Warfarin</label>
-    <label><input type="radio" name="q6" value="b"> Ethylene Diamine Tetra Acetic Acid</label>
-    <label><input type="radio" name="q6" value="c"> Magnesium citrate</label>
-    <label><input type="radio" name="q6" value="d"> Sodium chloride</label>
-    <label><input type="radio" name="q6" value="e"> Potassium oxalate</label>
-  </div>
-</div>
+    <div class="question">
+      <p>6. Which is the commonly used anticoagulant in haematology?</p>
+      <div class="options">
+        <label><input type="radio" name="q6" value="a"> Warfarin</label>
+        <label><input type="radio" name="q6" value="b"> Ethylene Diamine Tetra Acetic Acid</label>
+        <label><input type="radio" name="q6" value="c"> Magnesium citrate</label>
+        <label><input type="radio" name="q6" value="d"> Sodium chloride</label>
+        <label><input type="radio" name="q6" value="e"> Potassium oxalate</label>
+      </div>
+      <div class="question-feedback" id="feedback-q6"></div>
+    </div>
 
-<div class="question">
-  <p>7. Acarology is the study of:</p>
-  <div class="options">
-    <label><input type="radio" name="q7" value="a"> Insects</label>
-    <label><input type="radio" name="q7" value="b"> Single celled parasites</label>
-    <label><input type="radio" name="q7" value="c"> Many celled parasites</label>
-    <label><input type="radio" name="q7" value="d"> Ticks</label>
-    <label><input type="radio" name="q7" value="e"> Vectors</label>
-  </div>
-</div>
+    <div class="question">
+      <p>7. Acarology is the study of:</p>
+      <div class="options">
+        <label><input type="radio" name="q7" value="a"> Insects</label>
+        <label><input type="radio" name="q7" value="b"> Single celled parasites</label>
+        <label><input type="radio" name="q7" value="c"> Many celled parasites</label>
+        <label><input type="radio" name="q7" value="d"> Ticks</label>
+        <label><input type="radio" name="q7" value="e"> Vectors</label>
+      </div>
+      <div class="question-feedback" id="feedback-q7"></div>
+    </div>
 
-<div class="question">
-  <p>8. A host that is not necessary for the completion of a parasite's life cycle is called:</p>
-  <div class="options">
-    <label><input type="radio" name="q8" value="a"> Definitive host</label>
-    <label><input type="radio" name="q8" value="b"> Paratenic host</label>
-    <label><input type="radio" name="q8" value="c"> Intermediate host</label>
-    <label><input type="radio" name="q8" value="d"> Vector</label>
-    <label><input type="radio" name="q8" value="e"> Reservoir host</label>
-  </div>
-</div>
+    <div class="question">
+      <p>8. A host that is not necessary for the completion of a parasite's life cycle is called:</p>
+      <div class="options">
+        <label><input type="radio" name="q8" value="a"> Definitive host</label>
+        <label><input type="radio" name="q8" value="b"> Paratenic host</label>
+        <label><input type="radio" name="q8" value="c"> Intermediate host</label>
+        <label><input type="radio" name="q8" value="d"> Vector</label>
+        <label><input type="radio" name="q8" value="e"> Reservoir host</label>
+      </div>
+      <div class="question-feedback" id="feedback-q8"></div>
+    </div>
 
-<div class="question">
-  <p>9. The following is TRUE about Bacteria, EXCEPT:</p>
-  <div class="options">
-    <label><input type="radio" name="q9" value="a"> Gram positive bacteria have a thick peptidoglycan layer</label>
-    <label><input type="radio" name="q9" value="b"> They can be rod shaped</label>
-    <label><input type="radio" name="q9" value="c"> Gram negative bacteria have teichoic acid</label>
-    <label><input type="radio" name="q9" value="d"> They reproduce asexually by binary fission</label>
-    <label><input type="radio" name="q9" value="e"> Some are acid fast</label>
-  </div>
-</div>
+    <div class="question">
+      <p>9. The following is TRUE about Bacteria, EXCEPT:</p>
+      <div class="options">
+        <label><input type="radio" name="q9" value="a"> Gram positive bacteria have a thick peptidoglycan layer</label>
+        <label><input type="radio" name="q9" value="b"> They can be rod shaped</label>
+        <label><input type="radio" name="q9" value="c"> Gram negative bacteria have teichoic acid</label>
+        <label><input type="radio" name="q9" value="d"> They reproduce asexually by binary fission</label>
+        <label><input type="radio" name="q9" value="e"> Some are acid fast</label>
+      </div>
+      <div class="question-feedback" id="feedback-q9"></div>
+    </div>
 
-<div class="question">
-  <p>10. Which of the following bacteria is an acid-fast bacterium?</p>
-  <div class="options">
-    <label><input type="radio" name="q10" value="a"> Clostridium</label>
-    <label><input type="radio" name="q10" value="b"> E.coli</label>
-    <label><input type="radio" name="q10" value="c"> Treponema pallidum</label>
-    <label><input type="radio" name="q10" value="d"> Mycobacterium tuberculosis</label>
-    <label><input type="radio" name="q10" value="e"> Vibrio cholerae</label>
-  </div>
-</div>
+    <div class="question">
+      <p>10. Which of the following bacteria is an acid-fast bacterium?</p>
+      <div class="options">
+        <label><input type="radio" name="q10" value="a"> Clostridium</label>
+        <label><input type="radio" name="q10" value="b"> E.coli</label>
+        <label><input type="radio" name="q10" value="c"> Treponema pallidum</label>
+        <label><input type="radio" name="q10" value="d"> Mycobacterium tuberculosis</label>
+        <label><input type="radio" name="q10" value="e"> Vibrio cholerae</label>
+      </div>
+      <div class="question-feedback" id="feedback-q10"></div>
+    </div>
 
-<div class="question">
-  <p>11. The following diseases are caused by bacteria, EXCEPT:</p>
-  <div class="options">
-    <label><input type="radio" name="q11" value="a"> Ebola</label>
-    <label><input type="radio" name="q11" value="b"> Tuberculosis</label>
-    <label><input type="radio" name="q11" value="c"> Typhoid fever</label>
-    <label><input type="radio" name="q11" value="d"> Cholera</label>
-    <label><input type="radio" name="q11" value="e"> Plague</label>
-  </div>
-</div>
+    <div class="question">
+      <p>11. The following diseases are caused by bacteria, EXCEPT:</p>
+      <div class="options">
+        <label><input type="radio" name="q11" value="a"> Ebola</label>
+        <label><input type="radio" name="q11" value="b"> Tuberculosis</label>
+        <label><input type="radio" name="q11" value="c"> Typhoid fever</label>
+        <label><input type="radio" name="q11" value="d"> Cholera</label>
+        <label><input type="radio" name="q11" value="e"> Plague</label>
+      </div>
+      <div class="question-feedback" id="feedback-q11"></div>
+    </div>
 
-<div class="question">
-  <p>12. The following is TRUE about bacterial sexual reproduction, EXCEPT:</p>
-  <div class="options">
-    <label><input type="radio" name="q12" value="a"> In Transformation, DNA is acquired directly from the environment</label>
-    <label><input type="radio" name="q12" value="b"> In Transduction, a Bacteriophage transfers the genes between bacteria</label>
-    <label><input type="radio" name="q12" value="c"> In Conjugation, DNA crosses a sex pilus from donor to recipient</label>
-    <label><input type="radio" name="q12" value="d"> In Translation, RNA is acquired directly from the environment</label>
-    <label><input type="radio" name="q12" value="e"> In Conjugation, there is a cell to cell contact of bacteria</label>
-  </div>
-</div>
+    <div class="question">
+      <p>12. The following is TRUE about bacterial sexual reproduction, EXCEPT:</p>
+      <div class="options">
+        <label><input type="radio" name="q12" value="a"> In Transformation, DNA is acquired directly from the environment</label>
+        <label><input type="radio" name="q12" value="b"> In Transduction, a Bacteriophage transfers the genes between bacteria</label>
+        <label><input type="radio" name="q12" value="c"> In Conjugation, DNA crosses a sex pilus from donor to recipient</label>
+        <label><input type="radio" name="q12" value="d"> In Translation, RNA is acquired directly from the environment</label>
+        <label><input type="radio" name="q12" value="e"> In Conjugation, there is a cell to cell contact of bacteria</label>
+      </div>
+      <div class="question-feedback" id="feedback-q12"></div>
+    </div>
 
-<div class="question">
-  <p>13. The following statements on prokaryotic cells are correct except:</p>
-  <div class="options">
-    <label><input type="radio" name="q13" value="a"> Cells have a membrane around the nucleus.</label>
-    <label><input type="radio" name="q13" value="b"> Most cells are unicellular.</label>
-    <label><input type="radio" name="q13" value="d"> Bacteria are a common example of prokaryotic cells.</label>
-    <label><input type="radio" name="q13" value="d"> The plasma membrane typically has no carbohydrates.</label>
-    <label><input type="radio" name="q13" value="e"> The chromosome is singular and lacks histones.</label>
-  </div>
-</div>
+    <div class="question">
+      <p>13. The following statements on prokaryotic cells are correct except:</p>
+      <div class="options">
+        <label><input type="radio" name="q13" value="a"> Cells have a membrane around the nucleus.</label>
+        <label><input type="radio" name="q13" value="b"> Most cells are unicellular.</label>
+        <label><input type="radio" name="q13" value="d"> Bacteria are a common example of prokaryotic cells.</label>
+        <label><input type="radio" name="q13" value="d"> The plasma membrane typically has no carbohydrates.</label>
+        <label><input type="radio" name="q13" value="e"> The chromosome is singular and lacks histones.</label>
+      </div>
+      <div class="question-feedback" id="feedback-q13"></div>
+    </div>
 
-<div class="question">
-  <p>14. Eukaryotic cells</p>
-  <div class="options">
-    <label><input type="radio" name="q14" value="a"> Have a simple flagella with two protein building blocks.</label>
-    <label><input type="radio" name="q14" value="b"> Reproduce sexually through mitosis.</label>
-    <label><input type="radio" name="q14" value="c"> Have a chemically simple cell wall if present.</label>
-    <label><input type="radio" name="q14" value="d"> Are typically 2 µm in diameter.</label>
-    <label><input type="radio" name="q14" value="e"> Do not have membrane bound organelles</label>
-  </div>
-</div>
+    <div class="question">
+      <p>14. Eukaryotic cells</p>
+      <div class="options">
+        <label><input type="radio" name="q14" value="a"> Have a simple flagella with two protein building blocks.</label>
+        <label><input type="radio" name="q14" value="b"> Reproduce sexually through mitosis.</label>
+        <label><input type="radio" name="q14" value="c"> Have a chemically simple cell wall if present.</label>
+        <label><input type="radio" name="q14" value="d"> Are typically 2 µm in diameter.</label>
+        <label><input type="radio" name="q14" value="e"> Do not have membrane bound organelles</label>
+      </div>
+      <div class="question-feedback" id="feedback-q14"></div>
+    </div>
 
-<div class="question">
-  <p>15. With regards to microscopic methods</p>
-  <div class="options">
-    <label><input type="radio" name="q15" value="a"> Fluorescent microscopy has a higher resolution than an electron microscopy.</label>
-    <label><input type="radio" name="q15" value="b"> All microscopes require staining of the specimen before visualisation.</label>
-    <label><input type="radio" name="q15" value="c"> Brightfield microscopy creates a 3D image.</label>
-    <label><input type="radio" name="q15" value="d"> Darkfield microscopy causes the specimen to appear dark against an illuminated background.</label>
-    <label><input type="radio" name="q15" value="e"> The phase contrast microscope relies on the principle of light being dispersed according to specimen density.</label>
-  </div>
-</div>
+    <div class="question">
+      <p>15. With regards to microscopic methods</p>
+      <div class="options">
+        <label><input type="radio" name="q15" value="a"> Fluorescent microscopy has a higher resolution than an electron microscopy.</label>
+        <label><input type="radio" name="q15" value="b"> All microscopes require staining of the specimen before visualisation.</label>
+        <label><input type="radio" name="q15" value="c"> Brightfield microscopy creates a 3D image.</label>
+        <label><input type="radio" name="q15" value="d"> Darkfield microscopy causes the specimen to appear dark against an illuminated background.</label>
+        <label><input type="radio" name="q15" value="e"> The phase contrast microscope relies on the principle of light being dispersed according to specimen density.</label>
+      </div>
+      <div class="question-feedback" id="feedback-q15"></div>
+    </div>
 
-<div class="question">
-  <p>16. During slide preparation for microscopic examinations</p>
-  <div class="options">
-    <label><input type="radio" name="q16" value="a"> Fixation is the treatment of cells with a mild surfactant which dissolves the cell membrane.</label>
-    <label><input type="radio" name="q16" value="b"> Auramine-rhodamine is fluorescent dye that stains acid fast organisms.</label>
-    <label><input type="radio" name="q16" value="c"> The gram stain is used to detect blood parasites.</label>
-    <label><input type="radio" name="q16" value="d"> Potassium hydroxide is used as a contrast stain.</label>
-    <label><input type="radio" name="q16" value="e"> India ink is used to differentiate gram positive bacteria from gram negative bacteria.</label>
-  </div>
-</div>
+    <div class="question">
+      <p>16. During slide preparation for microscopic examinations</p>
+      <div class="options">
+        <label><input type="radio" name="q16" value="a"> Fixation is the treatment of cells with a mild surfactant which dissolves the cell membrane.</label>
+        <label><input type="radio" name="q16" value="b"> Auramine-rhodamine is fluorescent dye that stains acid fast organisms.</label>
+        <label><input type="radio" name="q16" value="c"> The gram stain is used to detect blood parasites.</label>
+        <label><input type="radio" name="q16" value="d"> Potassium hydroxide is used as a contrast stain.</label>
+        <label><input type="radio" name="q16" value="e"> India ink is used to differentiate gram positive bacteria from gram negative bacteria.</label>
+      </div>
+      <div class="question-feedback" id="feedback-q16"></div>
+    </div>
 
-<div class="question">
-  <p>17. Which one of the following is the smallest virus?</p>
-  <div class="options">
-    <label><input type="radio" name="q17" value="a"> Poxvirus</label>
-    <label><input type="radio" name="q17" value="b"> Parvovirus</label>
-    <label><input type="radio" name="q17" value="c"> Influenza virus</label>
-    <label><input type="radio" name="q17" value="d"> Rabies virus</label>
-  </div>
-</div>
+    <div class="question">
+      <p>17. Which one of the following is the smallest virus?</p>
+      <div class="options">
+        <label><input type="radio" name="q17" value="a"> Poxvirus</label>
+        <label><input type="radio" name="q17" value="b"> Parvovirus</label>
+        <label><input type="radio" name="q17" value="c"> Influenza virus</label>
+        <label><input type="radio" name="q17" value="d"> Rabies virus</label>
+      </div>
+      <div class="question-feedback" id="feedback-q17"></div>
+    </div>
 
-<div class="question">
-  <p>18. Which one of the following viruses produces Negri bodies?</p>
-  <div class="options">
-    <label><input type="radio" name="q18" value="a"> Adenovirus</label>
-    <label><input type="radio" name="q18" value="b"> Influenza virus</label>
-    <label><input type="radio" name="q18" value="c"> Rabies virus</label>
-    <label><input type="radio" name="q18" value="d"> Herpes simplex virus</label>
-  </div>
-</div>
+    <div class="question">
+      <p>18. Which one of the following viruses produces Negri bodies?</p>
+      <div class="options">
+        <label><input type="radio" name="q18" value="a"> Adenovirus</label>
+        <label><input type="radio" name="q18" value="b"> Influenza virus</label>
+        <label><input type="radio" name="q18" value="c"> Rabies virus</label>
+        <label><input type="radio" name="q18" value="d"> Herpes simplex virus</label>
+      </div>
+      <div class="question-feedback" id="feedback-q18"></div>
+    </div>
 
-<div class="question">
-  <p>19. The Ebolavirus is</p>
-  <div class="options">
-    <label><input type="radio" name="q19" value="a"> Bullet shape</label>
-    <label><input type="radio" name="q19" value="b"> Rod shape</label>
-    <label><input type="radio" name="q19" value="c"> Brick shape</label>
-    <label><input type="radio" name="q19" value="d"> Filamentous shape</label>
-  </div>
-</div>
+    <div class="question">
+      <p>19. The Ebolavirus is</p>
+      <div class="options">
+        <label><input type="radio" name="q19" value="a"> Bullet shape</label>
+        <label><input type="radio" name="q19" value="b"> Rod shape</label>
+        <label><input type="radio" name="q19" value="c"> Brick shape</label>
+        <label><input type="radio" name="q19" value="d"> Filamentous shape</label>
+      </div>
+      <div class="question-feedback" id="feedback-q19"></div>
+    </div>
 
-<div class="question">
-  <p>20. Which of the following statements most accurately distinguishes biosimilars from small molecule drugs?</p>
-  <div class="options">
-    <label><input type="radio" name="q20" value="a"> Biosimilars are chemically synthesized, while small molecule drugs are derived from living organisms.</label>
-    <label><input type="radio" name="q20" value="b"> Small molecule drugs have high molecular weight, whereas biosimilars have low molecular weight.</label>
-    <label><input type="radio" name="q20" value="c"> Biosimilars are derived from living organisms and have a more complex structure than small molecule drugs, which are chemically synthesized and have a well-defined structure.</label>
-    <label><input type="radio" name="q20" value="d"> Both are derived from living organisms, but biosimilars are less complex.</label>
-    <label><input type="radio" name="q20" value="e"> Small molecule drugs are exclusively used for infectious diseases, while biosimilars are for chronic conditions.</label>
-  </div>
-</div>
+    <div class="question">
+      <p>20. Which of the following statements most accurately distinguishes biosimilars from small molecule drugs?</p>
+      <div class="options">
+        <label><input type="radio" name="q20" value="a"> Biosimilars are chemically synthesized, while small molecule drugs are derived from living organisms.</label>
+        <label><input type="radio" name="q20" value="b"> Small molecule drugs have high molecular weight, whereas biosimilars have low molecular weight.</label>
+        <label><input type="radio" name="q20" value="c"> Biosimilars are derived from living organisms and have a more complex structure than small molecule drugs, which are chemically synthesized and have a well-defined structure.</label>
+        <label><input type="radio" name="q20" value="d"> Both are derived from living organisms, but biosimilars are less complex.</label>
+        <label><input type="radio" name="q20" value="e"> Small molecule drugs are exclusively used for infectious diseases, while biosimilars are for chronic conditions.</label>
+      </div>
+      <div class="question-feedback" id="feedback-q20"></div>
+    </div>
 
     
     <button type="button" class="btn" onclick="submitQuiz()">Submit</button>
@@ -608,8 +640,8 @@ const correctAnswers = {
      let score = 0;
      const total = Object.keys(correctAnswers).length;
  
-     // Build detailed feedback with colored items
-     let feedbackHTML = '';
+     // Clear any previous inline feedback
+     document.querySelectorAll('.question-feedback').forEach(el => el.innerHTML = '');
  
      for (let key in correctAnswers) {
        const radios = Array.from(document.querySelectorAll(`input[name="${key}"]`));
@@ -619,16 +651,15 @@ const correctAnswers = {
        // Score calc
        if (selected && selected.value === correct) score++;
  
-       // Per-question header
-       feedbackHTML += `<div class="answer-block"><strong>${key.toUpperCase()}</strong><div class="answer-list">`;
+       const feedbackEl = document.getElementById(`feedback-${key}`);
+       if (!feedbackEl) continue;
  
-       // For each option, show styled answer item
+       let feedbackHTML = `<div class="answer-block"><strong>Question ${key.replace(/^q/, '')}</strong><div class="answer-list">`;
+ 
        radios.forEach(r => {
-         // find label text (parent label) or nearby text
          let label = r.parentElement;
          let text = label ? label.textContent.trim() : r.value;
  
-         // determine classes
          let classes = ['answer-item'];
          if (r.value === correct) classes.push('answer-correct');
          if (r.checked && r.value !== correct) classes.push('answer-wrong', 'user-choice');
@@ -637,42 +668,40 @@ const correctAnswers = {
          feedbackHTML += `<div class="${classes.join(' ')}">${text}${r.checked ? ' ◀' : ''}</div>`;
        });
  
-      feedbackHTML += `</div>`; // close answer-list
+       feedbackHTML += `</div>`;
  
-      // explanation + indicate correct answer
-      const correctRadio = radios.find(rr => rr.value === correct);
-      const correctText = correctRadio && correctRadio.parentElement ? correctRadio.parentElement.textContent.trim() : correct;
-      const explanationText = answerExplanations[key] || '';
+       const correctRadio = radios.find(rr => rr.value === correct);
+       const correctText = correctRadio && correctRadio.parentElement ? correctRadio.parentElement.textContent.trim() : correct;
+       const explanationText = answerExplanations[key] || '';
  
-      if (selected) {
-        if (selected.value === correct) {
-          feedbackHTML += `<div class="explanation">✅ Correct — ${explanationText}</div>`;
-        } else {
-          feedbackHTML += `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
-        }
-      } else {
-        feedbackHTML += `<div class="explanation wrong">No answer selected. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
-      }
+       if (selected) {
+         if (selected.value === correct) {
+           feedbackHTML += `<div class="explanation">✅ Correct — ${explanationText}</div>`;
+         } else {
+           feedbackHTML += `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+         }
+       } else {
+         feedbackHTML += `<div class="explanation wrong">No answer selected. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+       }
  
-      feedbackHTML += `</div>`; // close answer-block
+       feedbackHTML += `</div>`;
+       feedbackEl.innerHTML = feedbackHTML;
      }
  
      const percentage = Math.round((score / total) * 100);
      document.getElementById("score").innerText = "0%";
      const resultBox = document.getElementById("resultBox");
      resultBox.style.display = "block";
-     document.getElementById("answers").innerHTML = feedbackHTML;
+     document.getElementById("answers").innerHTML = '';
  
-     // Animate score
      let start = 0;
      const timer = setInterval(() => {
        if (start >= percentage) clearInterval(timer);
        document.getElementById("score").innerText = start + "%";
        start++;
      }, 20);
-    
-    // optional: disable inputs after showing answers to prevent changing answers
-    document.querySelectorAll('#quizForm input').forEach(i => i.disabled = true);
+ 
+     document.querySelectorAll('#quizForm input').forEach(i => i.disabled = true);
    }
  
    // Essay Section

@@ -172,6 +172,11 @@
       display: none;
     }
 
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
     .back-btn {
       margin-top: 2rem;
       text-align: center;
@@ -261,15 +266,6 @@
 </head>
 <body>
 
-  <header>
-    <div class="container" style="display:flex;align-items:center;justify-content:space-between;">
-      <div class="logo">
-        <i class="fas fa-book-medical"></i>
-        <h1>2024 Exam | ToToZ Collection</h1>
-      </div>
-      <button id="backBtn" class="btn"><i class="fas fa-arrow-left"></i> Back</button>
-    </div>
-  </header>
 
 <div class="container" id="mcq-section">
   <h2>Multiple Choice Questions</h2>
@@ -313,39 +309,434 @@
 
 <!-- Short Essay Section (card style with sub-questions) -->
 <section id="essay-section" class="container" style="display:none;">
-  <h2 style="margin-bottom:1rem;color:var(--dark)">Short Essay Questions</h2>
+  <h2 style="margin-bottom:1rem;color:var(--dark)"> 2025 Test 1 Anatomy</h2>
 
   <div class="card">
-    <h3>1. Describe the physiological responses that occur following an acute loss of blood volume.</h3>
+    <h3>1. The Notochord</h3>
 
     <div class="subquestion">
-      <label>a) Immediate cardiovascular compensations</label>
-      <textarea id="ans1a" placeholder="Describe immediate changes (heart rate, vascular tone, etc.)"></textarea>
+      <label>a) What is the notochord? [2]</label>
+      <textarea id="ans1a" placeholder="Define the notochord and its origin..."></textarea>
     </div>
 
     <div class="subquestion">
-      <label>b) Neurohormonal responses</label>
-      <textarea id="ans1b" placeholder="Describe catecholamines, ADH, RAAS, etc."></textarea>
-    </div>
-
-    <div class="subquestion">
-      <label>c) Longer-term hematologic / renal compensation</label>
-      <textarea id="ans1c" placeholder="Describe erythropoiesis, fluid retention, renal changes"></textarea>
+      <label>b) Give its functions and fate. [4]</label>
+      <textarea id="ans1b" placeholder="Describe the roles it plays and what it eventually becomes..."></textarea>
     </div>
 
     <button class="btn" onclick="showAnswers('1')"><i class="fas fa-eye"></i> View Answers</button>
 
     <div id="answers1" class="answers" aria-hidden="true">
       <h3>Model Answers</h3>
-      <p><b>a)</b> Rapid sympathetic activation increases heart rate and contractility; peripheral vasoconstriction raises systemic vascular resistance to maintain perfusion.</p>
-      <p><b>b)</b> Release of catecholamines, ADH secretion and activation of RAAS promote vasoconstriction and fluid retention to support blood pressure.</p>
-      <p><b>c)</b> Kidneys increase erythropoietin to stimulate erythropoiesis; renal sodium/water retention and mobilization of interstitial fluid restore plasma volume over days to weeks.</p>
+      <p><b>a)</b> The notochord is a flexible, rod-like structure derived from the mesoderm that serves as the primary longitudinal skeletal element in the early embryo.</p>
+      <p><b>b)</b> <b>Functions:</b> It acts as the primary inducer for the overlying ectoderm to form the neural plate and provides mechanical support. <b>Fate:</b> It mostly disappears, but remains as the nucleus pulposus of the intervertebral discs.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>2. Capacitation of Sperms</h3>
+
+    <div class="subquestion">
+      <label>a) What is capacitation of sperms? [3]</label>
+      <textarea id="ans2a" placeholder="Define sperm capacitation..."></textarea>
     </div>
 
+    <div class="subquestion">
+      <label>b) How much time is required for it and what are the changes noted during capacitation? [4]</label>
+      <textarea id="ans2b" placeholder="Describe the duration and the physiological/biochemical changes..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('2')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers2" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>a)</b> Capacitation is the final stage of sperm maturation that occurs in the female reproductive tract, rendering the sperm capable of fertilizing an oocyte.</p>
+      <p><b>b)</b> It typically requires about 7 hours. Changes include the removal of the glycoprotein coat/seminal plasma proteins from the plasma membrane and increased membrane permeability to calcium, leading to hypermotility.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>3. Anatomical Position</h3>
+
+    <div class="subquestion">
+      <label>a) Describe the anatomical position [5]</label>
+      <textarea id="ans3a" placeholder="Describe the posture, head, and limb positions..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>b) Explain why it is important to know the anatomical position [2]</label>
+      <textarea id="ans3b" placeholder="Why is a standard reference necessary?"></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('3')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers3" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>a)</b> The body is standing erect, facing forward, feet flat on the floor and slightly apart, with arms at the sides and palms facing forward (supinated).</p>
+      <p><b>b)</b> It provides a universal standard reference point, ensuring that directional terms (like superior or lateral) remain consistent regardless of the patient's actual movement or posture.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>4. Embryonic Germ Layers</h3>
+
+    <div class="subquestion">
+      <label>State the three embryonic germ layers and list three derivatives from each [12]</label>
+      <textarea id="ans4" placeholder="Ectoderm, Mesoderm, Endoderm and their structures..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('4')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers4" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>1. Ectoderm:</b> Central nervous system, epidermis of skin, mammary glands.</p>
+      <p><b>2. Mesoderm:</b> Skeletal muscle, cardiovascular system, dermis of skin.</p>
+      <p><b>3. Endoderm:</b> Epithelial lining of the GI tract, liver, pancreas.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>5. Normal Menstrual Cycle, The following diagram illustrates the mentrual cycle</h3>
+
+    <div class="subquestion">
+      <label>a) Label the phases A, B, and C [3]</label>
+      <img src="../MBS-200-pics/q1.PNG" >
+      <textarea id="ans5a" placeholder="Identify the phases based on the uterine cycle..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>b) The endometrium is the innermost layer of the uterus that sheds off during menses. It is depicted by the layers D, E and F above. Label them and state their blood supply [6]</label>
+      <textarea id="ans5b" placeholder="D: Compact, E: Spongy, F: Basal..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>c) What are the other 2 layers of the uterus? [2]</label>
+      <textarea id="ans5c"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>d) What type of glands are found in the uterus? [1]</label>
+      <textarea id="ans5d"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>e) Which hormone is responsible for: [2] <br>(i) Ovulation at Day 14 <br>(ii) Phase B to occur? </label>
+      <textarea id="ans5e"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>f) Definitions: [5] <br>(i) Menorrhagia <br>(ii) Dysmenorrhoea <br>(iii) Metrorrhagia </label>
+      <textarea id="ans5f"></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('5')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers5" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>a)</b> A: Menstrual phase; B: Proliferative phase; C: Secretory phase.</p>
+      <p><b>b)</b> D: Stratum compactum; E: Stratum spongiosum; F: Stratum basale. D and E (Functional layer) are supplied by spiral arteries; F is supplied by straight arteries.</p>
+      <p><b>c)</b> Myometrium and Perimetrium.</p>
+      <p><b>d)</b> Simple tubular glands.</p>
+      <p><b>e)</b> (i) LH surge; (ii) Estrogen.</p>
+      <p><b>f)</b> (i) Excessive/prolonged menstrual bleeding; (ii) Painful menstruation; (iii) Bleeding between periods.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>6. The Placenta, Structurally, the placenta has two components: fetal and maternall portions.</h3>
+
+    <div class="subquestion">
+      <label>a) Which chorion forms the foetal portion? [2]</label>
+      <textarea id="ans6a"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>b) Which decidua forms the maternal portion? [1]</label>
+      <textarea id="ans6b"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>c) State 4 differences between foetal and maternal portions [4]</label>
+      <textarea id="ans6c"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>d) List 4 protein hormones produced by the placenta and its function [4]</label>
+      <textarea id="ans6d"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>e) What type of placenta is the human placenta? [1]</label>
+      <textarea id="ans6e"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>f) List the layers of the placental barrier (maternal to foetal side) [6]</label>
+      <textarea id="ans6f"></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('6')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers6" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>a)</b> Chorion frondosum.</p>
+      <p><b>b)</b> Decidua basalis.</p>
+      <p><b>c)</b> Foetal portion is smooth/covered by amnion, has umbilical cord attachment. Maternal portion is rough, has cotyledons, and consists of decidua.</p>
+      <p><b>d)</b> hCG (maintains corpus luteum), hPL (metabolism), Relaxin (softens ligaments), ACTH.</p>
+      <p><b>e)</b> Hemochorial placenta.</p>
+      <p><b>f)</b> Syncytiotrophoblast, Cytotrophoblast, Connective tissue of villus, Endothelium of foetal capillaries.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>7) A 24 year old female with suspected meningitis  experinces a delay in lumbar puncture due to poor sample labelling and processing. [4]</h3>
+
+    <div class="subquestion">
+      <label>a) What stain is routinely used for CNS tissue histology?</label>
+      <textarea id="ans7a"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>b) Which fibres primarily constitute the outer layers of the meninges?</label>
+      <textarea id="ans7b"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>c) What organelle is key for CSF-resorbing cell secretion?</label>
+      <textarea id="ans7c"></textarea> 
+    </div>
+
+    <div class="subquestion">
+      <label>d) Which junctional complex prevents CSF leakage ?</label>
+      <textarea id="ans7d"></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('78')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers7" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>a)</b> H&E (standard) or Cresyl Violet (Nissl stain) for neurons.</p>
+      <p><b>b)</b> Keratinized stratified squamous epithelium (thick skin).</p>
+      <p><b>c)</b> Pacinian corpuscles.</p>
+      <p><b>d)</b> Tight junctions.</p>
+    </div>
+  </div>
+
+
+  <div class="card" >
+    <h3>8) An elderly diabetic patient with a chronic non-healing plantar ulcer at Ndola Teaching Hospital. [4]</h3>
+    <div class="subquestion">
+      <label>a) What type of epithelium covers the plantar skin?</label>
+      <textarea id="ans8a"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>b) What receptor detects pressure changes?</label>
+      <textarea id="ans8b"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>c) which cytoskeleton protein anchors desmosome?</label>
+      <textarea id="ans8b"></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('78')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers8" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>a)</b> H&E (standard) or Cresyl Violet (Nissl stain) for neurons.</p>
+      <p><b>b)</b> Keratinized stratified squamous epithelium (thick skin).</p>
+      <p><b>c)</b> Desmoplakin.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>9. A Genetic Profile was done to help diagnose a suspected chromosomal abnormality ay a DNA diagnostic centre. Chromsome abnormalities maybe numerical or structural. </h3>
+
+    <div class="subquestion">
+      <label>Define the following terms: <br>(i) Aneuploid [1] <br>(ii) Trisomy and give 2 examples of a trisomy [3]<br>(iii) Monosomy and give 2 examples of a monosomy [3]</label>
+      <textarea id="ans9i"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label> iv) What can cause aneuploid? [1]</label>
+      <textarea id="ans9i"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label> v) What are structural chromosomal abnormalities ? [2]</label>
+      <textarea id="ans9i"></textarea>
+    </div>
+
+
+    <div class="subquestion">
+      <label>vi) Mention two conditions that result from structural depletion of chromosome 15, state which one is on the maternal or paternal chromosome [4]</label>
+      <textarea id="ans9vi" placeholder="Maternal vs Paternal..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('9')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers9" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>i-iii)</b> Aneuploid: Abnormal number of chromosomes. Trisomy: 3 copies (e.g., Down Syndrome T21, Edwards T18). Monosomy: 1 copy (e.g., Turner Syndrome 45,X).</p>
+      <p><b>iv)</b> Prader-Willi Syndrome (Paternal deletion) and Angelman Syndrome (Maternal deletion).</p>
+      <p><b>v)</b> Structural chromosomal abnormalities are changes in the structure of chromosomes, such as deletions, duplications, inversions, or translocations.</p>
+      <p><b>vi)</b> Prader-Willi Syndrome (Paternal deletion) and Angelman Syndrome (Maternal deletion).</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3> 10. A 19-year-old footballer reports persistent back spasms after training. A muscle biopsy is performed to rule out myopathy [4] </h3>
+    <div class="subquestion">
+      <label><b> a)</b> Which muscle type is biopsied ?</label>
+      <label> <b>b)</b>Which organelle stores calcium for contraction</label>
+      <textarea id="ans10a" placeholder="aaahhh awe mwe"></textarea>
+    </div>
+    
+    <div class="subquestion">
+      <label> <b>b)</b>Which organelle stores calcium for contraction? </label>
+      <textarea id="ans10b" placeholder="aaahhh awe mwe"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label> <b>c)</b>Which Muscle fibre resists fatigue?</label>
+      <textarea id="ans10c" placeholder="aaahhh awe mwe"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label> <b>d)</b>What neurotransmitter structure iniates contraction?</label>
+      <textarea id="ans10d" placeholder="aaahhh awe mwe"></textarea>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>11. Umbilical Cord and Connective Tissue</h3>
+
+    <div class="subquestion">
+      <label>a) Draw and label the contents of full-term umbilical cord in the horizontal section [5]</label>
+      <textarea id="ans11a" placeholder="Describe the two arteries, one vein, Wharton's jelly..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>b) Name the two types of embryonic connective tissue [2]</label>
+      <textarea id="ans11b"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>c) Describe the type of cells, fibers and state of ground substance found in the answers in (b) [6]</label>
+      <textarea id="ans11c"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>d) The connective tissue of the head and neck is derived from which embryonic structures [1] </label>
+      <textarea id="ans11d"></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('11')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers11" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>a)</b> A cross-section should show: 2 Umbilical Arteries, 1 Umbilical Vein, Mucoid connective tissue (Wharton’s Jelly), and a lining of Amniotic Epithelium.</p>
+      <p><b>b)</b> 1. Mesenchyme; 2. Mucous (Mucoid) connective tissue.</p>
+      <p><b>c)</b> <b>Mesenchyme:</b> Star-shaped cells, sparse reticular fibers, semi-fluid ground substance. <b>Mucoid:</b> Fibroblasts, collagen fibers, and a jelly-like (gelatinous) ground substance.</p>
+      <p><b>d)</b> Neural Crest Cells (Ectomesenchyme).</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Section B: Diagram A </h3>
+    <img src="../MBS-200-pics/q2.PNG">
+    <div class="subquestion">
+      <label>Label the parts of the developing embryo (1-13)</label>
+      <textarea id="ansDiagA" placeholder="List labels 1 through 13..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('diagA')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answersdiagA" class="answers" aria-hidden="true">
+      <h3>Model Labels</h3>
+      <table>
+        <tr><td>1. Extraembryonic mesoderm</td><td>8. Prochordal plate</td></tr>
+        <tr><td>2. Trophoblast (Syncytio-)</td><td>9. Primitive streak</td></tr>
+        <tr><td>3. Amniotic cavity</td><td>10. Yolk sac (Secondary)</td></tr>
+        <tr><td>4. Epiblast</td><td>11. Extraembryonic coelom</td></tr>
+        <tr><td>5. Hypoblast</td><td>12. Connecting stalk</td></tr>
+        <tr><td>6. Prechordal plate</td><td>13. Chorionic villi</td></tr>
+        <tr><td>7. Cloacal membrane</td><td></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Section B: Diagram B </h3>
+    <img src="../MBS-200-pics/q3.PNG">
+    <div class="subquestion">
+      <label>Label the parts of the folding embryo (A-M)</label>
+      <textarea id="ansDiagB" placeholder="List labels A through M..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('diagB')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answersdiagB" class="answers" aria-hidden="true">
+      <h3>Model Labels</h3>
+      <table>
+        <tr><td>A. Neural tube</td><td>H. Endoderm</td></tr>
+        <tr><td>B. Surface ectoderm</td><td>I. Amnion / Amniotic cavity</td></tr>
+        <tr><td>C. Notochord</td><td>J. Neural groove</td></tr>
+        <tr><td>D. Somite (Paraxial mesoderm)</td><td>K. Neural fold</td></tr>
+        <tr><td>E. Yolk sac</td><td>L. Intraembryonic coelom</td></tr>
+        <tr><td>F. Lateral plate mesoderm</td><td>M. Midgut (developing)</td></tr>
+        <tr><td>G. Extraembryonic mesoderm</td><td></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Section B: Diagram C </h3>
+    <img src="../MBS-200-pics/q4.PNG">
+    <div class="subquestion">
+      <label>Label the bone structures (1-10)</label>
+      <textarea id="ansDiagC" placeholder="List labels 1 through 10..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('diagC')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answersdiagC" class="answers" aria-hidden="true">
+      <h3>Model Labels</h3>
+      <table>
+        <tr><td>1. Osteocyte</td><td>6. Canaliculi</td></tr>
+        <tr><td>2. Lacuna</td><td>7. Volkmann's canal (Perforating)</td></tr>
+        <tr><td>3. Lamellae (Interstitial)</td><td>8. Haversian canal (Central)</td></tr>
+        <tr><td>4. Periosteum</td><td>9. Osteon (Haversian system)</td></tr>
+        <tr><td>5. Blood vessel</td><td>10. Concentric lamellae</td></tr>
+      </table>
+    </div>
+  </div>
+  
+  <div class="card">
+    <h3>Section B: Diagram D </h3>
+    <img src="../MBS-200-pics/q5.PNG">
+    <div class="subquestion">
+      <label>Label the bone structures (1-10)</label>
+      <textarea id="ansDiagD" placeholder="List labels 1 through 10..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('diagD')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answersdiagD" class="answers" aria-hidden="true">
+      <h3>Model Labels</h3>
+      <table>
+        <tr><td>1. Body</td><td>6. Superior Articular facet</td></tr>
+        <tr><td>2. Posterior Tubercle</td><td>7. Pedicle</td></tr>
+        <tr><td>3. Vertebral Foramen</td><td>8. Foramen Transvesarium</td></tr>
+        <tr><td>4. Lamina</td><td></td></tr>
+        <tr><td>5. Bifid Spine</td><td></td></tr>
+      </table>
+    </div>
   </div>
 
   <!-- New short essay question (added) -->
-  <div class="card">
+  <!-- <div class="card">
     <h3>2. Explain the kidney's role in maintaining electrolyte and fluid balance.</h3>
 
     <div class="subquestion">
@@ -371,8 +762,14 @@
       <p><b>b)</b> Aldosterone acts on distal tubule and collecting duct principal cells to increase expression of ENaC and Na+/K+ ATPase, enhancing sodium reabsorption and potassium secretion.</p>
       <p><b>c)</b> ADH increases water permeability of the collecting duct by inserting aquaporin-2 channels, concentrating urine when the body is dehydrated and reducing free-water excretion.</p>
     </div>
-  </div>
+  </div> -->
  </section>
+
+ <footer class="footer">
+        <button id="backBtn" onclick="goBack()">⬅ Back</button>
+        <h1>ToToZ Collection</h1>
+        <button id="forwardBtn" onclick="goForward()">Forward ➡</button>
+    </footer>
 
 <script>
   // Short explanation text for each question (keyed by question id)
@@ -489,6 +886,7 @@
    const backBtn = document.getElementById('backBtn');
    if (backBtn) backBtn.addEventListener('click', (e) => { e.preventDefault(); goBack(); });
  </script>
+ <script src="../nav.js"></script>
 
 </body>
 </html>
