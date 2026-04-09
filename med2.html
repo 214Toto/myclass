@@ -2997,7 +2997,7 @@
                             <h3> SMOOTH MUSCLE </h3>
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
-                                <a href="not-yet-ready.html" class="pdf-download">
+                                <a onclick="viewPhysioVideo(5)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a onclick="viewphysiology(5)" class="pdf-download">
@@ -3025,7 +3025,7 @@
                             <h3> SKELETAL MUSCLE TISSUE </h3>
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
-                                <a href="not-yet-ready.html" class="pdf-download">
+                                <a onclick="viewPhysioVideo(6)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a onclick="viewphysiology(6)" class="pdf-download">
@@ -3050,7 +3050,7 @@
                             <h3> SYNAPSES </h3>
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
-                                <a href="not-yet-ready.html" class="pdf-download">
+                                <a onclick="viewPhysioVideo(7)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a onclick="viewphysiology(7)" class="pdf-download">
@@ -3075,7 +3075,7 @@
                             <h3> Action Potentials </h3>
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
-                                <a href="not-yet-ready.html" class="pdf-download">
+                                <a onclick="viewPhysioVideo(8)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a onclick="viewphysiology(8)" class="pdf-download">
@@ -3100,7 +3100,7 @@
                             <h3> Nerve Tissue </h3>
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
-                                <a href="not-yet-ready.html" class="pdf-download">
+                                <a onclick="viewPhysioVideo(9)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a onclick="viewphysiology(9)" class="pdf-download">
@@ -3125,7 +3125,7 @@
                             <h3> Muscular System Disorders </h3>
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
-                                <a href="not-yet-ready.html" class="pdf-download">
+                                <a onclick="viewPhysioVideo(10)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a onclick="viewphysiology(10)" class="pdf-download">
@@ -3150,7 +3150,7 @@
                             <h3> Body Fluids </h3>
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
-                                <a href="not-yet-ready.html" class="pdf-download">
+                                <a onclick="viewPhysioVideo(11)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a onclick="viewphysiology(11)" class="pdf-download">
@@ -3178,7 +3178,7 @@
                             <h3> Pathophysiology of Diarrhoea </h3>
                             <p>Detailed analysis of heart function and circulation.</p>
                             <div class="buttonz">
-                                <a href="not-yet-ready.html" class="pdf-download">
+                                <a onclick="viewPhysioVideo(12)" class="pdf-download">
                                     <i class="fas fa-video"></i> Checkout Video
                                 </a>
                                 <a onclick="viewphysiology(12)" class="pdf-download">
@@ -3196,7 +3196,7 @@
                     </div>
 
                     
-                    <div class="resource-card">
+                    <!-- <div class="resource-card">
                         <div class="resource-img">
                             <img src="images/Pharmacy3.jpg" alt="Clinical Guidelines">
                         </div>
@@ -3219,7 +3219,7 @@
                                 <span><i class="fas fa-user-md"></i> By Dr. Smith</span>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
@@ -5018,6 +5018,11 @@ featureCards.forEach(card => {
         function viewTherap2(pdfNum) {
         localStorage.setItem("showTherap2", pdfNum);
         window.location.href = "MBS-230-T/therapeutics-pdf.html";
+        }
+
+        function viewTherapVideo2(pdfNum) {
+        localStorage.setItem("showTherapVideo2", pdfNum);
+        window.location.href = "MBS-230-T/therapeutics-video.html";
         }
 
         function viewPhysioVideo(pdfNum) {
