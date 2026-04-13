@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exam 2022 | ToToZ Collection</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+    :root {
+      --primary: #2b7a78;
+      --accent: #3aafa9;
+      --dark: #17252a;
+      --light: #f8f9fa;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #f5f7fb, #eef6f6);
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--dark));
+      color: white;
+      padding: 1.1rem 0;
+      position: fixed; /* Keeps it at the top when scrolling */
+      top: 0;          /* Added: Ensures it starts at the absolute top */
+      left: 0;         /* Added: Ensures it stretches from the left edge */
+      width: 100%;
+      z-index: 1000;   /* Added: Keeps header above all other elements */
+      box-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* Improved heading styling */
+    header h1 {
+      font-size: 1.25rem;
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: 0.35px;
+      color: #ffffff;
+      text-transform: none;
+      display: inline-block;
+      line-height: 1;
+      text-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* logo heading (keeps icon + title aligned) */
+    .logo h1 {
+      font-size: 1.25rem;
+      margin: 0 0 0 6px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 900px;
+      /* Adjust this value based on how tall your header is */
+      margin: 100px auto 0 auto; 
+      padding: 1.5rem 0;
+    }
+
+    h2 {
+      color: var(--primary);
+      margin: 0 0 0.85rem 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    /* responsive tweaks for small screens */
+    @media (max-width: 520px) {
+      header h1, .logo h1 { font-size: 1rem; }
+      h2 { font-size: 1rem; }
+    }
+
+    .question {
+      margin-bottom: 1.5rem;
+    }
+
+    .question p {
+      font-weight: 600;
+    }
+
+    .options label {
+      display: block;
+      background: #f8fafc;
+      border: 1px solid #d9e2ec;
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      margin-top: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .options label:hover {
+      background: #e0f7f6;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .result {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #f1faf9;
+      border-radius: var(--radius);
+      text-align: center;
+      display: none;
+    }
+
+    .score {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin-top: 0.5rem;
+    }
+
+    /* --- Styles for answer feedback --- */
+    .answer-list { text-align: left; margin-top: 12px; }
+    .answer-item {
+      display: block;
+      padding: 8px 10px;
+      border-radius: 8px;
+      margin: 6px 0;
+      border: 1px solid #e6eef3;
+      background: #ffffff;
+      color: var(--dark);
+      font-weight: 600;
+    }
+    .answer-correct {
+      background: #ecfdf5;       /* light green */
+      border-color: #bbf7d0;
+      color: #065f46;           /* dark green text */
+      box-shadow: 0 6px 18px rgba(16,185,129,0.06);
+    }
+    .answer-wrong {
+      background: #fff1f2;       /* light red */
+      border-color: #fca5a5;
+      color: #9f1239;           /* dark red text */
+      box-shadow: 0 6px 18px rgba(239,68,68,0.06);
+    }
+    .user-choice { outline: 2px dashed rgba(0,0,0,0.04); }
+
+    /* Essay Section */
+    textarea {
+      width: 80%;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.75rem;
+      resize: vertical;
+      min-height: 50px;
+      font-size: 1rem;
+    }
+
+    .essay-answer {
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-top: 0.75rem;
+      display: none;
+    }
+
+    .back-btn {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    /* Explanation box shown under each question in feedback */
+    .explanation {
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: #363d3a;           /* subtle greenish background */
+      color: #065f46;                /* dark green text */
+      font-size: 0.95rem;
+      line-height: 1.4;
+      border: 1px solid #bbf7d0;
+    }
+
+    /* For incorrect explanation (when needed) */
+    .explanation.wrong {
+      background: #fff1f2;
+      color: #7f1d1d;
+      border-color: #fca5a5;
+    }
+
+    /* small label styling for feedback header */
+    .answer-block { color: white; margin-bottom: 12px; }
+    .answer-block strong { display:block; margin-bottom:8px; color: white; }
+    .question-feedback {
+      margin-top: 14px;
+      padding: 14px 16px;
+      color: white;
+      border-radius: 12px;
+      background: #a82525;
+      border: 1px solid #d6e7eb;
+    }
+    .question-feedback .answer-list {
+      margin-top: 10px;
+    }
+
+    /* Essay card styles (compact, readable) */
+    #essay-section { padding-top: 0; }
+    #essay-section .card {
+      background: linear-gradient(180deg, #ffffff, #fbfeff);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(18,38,63,0.06);
+      border: 1px solid rgba(43,122,120,0.06);
+      max-width: 900px;
+      margin: 0 auto 1rem auto;
+    }
+    #essay-section .card h3 {
+      margin: 0 0 10px 0;
+      font-size: 1.02rem;
+      color: var(--dark);
+      font-weight: 700;
+    }
+    #essay-section .subquestion { margin-bottom: 12px; }
+    #essay-section .subquestion label {
+      display:block;
+      font-weight:700;
+      margin-bottom:6px;
+      color:var(--dark);
+    }
+    #essay-section textarea {
+      width:100%;
+      min-height:90px;
+      border-radius:8px;
+      border:1px solid #d1dbe0;
+      padding:10px;
+      resize:vertical;
+      font-family:inherit;
+    }
+    #essay-section .answers {
+      display:none;
+      margin-top:14px;
+      background:#f1faf9;
+      border-radius:8px;
+      padding:12px;
+      border:1px solid #cfeee6;
+      color:var(--dark);
+    }
+    #essay-section .answers h3 { margin-top:0; }
+    #essay-section .card .btn { margin-top:8px; }
+    /* make answers visible area stand out when shown */
+    #essay-section .answers.visible { display:block; }
+
+  </style>
+
+</head>
+<body>
+
+  <header>
+    <div style="max-width: 900px; margin: 0 auto; width: 92%; display:flex; align-items:center; justify-content:space-between;">
+      <div class="logo" style="display: flex; align-items: center;">
+        <i class="fas fa-book-medical"></i>
+        <h1>2022 Biochemistry Test 1</h1>
+      </div>
+      <button id="backBtn" class="btn"><i class="fas fa-arrow-left"></i> Back</button>
+    </div>
+  </header>
+
+<div class="container" id="mcq-section">
+  <h2>Multiple Choice Questions</h2>
+
+  <form id="quizForm">
+
+    <div class="question">
+  <p>1. An amino acid that yields acetoacetyl CoA during catabolism of its carbon skeleton is.......</p>
+  <div class="options">
+    <label><input type="radio" name="q1" value="a"> Glucogenic</label>
+    <label><input type="radio" name="q1" value="b"> Ketogenic</label>
+    <label><input type="radio" name="q1" value="c"> Hydrophobic</label>
+    <label><input type="radio" name="q1" value="d"> Polar</label>
+    <label><input type="radio" name="q1" value="e"> Polar and hydrophobic</label>
+  </div>
+  <div class="question-feedback" id="feedback-q1"></div>
+</div>
+
+<div class="question">
+  <p>2. ........................................is an amino acid the contains an imidazole aromatic ring</p>
+  <div class="options">
+    <label><input type="radio" name="q2" value="a"> Tyrosine</label>
+    <label><input type="radio" name="q2" value="b"> Phenylalanine</label>
+    <label><input type="radio" name="q2" value="c"> Histidine</label>
+    <label><input type="radio" name="q2" value="d"> Proline</label>
+    <label><input type="radio" name="q2" value="e"> Tryptophan</label>
+  </div>
+  <div class="question-feedback" id="feedback-q2"></div>
+</div>
+
+<div class="question">
+  <p>3. A 50-year-old patient is brought to the emergency department with the diagnosis of myocardial infarction. Which lactate dehydrogenase (LDH) isoenzyme activity would prevail in the patient's serum in the first two days after hospitalisation?</p>
+  <div class="options">
+    <label><input type="radio" name="q3" value="a"> LDH<sub>1</sub></label>
+    <label><input type="radio" name="q3" value="b"> LDH<sub>2</sub></label>
+    <label><input type="radio" name="q3" value="c"> LDH<sub>3</sub></label>
+    <label><input type="radio" name="q3" value="d"> LDH<sub>4</sub></label>
+    <label><input type="radio" name="q3" value="e"> LDH<sub>5</sub></label>
+  </div>
+  <div class="question-feedback" id="feedback-q3"></div>
+</div>
+
+<div class="question">
+  <p>4. Which of these bonds/forces mainly contribute to stabilisation of secondary structures of proteins?</p>
+  <div class="options">
+    <label><input type="radio" name="q4" value="a"> Hydrophobic bonds</label>
+    <label><input type="radio" name="q4" value="b"> Van der waal forces</label>
+    <label><input type="radio" name="q4" value="c"> Salt bridges</label>
+    <label><input type="radio" name="q4" value="d"> Hydrogen bonds</label>
+    <label><input type="radio" name="q4" value="e"> Peptide bonds</label>
+  </div>
+  <div class="question-feedback" id="feedback-q4"></div>
+</div>
+
+<div class="question">
+  <p>5. A chiral carbon of an amino acid arises from the fact that it........................................</p>
+  <div class="options">
+    <label><input type="radio" name="q5" value="a"> is symmetric</label>
+    <label><input type="radio" name="q5" value="b"> is bonded to both amino and carboxylic groups</label>
+    <label><input type="radio" name="q5" value="c"> is bonded to four different chemical groups</label>
+    <label><input type="radio" name="q5" value="d"> has net charge of zero</label>
+    <label><input type="radio" name="q5" value="e"> assumes an L configuration</label>
+  </div>
+  <div class="question-feedback" id="feedback-q5"></div>
+</div>
+
+<div class="question">
+  <p>6. The stability of protein structures is supported by a number of bonds. Which bonds support the primary structure?</p>
+  <div class="options">
+    <label><input type="radio" name="q6" value="a"> Ionic</label>
+    <label><input type="radio" name="q6" value="b"> Peptide</label>
+    <label><input type="radio" name="q6" value="c"> Hydrogen</label>
+    <label><input type="radio" name="q6" value="d"> Hydrophilic</label>
+    <label><input type="radio" name="q6" value="e"> Hydrophobic</label>
+  </div>
+  <div class="question-feedback" id="feedback-q6"></div>
+</div>
+
+<div class="question">
+  <p>7. The normal hemoglobin of an adult person consists of two identical &alpha; and two identical &beta; polypeptide chains. What is this level of structure called?</p>
+  <div class="options">
+    <label><input type="radio" name="q7" value="a"> Primary</label>
+    <label><input type="radio" name="q7" value="b"> Secondary</label>
+    <label><input type="radio" name="q7" value="c"> Quaternary</label>
+    <label><input type="radio" name="q7" value="d"> Tertiary</label>
+    <label><input type="radio" name="q7" value="e"> Binary</label>
+  </div>
+  <div class="question-feedback" id="feedback-q7"></div>
+</div>
+
+<div class="question">
+  <p>8. Most of the amino acids found in human body are............................</p>
+  <div class="options">
+    <label><input type="radio" name="q8" value="a"> L-isomers</label>
+    <label><input type="radio" name="q8" value="b"> D-isomers</label>
+    <label><input type="radio" name="q8" value="c"> Optical isomers</label>
+    <label><input type="radio" name="q8" value="d"> D and L- isomers</label>
+    <label><input type="radio" name="q8" value="e"> Optically inactive</label>
+  </div>
+  <div class="question-feedback" id="feedback-q8"></div>
+</div>
+
+<div class="question">
+  <p>9. ........................................primarily determines the function of a protein</p>
+  <div class="options">
+    <label><input type="radio" name="q9" value="a"> Number of amino acids</label>
+    <label><input type="radio" name="q9" value="b"> Spatial conformation</label>
+    <label><input type="radio" name="q9" value="c"> Molecular weight</label>
+    <label><input type="radio" name="q9" value="d"> Chirality of the carbon atoms</label>
+    <label><input type="radio" name="q9" value="e"> Affinity for water</label>
+  </div>
+  <div class="question-feedback" id="feedback-q9"></div>
+</div>
+
+<div class="question">
+  <p>10. Which one of the following amino acids would cause kinks in the peptide backbone, thereby hindering the peptide from forming its usual configuration?</p>
+  <div class="options">
+    <label><input type="radio" name="q10" value="a"> Glycine</label>
+    <label><input type="radio" name="q10" value="b"> Alanine</label>
+    <label><input type="radio" name="q10" value="c"> Glutamic acid</label>
+    <label><input type="radio" name="q10" value="d"> Proline</label>
+    <label><input type="radio" name="q10" value="e"> Valine</label>
+  </div>
+  <div class="question-feedback" id="feedback-q10"></div>
+</div>
+
+<div class="question">
+  <p>11. The underlying principle of spectrophotometry is............................................................</p>
+  <div class="options">
+    <label><input type="radio" name="q11" value="a"> The intensity of colour is a measure of the amount of a material in solution</label>
+    <label><input type="radio" name="q11" value="b"> The reflected light is a measure of the amount of a material in solution</label>
+    <label><input type="radio" name="q11" value="c"> The wavelength of the light absorbed is not related to the material in solution</label>
+    <label><input type="radio" name="q11" value="d"> The intensity of light reflected by the solution is indirectly proportional to the light absorbed</label>
+    <label><input type="radio" name="q11" value="e"> The intensity of light directed to pass through the solution is directly proportional to the colour of the material in solution</label>
+  </div>
+  <div class="question-feedback" id="feedback-q11"></div>
+</div>
+
+
+<div class="question">
+  <p>12. All of the following statements are correct regarding a peptide, except...................</p>
+  <div class="options">
+    <label><input type="radio" name="q12" value="a"> It contains amino terminus</label>
+    <label><input type="radio" name="q12" value="b"> It contains carboxyl terminus</label>
+    <label><input type="radio" name="q12" value="c"> It contains peptide bonds</label>
+    <label><input type="radio" name="q12" value="d"> It contains only basic amino acids</label>
+    <label><input type="radio" name="q12" value="e"> It contains between 2 and 50 amino acids</label>
+  </div>
+  <div class="question-feedback" id="feedback-q12"></div>
+</div>
+
+<div class="question">
+  <p>13. Which of the following is not correct?</p>
+  <div class="options">
+    <label><input type="radio" name="q13" value="a"> Protoporphyrin is bound to a single iron atom in its Fe<sup>3+</sup> state</label>
+    <label><input type="radio" name="q13" value="b"> Iron atom has 6 coordination bonds</label>
+    <label><input type="radio" name="q13" value="c"> Heme consists of a complex organic ring structure, protoporphyrin</label>
+    <label><input type="radio" name="q13" value="d"> Heme is found in a number of oxygen transporting proteins</label>
+    <label><input type="radio" name="q13" value="e"> One of the positions is coordinated to the side chain of a histidine residue</label>
+  </div>
+  <div class="question-feedback" id="feedback-q13"></div>
+</div>
+
+<div class="question">
+  <p>14. Myoglobin is mostly abundant in the..........................................</p>
+  <div class="options">
+    <label><input type="radio" name="q14" value="a"> Skin</label>
+    <label><input type="radio" name="q14" value="b"> Bones</label>
+    <label><input type="radio" name="q14" value="c"> Muscles</label>
+    <label><input type="radio" name="q14" value="d"> Nerves</label>
+    <label><input type="radio" name="q14" value="e"> White blood cells</label>
+  </div>
+  <div class="question-feedback" id="feedback-q14"></div>
+</div>
+
+<div class="question">
+  <p>15. Which of these statements is correct about the role of heme in cytochromes?</p>
+  <div class="options">
+    <label><input type="radio" name="q15" value="a"> Functions as part of the active site</label>
+    <label><input type="radio" name="q15" value="b"> Binds oxygen irreversibly</label>
+    <label><input type="radio" name="q15" value="c"> Functions as an electron carrier</label>
+    <label><input type="radio" name="q15" value="d"> Functions as a competitive inhibitor in reactions</label>
+    <label><input type="radio" name="q15" value="e"> Functions as an activator</label>
+  </div>
+  <div class="question-feedback" id="feedback-q15"></div>
+</div>
+
+<div class="question">
+  <p>16. Heme is a complex of..........................................</p>
+  <div class="options">
+    <label><input type="radio" name="q16" value="a"> protoporphyrin IX and ferric iron</label>
+    <label><input type="radio" name="q16" value="b"> protoporphyrin IX and ferrous iron</label>
+    <label><input type="radio" name="q16" value="c"> porphyrin IX and ferric iron</label>
+    <label><input type="radio" name="q16" value="d"> protoporphyrin IX and Histidine</label>
+    <label><input type="radio" name="q16" value="e"> porphyrin IX and ferrous iron</label>
+  </div>
+  <div class="question-feedback" id="feedback-q16"></div>
+</div>
+
+<div class="question">
+  <p>17. .......................................... is due to the oxidation of heme component to the ferric state</p>
+  <div class="options">
+    <label><input type="radio" name="q17" value="a"> Myoglobin</label>
+    <label><input type="radio" name="q17" value="b"> Metmyoglobin</label>
+    <label><input type="radio" name="q17" value="c"> Hemoglobin C</label>
+    <label><input type="radio" name="q17" value="d"> Hemoglobin F</label>
+    <label><input type="radio" name="q17" value="e"> Hemoglobin SC</label>
+  </div>
+  <div class="question-feedback" id="feedback-q17"></div>
+</div>
+
+<div class="question">
+  <p>18. NADH-Cytochrome b<sub>5</sub> reductase, an enzyme present in red blood cells, helps to correct the occasional oxidation of the hemoglobin iron. Why are newborns particularly susceptible to methemoglobin-producing compounds?</p>
+  <div class="options">
+    <label><input type="radio" name="q18" value="a"> New borns lack the enzyme</label>
+    <label><input type="radio" name="q18" value="b"> The capacity of the enzyme is lower</label>
+    <label><input type="radio" name="q18" value="c"> Their hemoglobin lacks the &alpha;-globin chain</label>
+    <label><input type="radio" name="q18" value="d"> They only have &gamma;-globin chains</label>
+    <label><input type="radio" name="q18" value="e"> The enzyme at this stage has various mutations</label>
+  </div>
+  <div class="question-feedback" id="feedback-q18"></div>
+</div>
+
+<div class="question">
+  <p>19. Phenylketonuria is a genetic disorder that results from..........................................</p>
+  <div class="options">
+    <label><input type="radio" name="q19" value="a"> low or absent activity of an enzyme phenylalanine hydroxylase</label>
+    <label><input type="radio" name="q19" value="b"> low or absent activity of an enzyme tyrosinase</label>
+    <label><input type="radio" name="q19" value="c"> low or absent activity of an enzyme tyrosine oxidase</label>
+    <label><input type="radio" name="q19" value="d"> low or absent activity of an enzyme phenyl oxidase</label>
+    <label><input type="radio" name="q19" value="e"> low or absent activity of an enzyme that converts a non-essential amino acid to an essential amino acid</label>
+  </div>
+  <div class="question-feedback" id="feedback-q19"></div>
+</div>
+
+<div class="question">
+  <p>20. One of the common laboratory experiments in Biochemistry determines electrophoretic spectrum of plasma proteins. What is the physiochemical properties of proteins utilized in this method?</p>
+  <div class="options">
+    <label><input type="radio" name="q20" value="a"> Inability to denaturation</label>
+    <label><input type="radio" name="q20" value="b"> Presence of charge</label>
+    <label><input type="radio" name="q20" value="c"> Optical activity</label>
+    <label><input type="radio" name="q20" value="d"> Solubility</label>
+    <label><input type="radio" name="q20" value="e"> Viscosity</label>
+  </div>
+  <div class="question-feedback" id="feedback-q20"></div>
+</div>
+
+<div class="question">
+  <p>21. Five isoenzymic forms of lactate dehydrogenase from the human blood serum were isolated and their properties studied. What property indicates that the isoenzymic forms were isolated from the same enzyme?</p>
+  <div class="options">
+    <label><input type="radio" name="q21" value="a"> Same physiochemical properties</label>
+    <label><input type="radio" name="q21" value="b"> Catalyzation of the same reaction</label>
+    <label><input type="radio" name="q21" value="c"> The same electrophoretic mobility</label>
+    <label><input type="radio" name="q21" value="d"> Tissue localisation</label>
+    <label><input type="radio" name="q21" value="e"> Same molecular weight</label>
+  </div>
+  <div class="question-feedback" id="feedback-q21"></div>
+</div>
+
+<div class="question">
+  <p>22. The portion of a transmembrane protein that is located within the plasma membrane is most likely to be composed of amino acids that are..........................................</p>
+  <div class="options">
+    <label><input type="radio" name="q22" value="a"> acidic</label>
+    <label><input type="radio" name="q22" value="b"> basic</label>
+    <label><input type="radio" name="q22" value="c"> hydrophobic</label>
+    <label><input type="radio" name="q22" value="d"> glycosylated</label>
+    <label><input type="radio" name="q22" value="e"> acetylated</label>
+  </div>
+  <div class="question-feedback" id="feedback-q22"></div>
+</div>
+
+<div class="question">
+  <p>23. Which one of the following can influence the charge of amino acid residues in the active site of an enzyme?</p>
+  <div class="options">
+    <label><input type="radio" name="q23" value="a"> Competitive inhibitor</label>
+    <label><input type="radio" name="q23" value="b"> Excess substrate</label>
+    <label><input type="radio" name="q23" value="c"> pH of medium</label>
+    <label><input type="radio" name="q23" value="d"> Temperature</label>
+    <label><input type="radio" name="q23" value="e"> Atmospheric pressure</label>
+  </div>
+  <div class="question-feedback" id="feedback-q23"></div>
+</div>
+
+<div class="question">
+  <p>24. Regulation of enzyme activity is the basis for feedback inhibition in enzyme catalysis. Which one of the following represents the most common type of regulation?</p>
+  <div class="options">
+    <label><input type="radio" name="q24" value="a"> Covalent modification</label>
+    <label><input type="radio" name="q24" value="b"> Allosteric regulation</label>
+    <label><input type="radio" name="q24" value="c"> Proteolysis</label>
+    <label><input type="radio" name="q24" value="d"> Carboxylation</label>
+    <label><input type="radio" name="q24" value="e"> Hydroxylation</label>
+  </div>
+  <div class="question-feedback" id="feedback-q24"></div>
+</div>
+
+<div class="question">
+  <p>25. Which globin chains are affected in glycosylated Hemoglobin?</p>
+  <div class="options">
+    <label><input type="radio" name="q25" value="a"> γ-globin chains</label>
+    <label><input type="radio" name="q25" value="b"> α-globin chains</label>
+    <label><input type="radio" name="q25" value="c"> β-globin chains</label>
+    <label><input type="radio" name="q25" value="d"> δ-globin chains</label>
+    <label><input type="radio" name="q25" value="e"> both γ and α-globin chains</label>
+  </div>
+  <div class="question-feedback" id="feedback-q25"></div>
+</div>
+
+<div class="question">
+  <p>26. Patients, homozygous for hemoglobin C, have a condition that arises from...........................</p>
+  <div class="options">
+    <label><input type="radio" name="q26" value="a"> substitution of lysine by glutamic acid in the β-chain</label>
+    <label><input type="radio" name="q26" value="b"> substitution of glutamic acid by lysine in the β-chain</label>
+    <label><input type="radio" name="q26" value="c"> substitution of valine by glutamic acid in the β-chain</label>
+    <label><input type="radio" name="q26" value="d"> substitution of a polar amino acid by a non-polar one in the β-chain</label>
+    <label><input type="radio" name="q26" value="e"> substitution of one of the α-chains by a β-chain</label>
+  </div>
+  <div class="question-feedback" id="feedback-q26"></div>
+</div>
+
+<div class="question">
+  <p>27. Which one of these statements is correct about Thalassemias?</p>
+  <div class="options">
+    <label><input type="radio" name="q27" value="a"> hereditary hemolytic diseases in which there is an imbalance in the synthesis of globin chains</label>
+    <label><input type="radio" name="q27" value="b"> they are polygenic disorders</label>
+    <label><input type="radio" name="q27" value="c"> only α-globin chains are affected</label>
+    <label><input type="radio" name="q27" value="d"> they are not in a class of hemoglobinopathies</label>
+    <label><input type="radio" name="q27" value="e"> Only γ- chains are affected</label>
+  </div>
+  <div class="question-feedback" id="feedback-q27"></div>
+</div>
+
+<div class="question">
+  <p>28. Which two amino acids in collagen usually undergo post translational modification?</p>
+  <div class="options">
+    <label><input type="radio" name="q28" value="a"> lysine and histidine</label>
+    <label><input type="radio" name="q28" value="b"> glycine and alanine</label>
+    <label><input type="radio" name="q28" value="c"> valine and isoleucine</label>
+    <label><input type="radio" name="q28" value="d"> lysine and proline</label>
+    <label><input type="radio" name="q28" value="e"> leucine and glutamic acid</label>
+  </div>
+  <div class="question-feedback" id="feedback-q28"></div>
+</div>
+
+<div class="question">
+  <p>29. Lack of post translational modifications of some amino acids in collagen leads to non-cross linkage of the fibers. Which one of the following refers to the condition that arises?</p>
+  <div class="options">
+    <label><input type="radio" name="q29" value="a"> sickle cell anemia</label>
+    <label><input type="radio" name="q29" value="b"> pernicious anemia</label>
+    <label><input type="radio" name="q29" value="c"> scurvy</label>
+    <label><input type="radio" name="q29" value="d"> phenylketonuria</label>
+    <label><input type="radio" name="q29" value="e"> hemosiderosis</label>
+  </div>
+  <div class="question-feedback" id="feedback-q29"></div>
+</div>
+
+<div class="question">
+  <p>30. Which one of these statements is correct about the Ehlers-Danlos Syndrome?</p>
+  <div class="options">
+    <label><input type="radio" name="q30" value="a"> results from defective heme synthesis</label>
+    <label><input type="radio" name="q30" value="b"> results from defective porphyrin ring synthesis</label>
+    <label><input type="radio" name="q30" value="c"> results from defective collagen synthesis</label>
+    <label><input type="radio" name="q30" value="d"> results from defective elastin synthesis</label>
+    <label><input type="radio" name="q30" value="e"> results from defective keratin synthesis</label>
+  </div>
+  <div class="question-feedback" id="feedback-q30"></div>
+</div>
+
+<div class="question">
+  <p>31. ........................................is the type of fibrous protein found in hair, nails and outer epidermal layer of mammals</p>
+  <div class="options">
+    <label><input type="radio" name="q31" value="a"> Elastin</label>
+    <label><input type="radio" name="q31" value="b"> Keratin</label>
+    <label><input type="radio" name="q31" value="c"> Collagen</label>
+    <label><input type="radio" name="q31" value="d"> Procollagen</label>
+    <label><input type="radio" name="q31" value="e"> Proelastin</label>
+  </div>
+  <div class="question-feedback" id="feedback-q31"></div>
+</div>
+
+<div class="question">
+  <p>32. ........................................is an example of covalent modification used mainly for regulation of enzyme activity</p>
+  <div class="options">
+    <label><input type="radio" name="q32" value="a"> Amination</label>
+    <label><input type="radio" name="q32" value="b"> Acetylation</label>
+    <label><input type="radio" name="q32" value="c"> Phosphorylation</label>
+    <label><input type="radio" name="q32" value="d"> Methylation</label>
+    <label><input type="radio" name="q32" value="e"> Decarboxylation</label>
+  </div>
+  <div class="question-feedback" id="feedback-q32"></div>
+</div>
+
+<div class="question">
+  <p>33. Succinyl CoA and ........................................ are involved in the formation of all the carbon and nitrogen atoms of the porphyrin ring through a condensation reaction catalyzed by an enzyme ALA synthase?</p>
+  <div class="options">
+    <label><input type="radio" name="q33" value="a"> Phenyl alanine</label>
+    <label><input type="radio" name="q33" value="b"> Histidine</label>
+    <label><input type="radio" name="q33" value="c"> Tyrosine</label>
+    <label><input type="radio" name="q33" value="d"> Glycine</label>
+    <label><input type="radio" name="q33" value="e"> Alanine</label>
+  </div>
+  <div class="question-feedback" id="feedback-q33"></div>
+</div>
+
+<div class="question">
+  <p>34. The catabolism of hemoglobin............................</p>
+  <div class="options">
+    <label><input type="radio" name="q34" value="a"> results in the formation of protoporphyrinogen</label>
+    <label><input type="radio" name="q34" value="b"> results in the formation carbon dioxide</label>
+    <label><input type="radio" name="q34" value="c"> occurs in red blood cells</label>
+    <label><input type="radio" name="q34" value="d"> is the only source of bilirubin</label>
+    <label><input type="radio" name="q34" value="e"> involves the destruction of the porphyrin ring</label>
+  </div>
+  <div class="question-feedback" id="feedback-q34"></div>
+</div>
+
+<div class="question">
+  <p>35. Which of the following statements is correct about most enzymes?</p>
+  <div class="options">
+    <label><input type="radio" name="q35" value="a"> They increase the activation energy so that the reaction occurs</label>
+    <label><input type="radio" name="q35" value="b"> can make a reaction happen faster</label>
+    <label><input type="radio" name="q35" value="c"> are used once and need to be replaced after catalyzing a reaction</label>
+    <label><input type="radio" name="q35" value="d"> they are stable in both high acid and high alkaline solutions</label>
+    <label><input type="radio" name="q35" value="e"> are not specific to the type of substrate they receive</label>
+  </div>
+  <div class="question-feedback" id="feedback-q35"></div>
+</div>
+
+<div class="question">
+  <p>36. Which of the following statements about sickle cell anemia is correct? It is...........</p>
+  <div class="options">
+    <label><input type="radio" name="q36" value="a"> an autosomal recessive disorder</label>
+    <label><input type="radio" name="q36" value="b"> an autosomal dominant disorder</label>
+    <label><input type="radio" name="q36" value="c"> a sex linked disorder</label>
+    <label><input type="radio" name="q36" value="d"> due to increased solubility of Hemoglobin</label>
+    <label><input type="radio" name="q36" value="e"> due to reduced deformability of red blood cells</label>
+  </div>
+  <div class="question-feedback" id="feedback-q36"></div>
+</div>
+
+<div class="question">
+  <p>37. Which one of the following statements concerning glutamine is correct?</p>
+  <div class="options">
+    <label><input type="radio" name="q37" value="a"> Contains an amide group</label>
+    <label><input type="radio" name="q37" value="b"> Has Glu as its three letter abbreviation</label>
+    <label><input type="radio" name="q37" value="c"> Classified as an acidic amino acid</label>
+    <label><input type="radio" name="q37" value="d"> Has a charged polar side chain</label>
+    <label><input type="radio" name="q37" value="e"> Doesn't have a chiral carbon</label>
+  </div>
+  <div class="question-feedback" id="feedback-q37"></div>
+</div>
+
+<div class="question">
+  <p>38. Which amino acid is capable of forming disulfide bonds?</p>
+  <div class="options">
+    <label><input type="radio" name="q38" value="a"> Glycine</label>
+    <label><input type="radio" name="q38" value="b"> Proline</label>
+    <label><input type="radio" name="q38" value="c"> Histidine</label>
+    <label><input type="radio" name="q38" value="d"> Cysteine</label>
+    <label><input type="radio" name="q38" value="e"> Isoleucine</label>
+  </div>
+  <div class="question-feedback" id="feedback-q38"></div>
+</div>
+
+<div class="question">
+  <p>39. Succinate dehydrogenase catalyses the dehydrogenation of succinate to fumarate. Malonic acid is used to inhibit the action of this enzyme. What type of inhibition is this?</p>
+  <div class="options">
+    <label><input type="radio" name="q39" value="a"> Competitive</label>
+    <label><input type="radio" name="q39" value="b"> Uncompetitive</label>
+    <label><input type="radio" name="q39" value="c"> Non competitive</label>
+    <label><input type="radio" name="q39" value="d"> Feed back</label>
+    <label><input type="radio" name="q39" value="e"> Allosteric</label>
+  </div>
+  <div class="question-feedback" id="feedback-q39"></div>
+</div>
+
+<div class="question">
+  <p>40. ........................................is associated with a condition known as phenylketonuria.</p>
+  <div class="options">
+    <label><input type="radio" name="q40" value="a"> Proline</label>
+    <label><input type="radio" name="q40" value="b"> Methionine</label>
+    <label><input type="radio" name="q40" value="c"> Phenylalanine</label>
+    <label><input type="radio" name="q40" value="d"> Histidine</label>
+    <label><input type="radio" name="q40" value="e"> Valine</label>
+  </div>
+  <div class="question-feedback" id="feedback-q40"></div>
+</div>
+
+    
+
+    <button type="button" class="btn" onclick="submitQuiz()">Submit</button>
+  </form>
+
+  <div class="result" id="resultBox">
+    <h3>Your Score:</h3>
+    <div class="score" id="score">0%</div>
+    <div id="answers"></div>
+  </div>
+</div>
+
+<!-- Short Essay Section (card style with sub-questions) -->
+<section id="essay-section" class="container" style="display:none;">
+  <h2 style="margin-bottom:1rem;color:var(--dark)">Short Essay Questions</h2>
+
+  <div class="card">
+  <h3>1. Explain how a metabolic pathway can be self-regulating i.e. how it can keep itself off and on.</h3>
+
+  <div class="subquestion">
+    <label>Mechanism of Self-Regulation</label>
+    <textarea id="ansP2_1" placeholder="Describe feedback mechanisms..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('P2_1')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answersP2_1" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>Answer:</b> Metabolic pathways are primarily regulated through <b>negative feedback inhibition</b> (or end-product inhibition). In this process, the final product of the pathway acts as an allosteric inhibitor for an enzyme acting early in the pathway. When product levels are high, the pathway is "turned off"; when levels drop, the inhibition is released and the pathway turns "on" again.</p>
+  </div>
+</div>
+
+<hr>
+
+<div class="card">
+  <h3>2. Explain how denaturation of an enzyme affects its activity. State the effect of the denaturant on each of the structures of the protein enzyme. Do you envisage return of enzyme activity when the denaturant is removed?</h3>
+
+  <div class="subquestion">
+    <label>Effect on Activity and Structures</label>
+    <textarea id="ansP2_2" placeholder="Explain effects on primary, secondary, tertiary structures..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('P2_2')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answersP2_2" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>Effect on Activity:</b> Denaturation changes the three-dimensional shape of the active site, preventing the substrate from binding, which leads to a loss of biological activity.</p>
+    <p><b>Effect on Structures:</b>
+      <ul>
+        <li><b>Primary:</b> Unaffected (peptide bonds remain intact).</li>
+        <li><b>Secondary, Tertiary, and Quaternary:</b> Disrupted as hydrogen bonds, disulfide bridges, and hydrophobic interactions are broken.</li>
+      </ul>
+    </p>
+    <p><b>Return of Activity:</b> In some cases, if the denaturation is mild and the primary structure is intact, the protein may undergo <b>renaturation</b> (refolding) once the denaturant is removed, restoring activity. However, in many cases (like cooked egg white), the process is irreversible.</p>
+  </div>
+</div>
+
+<hr>
+
+<div class="card">
+  <h3>3. State what happens to the rate of product formation in an enzyme catalysed reaction if you continue to:</h3>
+
+  <div class="subquestion">
+    <label>i. add the substrate</label>
+    <textarea id="ansP2_3i" placeholder="What happens as substrate concentration increases?"></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('P2_3')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answersP2_3" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>i)</b> Initially, the rate of product formation will increase linearly as more substrate molecules collide with active sites. However, the rate will eventually reach a maximum (Vmax) and level off. At this point, the enzyme is <b>saturated</b>; all active sites are occupied, and adding more substrate will not further increase the reaction rate.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>3. (Continued) State what happens to the rate of product formation if you continue to:</h3>
+
+  <div class="subquestion">
+    <label>ii. add an inhibitor</label>
+    <textarea id="ansP2_3ii" placeholder="Describe the effect of inhibitors..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>iii. add an enzyme</label>
+    <textarea id="ansP2_3iii" placeholder="Describe the effect of increasing enzyme concentration..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('P2_3cont')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answersP2_3cont" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>ii)</b> Adding an inhibitor will slow down the rate of enzyme action and product formation. In some cases, such as non-competitive or irreversible inhibition, it may stop the reaction entirely.</p>
+    <p><b>iii)</b> Provided there is excess substrate, adding more enzyme increases the rate of reaction. The reaction rate is directly proportional to the enzyme concentration.</p>
+  </div>
+</div>
+
+<hr>
+
+<div class="card">
+  <h3>4. Describe the following, in reference to proteins:</h3>
+
+  <div class="subquestion">
+    <label>a. Primary structure</label>
+    <textarea id="ansP2_4a" placeholder="Describe primary structure..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>b. Secondary structure</label>
+    <textarea id="ansP2_4b" placeholder="Describe secondary structure..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>c. Tertiary structure</label>
+    <textarea id="ansP2_4c" placeholder="Describe tertiary structure..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>d. Quaternary structure</label>
+    <textarea id="ansP2_4d" placeholder="Describe quaternary structure..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>e. What are chaperones and what is their role in protein structure conformation?</label>
+    <textarea id="ansP2_4e" placeholder="Describe chaperones..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('P2_4')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answersP2_4" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>a)</b> The linear sequence of amino acids in a polypeptide chain held together by covalent peptide bonds.</p>
+    <p><b>b)</b> Local spatial arrangement of the polypeptide backbone, such as alpha-helices or beta-pleated sheets, stabilized by hydrogen bonds.</p>
+    <p><b>c)</b> The overall three-dimensional folding of a single polypeptide chain, stabilized by hydrophobic interactions, ionic bonds, and disulfide bridges.</p>
+    <p><b>d)</b> The assembly of two or more polypeptide chains (subunits) into a single functional complex.</p>
+    <p><b>e)</b> Chaperones are specialized proteins that assist in the correct folding or unfolding of other macromolecules. They prevent the formation of non-functional protein aggregates.</p>
+  </div>
+</div>
+
+<hr>
+
+<div class="card">
+  <h3>General Biochemistry Principles</h3>
+
+  <div class="subquestion">
+    <label>5. State two properties of optically active isomers.</label>
+    <textarea id="ansP2_5" placeholder="List properties..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>6. Explain the statement that an enzyme does not change the position of the equilibrium in a reversible reaction. State three factors that can lead to change in equilibrium position.</label>
+    <textarea id="ansP2_6" placeholder="Explain catalysts and equilibrium..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>7. What is the role of methemoglobin in cyanide poisoning?</label>
+    <textarea id="ansP2_7" placeholder="Explain the interaction..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('P2_misc')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answersP2_misc" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>5)</b> 1. They rotate plane-polarized light (either to the left or right). 2. They exist as non-superimposable mirror images of each other.</p>
+    <p><b>6)</b> Enzymes only speed up the rate at which equilibrium is reached by lowering activation energy; they do not alter the final ratio of reactants to products. Factors that *can* change equilibrium include changes in concentration, temperature, or pressure (Le Chatelier's Principle).</p>
+    <p><b>7)</b> Methemoglobin has a high affinity for cyanide. It binds to cyanide to form cyanomethemoglobin, which prevents the cyanide from inhibiting the cytochrome oxidase in the electron transport chain, thereby acting as a scavenger.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>8. In patients that have Diabetes mellitus, explain why there is increased amounts of glycosylated hemoglobin.</h3>
+
+  <div class="subquestion">
+    <label>Explanation of Glycosylation</label>
+    <textarea id="ansP3_8" placeholder="Relate glucose levels to hemoglobin..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('P3_8')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answersP3_8" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>Answer:</b> Patients with Diabetes mellitus have chronically high levels of glucose in their plasma (hyperglycemia). Glucose binds non-enzymatically to hemoglobin in red blood cells through a process called glycation. The amount of glycosylated hemoglobin (HbA1c) is directly proportional to the average blood glucose concentration over the lifespan of the red blood cell.</p>
+  </div>
+</div>
+
+<hr>
+
+<div class="card">
+  <h3>9. A mutation in a gene that codes for the beta chain in hemoglobin causes sickle cell disease. This results in interruption of oxygen flow to tissues. Explain how/why this happens.</h3>
+
+  <div class="subquestion">
+    <label>Pathophysiology of Sickling</label>
+    <textarea id="ansP3_9" placeholder="Explain the effect on red blood cells..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('P3_9')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answersP3_9" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>Answer:</b> The mutation causes hemoglobin molecules (HbS) to polymerize and form long rigid fibers when oxygen levels are low. This deforms the red blood cells into a "sickle" shape. These deformed cells are less flexible and block small blood vessels (capillaries), which interrupts blood flow and oxygen delivery to tissues (vaso-occlusion).</p>
+      </div>
+</div>
+
+<hr>
+
+<div class="card">
+  <h3>10. Explain the relationship that exists between the Michaelis Menten's constant (Km) and the affinity of the enzyme.</h3>
+
+  <div class="subquestion">
+    <label>Km vs Affinity</label>
+    <textarea id="ansP3_10" placeholder="Describe the inverse relationship..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('P3_10')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answersP3_10" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>Answer:</b> There is an inverse relationship between Km and affinity. A <b>lower Km</b> indicates a <b>higher affinity</b> of the enzyme for its substrate (meaning the enzyme can reach half-maximum velocity at a low substrate concentration). Conversely, a <b>higher Km</b> indicates a <b>lower affinity</b>.</p>
+  </div>
+</div>
+
+<hr>
+
+<div class="card">
+  <h3>12. Explain why Sickle cell anaemia is classified as a qualitative hemoglobinopathy.</h3>
+
+  <div class="subquestion">
+    <label>Qualitative vs Quantitative</label>
+    <textarea id="ansP3_12" placeholder="Explain the nature of the defect..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('P3_12')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answersP3_12" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>Answer:</b> It is classified as qualitative because the body produces a normal *amount* of hemoglobin, but the *quality* (structure) of the hemoglobin is abnormal due to a single amino acid substitution. This contrasts with quantitative disorders like thalassemia, where the hemoglobin structure is normal but the amount produced is reduced.</p>
+  </div>
+</div>
+
+<hr>
+
+<div class="card">
+  <h3>14. Enzymes are often used in clinical diagnosis, however one of the disadvantages to this, for some enzymes, is lack of specificity for a particular tissue. Explain this observation in reference to an anti-TB drug, rifampicin.</h3>
+
+  <div class="subquestion">
+    <label>Enzyme Specificity</label>
+    <textarea id="ansP3_14" placeholder="Explain the lack of specificity..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('P3_14')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answersP3_14" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>Answer:</b> Certain enzymes are distributed across many different tissues in the body. If an anti-TB drug like rifampicin causes enzyme induction or tissue damage, the resulting rise in plasma enzyme levels may not clearly indicate which specific organ is affected because the enzyme is not unique to a single tissue.</p>
+  </div>
+</div>
+
+<hr>
+
+<div class="card">
+  <h3>Chemical Messengers and Precursors</h3>
+
+  <div class="subquestion">
+    <label>15. State the precursor amino acid for Serotonin and the type of reaction(s) involved in its formation.</label>
+    <textarea id="ansP3_15" placeholder="Amino acid and reaction type..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>16. Which amino acid is a precursor for histamines and what type of reaction takes place to produce histamines?</label>
+    <textarea id="ansP3_16" placeholder="Amino acid and reaction type..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('P3_msg')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answersP3_msg" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>15) Precursor:</b> Tryptophan. <b>Reactions:</b> Hydroboxylation followed by Decarboxylation.</p>
+    <p><b>16) Precursor:</b> Histidine. <b>Reaction:</b> Decarboxylation.</p>
+  </div>
+</div>
+
+<hr>
+
+<div class="card">
+  <h3>17. Collagen is the most abundant fibrous protein. Describe its structure, stating the number of polypeptide chains and what variation in the amino acid sequence achieves it.</h3>
+
+  <div class="subquestion">
+    <label>Collagen Composition</label>
+    <textarea id="ansP3_17" placeholder="Describe the triple helix..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('P3_17')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answersP3_17" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>Answer:</b> Collagen consists of <b>three polypeptide chains</b> (alpha chains) wound together to form a tight <b>triple helix</b>. This structure is achieved by a repetitive amino acid sequence where <b>Glycine</b> occurs at every third position (Gly-X-Y), allowing the chains to pack closely together.</p>
+      </div>
+</div>
+
+<div class="card">
+    <h3>18. Explain an irreversible type of enzyme inhibition. Give examples and state the type of bonds the inhibitor will form with the enzyme.</h3>
+
+    <div class="subquestion">
+      <label>a) Explanation of irreversible inhibition</label>
+      <textarea id="ans18a" placeholder="Explain the mechanism of irreversible inhibition"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>b) Examples and Bonding</label>
+      <textarea id="ans18b" placeholder="List examples and the specific chemical bonds involved"></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('18')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers18" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>a)</b> Irreversible inhibition occurs when an inhibitor permanently inactivates an enzyme by binding to it in a way that cannot be easily reversed, often by modifying key amino acid residues at the active site.</p>
+      <p><b>b)</b> Examples include Aspirin (acetylsalicylic acid) or Penicillin. These inhibitors typically form strong <b>covalent bonds</b> with the enzyme's active site.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>19. The figure below is a plot showing the effect of substrate concentration on velocity of a reaction. Explain the portions indicated as:</h3>
+    <img src="../MBS-230-B-pics/2025-q4.PNG">
+
+    <div class="subquestion">
+      <label>i. First order</label>
+      <textarea id="ans19i" placeholder="Explain the first-order region"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>ii. Mixed order</label>
+      <textarea id="ans19ii" placeholder="Explain the mixed-order region"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>iii. Zero order</label>
+      <textarea id="ans19iii" placeholder="Explain the zero-order region"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>iv. Define Vmax</label>
+      <textarea id="ans19iv" placeholder="Define Vmax"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>v. Define Km</label>
+      <textarea id="ans19v" placeholder="Define Km"></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('19')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers19" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>i. First order:</b> Occurs at low substrate concentrations ([S] << Km) where the reaction velocity is directly proportional to the substrate concentration.</p>
+      <p><b>ii. Mixed order:</b> Occurs at intermediate doses where the rate is no longer strictly linear but has not yet reached maximum capacity; it is described by the full Michaelis-Menten equation.</p>
+      <p><b>iii. Zero order:</b> Occurs at high substrate concentrations ([S] >> Km) where the enzyme is saturated. The reaction rate is constant and independent of substrate concentration.</p>
+      <p><b>iv. Vmax:</b> The maximum velocity of the enzymatic reaction when the enzyme is fully saturated with substrate.</p>
+      <p><b>v. Km:</b> The Michaelis constant; it is the substrate concentration at which the reaction velocity is exactly half of Vmax ($V = \frac{1}{2} V_{max}$). It reflects the affinity of the enzyme for its substrate.</p>
+    </div>
+  </div> 
+</section>
+
+<script>
+  // Short explanation text for each question (keyed by question id)
+  const answerExplanations = {
+  q1: "Ketogenic amino acids are broken down into ketone bodies such as acetoacetate or acetoacetyl CoA.",
+  q2: "Histidine features a side chain with a five-membered imidazole aromatic ring.",
+  q3: "LDH1 (found in heart muscle) increases significantly in the blood following a myocardial infarction.",
+  q4: "The folding of alpha-helices and beta-sheets is primarily held together by hydrogen bonds between backbone atoms.",
+  q5: "Chirality occurs when a carbon atom is asymmetrical, meaning it is bonded to four distinct chemical groups.",
+  q6: "The primary structure of a protein is the sequence of amino acids held together by covalent peptide bonds.",
+  q7: "Quaternary structure refers to the arrangement and interaction of multiple polypeptide subunits, such as the four chains in hemoglobin.",
+  q8: "In biological systems, almost all protein-building amino acids exist in the L-configuration.",
+  q9: "The specific 3D spatial folding (conformation) allows a protein to interact with its environment and perform its job.",
+  q10: "Proline's unique cyclic side chain puts a rigid bend or 'kink' in the polypeptide chain.",
+  q11: "Spectrophotometry relies on the principle that the amount of light absorbed (and thus the intensity of color) is proportional to the concentration of the substance in solution.",
+  q12: "Peptides can be composed of any combination of amino acids (acidic, basic, or neutral), not just basic ones.",
+  q13: "In functional heme (as in hemoglobin or myoglobin), the iron must be in the ferrous (Fe2+) state to bind oxygen; the ferric (Fe3+) state cannot bind O2.",
+  q14: "Myoglobin is a specialized oxygen-binding protein found predominantly in cardiac and skeletal muscle tissue.",
+  q15: "In cytochromes, the iron in heme cycles between Fe2+ and Fe3+, allowing the protein to function as an electron carrier in the electron transport chain.",
+  q16: "Heme is chemically defined as a coordination complex consisting of a protoporphyrin IX ring and a central ferrous (Fe2+) iron atom.",
+  q17: "Metmyoglobin is the oxidized form of myoglobin, where the heme iron has been converted from the ferrous (Fe2+) to the ferric (Fe3+) state.",
+  q18: "Newborns have approximately half the capacity of adult NADH-cytochrome b5 reductase, making them more sensitive to methemoglobinemia.",
+  q19: "Phenylketonuria (PKU) is caused by a deficiency in phenylalanine hydroxylase, the enzyme that converts phenylalanine to tyrosine.",
+  q20: "Electrophoresis separates proteins based on their movement in an electric field, which is primarily determined by their net electrical charge.",
+  q21: "Isoenzymes (isozymes) are different physical forms of an enzyme that catalyze the exact same chemical reaction.",
+  q22: "The interior of the lipid bilayer is non-polar; therefore, the transmembrane domains of proteins consist primarily of hydrophobic amino acids.",
+  q23: "The pH of the medium determines the ionization state (charge) of the acidic and basic R-groups of amino acids in the active site.",
+  q24: "Allosteric regulation is a primary and common mechanism for controlling metabolic pathways via feedback inhibition.",
+  q25: "In glycosylated hemoglobin (HbA1c), glucose is non-enzymatically attached specifically to the N-terminal valine of the β-globin chains.",
+  q26: "Hemoglobin C is caused by a point mutation where glutamic acid is substituted by lysine at position 6 of the β-globin chain.",
+  q27: "Thalassemias are hereditary disorders characterized by the defective or absent synthesis of one or more globin chains, leading to imbalance.",
+  q28: "Lysine and proline undergo hydroxylation, a critical post-translational modification for collagen stability.",
+  q29: "Scurvy is caused by Vitamin C deficiency, which is a required cofactor for the hydroxylation of proline and lysine in collagen.",
+  q30: "Ehlers-Danlos Syndrome (EDS) is a group of genetic disorders caused by defects in the synthesis or structure of fibrillar collagen.",
+  q31: "Keratin is the structural fibrous protein that makes up hair, nails, and the outer layer of the skin.",
+  q32: "Phosphorylation is the most widespread covalent modification used to regulate enzyme activity rapidly and reversibly.",
+  q33: "The first step of heme synthesis involves the condensation of Succinyl CoA and Glycine to form δ-aminolevulinic acid (ALA).",
+  q34: "Hemoglobin catabolism involves the opening and destruction of the porphyrin ring to ultimately form bilirubin.",
+  q35: "Enzymes are biological catalysts that increase the rate of reaction by lowering the activation energy barrier.",
+  q36: "Sickle cell anemia is an autosomal recessive disorder caused by a specific mutation in the β-globin gene.",
+  q37: "Glutamine is a polar amino acid that contains an amide functional group in its side chain.",
+  q38: "Cysteine contains a sulfhydryl (-SH) group that can react with another cysteine to form a covalent disulfide bond.",
+  q39: "Malonate is a structural analog of succinate and competes for the same active site, making it a classic competitive inhibitor.",
+  q40: "Phenylketonuria (PKU) is caused by a deficiency in the enzyme that metabolizes the amino acid phenylalanine."
+};
+
+const correctAnswers = { 
+  q1: "b", 
+  q2: "c",
+  q3: "a",
+  q4: "d",
+  q5: "c",
+  q6: "b",
+  q7: "c",
+  q8: "a",
+  q9: "b",
+  q10: "d",
+  q11: "a",
+  q12: "d",
+  q13: "a",
+  q14: "c",
+  q15: "c",
+  q16: "b",
+  q17: "b",
+  q18: "b",
+  q19: "a",
+  q20: "b",
+  q21: "b",
+  q22: "c",
+  q23: "c",
+  q24: "b",
+  q25: "c",
+  q26: "b",
+  q27: "a",
+  q28: "d",
+  q29: "c",
+  q30: "c",
+  q31: "b",
+  q32: "c",
+  q33: "d",
+  q34: "e",
+  q35: "b",
+  q36: "a",
+  q37: "a",
+  q38: "d",
+  q39: "a",
+  q40: "c",
+};
+
+
+  function submitQuiz() {
+     let score = 0;
+     const total = Object.keys(correctAnswers).length;
+ 
+     // Clear any previous inline feedback
+     document.querySelectorAll('.question-feedback').forEach(el => el.innerHTML = '');
+ 
+     for (let key in correctAnswers) {
+       const radios = Array.from(document.querySelectorAll(`input[name="${key}"]`));
+       const selected = radios.find(r => r.checked);
+       const correct = correctAnswers[key];
+ 
+       // Score calc
+       if (selected && selected.value === correct) score++;
+ 
+       const feedbackEl = document.getElementById(`feedback-${key}`);
+       if (!feedbackEl) continue;
+ 
+       let feedbackHTML = `<div class="answer-block"><strong>Question ${key.replace(/^q/, '')}</strong><div class="answer-list">`;
+ 
+       radios.forEach(r => {
+         let label = r.parentElement;
+         let text = label ? label.textContent.trim() : r.value;
+ 
+         let classes = ['answer-item'];
+         if (r.value === correct) classes.push('answer-correct');
+         if (r.checked && r.value !== correct) classes.push('answer-wrong', 'user-choice');
+         if (r.checked && r.value === correct) classes.push('user-choice');
+ 
+         feedbackHTML += `<div class="${classes.join(' ')}">${text}${r.checked ? ' ◀' : ''}</div>`;
+       });
+ 
+       feedbackHTML += `</div>`;
+ 
+       const correctRadio = radios.find(rr => rr.value === correct);
+       const correctText = correctRadio && correctRadio.parentElement ? correctRadio.parentElement.textContent.trim() : correct;
+       const explanationText = answerExplanations[key] || '';
+ 
+       if (selected) {
+         if (selected.value === correct) {
+           feedbackHTML += `<div class="explanation">✅ Correct — ${explanationText}</div>`;
+         } else {
+           feedbackHTML += `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+         }
+       } else {
+         feedbackHTML += `<div class="explanation wrong">No answer selected. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+       }
+ 
+       feedbackHTML += `</div>`;
+       feedbackEl.innerHTML = feedbackHTML;
+     }
+ 
+     const percentage = Math.round((score / total) * 100);
+     document.getElementById("score").innerText = "0%";
+     const resultBox = document.getElementById("resultBox");
+     resultBox.style.display = "block";
+     document.getElementById("answers").innerHTML = '';
+ 
+     let start = 0;
+     const timer = setInterval(() => {
+       if (start >= percentage) clearInterval(timer);
+       document.getElementById("score").innerText = start + "%";
+       start++;
+     }, 20);
+ 
+     document.querySelectorAll('#quizForm input').forEach(i => i.disabled = true);
+   }
+ 
+   // Essay Section
+   function showEssayAnswers() {
+     document.querySelectorAll(".essay-answer").forEach(a => a.style.display = "block");
+   }
+
+   // Show/hide model answers for an essay card
+   function showAnswers(id) {
+     const el = document.getElementById('answers' + id);
+     if (!el) return;
+     const isVisible = el.classList.toggle('visible');
+     el.setAttribute('aria-hidden', !isVisible);
+     if (isVisible) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+   }
+ 
+   // Mode switching (from first file)
+   const mode = localStorage.getItem("examMode"); // "mcq" or "essay"
+   if (mode === "essay") {
+     document.getElementById("mcq-section").style.display = "none";
+     document.getElementById("essay-section").style.display = "block";
+   }
+ 
+   // Navigate to the previous page if available, otherwise fall back to index.html
+   function goBack() {
+     if (history.length > 1) {
+       history.back();
+     } else {
+       window.location.href = "index.html";
+     }
+   }
+ 
+   // header back button hookup (same behaviour)
+   const backBtn = document.getElementById('backBtn');
+   if (backBtn) backBtn.addEventListener('click', (e) => { e.preventDefault(); goBack(); });
+ </script>
+
+</body>
+</html>

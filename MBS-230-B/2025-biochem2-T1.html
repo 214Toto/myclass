@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exam 2025 | ToToZ Collection</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2b7a78;
+      --accent: #3aafa9;
+      --dark: #17252a;
+      --light: #f8f9fa;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #f5f7fb, #eef6f6);
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--dark));
+      color: white;
+      padding: 1.1rem 0;
+      position: fixed; /* Keeps it at the top when scrolling */
+      top: 0;          /* Added: Ensures it starts at the absolute top */
+      left: 0;         /* Added: Ensures it stretches from the left edge */
+      width: 100%;
+      z-index: 1000;   /* Added: Keeps header above all other elements */
+      box-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* Improved heading styling */
+    header h1 {
+      font-size: 1.25rem;
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: 0.35px;
+      color: #ffffff;
+      text-transform: none;
+      display: inline-block;
+      line-height: 1;
+      text-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* logo heading (keeps icon + title aligned) */
+    .logo h1 {
+      font-size: 1.25rem;
+      margin: 0 0 0 6px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 900px;
+      /* Adjust this value based on how tall your header is */
+      margin: 100px auto 0 auto; 
+      padding: 1.5rem 0;
+    }
+
+    h2 {
+      color: var(--primary);
+      margin: 0 0 0.85rem 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    /* responsive tweaks for small screens */
+    @media (max-width: 520px) {
+      header h1, .logo h1 { font-size: 1rem; }
+      h2 { font-size: 1rem; }
+    }
+
+    .question {
+      margin-bottom: 1.5rem;
+    }
+
+    .question p {
+      font-weight: 600;
+    }
+
+    .options label {
+      display: block;
+      background: #f8fafc;
+      border: 1px solid #d9e2ec;
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      margin-top: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .options label:hover {
+      background: #e0f7f6;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .result {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #f1faf9;
+      border-radius: var(--radius);
+      text-align: center;
+      display: none;
+    }
+
+    .score {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin-top: 0.5rem;
+    }
+
+    /* --- Styles for answer feedback --- */
+    .answer-list { text-align: left; margin-top: 12px; }
+    .answer-item {
+      display: block;
+      padding: 8px 10px;
+      border-radius: 8px;
+      margin: 6px 0;
+      border: 1px solid #e6eef3;
+      background: #ffffff;
+      color: var(--dark);
+      font-weight: 600;
+    }
+    .answer-correct {
+      background: #ecfdf5;       /* light green */
+      border-color: #bbf7d0;
+      color: #065f46;           /* dark green text */
+      box-shadow: 0 6px 18px rgba(16,185,129,0.06);
+    }
+    .answer-wrong {
+      background: #fff1f2;       /* light red */
+      border-color: #fca5a5;
+      color: #9f1239;           /* dark red text */
+      box-shadow: 0 6px 18px rgba(239,68,68,0.06);
+    }
+    .user-choice { outline: 2px dashed rgba(0,0,0,0.04); }
+
+    /* Essay Section */
+    textarea {
+      width: 80%;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.75rem;
+      resize: vertical;
+      min-height: 50px;
+      font-size: 1rem;
+    }
+
+    .essay-answer {
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-top: 0.75rem;
+      display: none;
+    }
+
+    .back-btn {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    /* Explanation box shown under each question in feedback */
+    .explanation {
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: #363d3a;           /* subtle greenish background */
+      color: #065f46;                /* dark green text */
+      font-size: 0.95rem;
+      line-height: 1.4;
+      border: 1px solid #bbf7d0;
+    }
+
+    /* For incorrect explanation (when needed) */
+    .explanation.wrong {
+      background: #fff1f2;
+      color: #7f1d1d;
+      border-color: #fca5a5;
+    }
+
+    /* small label styling for feedback header */
+    .answer-block { color: white; margin-bottom: 12px; }
+    .answer-block strong { display:block; margin-bottom:8px; color: white; }
+    .question-feedback {
+      margin-top: 14px;
+      padding: 14px 16px;
+      color: white;
+      border-radius: 12px;
+      background: #a82525;
+      border: 1px solid #d6e7eb;
+    }
+    .question-feedback .answer-list {
+      margin-top: 10px;
+    }
+
+    /* Essay card styles (compact, readable) */
+    #essay-section { padding-top: 0; }
+    #essay-section .card {
+      background: linear-gradient(180deg, #ffffff, #fbfeff);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(18,38,63,0.06);
+      border: 1px solid rgba(43,122,120,0.06);
+      max-width: 900px;
+      margin: 0 auto 1rem auto;
+    }
+    #essay-section .card h3 {
+      margin: 0 0 10px 0;
+      font-size: 1.02rem;
+      color: var(--dark);
+      font-weight: 700;
+    }
+    #essay-section .subquestion { margin-bottom: 12px; }
+    #essay-section .subquestion label {
+      display:block;
+      font-weight:700;
+      margin-bottom:6px;
+      color:var(--dark);
+    }
+    #essay-section textarea {
+      width:100%;
+      min-height:90px;
+      border-radius:8px;
+      border:1px solid #d1dbe0;
+      padding:10px;
+      resize:vertical;
+      font-family:inherit;
+    }
+    #essay-section .answers {
+      display:none;
+      margin-top:14px;
+      background:#f1faf9;
+      border-radius:8px;
+      padding:12px;
+      border:1px solid #cfeee6;
+      color:var(--dark);
+    }
+    #essay-section .answers h3 { margin-top:0; }
+    #essay-section .card .btn { margin-top:8px; }
+    /* make answers visible area stand out when shown */
+    #essay-section .answers.visible { display:block; }
+
+  </style>
+
+</head>
+<body>
+
+  <header>
+    <div style="max-width: 900px; margin: 0 auto; width: 92%; display:flex; align-items:center; justify-content:space-between;">
+      <div class="logo" style="display: flex; align-items: center;">
+        <i class="fas fa-book-medical"></i>
+        <h1>2025 Biochemistry Test 1</h1>
+      </div>
+      <button id="backBtn" class="btn"><i class="fas fa-arrow-left"></i> Back</button>
+    </div>
+  </header>
+
+<div class="container" id="mcq-section">
+  <h2>Multiple Choice Questions</h2>
+
+  <form id="quizForm">
+
+    <div class="question">
+      <p>1. ........................................is an example of covalent modification used mainly for regulation of enzyme activity</p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="a"> Amination</label>
+        <label><input type="radio" name="q1" value="b"> Acetylation</label>
+        <label><input type="radio" name="q1" value="c"> Phosphorylation</label>
+        <label><input type="radio" name="q1" value="d"> Methylation</label>
+        <label><input type="radio" name="q1" value="e"> Decarboxylation</label>
+      </div>
+      <div class="question-feedback" id="feedback-q1"></div>
+    </div>
+
+    <div class="question">
+      <p>2. Which of the following statements is correct about most enzymes?</p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="a"> They increase the activation energy so that the reaction occurs</label>
+        <label><input type="radio" name="q2" value="b"> They can make a reaction happen faster</label>
+        <label><input type="radio" name="q2" value="c"> There are used once and need to be replaced after catalyzing a reaction</label>
+        <label><input type="radio" name="q2" value="d"> They are stable in both high acid and high alkaline solutions</label>
+        <label><input type="radio" name="q2" value="e"> They are not specific to the type of substrate they receive</label>
+      </div>
+      <div class="question-feedback" id="feedback-q2"></div>
+    </div>
+
+    <div class="question">
+      <p>3. Which one of the following statements concerning glutamine is correct?</p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="a"> Contains an amide group</label>
+        <label><input type="radio" name="q3" value="b"> Has Gln as its three letter abbreviation</label>
+        <label><input type="radio" name="q3" value="c"> Classified as an acidic amino acid</label>
+        <label><input type="radio" name="q3" value="d"> Has a charged polar side chain</label>
+        <label><input type="radio" name="q3" value="e"> Doesn't have a chiral carbon</label>
+      </div>
+      <div class="question-feedback" id="feedback-q3"></div>
+    </div>
+
+    <div class="question">
+      <p>4. Succinate dehydrogenase catalyses the dehydrogenation of succinate to fumarate. Malonic acid is used to inhibit the action of this enzyme. What type of inhibition is this?</p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="a"> Competitive</label>
+        <label><input type="radio" name="q4" value="b"> Uncompetitive</label>
+        <label><input type="radio" name="q4" value="c"> Non competitive</label>
+        <label><input type="radio" name="q4" value="d"> Feed back</label>
+        <label><input type="radio" name="q4" value="e"> Allosteric</label>
+      </div>
+      <div class="question-feedback" id="feedback-q4"></div>
+    </div>
+
+    <div class="question">
+      <p>5. ........................................is associated with a condition known as Alkaptonuria.</p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="a"> Proline</label>
+        <label><input type="radio" name="q5" value="b"> Methionine</label>
+        <label><input type="radio" name="q5" value="c"> Phenylalanine</label>
+        <label><input type="radio" name="q5" value="d"> Histidine</label>
+        <label><input type="radio" name="q5" value="e"> Valine</label>
+      </div>
+      <div class="question-feedback" id="feedback-q5"></div>
+    </div>
+
+    <div class="question">
+      <p>6. An amino acid that yields acetoacetyl CoA during catabolism of its carbon skeleton is........................................</p>
+      <div class="options">
+        <label><input type="radio" name="q6" value="a"> Glucogenic</label>
+        <label><input type="radio" name="q6" value="b"> Ketogenic</label>
+        <label><input type="radio" name="q6" value="c"> Hydrophobic</label>
+        <label><input type="radio" name="q6" value="d"> Polar</label>
+        <label><input type="radio" name="q6" value="e"> Polar and hydrophobic</label>
+      </div>
+      <div class="question-feedback" id="feedback-q6"></div>
+    </div>
+
+    <div class="question">
+      <p>7. ........................................is an amino acid the contains an imidazole ring</p>
+      <div class="options">
+        <label><input type="radio" name="q7" value="a"> Tyrosine</label>
+        <label><input type="radio" name="q7" value="b"> Phenylalanine</label>
+        <label><input type="radio" name="q7" value="c"> Histidine</label>
+        <label><input type="radio" name="q7" value="d"> Proline</label>
+        <label><input type="radio" name="q7" value="e"> Tryptophan</label>
+      </div>
+      <div class="question-feedback" id="feedback-q7"></div>
+    </div>
+
+    <div class="question">
+      <p>8. A 50-year-old patient is brought to the emergency department with the diagnosis of myocardial infarction. Which lactate dehydrogenase (LDH) isoenzyme activity would prevail in the patient's serum in the first two days after hospitalisation?</p>
+      <div class="options">
+        <label><input type="radio" name="q8" value="a"> LDH<sub>1</sub></label>
+        <label><input type="radio" name="q8" value="b"> LDH<sub>2</sub></label>
+        <label><input type="radio" name="q8" value="c"> LDH<sub>3</sub></label>
+        <label><input type="radio" name="q8" value="d"> LDH<sub>4</sub></label>
+        <label><input type="radio" name="q8" value="e"> LDH<sub>5</sub></label>
+      </div>
+      <div class="question-feedback" id="feedback-q8"></div>
+    </div>
+
+    <div class="question">
+      <p>9. A chiral carbon of an amino acid arises from the fact that it........................................</p>
+      <div class="options">
+        <label><input type="radio" name="q9" value="a"> is symmetric</label>
+        <label><input type="radio" name="q9" value="b"> is bonded to both amino and carboxylic groups</label>
+        <label><input type="radio" name="q9" value="c"> is bonded to four different chemical groups</label>
+        <label><input type="radio" name="q9" value="d"> has net charge of zero</label>
+        <label><input type="radio" name="q9" value="e"> assumes an L configuration</label>
+      </div>
+      <div class="question-feedback" id="feedback-q9"></div>
+    </div>
+
+    <div class="question">
+      <p>10. The stability of protein structures is supported by a number of bonds. Which bonds support the primary structure?</p>
+      <div class="options">
+        <label><input type="radio" name="q10" value="a"> Ionic</label>
+        <label><input type="radio" name="q10" value="b"> Peptide</label>
+        <label><input type="radio" name="q10" value="c"> Hydrogen</label>
+        <label><input type="radio" name="q10" value="d"> Hydrophilic</label>
+        <label><input type="radio" name="q10" value="e"> Hydrophobic</label>
+      </div>
+      <div class="question-feedback" id="feedback-q10"></div>
+    </div>
+
+    <div class="question">
+      <p>11. The normal hemoglobin of an adult person consists of two identical α and two identical β polypeptide chains. What is this level of structure called?</p>
+      <div class="options">
+        <label><input type="radio" name="q11" value="a"> Primary</label>
+        <label><input type="radio" name="q11" value="b"> Secondary</label>
+        <label><input type="radio" name="q11" value="c"> Quaternary</label>
+        <label><input type="radio" name="q11" value="d"> Tertiary</label>
+        <label><input type="radio" name="q11" value="e"> Binary</label>
+      </div>
+      <div class="question-feedback" id="feedback-q11"></div>
+    </div>
+
+    <div class="question">
+      <p>12. One of the common laboratory experiments in Biochemistry determines electrophoretic spectrum of plasma proteins. What is the physiochemical properties of proteins utilized in this method?</p>
+      <div class="options">
+        <label><input type="radio" name="q12" value="a"> Inability to denaturation</label>
+        <label><input type="radio" name="q12" value="b"> Presence of charge</label>
+        <label><input type="radio" name="q12" value="c"> Optical activity</label>
+        <label><input type="radio" name="q12" value="d"> Solubility</label>
+        <label><input type="radio" name="q12" value="e"> Viscosity</label>
+      </div>
+      <div class="question-feedback" id="feedback-q12"></div>
+    </div>
+
+    <div class="question">
+      <p>13. Amino acids are an important substrate for gluconeogenesis during fasting. Which one of the following is a major gluconeogenic amino acid received by the liver?</p>
+      <div class="options">
+        <label><input type="radio" name="q13" value="a"> Alanine</label>
+        <label><input type="radio" name="q13" value="b"> Glycine</label>
+        <label><input type="radio" name="q13" value="c"> Cysteine</label>
+        <label><input type="radio" name="q13" value="d"> Pyruvate</label>
+        <label><input type="radio" name="q13" value="e"> Tryptophan</label>
+      </div>
+      <div class="question-feedback" id="feedback-q13"></div>
+    </div>
+
+    <div class="question">
+      <p>14. Which amino acid is involved in producing glutathione, an important antioxidant?</p>
+      <div class="options">
+        <label><input type="radio" name="q14" value="a"> Glutamine</label>
+        <label><input type="radio" name="q14" value="b"> Glutamate</label>
+        <label><input type="radio" name="q14" value="c"> Proline</label>
+        <label><input type="radio" name="q14" value="d"> Ornithine</label>
+        <label><input type="radio" name="q14" value="e"> Arginine</label>
+      </div>
+      <div class="question-feedback" id="feedback-q14" ></div>
+    </div>
+
+    <div class="question">
+      <p>15. A protein's activity is altered when a particular serine side chain is phosphorylated. Which of the following amino acid substitutions at this position could lead to a permanent alteration in normal enzyme activity?</p>
+      <div class="options">
+        <label><input type="radio" name="q15" value="a"> Serine to Glutamic acid</label>
+        <label><input type="radio" name="q15" value="b"> Serine to Threonine</label>
+        <label><input type="radio" name="q15" value="c"> Serine to Tyrosine</label>
+        <label><input type="radio" name="q15" value="d"> Serine to Lysine</label>
+        <label><input type="radio" name="q15" value="e"> Serine to Leucine</label>
+      </div>
+      <div class="question-feedback" id="feedback-q15"></div>
+    </div>
+
+    <div class="question">
+      <p>16. One of the main sources of non-volatile acid in the body is sulfuric acid generated from the sulfur-containing compounds in ingested food or from the metabolism of the sulfur-containing amino acids. Which of the following amino acids would lead to sulfuric acid formation?</p>
+      <div class="options">
+        <label><input type="radio" name="q16" value="a"> Cysteine and isoleucine</label>
+        <label><input type="radio" name="q16" value="b"> Cysteine and alanine</label>
+        <label><input type="radio" name="q16" value="c"> Cysteine and methionine</label>
+        <label><input type="radio" name="q16" value="d"> Methionine and isoleucine</label>
+        <label><input type="radio" name="q16" value="e"> Isoleucine and alanine</label>
+      </div>
+      <div class="question-feedback" id="feedback-q16"></div>
+    </div>
+
+    <div class="question">
+      <p>17. What would be the most likely composition of amino acids that form a portion of a transmembrane protein located within the plasma membrane?</p>
+      <div class="options">
+        <label><input type="radio" name="q17" value="a"> acidic</label>
+        <label><input type="radio" name="q17" value="b"> basic</label>
+        <label><input type="radio" name="q17" value="c"> hydrophobic</label>
+        <label><input type="radio" name="q17" value="d"> glycosylated</label>
+        <label><input type="radio" name="q17" value="e"> acetylated</label>
+      </div>
+      <div class="question-feedback" id="feedback-q17"></div>
+    </div>
+
+    <div class="question">
+      <p>18. Five isoenzymic forms of lactate dehydrogenase from the human blood serum were isolated and their properties studied. What property indicates that the isoenzymic forms were isolated from the same enzyme?</p>
+      <div class="options">
+        <label><input type="radio" name="q18" value="a"> Same physiochemical properties</label>
+        <label><input type="radio" name="q18" value="b"> Catalyzation of the same reaction</label>
+        <label><input type="radio" name="q18" value="c"> The same electrophoretic mobility</label>
+        <label><input type="radio" name="q18" value="d"> Tissue localisation</label>
+        <label><input type="radio" name="q18" value="e"> Same molecular weight</label>
+      </div>
+      <div class="question-feedback" id="feedback-q18"></div>
+    </div>
+
+    <div class="question">
+      <p>19. Which one of the following can influence the charge of amino acid residues in the active site of an enzyme?</p>
+      <div class="options">
+        <label><input type="radio" name="q19" value="a"> Competitive inhibitor</label>
+        <label><input type="radio" name="q19" value="b"> Excess substrate</label>
+        <label><input type="radio" name="q19" value="c"> pH of medium</label>
+        <label><input type="radio" name="q19" value="d"> Temperature</label>
+        <label><input type="radio" name="q19" value="e"> Atmospheric pressure</label>
+      </div>
+      <div class="question-feedback" id="feedback-q19"></div>
+    </div>
+
+    <div class="question">
+      <p>20. Regulation of enzyme activity is the basis for feedback inhibition in enzyme catalysis. Which one of the following represents the most common type of regulation?</p>
+      <div class="options">
+        <label><input type="radio" name="q20" value="a"> Covalent modification</label>
+        <label><input type="radio" name="q20" value="b"> Allosteric regulation</label>
+        <label><input type="radio" name="q20" value="c"> Proteolysis</label>
+        <label><input type="radio" name="q20" value="d"> Carboxylation</label>
+        <label><input type="radio" name="q20" value="e"> Hydroxylation</label>
+      </div>
+      <div class="question-feedback" id="feedback-q20"></div>
+    </div>
+
+    <div class="question">
+      <p>21. Which of these is an example of the secondary structure of a protein?</p>
+      <div class="options">
+        <label><input type="radio" name="q21" value="a"> Peptide bonding between amino acids</label>
+        <label><input type="radio" name="q21" value="b"> Hydrophobic interactions</label>
+        <label><input type="radio" name="q21" value="c"> Hydrogen bonding between R groups</label>
+        <label><input type="radio" name="q21" value="d"> Disulphide bonds between cysteine residues</label>
+        <label><input type="radio" name="q21" value="e"> Hydrogen bonding an amine and carbonyl group</label>
+      </div>
+      <div class="question-feedback" id="feedback-q21"></div>
+    </div>
+
+    <div class="question">
+      <p>22. Which level of protein structure is determined only by hydrogen bonds?</p>
+      <div class="options">
+        <label><input type="radio" name="q22" value="a"> Primary</label>
+        <label><input type="radio" name="q22" value="b"> Tertiary</label>
+        <label><input type="radio" name="q22" value="c"> Secondary</label>
+        <label><input type="radio" name="q22" value="d"> Quaternary</label>
+        <label><input type="radio" name="q22" value="e"> Ovoidal</label>
+      </div>
+      <div class="question-feedback" id="feedback-q22"></div>
+    </div>
+
+    <div class="question">
+  <p>23. Which globin chains are affected in glycosylated Hemoglobin?</p>
+  <div class="options">
+    <label><input type="radio" name="q23" value="a"> γ-globin chains</label>
+    <label><input type="radio" name="q23" value="b"> α-globin chains</label>
+    <label><input type="radio" name="q23" value="c"> β-globin chains</label>
+    <label><input type="radio" name="q23" value="d"> δ-globin chains</label>
+    <label><input type="radio" name="q23" value="e"> both γ and α-globin chains</label>
+  </div>
+      <div class="question-feedback" id="feedback-q23"></div>
+</div>
+
+<div class="question">
+  <p>24. Patients, homozygous for hemoglobin C, have a condition that arises from....................</p>
+  <div class="options">
+    <label><input type="radio" name="q24" value="a"> substitution of lysine by glutamic acid in the β-chain</label>
+    <label><input type="radio" name="q24" value="b"> substitution of glutamic acid by lysine in the β-chain</label>
+    <label><input type="radio" name="q24" value="c"> substitution of valine by glutamic acid in the β-chain</label>
+    <label><input type="radio" name="q24" value="d"> substitution of a polar amino acid by a non-polar one in the β-chain</label>
+    <label><input type="radio" name="q24" value="e"> substitution of one of the α-chains by a β-chain</label>
+  </div>
+      <div class="question-feedback" id="feedback-q24"></div>
+</div>
+
+<div class="question">
+  <p>25. Which one of these statements is correct about Thalassemias?</p>
+  <div class="options">
+    <label><input type="radio" name="q25" value="a"> hereditary hemolytic diseases in which there is an imbalance in the synthesis of globin chains</label>
+    <label><input type="radio" name="q25" value="b"> they are polygenic disorders</label>
+    <label><input type="radio" name="q25" value="c"> only α-globin chains are affected</label>
+    <label><input type="radio" name="q25" value="d"> they are not in a class of hemoglobinopathies</label>
+    <label><input type="radio" name="q25" value="e"> Only γ- chains are affected</label>
+  </div>
+      <div class="question-feedback" id="feedback-q25"></div>
+</div>
+
+<div class="question">
+  <p>26. Which two amino acids in collagen usually undergo post translational modification?</p>
+  <div class="options">
+    <label><input type="radio" name="q26" value="a"> lysine and histidine</label>
+    <label><input type="radio" name="q26" value="b"> glycine and alanine</label>
+    <label><input type="radio" name="q26" value="c"> valine and isoleucine</label>
+    <label><input type="radio" name="q26" value="d"> lysine and proline</label>
+    <label><input type="radio" name="q26" value="e"> leucine and glutamic acid</label>
+  </div>
+      <div class="question-feedback" id="feedback-q26"></div>
+</div>
+
+<div class="question">
+  <p>27. Lack of post translational modifications of some amino acids in collagen leads to non-cross linkage of the fibers. Which one of the following refers to the condition that arises?</p>
+  <div class="options">
+    <label><input type="radio" name="q27" value="a"> sickle cell anemia</label>
+    <label><input type="radio" name="q27" value="b"> pernicious anemia</label>
+    <label><input type="radio" name="q27" value="c"> scurvy</label>
+    <label><input type="radio" name="q27" value="d"> phenylketonuria</label>
+    <label><input type="radio" name="q27" value="e"> hemosiderosis</label>
+  </div>
+      <div class="question-feedback" id="feedback-q27"></div>
+</div>
+
+<div class="question">
+  <p>28. Which of the following is responsible for specifying the 3-dimensional shape of a protein?</p>
+  <div class="options">
+    <label><input type="radio" name="q28" value="a"> The peptide bond</label>
+    <label><input type="radio" name="q28" value="b"> The amino acid sequence</label>
+    <label><input type="radio" name="q28" value="c"> Interaction with other polypeptides</label>
+    <label><input type="radio" name="q28" value="d"> Interaction with molecular chaperones</label>
+    <label><input type="radio" name="q28" value="e"> Interaction with water molecules</label>
+  </div>
+      <div class="question-feedback" id="feedback-q28"></div>
+</div>
+
+<div class="question">
+  <p>29. Which one of the following plasma proteins is the most abundant in blood?</p>
+  <div class="options">
+    <label><input type="radio" name="q29" value="a"> Globulins</label>
+    <label><input type="radio" name="q29" value="b"> Albumin</label>
+    <label><input type="radio" name="q29" value="c"> Fibrinogen</label>
+    <label><input type="radio" name="q29" value="d"> Prothrombin</label>
+    <label><input type="radio" name="q29" value="e"> Thrombin</label>
+  </div>
+      <div class="question-feedback" id="feedback-q29"></div>
+</div>
+
+<div class="question">
+  <p>30. What is the primary function of albumin in plasma?</p>
+  <div class="options">
+    <label><input type="radio" name="q30" value="a"> Blood clotting</label>
+    <label><input type="radio" name="q30" value="b"> Transport of lipids</label>
+    <label><input type="radio" name="q30" value="c"> Maintaining osmotic pressure</label>
+    <label><input type="radio" name="q30" value="d"> Antibody production</label>
+    <label><input type="radio" name="q30" value="e"> Transport carbohydrates</label>
+  </div>
+      <div class="question-feedback" id="feedback-q30"></div>
+</div>
+
+<div class="question">
+  <p>31. Which plasma protein is involved in blood clotting?</p>
+  <div class="options">
+    <label><input type="radio" name="q31" value="a"> Albumin</label>
+    <label><input type="radio" name="q31" value="b"> Globulins</label>
+    <label><input type="radio" name="q31" value="c"> Fibrinogen</label>
+    <label><input type="radio" name="q31" value="d"> Complement</label>
+    <label><input type="radio" name="q31" value="e"> C-reactive protein</label>
+  </div>
+      <div class="question-feedback" id="feedback-q31"></div>
+</div>
+
+<div class="question">
+  <p>32. Which plasma protein is produced primarily by the liver?</p>
+  <div class="options">
+    <label><input type="radio" name="q32" value="a"> Immunoglobulins</label>
+    <label><input type="radio" name="q32" value="b"> Fibrinogen</label>
+    <label><input type="radio" name="q32" value="c"> Albumin</label>
+    <label><input type="radio" name="q32" value="d"> Complement</label>
+    <label><input type="radio" name="q32" value="e"> Thrombin</label>
+  </div>
+      <div class="question-feedback" id="feedback-q32"></div>
+</div>
+
+<div class="question">
+  <p>33. What are globulins primarily responsible for?</p>
+  <div class="options">
+    <label><input type="radio" name="q33" value="a"> Transporting nutrients</label>
+    <label><input type="radio" name="q33" value="b"> Blood clotting</label>
+    <label><input type="radio" name="q33" value="c"> Immune response</label>
+    <label><input type="radio" name="q33" value="d"> Maintaining blood volume</label>
+    <label><input type="radio" name="q33" value="e"> Maintaining oncotic pressure</label>
+  </div>
+      <div class="question-feedback" id="feedback-q33"></div>
+</div>
+
+<div class="question">
+  <p>34. Sickle cell anemia is caused by a mutation in the gene that codes for:</p>
+  <div class="options">
+    <label><input type="radio" name="q34" value="a"> Myoglobin</label>
+    <label><input type="radio" name="q34" value="b"> Hemoglobin</label>
+    <label><input type="radio" name="q34" value="c"> Red blood cells</label>
+    <label><input type="radio" name="q34" value="d"> Albumin</label>
+    <label><input type="radio" name="q34" value="e"> Globulins</label>
+  </div>
+      <div class="question-feedback" id="feedback-q34"></div>
+</div>
+
+    <button type="button" class="btn" onclick="submitQuiz()">Submit</button>
+  </form>
+
+  <div class="result" id="resultBox">
+    <h3>Your Score:</h3>
+    <div class="score" id="score">0%</div>
+    <div id="answers"></div>
+  </div>
+</div>
+
+<!-- Short Essay Section (card style with sub-questions) -->
+<section id="essay-section" class="container" style="display:none;">
+  <h2 style="margin-bottom:1rem;color:var(--dark)">Short Essay Questions</h2>
+
+
+  <div class="question-block">
+  <!-- <h2>1. Plasma Proteins</h2> -->
+   <img src="../MBS-230-B-pics/2025-q1.PNG">
+  <div class="subquestion">
+    <label>i) What is the normal reference range (in g/dL) for total plasma proteins?</label>
+    <textarea id="ans1-1"></textarea>
+  </div>
+  <div class="subquestion">
+    <label>ii) What is the term given to the soluble fraction of blood that lacks coagulation factors?</label>
+    <textarea id="ans1-2"></textarea>
+  </div>
+  <div class="subquestion">
+    <label>iii) Besides clotting factors, which other protein lacks in the soluble fraction referred to in (ii)?</label>
+    <textarea id="ans1-3"></textarea>
+  </div>
+  <div class="subquestion">
+    <label>iv) How are normal or reference ranges for biochemical parameters established?</label>
+    <textarea id="ans1-4"></textarea>
+  </div>
+  <div class="subquestion">
+    <label>v) Which one is a major plasma protein and what percentage of total plasma protein does it account for?</label>
+    <textarea id="ans1-5"></textarea>
+  </div>
+  <div class="subquestion">
+    <label>vi) Why is the protein in (v) assessed in patients suspected to have liver disorders?</label>
+    <textarea id="ans1-6"></textarea>
+  </div>
+  <div class="subquestion">
+    <label>vii) Name at least one function of protein in (v) and explain how it carries out this function.</label>
+    <textarea id="ans1-7"></textarea>
+  </div>
+  <div class="subquestion">
+    <label>viii) Which plasma protein is elevated during inflammation and infections?</label>
+    <textarea id="ans1-8"></textarea>
+  </div>
+  <div class="subquestion">
+    <label>ix) What is its classification?</label>
+    <textarea id="ans1-9"></textarea>
+  </div>
+  <div class="subquestion">
+    <label>x) Where are most plasma proteins synthesized?</label>
+    <textarea id="ans1-10"></textarea>
+  </div>
+  <div class="subquestion">
+    <label>xi) Name four properties of proteins that are used in separating plasma proteins.</label>
+    <textarea id="ans1-11"></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('1')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answers1" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>i)</b> 6.0 to 8.0 g/dL (or 60–80 g/L).</p>
+    <p><b>ii)</b> Serum.</p>
+    <p><b>iii)</b> Fibrinogen.</p>
+    <p><b>iv)</b> Established by collecting samples from a large, healthy population. The range is the mean $\pm 2$ standard deviations, covering 95% of the population.</p>
+    <p><b>v)</b> Albumin; accounts for approximately 55%–60%.</p>
+    <p><b>vi)</b> Because albumin is synthesized exclusively by the liver; low levels indicate liver damage.</p>
+    <p><b>vii)</b> Maintenance of Oncotic Pressure: It exerts osmotic pressure that pulls water from the interstitial space back into capillaries, preventing edema.</p>
+    <p><b>viii)</b> C-reactive protein (CRP) or Haptoglobin.</p>
+    <p><b>ix)</b> Acute-phase reactant.</p>
+    <p><b>x)</b> The Liver.</p>
+    <p><b>xi)</b> 1. Molecular size/weight, <br>2. Net electric charge, <br>3. Solubility, <br>4. Binding affinity.</p>
+  </div>
+</div>
+
+<hr>
+
+<div class="question-block">
+  <h2>2. A new drug is developed whuch selectively cleaves covalent bonds between two sulfur atoms of non-adjacent amino acids in a polypeptide chain.</h2>
+   <img src>
+  <div class="subquestion">
+    <label>i)  Which level of protein structure is most directly affected?</label>
+    <textarea id="ans2-1"></textarea>
+  </div>
+  <div class="subquestion">
+    <label>ii) Explain why this level is affected.</label>
+    <textarea id="ans2-2"></textarea>
+  </div>
+  <div class="subquestion">
+    <label>iii) Describe, with the help of diagrams, the other levels of protein structure.</label>
+    <textarea id="ans2-3"></textarea>
+  </div>
+  <div class="subquestion">
+    <label>iv) Which forces or interactions maintain levels of protein structures?</label>
+    <textarea id="ans2-4"></textarea>
+  </div>
+  <div class="subquestion">
+    <label>v) Which information specifies the 3D structure of a protein?</label>
+    <textarea id="ans2-5"></textarea>
+  </div>
+  <div class="subquestion">
+    <label>vi) Name the amino acid capable of forming disulfide bonds.</label>
+    <textarea id="ans2-6"></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('2')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answers2" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>i)</b> Tertiary structure (and Quaternary if inter-chain).</p>
+    <p><b>ii)</b> Tertiary structure is stabilized by covalent disulfide bonds; cleaving them disrupts the specific 3D folding.</p>
+    <p><b>iii)</b> Primary: amino acid sequence; Secondary: $\alpha$-helices/$\beta$-sheets via H-bonds; Quaternary: multiple subunit arrangement.</p>
+    <p><b>iv)</b> Primary: Peptide bonds; Secondary: H-bonds; Tertiary/Quaternary: Disulfide, Hydrophobic, Ionic, and Van der Waals.</p>
+    <p><b>v)</b> The primary sequence of amino acids.</p>
+    <p><b>vi)</b> Cysteine.</p>
+  </div>
+</div>
+
+<hr>
+
+<div class="question-block">
+  <!-- <h2>3. Insulin Synthesis</h2> -->
+   <img src="../MBS-230-B-pics/2025-q3.PNG">
+  <div class="subquestion">
+    <label>i) Why does the pancreas produce insulin as a prohormone?</label>
+    <textarea id="ans3-1"></textarea>
+  </div>
+  <div class="subquestion">
+    <label>ii) How is the prohormone converted to an active hormone?</label>
+    <textarea id="ans3-2"></textarea>
+  </div>
+  <div class="subquestion">
+    <label>iii) What happens to the connecting polypeptide (C-peptide) during activation?</label>
+    <textarea id="ans3-3"></textarea>
+  </div>
+  <div class="subquestion">
+    <label>iv) What is the general term for enzymes that cut at these activation sites?</label>
+    <textarea id="ans3-4"></textarea>
+  </div>
+  <div class="subquestion">
+    <label>v) Classify (using the main amino acid classification) the amino acid responsible for S-S linkages in the figure.</label>
+    <textarea id="ans3-5"></textarea>
+  </div>
+  <div class="subquestion">
+    <label>vi) Explain why the fact that specis variation in insulin is restricted to position 8.9.10 in the A chain and to posotion 30 in the B chain ? </label>
+    <textarea id="ans3-6"></textarea>
+  </div>
+  <div class="subquestion">
+    <label>vii) Sequence homology is the term used to show that human insulin is smaller to porcin insulin.Can porcine insulin then be used on diabetic human beings ? Justify your answer.</label>
+    <textarea id="ans3-7"></textarea>
+  </div>
+  <div class="subquestion">
+    <label>viii) write the fulln name of a peptide formed by carboxyl group of glycine with amino group of alanine and then carboxyl group of alanine with amino group of valine ?</label>
+    <textarea id="ans3-8"></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('3')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answers3" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>i)</b> To ensure the protein folds correctly into its 3D shape before C-peptide removal.</p>
+    <p><b>ii)</b> Through proteolytic cleavage by proprotein convertases.</p>
+    <p><b>iii)</b> It is cleaved off and released into the bloodstream along with active insulin.</p>
+    <p><b>iv)</b> Endopeptidases (or Proteases).</p>
+    <p><b>v)</b> Sulfur-containing amino acid (Cysteine).</p>
+    <p><b>vi)</b> These positions are not critical for biological activity or receptor binding.</p>
+    <p><b>vii)</b> Yes; due to high sequence homology (differs by only one amino acid).</p>
+    <p><b>viii)</b> Glycyl-alanyl-valine.</p>
+  </div>
+</div>
+
+<hr>
+
+<div class="card">
+    <h3>4. The figure below is a plot showing the effect of substrate concentration on velocity of a reaction. Explain the portions indicated as:</h3>
+    <img src="../MBS-230-B-pics/2025-q4.PNG">
+
+    <div class="subquestion">
+      <label>i. First order</label>
+      <textarea id="ans19i" placeholder="Explain the first-order region"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>ii. Mixed order</label>
+      <textarea id="ans19ii" placeholder="Explain the mixed-order region"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>iii. Zero order</label>
+      <textarea id="ans19iii" placeholder="Explain the zero-order region"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>iv. Define Vmax</label>
+      <textarea id="ans19iv" placeholder="Define Vmax"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>v. Define Km</label>
+      <textarea id="ans19v" placeholder="Define Km"></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('19')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers19" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>i. First order:</b> Occurs at low substrate concentrations ([S] << Km) where the reaction velocity is directly proportional to the substrate concentration.</p>
+      <p><b>ii. Mixed order:</b> Occurs at intermediate doses where the rate is no longer strictly linear but has not yet reached maximum capacity; it is described by the full Michaelis-Menten equation.</p>
+      <p><b>iii. Zero order:</b> Occurs at high substrate concentrations ([S] >> Km) where the enzyme is saturated. The reaction rate is constant and independent of substrate concentration.</p>
+      <p><b>iv. Vmax:</b> The maximum velocity of the enzymatic reaction when the enzyme is fully saturated with substrate.</p>
+      <p><b>v. Km:</b> The Michaelis constant; it is the substrate concentration at which the reaction velocity is exactly half of Vmax ($V = \frac{1}{2} V_{max}$). It reflects the affinity of the enzyme for its substrate.</p>
+    </div>
+  </div>
+
+ </section>
+
+
+<script>
+  // Short explanation text for each question (keyed by question id)
+  const answerExplanations = {
+q1: "Phosphorylation is a common reversible covalent modification where a phosphate group is added to an enzyme to toggle its activity.",
+    q2: "Enzymes act as catalysts, which means they increase the rate of chemical reactions by lowering the activation energy.",
+    q3: "Glutamine is a polar amino acid that features an amide group in its side chain.",
+    q4: "Malonate (malonic acid) is a classic competitive inhibitor because its structure is similar to the natural substrate, succinate.",
+    q5: "Alkaptonuria is an autosomal recessive disorder involving the metabolism of Phenylalanine and Tyrosine, caused by a deficiency in homogentisate oxidase.",
+    q6: "Ketogenic amino acids yield ketone bodies or their precursors, like acetoacetyl CoA, during their catabolism.",
+    q7: "Histidine is unique among the 20 standard amino acids for having an imidazole ring as its side chain functional group.",
+    q8: "LDH1 is found primarily in the heart muscle; following an MI, LDH1 levels rise and often exceed LDH2 levels (the 'LDH flip').",
+    q9: "Chirality (optical activity) occurs when a carbon atom is bonded to four distinct chemical groups, creating non-superimposable mirror images.",
+    q10: "The primary structure consists of the amino acid sequence linked together by covalent peptide bonds.",
+    q11: "Quaternary structure refers to the interaction and spatial arrangement of multiple polypeptide chains (subunits) in a single protein molecule.",
+    q12: "Electrophoresis separates proteins based on their movement in an electric field, which is determined by their net electrical charge.",
+    q13: "Alanine is the primary amino acid used for gluconeogenesis in the liver via the glucose-alanine cycle during fasting.",
+    q14: "Glutathione (GSH) is a tripeptide synthesized from three amino acids: glutamate, cysteine, and glycine.",
+    q15: "Glutamic acid is negatively charged and can act as a phosphomimetic, simulating the presence of a phosphate group permanently.",
+    q16: "Cysteine and methionine are the only standard amino acids that contain sulfur, which is oxidized to sulfuric acid in the body.",
+    q17: "The core of the lipid bilayer is non-polar; therefore, transmembrane segments of proteins are composed of hydrophobic amino acids to remain stable.",
+    q18: "Isoenzymes (or isozymes) are different physical forms of the same enzyme; while they differ in structure, they catalyze the exact same chemical reaction.",
+    q19: "The ionization state of the R-groups in an active site is sensitive to the pH of the surrounding medium, which affects enzyme activity.",
+    q20: "Allosteric regulation is the primary mechanism for feedback inhibition, where a product binds to a site other than the active site to regulate the enzyme.",
+    q21: "Secondary structures (alpha-helices and beta-sheets) are stabilized by hydrogen bonds between the backbone amine hydrogen and carbonyl oxygen.",
+    q22: "Secondary structure is uniquely characterized by being stabilized exclusively by hydrogen bonding along the polypeptide backbone.",
+    q23: "Glycosylated hemoglobin (HbA1c) specifically involves the non-enzymatic attachment of glucose to the N-terminal valine of the β-globin chains.",
+  q24: "Hemoglobin C is caused by a point mutation where glutamic acid is replaced by lysine at the 6th position of the β-globin chain.",
+  q25: "Thalassemias are a group of inherited blood disorders characterized by decreased or absent synthesis of specific globin chains (alpha or beta).",
+  q26: "In collagen synthesis, specific proline and lysine residues undergo hydroxylation, a critical post-translational modification.",
+  q27: "Scurvy results from Vitamin C deficiency, which is a cofactor for hydroxylating enzymes; without this, collagen fibers cannot cross-link properly.",
+  q28: "The primary structure (amino acid sequence) contains all the necessary information required for a protein to fold into its native 3D conformation.",
+  q29: "Albumin is the most abundant protein in human plasma, accounting for approximately 50-60% of total plasma protein.",
+  q30: "Albumin provides about 80% of the colloid osmotic (oncotic) pressure of plasma, which maintains fluid balance between blood vessels and tissues.",
+  q31: "Fibrinogen is a soluble plasma glycoprotein that is converted by thrombin into fibrin clots during the coagulation process.",
+  q32: "Albumin is synthesized exclusively by the hepatocytes in the liver.",
+  q33: "The gamma-globulin fraction of plasma proteins consists primarily of immunoglobulins (antibodies) essential for the immune response.",
+  q34: "Sickle cell anemia is caused by a single nucleotide mutation in the HBB gene, which encodes the β-globin subunit of hemoglobin.",
+  };
+
+  // MCQ Functionality
+  const correctAnswers = { 
+    q1: "c", 
+    q2: "b", 
+    q3: "a", 
+    q4: "a", 
+    q5: "c",
+    q6: "b", 
+    q7: "c", 
+    q8: "a", 
+    q9: "c", 
+    q10: "b", 
+    q11: "c",
+    q12: "b", 
+    q13: "a", 
+    q14: "b", 
+    q15: "a",
+    q16: "c",
+    q17: "c", 
+    q18: "b", 
+    q19: "c", 
+    q20: "b", 
+    q21: "e",
+    q22: "c",
+    q23: "c",
+  q24: "b",
+  q25: "a",
+  q26: "d",
+  q27: "c",
+  q28: "b",
+  q29: "b",
+  q30: "c",
+  q31: "c",
+  q32: "c",
+  q33: "c",
+  q34: "b"
+  };
+ 
+  function submitQuiz() {
+     let score = 0;
+     const total = Object.keys(correctAnswers).length;
+ 
+     // Clear any previous inline feedback
+     document.querySelectorAll('.question-feedback').forEach(el => el.innerHTML = '');
+ 
+     for (let key in correctAnswers) {
+       const radios = Array.from(document.querySelectorAll(`input[name="${key}"]`));
+       const selected = radios.find(r => r.checked);
+       const correct = correctAnswers[key];
+ 
+       // Score calc
+       if (selected && selected.value === correct) score++;
+ 
+       const feedbackEl = document.getElementById(`feedback-${key}`);
+       if (!feedbackEl) continue;
+ 
+       let feedbackHTML = `<div class="answer-block"><strong>Question ${key.replace(/^q/, '')}</strong><div class="answer-list">`;
+ 
+       radios.forEach(r => {
+         let label = r.parentElement;
+         let text = label ? label.textContent.trim() : r.value;
+ 
+         let classes = ['answer-item'];
+         if (r.value === correct) classes.push('answer-correct');
+         if (r.checked && r.value !== correct) classes.push('answer-wrong', 'user-choice');
+         if (r.checked && r.value === correct) classes.push('user-choice');
+ 
+         feedbackHTML += `<div class="${classes.join(' ')}">${text}${r.checked ? ' ◀' : ''}</div>`;
+       });
+ 
+       feedbackHTML += `</div>`;
+ 
+       const correctRadio = radios.find(rr => rr.value === correct);
+       const correctText = correctRadio && correctRadio.parentElement ? correctRadio.parentElement.textContent.trim() : correct;
+       const explanationText = answerExplanations[key] || '';
+ 
+       if (selected) {
+         if (selected.value === correct) {
+           feedbackHTML += `<div class="explanation">✅ Correct — ${explanationText}</div>`;
+         } else {
+           feedbackHTML += `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+         }
+       } else {
+         feedbackHTML += `<div class="explanation wrong">No answer selected. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+       }
+ 
+       feedbackHTML += `</div>`;
+       feedbackEl.innerHTML = feedbackHTML;
+     }
+ 
+     const percentage = Math.round((score / total) * 100);
+     document.getElementById("score").innerText = "0%";
+     const resultBox = document.getElementById("resultBox");
+     resultBox.style.display = "block";
+     document.getElementById("answers").innerHTML = '';
+ 
+     let start = 0;
+     const timer = setInterval(() => {
+       if (start >= percentage) clearInterval(timer);
+       document.getElementById("score").innerText = start + "%";
+       start++;
+     }, 20);
+ 
+     document.querySelectorAll('#quizForm input').forEach(i => i.disabled = true);
+   }
+ 
+   // Essay Section
+   function showEssayAnswers() {
+     document.querySelectorAll(".essay-answer").forEach(a => a.style.display = "block");
+   }
+
+   // Show/hide model answers for an essay card
+   function showAnswers(id) {
+     const el = document.getElementById('answers' + id);
+     if (!el) return;
+     const isVisible = el.classList.toggle('visible');
+     el.setAttribute('aria-hidden', !isVisible);
+     if (isVisible) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+   }
+ 
+   // Mode switching (from first file)
+   const mode = localStorage.getItem("examMode"); // "mcq" or "essay"
+   if (mode === "essay") {
+     document.getElementById("mcq-section").style.display = "none";
+     document.getElementById("essay-section").style.display = "block";
+   }
+ 
+   // Navigate to the previous page if available, otherwise fall back to index.html
+   function goBack() {
+     if (history.length > 1) {
+       history.back();
+     } else {
+       window.location.href = "index.html";
+     }
+   }
+ 
+   // header back button hookup (same behaviour)
+   const backBtn = document.getElementById('backBtn');
+   if (backBtn) backBtn.addEventListener('click', (e) => { e.preventDefault(); goBack(); });
+ </script>
+
+</body>
+</html>
