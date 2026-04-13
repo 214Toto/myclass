@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Papers | ToToZ Collection</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../nav.css">
+  <style>
+    :root {
+      --primary: #2b7a78;
+      --accent: #3aafa9;
+      --dark: #17252a;
+      --light: #f8f9fa;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #f5f7fb, #eef6f6);
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--dark));
+      color: white;
+      padding: 1.1rem 0;
+      box-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* Improved heading styling */
+    header h1 {
+      font-size: 1.25rem;
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: 0.35px;
+      color: #ffffff;
+      text-transform: none;
+      display: inline-block;
+      line-height: 1;
+      text-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* logo heading (keeps icon + title aligned) */
+    .logo h1 {
+      font-size: 1.25rem;
+      margin: 0 0 0 6px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1.5rem 0;
+    }
+
+    h2 {
+      color: var(--primary);
+      margin: 0 0 0.85rem 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    /* responsive tweaks for small screens */
+    @media (max-width: 520px) {
+      header h1, .logo h1 { font-size: 1rem; }
+      h2 { font-size: 1rem; }
+    }
+
+    .question {
+      margin-bottom: 1.5rem;
+    }
+
+    .question p {
+      font-weight: 600;
+    }
+
+    .options label {
+      display: block;
+      background: #f8fafc;
+      border: 1px solid #d9e2ec;
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      margin-top: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .options label:hover {
+      background: #e0f7f6;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .result {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #f1faf9;
+      border-radius: var(--radius);
+      text-align: center;
+      display: none;
+    }
+
+    .score {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin-top: 0.5rem;
+    }
+
+    /* --- Styles for answer feedback --- */
+    .answer-list { text-align: left; margin-top: 12px; }
+    .answer-item {
+      display: block;
+      padding: 8px 10px;
+      border-radius: 8px;
+      margin: 6px 0;
+      border: 1px solid #e6eef3;
+      background: #ffffff;
+      color: var(--dark);
+      font-weight: 600;
+    }
+    .answer-correct {
+      background: #ecfdf5;       /* light green */
+      border-color: #bbf7d0;
+      color: #065f46;           /* dark green text */
+      box-shadow: 0 6px 18px rgba(16,185,129,0.06);
+    }
+    .answer-wrong {
+      background: #fff1f2;       /* light red */
+      border-color: #fca5a5;
+      color: #9f1239;           /* dark red text */
+      box-shadow: 0 6px 18px rgba(239,68,68,0.06);
+    }
+    .user-choice { outline: 2px dashed rgba(0,0,0,0.04); }
+
+    /* Essay Section */
+    textarea {
+      width: 80%;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.75rem;
+      resize: vertical;
+      min-height: 50px;
+      font-size: 1rem;
+    }
+
+    .essay-answer {
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-top: 0.75rem;
+      display: none;
+    }
+
+    .back-btn {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    /* Explanation box shown under each question in feedback */
+    .explanation {
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: #ecfdf5;           /* subtle greenish background */
+      color: #065f46;                /* dark green text */
+      font-size: 0.95rem;
+      line-height: 1.4;
+      border: 1px solid #bbf7d0;
+    }
+
+    /* For incorrect explanation (when needed) */
+    .explanation.wrong {
+      background: #fff1f2;
+      color: #7f1d1d;
+      border-color: #fca5a5;
+    }
+
+    /* small label styling for feedback header */
+    .answer-block { margin-bottom: 12px; }
+    .answer-block strong { display:block; margin-bottom:8px; color:var(--primary); }
+    .question-feedback {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 1px solid #d6e7eb;
+    }
+    .question-feedback .answer-list {
+      margin-top: 10px;
+    }
+
+    /* Essay card styles (compact, readable) */
+    #essay-section { padding-top: 0; }
+    #essay-section .card {
+      background: linear-gradient(180deg, #ffffff, #fbfeff);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(18,38,63,0.06);
+      border: 1px solid rgba(43,122,120,0.06);
+      max-width: 900px;
+      margin: 0 auto 1rem auto;
+    }
+    #essay-section .card h3 {
+      margin: 0 0 10px 0;
+      font-size: 1.02rem;
+      color: var(--dark);
+      font-weight: 700;
+    }
+    #essay-section .subquestion { margin-bottom: 12px; }
+    #essay-section .subquestion label {
+      display:block;
+      font-weight:700;
+      margin-bottom:6px;
+      color:var(--dark);
+    }
+    #essay-section textarea {
+      width:100%;
+      min-height:90px;
+      border-radius:8px;
+      border:1px solid #d1dbe0;
+      padding:10px;
+      resize:vertical;
+      font-family:inherit;
+    }
+    #essay-section .answers {
+      display:none;
+      margin-top:14px;
+      background:#f1faf9;
+      border-radius:8px;
+      padding:12px;
+      border:1px solid #cfeee6;
+      color:var(--dark);
+    }
+    #essay-section .answers h3 { margin-top:0; }
+    #essay-section .card .btn { margin-top:8px; }
+    /* make answers visible area stand out when shown */
+    #essay-section .answers.visible { display:block; }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;">
+      <div class="logo">
+        <i class="fas fa-book-medical"></i>
+        <h1>2024 Exam | ToToZ Collection</h1>
+      </div>
+      <button id="backBtn" class="btn"><i class="fas fa-arrow-left"></i> Back</button>
+    </div>
+  </header>
+
+<div class="container" id="mcq-section">
+  <h2>Multiple Choice Questions</h2>
+
+  <form id="quizForm">
+
+    <div class="question">
+  <p>29. In which choice are the proteins listed in the order in which they are activated?</p>
+  <div class="options">
+    <label><input type="radio" name="q29" value="a"> Prothrombin activator, thrombin, fibrin</label>
+    <label><input type="radio" name="q29" value="b"> Fibrin, thrombin, prothrombin activator</label>
+    <label><input type="radio" name="q29" value="c"> Thrombin, fibrin, prothrombin activator</label>
+    <label><input type="radio" name="q29" value="d"> Thrombin, prothrombin activator, fibrin</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>30. When red blood cells are worn out, part of their components are recycled while others are disposed. Select the incorrect statement about destruction of red blood cells.</p>
+  <div class="options">
+    <label><input type="radio" name="q30" value="a"> The greenish pigment, biliverdin, is recycled to the bone marrow</label>
+    <label><input type="radio" name="q30" value="b"> Iron is carried to the bone marrow by a protein called transferrin</label>
+    <label><input type="radio" name="q30" value="c"> Biliverdin and bilirubin impart color to bile</label>
+    <label><input type="radio" name="q30" value="d"> Macrophages in the liver and spleen destroy worn out red blood cells</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>31. While attending an emergency care patient, which of the following isotonic fluid is used for IV infusion?</p>
+  <div class="options">
+    <label><input type="radio" name="q31" value="a"> 1.9% Nacl</label>
+    <label><input type="radio" name="q31" value="b"> 9% Nacl</label>
+    <label><input type="radio" name="q31" value="c"> 5% Dextrose</label>
+    <label><input type="radio" name="q31" value="d"> Ringer's Glucose</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>32. The Sodium potassium pump prevent cell from swelling by pumping:</p>
+  <div class="options">
+    <label><input type="radio" name="q32" value="a"> 3 Na+ inside</label>
+    <label><input type="radio" name="q32" value="b"> 3Na+ outside</label>
+    <label><input type="radio" name="q32" value="c"> 3K+ inside</label>
+    <label><input type="radio" name="q32" value="d"> 3K+ outside</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>33. An example of an integral protein in a cell membrane:</p>
+  <div class="options">
+    <label><input type="radio" name="q33" value="a"> Spectrin</label>
+    <label><input type="radio" name="q33" value="b"> Ankyrin</label>
+    <label><input type="radio" name="q33" value="c"> Actin</label>
+    <label><input type="radio" name="q33" value="d"> Band 3</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>34. The semi-permeable function of the plasma membrane helps to:</p>
+  <div class="options">
+    <label><input type="radio" name="q34" value="a"> Fight against cellular infection</label>
+    <label><input type="radio" name="q34" value="b"> Establish the resting membrane potential</label>
+    <label><input type="radio" name="q34" value="c"> Protects cell from toxic substances</label>
+    <label><input type="radio" name="q34" value="d"> Maintain the size of the cell</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>35. All of the following are not examples of passive transport mechanism across cell membrane except:</p>
+  <div class="options">
+    <label><input type="radio" name="q35" value="a"> Calcium pump</label>
+    <label><input type="radio" name="q35" value="b"> Facilitated transport</label>
+    <label><input type="radio" name="q35" value="c"> Primary active transport</label>
+    <label><input type="radio" name="q35" value="d"> Endocytosis</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>36. An example of active transport mechanisms across cell membrane include:</p>
+  <div class="options">
+    <label><input type="radio" name="q36" value="a"> Endocytosis</label>
+    <label><input type="radio" name="q36" value="b"> Osmosis</label>
+    <label><input type="radio" name="q36" value="c"> Filtration</label>
+    <label><input type="radio" name="q36" value="d"> Facilitated transport</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>37. Skeletal muscle number is fixed at time of birth in humans. Which of the following hormones stimulate muscle hypertrophy?</p>
+  <div class="options">
+    <label><input type="radio" name="q37" value="a"> Estrogen</label>
+    <label><input type="radio" name="q37" value="b"> Growth hormone</label>
+    <label><input type="radio" name="q37" value="c"> Oestrone</label>
+    <label><input type="radio" name="q37" value="d"> Adrenaline</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>38. Functional significance of sarcoplasmic reticulum:</p>
+  <div class="options">
+    <label><input type="radio" name="q38" value="a"> Membranous sacs which encircles each myofibril</label>
+    <label><input type="radio" name="q38" value="b"> Stores and release calcium ions (Ca++)</label>
+    <label><input type="radio" name="q38" value="c"> Release of Na+ triggers muscle contraction</label>
+    <label><input type="radio" name="q38" value="d"> Interacts with Troponin C</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>39. Regarding contractile filaments:</p>
+  <div class="options">
+    <label><input type="radio" name="q39" value="a"> Function in the non contractile process</label>
+    <label><input type="radio" name="q39" value="b"> Three types of filaments (Thick, medium and Thin)</label>
+    <label><input type="radio" name="q39" value="c"> There are one thick filaments for every two thin filaments</label>
+    <label><input type="radio" name="q39" value="d"> There are two thin filaments for every thick filament</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>40. Regarding Sarcomeres:</p>
+  <div class="options">
+    <label><input type="radio" name="q40" value="a"> These are compartments of arranged fibres</label>
+    <label><input type="radio" name="q40" value="b"> Generate action potential</label>
+    <label><input type="radio" name="q40" value="c"> Basic functional unit of a myofibril</label>
+    <label><input type="radio" name="q40" value="d"> Store and release Ca++</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>41. Regarding myosin filaments:</p>
+  <div class="options">
+    <label><input type="radio" name="q41" value="a"> They are thin filaments</label>
+    <label><input type="radio" name="q41" value="b"> Functions as a regulatory protein which can achieve motion</label>
+    <label><input type="radio" name="q41" value="c"> Convert ATP to glucose of motion</label>
+    <label><input type="radio" name="q41" value="d"> Each myosin molecule protrude outward as a head</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>42. The muscle protein which covers the active sites on the actin filament at rest is:</p>
+  <div class="options">
+    <label><input type="radio" name="q42" value="a"> Actin</label>
+    <label><input type="radio" name="q42" value="b"> Myosin</label>
+    <label><input type="radio" name="q42" value="c"> Tropomyosin</label>
+    <label><input type="radio" name="q42" value="d"> Troponin-T</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>43. The total strength of a contraction depends on the:</p>
+  <div class="options">
+    <label><input type="radio" name="q43" value="a"> Motor neurons</label>
+    <label><input type="radio" name="q43" value="b"> Less motor units</label>
+    <label><input type="radio" name="q43" value="c"> Motor units activated</label>
+    <label><input type="radio" name="q43" value="d"> Stimulus strength</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>44. During Relaxation period of a simple muscle twitch:</p>
+  <div class="options">
+    <label><input type="radio" name="q44" value="a"> Na+ is transported into the SR</label>
+    <label><input type="radio" name="q44" value="b"> Myosin sticks to sarcolemma</label>
+    <label><input type="radio" name="q44" value="c"> Myosin-binding sites are covered by tropomyosin</label>
+    <label><input type="radio" name="q44" value="d"> Power stroke of myosin occurs</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>45. Regarding Repolarisation:</p>
+  <div class="options">
+    <label><input type="radio" name="q45" value="a"> It is the decrease in cell electronegativity</label>
+    <label><input type="radio" name="q45" value="b"> It is the increase in cell electropositivity</label>
+    <label><input type="radio" name="q45" value="c"> It is the decrease in cell electropositivity inside membrane</label>
+    <label><input type="radio" name="q45" value="d"> It is the decrease in cell electronegativity outside</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>46. An action potential in a nerve fibre:</p>
+  <div class="options">
+    <label><input type="radio" name="q46" value="a"> Has amplitude which varies directly with the strength of the stimulus</label>
+    <label><input type="radio" name="q46" value="b"> Induces graded electrical currents in adjacent segments of the fibre</label>
+    <label><input type="radio" name="q46" value="c"> Is associated with a transient decrease in membrane permeability to potassium</label>
+    <label><input type="radio" name="q46" value="d"> Is associated with a transient increase in membrane permeability to sodium</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>47. About the Na+/K+ pump of cell membranes, the following hold true:</p>
+  <div class="options">
+    <label><input type="radio" name="q47" value="a"> All cells have the Na+/K+ pump that pumps in Na+ and takes out K+ of the cell actively</label>
+    <label><input type="radio" name="q47" value="b"> 2 potassium ions are pumped out</label>
+    <label><input type="radio" name="q47" value="c"> Breaks down ATP to power ion transport</label>
+    <label><input type="radio" name="q47" value="d"> The Na+/K+ pump does not require it beta subunit to operate</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>48. Neurons that stimulate skeletal muscle to contract are labelled as</p>
+  <div class="options">
+    <label><input type="radio" name="q48" value="a"> Somatic sensory neurons</label>
+    <label><input type="radio" name="q48" value="b"> Somatic motor neurons</label>
+    <label><input type="radio" name="q48" value="c"> Autonomic motor neurons</label>
+    <label><input type="radio" name="q48" value="d"> Autonomic sensory neurons</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>49. Skeletal muscle have no capacity for regeneration. Which of these cells retain the capacity to regenerate only the damaged muscle fibers?</p>
+  <div class="options">
+    <label><input type="radio" name="q49" value="a"> Myosin-1cells</label>
+    <label><input type="radio" name="q49" value="b"> Satellite cells</label>
+    <label><input type="radio" name="q49" value="c"> Endothelial cells</label>
+    <label><input type="radio" name="q49" value="d"> Basal laminar cells</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>50. Function of Contractile proteins inside myofibrils is</p>
+  <div class="options">
+    <label><input type="radio" name="q50" value="a"> Switch the contraction process prolonged</label>
+    <label><input type="radio" name="q50" value="b"> Switch the contraction process off</label>
+    <label><input type="radio" name="q50" value="c"> Generate force during contraction</label>
+    <label><input type="radio" name="q50" value="d"> Align the thick and thin filaments properly</label>
+  </div>
+</div>
+
+    
+
+    <button type="button" class="btn" onclick="submitQuiz()">Submit</button>
+  </form>
+
+  <div class="result" id="resultBox">
+    <h3>Your Score:</h3>
+    <div class="score" id="score">0%</div>
+    <div id="answers"></div>
+  </div>
+</div>
+
+<!-- Short Essay Section (card style with sub-questions) -->
+<section id="essay-section" class="container" style="display:none;">
+  <h2 style="margin-bottom:1rem;color:var(--dark)">Short Essay Questions</h2>
+
+  <div class="card">
+    <h3>1. Describe the physiological responses that occur following an acute loss of blood volume.</h3>
+
+    <div class="subquestion">
+      <label>a) Immediate cardiovascular compensations</label>
+      <textarea id="ans1a" placeholder="Describe immediate changes (heart rate, vascular tone, etc.)"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>b) Neurohormonal responses</label>
+      <textarea id="ans1b" placeholder="Describe catecholamines, ADH, RAAS, etc."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>c) Longer-term hematologic / renal compensation</label>
+      <textarea id="ans1c" placeholder="Describe erythropoiesis, fluid retention, renal changes"></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('1')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers1" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>a)</b> Rapid sympathetic activation increases heart rate and contractility; peripheral vasoconstriction raises systemic vascular resistance to maintain perfusion.</p>
+      <p><b>b)</b> Release of catecholamines, ADH secretion and activation of RAAS promote vasoconstriction and fluid retention to support blood pressure.</p>
+      <p><b>c)</b> Kidneys increase erythropoietin to stimulate erythropoiesis; renal sodium/water retention and mobilization of interstitial fluid restore plasma volume over days to weeks.</p>
+    </div>
+
+  </div>
+
+  <!-- New short essay question (added) -->
+  <div class="card">
+    <h3>2. Explain the kidney's role in maintaining electrolyte and fluid balance.</h3>
+
+    <div class="subquestion">
+      <label>a) Describe how the proximal tubule handles sodium and water.</label>
+      <textarea id="ans2a" placeholder="Answer A — proximal tubule handling..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>b) Explain the role of aldosterone in distal nephron sodium handling.</label>
+      <textarea id="ans2b" placeholder="Answer B — aldosterone actions..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>c) Outline how the kidney adapts to changes in body hydration (antidiuretic hormone/ADH).</label>
+      <textarea id="ans2c" placeholder="Answer C — ADH and urine concentration..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('2')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers2" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>a)</b> The proximal tubule reabsorbs the bulk of filtered sodium and water via coupled transporters and passive water movement; most solute and isoosmotic fluid is reclaimed here.</p>
+      <p><b>b)</b> Aldosterone acts on distal tubule and collecting duct principal cells to increase expression of ENaC and Na+/K+ ATPase, enhancing sodium reabsorption and potassium secretion.</p>
+      <p><b>c)</b> ADH increases water permeability of the collecting duct by inserting aquaporin-2 channels, concentrating urine when the body is dehydrated and reducing free-water excretion.</p>
+    </div>
+  </div>
+ </section>
+
+<script>
+  // Short explanation text for each question (keyed by question id)
+  const answerExplanations = {
+  q29: "Hemostasis follows a cascade: Prothrombin activator converts prothrombin to thrombin, which then converts fibrinogen to fibrin.",
+  q30: "Biliverdin is a waste product converted to bilirubin and excreted; it is not recycled to the bone marrow for reuse like iron.",
+  q31: "5% Dextrose in water (D5W) is considered isotonic in the bag, though it becomes hypotonic once metabolized.",
+  q32: "To maintain osmotic balance, the pump moves 3 sodium ions out for every 2 potassium ions in.",
+  q33: "Band 3 is a major integral membrane protein of the erythrocyte that acts as an anion exchanger.",
+  q34: "Semi-permeability regulates solute movement, which is critical for establishing the electrical gradient (RMP).",
+  q35: "Facilitated transport (facilitated diffusion) is a passive process because it follows a concentration gradient.",
+  q36: "Endocytosis is a form of bulk active transport requiring cellular energy (ATP).",
+  q37: "Growth hormone and testosterone are primary triggers for muscle protein synthesis and hypertrophy.",
+  q38: "The SR is a specialized endoplasmic reticulum that sequesters and releases Ca2+ to regulate contraction.",
+  q39: "In skeletal muscle, thin filaments outnumber thick filaments (the ratio is usually 2:1 in a cross-section).",
+  q40: "The sarcomere is defined as the repeating structural and functional unit of the myofibril between two Z-lines.",
+  q41: "Myosin molecules consist of a tail and a globular head that forms cross-bridges with actin.",
+  q42: "Tropomyosin blocks the myosin-binding sites on actin when the muscle is at rest.",
+  q43: "Recruitment of more motor units increases the total tension produced by a muscle.",
+  q44: "Relaxation occurs when Ca2+ is pumped back into the SR and tropomyosin covers the binding sites again.",
+  q45: "Repolarization restores the internal negative charge by moving positive ions (potassium) out of the cell.",
+  q46: "The rising phase of an action potential is caused by a rapid influx of sodium ions due to increased permeability.",
+  q47: "The Na+/K+-ATPase uses energy from ATP hydrolysis to transport ions against their gradients.",
+  q48: "Somatic motor neurons originate in the central nervous system and trigger voluntary muscle movement.",
+  q49: "Satellite cells are myogenic stem cells located between the sarcolemma and basal lamina that aid in repair.",
+  q50: "Actin and myosin are the contractile proteins responsible for generating tension and shortening the muscle."
+};
+
+const correctAnswers = {
+  q29: "a", q30: "a", q31: "c", q32: "b", q33: "d", q34: "b",
+  q35: "b", q36: "a", q37: "b", q38: "b", q39: "d", q40: "c",
+  q41: "d", q42: "c", q43: "c", q44: "c", q45: "c", q46: "d",
+  q47: "c", q48: "b", q49: "b", q50: "c"
+};
+
+ 
+  function submitQuiz() {
+     let score = 0;
+     const total = Object.keys(correctAnswers).length;
+ 
+     // Clear any previous inline feedback
+     document.querySelectorAll('.question-feedback').forEach(el => el.innerHTML = '');
+ 
+     for (let key in correctAnswers) {
+       const radios = Array.from(document.querySelectorAll(`input[name="${key}"]`));
+       const selected = radios.find(r => r.checked);
+       const correct = correctAnswers[key];
+ 
+       // Score calc
+       if (selected && selected.value === correct) score++;
+ 
+       const feedbackEl = document.getElementById(`feedback-${key}`);
+       if (!feedbackEl) continue;
+ 
+       let feedbackHTML = `<div class="answer-block"><strong>Question ${key.replace(/^q/, '')}</strong><div class="answer-list">`;
+ 
+       radios.forEach(r => {
+         let label = r.parentElement;
+         let text = label ? label.textContent.trim() : r.value;
+ 
+         let classes = ['answer-item'];
+         if (r.value === correct) classes.push('answer-correct');
+         if (r.checked && r.value !== correct) classes.push('answer-wrong', 'user-choice');
+         if (r.checked && r.value === correct) classes.push('user-choice');
+ 
+         feedbackHTML += `<div class="${classes.join(' ')}">${text}${r.checked ? ' ◀' : ''}</div>`;
+       });
+ 
+       feedbackHTML += `</div>`;
+ 
+       const correctRadio = radios.find(rr => rr.value === correct);
+       const correctText = correctRadio && correctRadio.parentElement ? correctRadio.parentElement.textContent.trim() : correct;
+       const explanationText = answerExplanations[key] || '';
+ 
+       if (selected) {
+         if (selected.value === correct) {
+           feedbackHTML += `<div class="explanation">✅ Correct — ${explanationText}</div>`;
+         } else {
+           feedbackHTML += `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+         }
+       } else {
+         feedbackHTML += `<div class="explanation wrong">No answer selected. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+       }
+ 
+       feedbackHTML += `</div>`;
+       feedbackEl.innerHTML = feedbackHTML;
+     }
+ 
+     const percentage = Math.round((score / total) * 100);
+     document.getElementById("score").innerText = "0%";
+     const resultBox = document.getElementById("resultBox");
+     resultBox.style.display = "block";
+     document.getElementById("answers").innerHTML = '';
+ 
+     let start = 0;
+     const timer = setInterval(() => {
+       if (start >= percentage) clearInterval(timer);
+       document.getElementById("score").innerText = start + "%";
+       start++;
+     }, 20);
+ 
+     document.querySelectorAll('#quizForm input').forEach(i => i.disabled = true);
+   }
+ 
+   // Essay Section
+   function showEssayAnswers() {
+     document.querySelectorAll(".essay-answer").forEach(a => a.style.display = "block");
+   }
+
+   // Show/hide model answers for an essay card
+   function showAnswers(id) {
+     const el = document.getElementById('answers' + id);
+     if (!el) return;
+     const isVisible = el.classList.toggle('visible');
+     el.setAttribute('aria-hidden', !isVisible);
+     if (isVisible) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+   }
+ 
+   // Mode switching (from first file)
+   const mode = localStorage.getItem("examMode"); // "mcq" or "essay"
+   if (mode === "essay") {
+     document.getElementById("mcq-section").style.display = "none";
+     document.getElementById("essay-section").style.display = "block";
+   }
+ 
+   // Navigate to the previous page if available, otherwise fall back to index.html
+   function goBack() {
+     if (history.length > 1) {
+       history.back();
+     } else {
+       window.location.href = "index.html";
+     }
+   }
+ 
+   // header back button hookup (same behaviour)
+   const backBtn = document.getElementById('backBtn');
+   if (backBtn) backBtn.addEventListener('click', (e) => { e.preventDefault(); goBack(); });
+ </script>
+
+</body>
+</html>

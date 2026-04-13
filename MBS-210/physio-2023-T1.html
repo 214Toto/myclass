@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Papers | ToToZ Collection</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../nav.css">
+  <style>
+    :root {
+      --primary: #2b7a78;
+      --accent: #3aafa9;
+      --dark: #17252a;
+      --light: #f8f9fa;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #f5f7fb, #eef6f6);
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--dark));
+      color: white;
+      padding: 1.1rem 0;
+      box-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* Improved heading styling */
+    header h1 {
+      font-size: 1.25rem;
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: 0.35px;
+      color: #ffffff;
+      text-transform: none;
+      display: inline-block;
+      line-height: 1;
+      text-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* logo heading (keeps icon + title aligned) */
+    .logo h1 {
+      font-size: 1.25rem;
+      margin: 0 0 0 6px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1.5rem 0;
+    }
+
+    h2 {
+      color: var(--primary);
+      margin: 0 0 0.85rem 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    /* responsive tweaks for small screens */
+    @media (max-width: 520px) {
+      header h1, .logo h1 { font-size: 1rem; }
+      h2 { font-size: 1rem; }
+    }
+
+    .question {
+      margin-bottom: 1.5rem;
+    }
+
+    .question p {
+      font-weight: 600;
+    }
+
+    .options label {
+      display: block;
+      background: #f8fafc;
+      border: 1px solid #d9e2ec;
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      margin-top: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .options label:hover {
+      background: #e0f7f6;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .result {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #f1faf9;
+      border-radius: var(--radius);
+      text-align: center;
+      display: none;
+    }
+
+    .score {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin-top: 0.5rem;
+    }
+
+    /* --- Styles for answer feedback --- */
+    .answer-list { text-align: left; margin-top: 12px; }
+    .answer-item {
+      display: block;
+      padding: 8px 10px;
+      border-radius: 8px;
+      margin: 6px 0;
+      border: 1px solid #e6eef3;
+      background: #ffffff;
+      color: var(--dark);
+      font-weight: 600;
+    }
+    .answer-correct {
+      background: #ecfdf5;       /* light green */
+      border-color: #bbf7d0;
+      color: #065f46;           /* dark green text */
+      box-shadow: 0 6px 18px rgba(16,185,129,0.06);
+    }
+    .answer-wrong {
+      background: #fff1f2;       /* light red */
+      border-color: #fca5a5;
+      color: #9f1239;           /* dark red text */
+      box-shadow: 0 6px 18px rgba(239,68,68,0.06);
+    }
+    .user-choice { outline: 2px dashed rgba(0,0,0,0.04); }
+
+    /* Essay Section */
+    textarea {
+      width: 80%;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.75rem;
+      resize: vertical;
+      min-height: 50px;
+      font-size: 1rem;
+    }
+
+    .essay-answer {
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-top: 0.75rem;
+      display: none;
+    }
+
+    .back-btn {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    /* Explanation box shown under each question in feedback */
+    .explanation {
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: #ecfdf5;           /* subtle greenish background */
+      color: #065f46;                /* dark green text */
+      font-size: 0.95rem;
+      line-height: 1.4;
+      border: 1px solid #bbf7d0;
+    }
+
+    /* For incorrect explanation (when needed) */
+    .explanation.wrong {
+      background: #fff1f2;
+      color: #7f1d1d;
+      border-color: #fca5a5;
+    }
+
+    /* small label styling for feedback header */
+    .answer-block { margin-bottom: 12px; }
+    .answer-block strong { display:block; margin-bottom:8px; color:var(--primary); }
+    .question-feedback {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 1px solid #d6e7eb;
+    }
+    .question-feedback .answer-list {
+      margin-top: 10px;
+    }
+
+    /* Essay card styles (compact, readable) */
+    #essay-section { padding-top: 0; }
+    #essay-section .card {
+      background: linear-gradient(180deg, #ffffff, #fbfeff);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(18,38,63,0.06);
+      border: 1px solid rgba(43,122,120,0.06);
+      max-width: 900px;
+      margin: 0 auto 1rem auto;
+    }
+    #essay-section .card h3 {
+      margin: 0 0 10px 0;
+      font-size: 1.02rem;
+      color: var(--dark);
+      font-weight: 700;
+    }
+    #essay-section .subquestion { margin-bottom: 12px; }
+    #essay-section .subquestion label {
+      display:block;
+      font-weight:700;
+      margin-bottom:6px;
+      color:var(--dark);
+    }
+    #essay-section textarea {
+      width:100%;
+      min-height:90px;
+      border-radius:8px;
+      border:1px solid #d1dbe0;
+      padding:10px;
+      resize:vertical;
+      font-family:inherit;
+    }
+    #essay-section .answers {
+      display:none;
+      margin-top:14px;
+      background:#f1faf9;
+      border-radius:8px;
+      padding:12px;
+      border:1px solid #cfeee6;
+      color:var(--dark);
+    }
+    #essay-section .answers h3 { margin-top:0; }
+    #essay-section .card .btn { margin-top:8px; }
+    /* make answers visible area stand out when shown */
+    #essay-section .answers.visible { display:block; }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;">
+      <div class="logo">
+        <i class="fas fa-book-medical"></i>
+        <h1>2023 Exam | ToToZ Collection</h1>
+      </div>
+      <button id="backBtn" class="btn"><i class="fas fa-arrow-left"></i> Back</button>
+    </div>
+  </header>
+
+<div class="container" id="mcq-section">
+  <h2>Multiple Choice Questions</h2>
+
+  <form id="quizForm">
+
+    <div class="question">
+  <p>1. In which phase of the cardiac muscle action potential, is the calcium ion permeability the highest?</p>
+  <div class="options">
+    <label><input type="radio" name="q1" value="a"> Depolarization</label>
+    <label><input type="radio" name="q1" value="b"> Repolarization</label>
+    <label><input type="radio" name="q1" value="c"> Plateau</label>
+    <label><input type="radio" name="q1" value="d"> Hyperpolarization</label>
+    <label><input type="radio" name="q1" value="e"> Uniform all over</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>2. Which of the following best explains how sympathetic stimulation affects the heart?</p>
+  <div class="options">
+    <label><input type="radio" name="q2" value="a"> Permeability of the S-A node to sodium decreases</label>
+    <label><input type="radio" name="q2" value="b"> Permeability of the A-V node to sodium decreases</label>
+    <label><input type="radio" name="q2" value="c"> Permeability of the S-A node to potassium increases</label>
+    <label><input type="radio" name="q2" value="d"> There is an increased rate of upward drift of the resting membrane potential of the S-A node</label>
+    <label><input type="radio" name="q2" value="e"> Permeability of the cardiac muscle to calcium decreases</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>3. Myocardial contractility is best controlled with the secretions and action of _____.</p>
+  <div class="options">
+    <label><input type="radio" name="q3" value="a"> Na+</label>
+    <label><input type="radio" name="q3" value="b"> Sympathetic nerves</label>
+    <label><input type="radio" name="q3" value="c"> Parasympathetic nerves</label>
+    <label><input type="radio" name="q3" value="d"> Both B & C</label>
+    <label><input type="radio" name="q3" value="e"> None</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>4. Example for autoimmune disease in muscle?</p>
+  <div class="options">
+    <label><input type="radio" name="q4" value="a"> Muscular dystrophy</label>
+    <label><input type="radio" name="q4" value="b"> Myasthenia gravis</label>
+    <label><input type="radio" name="q4" value="c"> Polio</label>
+    <label><input type="radio" name="q4" value="d"> Paralysis</label>
+    <label><input type="radio" name="q4" value="e"> Paresis</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>5. Reason for action potential to get faster conductance rate?</p>
+  <div class="options">
+    <label><input type="radio" name="q5" value="a"> Oligodendrocytes</label>
+    <label><input type="radio" name="q5" value="b"> Calmodulin</label>
+    <label><input type="radio" name="q5" value="c"> Nodes of ranvier</label>
+    <label><input type="radio" name="q5" value="d"> Unmyelinated fibers</label>
+    <label><input type="radio" name="q5" value="e"> Graded potentials</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>6. Even with high sophisticated language technology, humans cannot control their own body smooth muscles at will. Which of the following enzymes is responsible for phosphorylating myosin light chains to activate smooth muscle contraction?</p>
+  <div class="options">
+    <label><input type="radio" name="q6" value="a"> Calmodulin</label>
+    <label><input type="radio" name="q6" value="b"> Myosin light chain kinase</label>
+    <label><input type="radio" name="q6" value="c"> Myosin light chain phosphatase</label>
+    <label><input type="radio" name="q6" value="d"> Myosin ATPase</label>
+    <label><input type="radio" name="q6" value="e"> Actomyosin ATPase</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>7. Which characteristic or component is shared by skeletal muscle and smooth muscle?</p>
+  <div class="options">
+    <label><input type="radio" name="q7" value="a"> Thick and thin filaments arranged equally in sarcomeres</label>
+    <label><input type="radio" name="q7" value="b"> Troponin</label>
+    <label><input type="radio" name="q7" value="c"> Elevation of intracellular [Ca2+] for excitation-contraction coupling</label>
+    <label><input type="radio" name="q7" value="d"> Spontaneous depolarization of the membrane potential</label>
+    <label><input type="radio" name="q7" value="e"> High degree of electrical coupling between cells</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>8. A 66-year-old woman with severe muscle weakness is hospitalized. The only abnormality in her laboratory values is an elevated serum K+ concentration. In a muscle, the K+ ions play a major role in _____.</p>
+  <div class="options">
+    <label><input type="radio" name="q8" value="a"> The resting membrane potential</label>
+    <label><input type="radio" name="q8" value="b"> Repolarization phase</label>
+    <label><input type="radio" name="q8" value="c"> Are closed by depolarization</label>
+    <label><input type="radio" name="q8" value="d"> Are closed by repolarization</label>
+    <label><input type="radio" name="q8" value="e"> Are opened by depolarization</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>9. How does the single-unit smooth muscle differ from multiunit smooth muscles?</p>
+  <div class="options">
+    <label><input type="radio" name="q9" value="a"> Single-unit muscle contraction speed is slow, while multiunit is fast</label>
+    <label><input type="radio" name="q9" value="b"> Single-unit muscle has T-tubules, while multiunit does not</label>
+    <label><input type="radio" name="q9" value="c"> Single-unit muscles are not innervated by autonomic nerves</label>
+    <label><input type="radio" name="q9" value="d"> Single-unit muscle produces action potentials spontaneously that spreads to neighbouring cells, while multiunit does not</label>
+    <label><input type="radio" name="q9" value="e"> They are all smooth muscles, they do not differ</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>10. In excitation-contraction of smooth muscle, calcium binds to which protein after influx into the cytoplasm?</p>
+  <div class="options">
+    <label><input type="radio" name="q10" value="a"> Calmodulin</label>
+    <label><input type="radio" name="q10" value="b"> Tropomyosin</label>
+    <label><input type="radio" name="q10" value="c"> Troponin C</label>
+    <label><input type="radio" name="q10" value="d"> Troponin I</label>
+    <label><input type="radio" name="q10" value="e"> Myosin</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>11. While attending to an emergency care patient [soldier] who came from conflicted region of TIGRAY at Ethiopian border with Eritrea, which of the following are isotonic fluids used for IV infusion?</p>
+  <div class="options">
+    <label><input type="radio" name="q11" value="a"> 1.9% NaCl</label>
+    <label><input type="radio" name="q11" value="b"> 5% Dextrose</label>
+    <label><input type="radio" name="q11" value="c"> Fingers Lactate</label>
+    <label><input type="radio" name="q11" value="d"> 9% NaCl</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>12. As a medical graduate, you got to infuse an IV solution at emergency department based on the particular patient's:</p>
+  <div class="options">
+    <label><input type="radio" name="q12" value="a"> Liver-volume balance</label>
+    <label><input type="radio" name="q12" value="b"> Permanent residency status</label>
+    <label><input type="radio" name="q12" value="c"> Serum electrolyte values</label>
+    <label><input type="radio" name="q12" value="d"> Attitude</label>
+    <label><input type="radio" name="q12" value="e"> Blood oxygen level</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>13. In cardiac muscles, both chambers contract at the same time during heart beats. The function of gap junction or nexus that are present between two cells in any tissue is _____.</p>
+  <div class="options">
+    <label><input type="radio" name="q13" value="a"> Transportation and communication between cells</label>
+    <label><input type="radio" name="q13" value="b"> Cl- ions follows Na+ ions</label>
+    <label><input type="radio" name="q13" value="c"> H2O follows NaCl</label>
+    <label><input type="radio" name="q13" value="d"> Ca++ pumped out</label>
+    <label><input type="radio" name="q13" value="e"> 3 K+ pumped out</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>14. Example for integral proteins of cell membrane:</p>
+  <div class="options">
+    <label><input type="radio" name="q14" value="a"> Carriers</label>
+    <label><input type="radio" name="q14" value="b"> Channels</label>
+    <label><input type="radio" name="q14" value="c"> Integral protein band 3</label>
+    <label><input type="radio" name="q14" value="d"> Antigen</label>
+    <label><input type="radio" name="q14" value="e"> Spectrin</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>15. Plasma membrane function as semi permeable barrier aids to _____.</p>
+  <div class="options">
+    <label><input type="radio" name="q15" value="a"> Maintains difference in composition of ICF & ECF & fluid in various organelles</label>
+    <label><input type="radio" name="q15" value="b"> Protects cell from toxic substances</label>
+    <label><input type="radio" name="q15" value="c"> Excretion of waste products</label>
+    <label><input type="radio" name="q15" value="d"> Transport of nutrients</label>
+    <label><input type="radio" name="q15" value="e"> Cell growth</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>16. Example for Passive transport mechanism across cell membrane _____.</p>
+  <div class="options">
+    <label><input type="radio" name="q16" value="a"> Voltage gated diffusion</label>
+    <label><input type="radio" name="q16" value="b"> Facilitated diffusion</label>
+    <label><input type="radio" name="q16" value="c"> Exocytosis</label>
+    <label><input type="radio" name="q16" value="d"> Endocytosis</label>
+    <label><input type="radio" name="q16" value="e"> Sodium potassium pump</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>17. Example of an active transport mechanisms across cell membrane is _____.</p>
+  <div class="options">
+    <label><input type="radio" name="q17" value="a"> Cytolysis</label>
+    <label><input type="radio" name="q17" value="b"> Facilitated diffusion</label>
+    <label><input type="radio" name="q17" value="c"> Filtration</label>
+    <label><input type="radio" name="q17" value="d"> Secondary active transport</label>
+    <label><input type="radio" name="q17" value="e"> Osmosis</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>18. Skeletal muscle number is fixed at time of birth in humans. Which of the following hormones stimulate muscle hypertrophy?</p>
+  <div class="options">
+    <label><input type="radio" name="q18" value="a"> Estrogen</label>
+    <label><input type="radio" name="q18" value="b"> Growth hormone</label>
+    <label><input type="radio" name="q18" value="c"> Oestrone</label>
+    <label><input type="radio" name="q18" value="d"> Adrenaline</label>
+    <label><input type="radio" name="q18" value="e"> T4</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>19. Functional significance of sarcoplasmic reticulum in muscle cells is _____.</p>
+  <div class="options">
+    <label><input type="radio" name="q19" value="a"> Membranous sacs which encircles each myofibril</label>
+    <label><input type="radio" name="q19" value="b"> Stores and release calcium ions (Ca++)</label>
+    <label><input type="radio" name="q19" value="c"> Release of Na+ triggers muscle contraction</label>
+    <label><input type="radio" name="q19" value="d"> Develops action potential</label>
+    <label><input type="radio" name="q19" value="e"> Releases sodium ions</label>
+  </div>
+</div>
+<div class="question">
+  <p>20. Regarding contractile filaments in a skeletal muscle:</p>
+  <div class="options">
+    <label><input type="radio" name="q20" value="a"> Function in the non contractile process</label>
+    <label><input type="radio" name="q20" value="b"> Three types of filaments (Thick, medium and Thin)</label>
+    <label><input type="radio" name="q20" value="c"> There are two thin filaments for every thick filament</label>
+    <label><input type="radio" name="q20" value="d"> Secrete ca++</label>
+    <label><input type="radio" name="q20" value="e"> Myosin are thin filaments</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>21. Regarding Sarcomeres:</p>
+  <div class="options">
+    <label><input type="radio" name="q21" value="a"> Compartments of arranged fibres</label>
+    <label><input type="radio" name="q21" value="b"> Basic functional unit of a myofibril</label>
+    <label><input type="radio" name="q21" value="c"> Secrete ca++</label>
+    <label><input type="radio" name="q21" value="d"> Generate action potential</label>
+    <label><input type="radio" name="q21" value="e"> Has voltage</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>22. Regarding myosin filaments:</p>
+  <div class="options">
+    <label><input type="radio" name="q22" value="a"> Thin filaments</label>
+    <label><input type="radio" name="q22" value="b"> Functions as a motor protein which cannot achieve motion</label>
+    <label><input type="radio" name="q22" value="c"> Convert ADP to glucose of motion</label>
+    <label><input type="radio" name="q22" value="d"> Projections of each myosin molecule protrude outward (myosin head)</label>
+    <label><input type="radio" name="q22" value="e"> Actin has cross bridges</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>23. Regarding Actin filaments in skeletal muscles:</p>
+  <div class="options">
+    <label><input type="radio" name="q23" value="a"> Thick filaments</label>
+    <label><input type="radio" name="q23" value="b"> Actin molecules provide a site where a myosin head can attach</label>
+    <label><input type="radio" name="q23" value="c"> Tropomyosin and troponin are branched part of the thin filament</label>
+    <label><input type="radio" name="q23" value="d"> Does not contract</label>
+    <label><input type="radio" name="q23" value="e"> Has cross bridges</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>24. Physiotherapy is a branch of contemporary medicine that focuses on neuromuscular rehabilitation of patients. The total strength of a contraction in a muscle depends on the _____.</p>
+  <div class="options">
+    <label><input type="radio" name="q24" value="a"> Motor neurons</label>
+    <label><input type="radio" name="q24" value="b"> Less motor units</label>
+    <label><input type="radio" name="q24" value="c"> Number of motor units that are activated</label>
+    <label><input type="radio" name="q24" value="d"> Stimulus strength</label>
+    <label><input type="radio" name="q24" value="e"> Energy drink</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>25. LATCH phenomenon in a smooth muscle refers to:</p>
+  <div class="options">
+    <label><input type="radio" name="q25" value="a"> Na+ is transported into the SR</label>
+    <label><input type="radio" name="q25" value="b"> Myosin-binding sites are covered by tropomyosin</label>
+    <label><input type="radio" name="q25" value="c"> Myosin heads remain attached to actin for long duration</label>
+    <label><input type="radio" name="q25" value="d"> Power stroke of myosin occurs</label>
+    <label><input type="radio" name="q25" value="e"> Binding sites are open always</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>26. VISUALIZE an action potential curve, of a nerve. During depolarization phase;</p>
+  <div class="options">
+    <label><input type="radio" name="q26" value="a"> It is the decrease in cell electronegativity inside</label>
+    <label><input type="radio" name="q26" value="b"> It is the increase in cell electropositivity outside</label>
+    <label><input type="radio" name="q26" value="c"> It is the decrease in cell electropositivity inside of nerve membrane</label>
+    <label><input type="radio" name="q26" value="d"> It is the decrease in cell size</label>
+    <label><input type="radio" name="q26" value="e"> No voltage change</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>27. We are living in modern world of artificial intelligence with CHAT-GPT. AI robots with can now replace a human as an UNBIASED personal assistant. An action potential in a nerve fibre:</p>
+  <div class="options">
+    <label><input type="radio" name="q27" value="a"> Has amplitude which varies directly with the strength of the stimulus</label>
+    <label><input type="radio" name="q27" value="b"> Induces graded electrical currents in adjacent segments of the fibre</label>
+    <label><input type="radio" name="q27" value="c"> Is associated with a transient decrease in membrane permeability to potassium</label>
+    <label><input type="radio" name="q27" value="d"> Is associated with a transient increase in membrane permeability to sodium</label>
+    <label><input type="radio" name="q27" value="e"> Is associated with a transient increase in membrane permeability to Aluminium</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>28. About synapses;</p>
+  <div class="options">
+    <label><input type="radio" name="q28" value="a"> Electrical synapses can be found between a neuron and a neuron</label>
+    <label><input type="radio" name="q28" value="b"> Physical synapses can be found between a neuron and a bone</label>
+    <label><input type="radio" name="q28" value="c"> Chemical synapses cannot be found between a neuron and a skin cell</label>
+    <label><input type="radio" name="q28" value="d"> Chemical synapses can be found between a neuron and a bone</label>
+    <label><input type="radio" name="q28" value="e"> Exist inside blood plasma</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>29. BMW group is at the forefront of global market in innovation of using AI sensors for automobiles. The following is related to nerve conduction senses in humans:</p>
+  <div class="options">
+    <label><input type="radio" name="q29" value="a"> Neurons not communicate with each other by synapses</label>
+    <label><input type="radio" name="q29" value="b"> A synapse is typically formed between an axon of a neuron and the dendrite of another neuron</label>
+    <label><input type="radio" name="q29" value="c"> Nerve impulses go from the axon to the nerve body</label>
+    <label><input type="radio" name="q29" value="d"> The only form of transmission of an impulse from one neuron to another is direct electrical connection</label>
+    <label><input type="radio" name="q29" value="e"> Nerve impulse is a fictional signal</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>30. Regarding the sodium potassium pump;</p>
+  <div class="options">
+    <label><input type="radio" name="q30" value="a"> It transports sodium and potassium by breaking down ATP</label>
+    <label><input type="radio" name="q30" value="b"> Has no beta subunit with transportation occurring on the beta subunit</label>
+    <label><input type="radio" name="q30" value="c"> 3 sites inside the cell are for potassium and 2 sites on the extracellular allow sodium to bind</label>
+    <label><input type="radio" name="q30" value="d"> Pumps 2 Na+ outside to function</label>
+    <label><input type="radio" name="q30" value="e"> Pumps chloride ions</label>
+  </div>
+</div>
+
+    
+
+    <button type="button" class="btn" onclick="submitQuiz()">Submit</button>
+  </form>
+
+  <div class="result" id="resultBox">
+    <h3>Your Score:</h3>
+    <div class="score" id="score">0%</div>
+    <div id="answers"></div>
+  </div>
+</div>
+
+<!-- Short Essay Section (card style with sub-questions) -->
+<section id="essay-section" class="container" style="display:none;">
+  <h2 style="margin-bottom:1rem;color:var(--dark)">Short Essay Questions</h2>
+
+  <div class="card">
+    <h3>1. Describe the physiological responses that occur following an acute loss of blood volume.</h3>
+
+    <div class="subquestion">
+      <label>a) Immediate cardiovascular compensations</label>
+      <textarea id="ans1a" placeholder="Describe immediate changes (heart rate, vascular tone, etc.)"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>b) Neurohormonal responses</label>
+      <textarea id="ans1b" placeholder="Describe catecholamines, ADH, RAAS, etc."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>c) Longer-term hematologic / renal compensation</label>
+      <textarea id="ans1c" placeholder="Describe erythropoiesis, fluid retention, renal changes"></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('1')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers1" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>a)</b> Rapid sympathetic activation increases heart rate and contractility; peripheral vasoconstriction raises systemic vascular resistance to maintain perfusion.</p>
+      <p><b>b)</b> Release of catecholamines, ADH secretion and activation of RAAS promote vasoconstriction and fluid retention to support blood pressure.</p>
+      <p><b>c)</b> Kidneys increase erythropoietin to stimulate erythropoiesis; renal sodium/water retention and mobilization of interstitial fluid restore plasma volume over days to weeks.</p>
+    </div>
+
+  </div>
+
+  <!-- New short essay question (added) -->
+  <div class="card">
+    <h3>2. Explain the kidney's role in maintaining electrolyte and fluid balance.</h3>
+
+    <div class="subquestion">
+      <label>a) Describe how the proximal tubule handles sodium and water.</label>
+      <textarea id="ans2a" placeholder="Answer A — proximal tubule handling..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>b) Explain the role of aldosterone in distal nephron sodium handling.</label>
+      <textarea id="ans2b" placeholder="Answer B — aldosterone actions..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>c) Outline how the kidney adapts to changes in body hydration (antidiuretic hormone/ADH).</label>
+      <textarea id="ans2c" placeholder="Answer C — ADH and urine concentration..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('2')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers2" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>a)</b> The proximal tubule reabsorbs the bulk of filtered sodium and water via coupled transporters and passive water movement; most solute and isoosmotic fluid is reclaimed here.</p>
+      <p><b>b)</b> Aldosterone acts on distal tubule and collecting duct principal cells to increase expression of ENaC and Na+/K+ ATPase, enhancing sodium reabsorption and potassium secretion.</p>
+      <p><b>c)</b> ADH increases water permeability of the collecting duct by inserting aquaporin-2 channels, concentrating urine when the body is dehydrated and reducing free-water excretion.</p>
+    </div>
+  </div>
+ </section>
+
+<script>
+  // Short explanation text for each question
+const answerExplanations = {
+  q1: "The plateau phase (Phase 2) is characterized by a balance between inward calcium (Ca2+) current and outward potassium (K+) current, representing peak Ca2+ permeability.",
+  q2: "Sympathetic stimulation increases the rate of Phase 4 depolarization (upward drift) in the S-A node, leading to a faster heart rate.",
+  q3: "While nerves and hormones modulate it, myocardial contractility is fundamentally regulated by the concentration of Na+ and its effect on Ca2+ exchange.",
+  q4: "Myasthenia gravis is a classic autoimmune disease where antibodies attack acetylcholine receptors at the neuromuscular junction.",
+  q5: "Nodes of Ranvier allow for saltatory conduction, where the action potential 'jumps' between gaps in the myelin sheath, significantly increasing speed.",
+  q6: "In smooth muscle, Myosin Light Chain Kinase (MLCK) must phosphorylate the myosin head to initiate the cross-bridge cycle.",
+  q7: "Both muscle types rely on an increase in intracellular calcium ions to trigger the interaction between actin and myosin.",
+  q8: "The movement of K+ out of the cell is the primary driver of the repolarization phase, returning the membrane to its resting state.",
+  q9: "Single-unit smooth muscles are connected by gap junctions, allowing an action potential in one cell to spread spontaneously to its neighbors.",
+  q10: "Unlike skeletal muscle (which uses Troponin), smooth muscle uses the protein Calmodulin to bind calcium and activate contraction.",
+  q11: "5% Dextrose (D5W) is considered isotonic in the bag, though it becomes hypotonic once the glucose is metabolized by the body.",
+  q12: "IV fluid choice is primarily dictated by the patient's serum electrolyte levels and volume status to maintain homeostasis.",
+  q13: "Gap junctions (or nexuses) provide low-resistance pathways that allow for chemical and electrical communication between adjacent cells.",
+  q14: "Integral protein band 3 is a major transport protein found in the erythrocyte (red blood cell) membrane.",
+  q15: "The semi-permeable nature of the plasma membrane allows the cell to maintain distinct chemical environments in the ICF versus the ECF.",
+  q16: "Facilitated diffusion is a passive process that uses carrier proteins to move molecules down their concentration gradient without energy.",
+  q17: "Secondary active transport uses the energy from an established electrochemical gradient (usually Na+) to move another substance against its own gradient.",
+  q18: "Growth hormone (along with IGF-1) is a primary stimulator of protein synthesis and hypertrophy in skeletal muscle tissue.",
+  q19: "The sarcoplasmic reticulum (SR) acts as the internal storage site for calcium ions, releasing them to trigger contraction.",
+  q20: "In the sliding filament model of skeletal muscle, the standard arrangement involves two thin (actin) filaments for every one thick (myosin) filament.",
+  q21: "The sarcomere is the basic functional and contractile unit of a myofibril, repeating from Z-line to Z-line.",
+  q22: "The myosin filament consists of many myosin molecules with 'heads' that protrude outward to form cross-bridges with actin.",
+  q23: "Actin filaments contain specific binding sites that are 'uncovered' during excitation so that myosin heads can attach and pull.",
+  q24: "Recruitment, or increasing the number of active motor units, is the primary way the body increases the total strength of a muscle contraction.",
+  q25: "The LATCH state allows smooth muscle to maintain high tension for long periods with very low ATP consumption due to slow cross-bridge cycling.",
+  q26: "During depolarization, sodium influx makes the inside of the cell less negative (more positive) compared to its resting state.",
+  q27: "Nerve action potentials are initiated by a rapid, transient increase in the membrane's permeability to sodium ions.",
+  q28: "Electrical synapses (gap junctions) allow for direct, rapid electrical signaling between two neurons.",
+  q29: "The standard structural synapse involves the axon terminal of the presynaptic neuron communicating with the dendrite of the postsynaptic neuron.",
+  q30: "The Na+/K+ pump (ATPase) actively transports 3 Na+ ions out and 2 K+ ions in by hydrolyzing one molecule of ATP."
+};
+
+  // MCQ Functionality
+const correctAnswers = { 
+  q1: "c", 
+  q2: "d", 
+  q3: "a", 
+  q4: "b", 
+  q5: "c", 
+  q6: "b", 
+  q7: "c", 
+  q8: "b", 
+  q9: "d", 
+  q10: "a",
+  q11: "b",
+  q12: "c",
+  q13: "a",
+  q14: "c",
+  q15: "a",
+  q16: "b",
+  q17: "d",
+  q18: "b",
+  q19: "b",
+  q20: "c",
+  q21: "b",
+  q22: "d",
+  q23: "b",
+  q24: "c",
+  q25: "c",
+  q26: "a",
+  q27: "d",
+  q28: "a",
+  q29: "b",
+  q30: "a"
+};
+ 
+  function submitQuiz() {
+     let score = 0;
+     const total = Object.keys(correctAnswers).length;
+ 
+     // Clear any previous inline feedback
+     document.querySelectorAll('.question-feedback').forEach(el => el.innerHTML = '');
+ 
+     for (let key in correctAnswers) {
+       const radios = Array.from(document.querySelectorAll(`input[name="${key}"]`));
+       const selected = radios.find(r => r.checked);
+       const correct = correctAnswers[key];
+ 
+       // Score calc
+       if (selected && selected.value === correct) score++;
+ 
+       const feedbackEl = document.getElementById(`feedback-${key}`);
+       if (!feedbackEl) continue;
+ 
+       let feedbackHTML = `<div class="answer-block"><strong>Question ${key.replace(/^q/, '')}</strong><div class="answer-list">`;
+ 
+       radios.forEach(r => {
+         let label = r.parentElement;
+         let text = label ? label.textContent.trim() : r.value;
+ 
+         let classes = ['answer-item'];
+         if (r.value === correct) classes.push('answer-correct');
+         if (r.checked && r.value !== correct) classes.push('answer-wrong', 'user-choice');
+         if (r.checked && r.value === correct) classes.push('user-choice');
+ 
+         feedbackHTML += `<div class="${classes.join(' ')}">${text}${r.checked ? ' ◀' : ''}</div>`;
+       });
+ 
+       feedbackHTML += `</div>`;
+ 
+       const correctRadio = radios.find(rr => rr.value === correct);
+       const correctText = correctRadio && correctRadio.parentElement ? correctRadio.parentElement.textContent.trim() : correct;
+       const explanationText = answerExplanations[key] || '';
+ 
+       if (selected) {
+         if (selected.value === correct) {
+           feedbackHTML += `<div class="explanation">✅ Correct — ${explanationText}</div>`;
+         } else {
+           feedbackHTML += `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+         }
+       } else {
+         feedbackHTML += `<div class="explanation wrong">No answer selected. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+       }
+ 
+       feedbackHTML += `</div>`;
+       feedbackEl.innerHTML = feedbackHTML;
+     }
+ 
+     const percentage = Math.round((score / total) * 100);
+     document.getElementById("score").innerText = "0%";
+     const resultBox = document.getElementById("resultBox");
+     resultBox.style.display = "block";
+     document.getElementById("answers").innerHTML = '';
+ 
+     let start = 0;
+     const timer = setInterval(() => {
+       if (start >= percentage) clearInterval(timer);
+       document.getElementById("score").innerText = start + "%";
+       start++;
+     }, 20);
+ 
+     document.querySelectorAll('#quizForm input').forEach(i => i.disabled = true);
+   }
+ 
+   // Essay Section
+   function showEssayAnswers() {
+     document.querySelectorAll(".essay-answer").forEach(a => a.style.display = "block");
+   }
+
+   // Show/hide model answers for an essay card
+   function showAnswers(id) {
+     const el = document.getElementById('answers' + id);
+     if (!el) return;
+     const isVisible = el.classList.toggle('visible');
+     el.setAttribute('aria-hidden', !isVisible);
+     if (isVisible) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+   }
+ 
+   // Mode switching (from first file)
+   const mode = localStorage.getItem("examMode"); // "mcq" or "essay"
+   if (mode === "essay") {
+     document.getElementById("mcq-section").style.display = "none";
+     document.getElementById("essay-section").style.display = "block";
+   }
+ 
+   // Navigate to the previous page if available, otherwise fall back to index.html
+   function goBack() {
+     if (history.length > 1) {
+       history.back();
+     } else {
+       window.location.href = "index.html";
+     }
+   }
+ 
+   // header back button hookup (same behaviour)
+   const backBtn = document.getElementById('backBtn');
+   if (backBtn) backBtn.addEventListener('click', (e) => { e.preventDefault(); goBack(); });
+ </script>
+
+</body>
+</html>

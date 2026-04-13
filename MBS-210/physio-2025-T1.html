@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Papers | ToToZ Collection</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../nav.css">
+  <style>
+    :root {
+      --primary: #2b7a78;
+      --accent: #3aafa9;
+      --dark: #17252a;
+      --light: #f8f9fa;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #f5f7fb, #eef6f6);
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--dark));
+      color: white;
+      padding: 1.1rem 0;
+      box-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* Improved heading styling */
+    header h1 {
+      font-size: 1.25rem;
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: 0.35px;
+      color: #ffffff;
+      text-transform: none;
+      display: inline-block;
+      line-height: 1;
+      text-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* logo heading (keeps icon + title aligned) */
+    .logo h1 {
+      font-size: 1.25rem;
+      margin: 0 0 0 6px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1.5rem 0;
+    }
+
+    h2 {
+      color: var(--primary);
+      margin: 0 0 0.85rem 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    /* responsive tweaks for small screens */
+    @media (max-width: 520px) {
+      header h1, .logo h1 { font-size: 1rem; }
+      h2 { font-size: 1rem; }
+    }
+
+    .question {
+      margin-bottom: 1.5rem;
+    }
+
+    .question p {
+      font-weight: 600;
+    }
+
+    .options label {
+      display: block;
+      background: #f8fafc;
+      border: 1px solid #d9e2ec;
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      margin-top: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .options label:hover {
+      background: #e0f7f6;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .result {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #f1faf9;
+      border-radius: var(--radius);
+      text-align: center;
+      display: none;
+    }
+
+    .score {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin-top: 0.5rem;
+    }
+
+    /* --- Styles for answer feedback --- */
+    .answer-list { text-align: left; margin-top: 12px; }
+    .answer-item {
+      display: block;
+      padding: 8px 10px;
+      border-radius: 8px;
+      margin: 6px 0;
+      border: 1px solid #e6eef3;
+      background: #ffffff;
+      color: var(--dark);
+      font-weight: 600;
+    }
+    .answer-correct {
+      background: #ecfdf5;       /* light green */
+      border-color: #bbf7d0;
+      color: #065f46;           /* dark green text */
+      box-shadow: 0 6px 18px rgba(16,185,129,0.06);
+    }
+    .answer-wrong {
+      background: #fff1f2;       /* light red */
+      border-color: #fca5a5;
+      color: #9f1239;           /* dark red text */
+      box-shadow: 0 6px 18px rgba(239,68,68,0.06);
+    }
+    .user-choice { outline: 2px dashed rgba(0,0,0,0.04); }
+
+    /* Essay Section */
+    textarea {
+      width: 80%;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.75rem;
+      resize: vertical;
+      min-height: 50px;
+      font-size: 1rem;
+    }
+
+    .essay-answer {
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-top: 0.75rem;
+      display: none;
+    }
+
+    .back-btn {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    /* Explanation box shown under each question in feedback */
+    .explanation {
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: #ecfdf5;           /* subtle greenish background */
+      color: #065f46;                /* dark green text */
+      font-size: 0.95rem;
+      line-height: 1.4;
+      border: 1px solid #bbf7d0;
+    }
+
+    /* For incorrect explanation (when needed) */
+    .explanation.wrong {
+      background: #fff1f2;
+      color: #7f1d1d;
+      border-color: #fca5a5;
+    }
+
+    /* small label styling for feedback header */
+    .answer-block { margin-bottom: 12px; }
+    .answer-block strong { display:block; margin-bottom:8px; color:var(--primary); }
+    .question-feedback {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 1px solid #d6e7eb;
+    }
+    .question-feedback .answer-list {
+      margin-top: 10px;
+    }
+
+    /* Essay card styles (compact, readable) */
+    #essay-section { padding-top: 0; }
+    #essay-section .card {
+      background: linear-gradient(180deg, #ffffff, #fbfeff);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(18,38,63,0.06);
+      border: 1px solid rgba(43,122,120,0.06);
+      max-width: 900px;
+      margin: 0 auto 1rem auto;
+    }
+    #essay-section .card h3 {
+      margin: 0 0 10px 0;
+      font-size: 1.02rem;
+      color: var(--dark);
+      font-weight: 700;
+    }
+    #essay-section .subquestion { margin-bottom: 12px; }
+    #essay-section .subquestion label {
+      display:block;
+      font-weight:700;
+      margin-bottom:6px;
+      color:var(--dark);
+    }
+    #essay-section textarea {
+      width:100%;
+      min-height:90px;
+      border-radius:8px;
+      border:1px solid #d1dbe0;
+      padding:10px;
+      resize:vertical;
+      font-family:inherit;
+    }
+    #essay-section .answers {
+      display:none;
+      margin-top:14px;
+      background:#f1faf9;
+      border-radius:8px;
+      padding:12px;
+      border:1px solid #cfeee6;
+      color:var(--dark);
+    }
+    #essay-section .answers h3 { margin-top:0; }
+    #essay-section .card .btn { margin-top:8px; }
+    /* make answers visible area stand out when shown */
+    #essay-section .answers.visible { display:block; }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;">
+      <div class="logo">
+        <i class="fas fa-book-medical"></i>
+        <h1>2024 Exam | ToToZ Collection</h1>
+      </div>
+      <button id="backBtn" class="btn"><i class="fas fa-arrow-left"></i> Back</button>
+    </div>
+  </header>
+
+<div class="container" id="mcq-section">
+  <h2>Multiple Choice Questions</h2>
+
+  <form id="quizForm">
+
+    <div class="question">
+  <p>1. This is of primary importance in the long-term regulation of ECF volume:</p>
+  <div class="options">
+    <label><input type="radio" name="q1" value="a"> ECF osmolarity</label>
+    <label><input type="radio" name="q1" value="b"> ICF osmolality</label>
+    <label><input type="radio" name="q1" value="c"> Nephrons</label>
+    <label><input type="radio" name="q1" value="d"> Medullary osmolality</label>
+    <label><input type="radio" name="q1" value="e"> Bone density</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>2. ECF osmolarity is maintained mainly by....................balance.</p>
+  <div class="options">
+    <label><input type="radio" name="q2" value="a"> NaCl</label>
+    <label><input type="radio" name="q2" value="b"> KCl</label>
+    <label><input type="radio" name="q2" value="c"> MgSO4</label>
+    <label><input type="radio" name="q2" value="d"> Ca2+</label>
+    <label><input type="radio" name="q2" value="e"> Fe+</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>3. Interstitial fluid volume is calculated using the formula:</p>
+  <div class="options">
+    <label><input type="radio" name="q3" value="a"> ECF + plasma volume</label>
+    <label><input type="radio" name="q3" value="b"> ECF - plasma volume</label>
+    <label><input type="radio" name="q3" value="c"> TBW - ECF</label>
+    <label><input type="radio" name="q3" value="d"> TBW + ECF</label>
+    <label><input type="radio" name="q3" value="e"> TBW + plasma volume</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>4. The molecular weight of a solute (in grams) divided by the number of ions or particles into which it dissociates in solution is called:</p>
+  <div class="options">
+    <label><input type="radio" name="q4" value="a"> Millimole</label>
+    <label><input type="radio" name="q4" value="b"> Osmole</label>
+    <label><input type="radio" name="q4" value="c"> Osmolality</label>
+    <label><input type="radio" name="q4" value="d"> Osmolarity</label>
+    <label><input type="radio" name="q4" value="e"> Polarity</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>5. ___ is a measure of the osmoles of solute per liter of solution.</p>
+  <div class="options">
+    <label><input type="radio" name="q5" value="a"> Osmolality</label>
+    <label><input type="radio" name="q5" value="b"> Osmolarity</label>
+    <label><input type="radio" name="q5" value="c"> Polarity</label>
+    <label><input type="radio" name="q5" value="d"> Parity</label>
+    <label><input type="radio" name="q5" value="e"> Extrapolation</label>
+  </div>
+</div>
+
+<div class="question">
+  <p>6. Because of the Donnan effect, cells will:</p>
+  <div class="options">
+    <label><input type="radio" name="q6" value="a"> Swell and burst</label>
+    <label><input type="radio" name="q6" value="b"> Shrink</label>
+    <label><input type="radio" name="q6" value="c"> No change</label>
+    <label><input type="radio" name="q6" value="d"> Become circular</label>
+    <label><input type="radio" name="q6" value="e"> Become sickled</label>
+  </div>
+</div>
+    
+
+    <button type="button" class="btn" onclick="submitQuiz()">Submit</button>
+  </form>
+
+  <div class="result" id="resultBox">
+    <h3>Your Score:</h3>
+    <div class="score" id="score">0%</div>
+    <div id="answers"></div>
+  </div>
+</div>
+
+<!-- Short Essay Section (card style with sub-questions) -->
+<section id="essay-section" class="container" style="display:none;">
+  <h2 style="margin-bottom:1rem;color:var(--dark)">Short Essay Questions</h2>
+
+  <div class="card">
+    <h3>1. Explain the operational effect of anaesthetics on nerve physiology, with examples.</h3>
+    <div class="subquestion">
+      <label>Answer:</label>
+      <textarea id="ans1" placeholder="Describe how anaesthetics interact with ion channels and nerve conduction..."></textarea>
+    </div>
+    <button class="btn" onclick="showAnswers('1')"><i class="fas fa-eye"></i> View Answers</button>
+    <div id="answers1" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p>Anaesthetics primarily act by blocking voltage-gated sodium channels in the nerve membrane, preventing depolarization and the propagation of action potentials. <b>Examples:</b> Lidocaine (local) and Propofol or Isoflurane (general).</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>2. Describe the functions of integrins in the cell and tight junctions between cells.</h3>
+    <div class="subquestion">
+      <label>Answer:</label>
+      <textarea id="ans2" placeholder="Describe cell-matrix adhesion and paracellular barriers..."></textarea>
+    </div>
+    <button class="btn" onclick="showAnswers('2')"><i class="fas fa-eye"></i> View Answers</button>
+    <div id="answers2" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>Integrins:</b> Mediate cell-extracellular matrix (ECM) adhesion and signal transduction. <b>Tight Junctions:</b> Create a seal between adjacent epithelial cells to prevent the leakage of molecules (paracellular barrier) and maintain cell polarity.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>3. Elucidate the structural design, with a labelled diagram, of nexus in body cells and write a note on their physiological significance.</h3>
+    <div class="subquestion">
+      <label>Answer:</label>
+      <textarea id="ans3" placeholder="Describe connexons and electrical/chemical coupling..."></textarea>
+    </div>
+    <button class="btn" onclick="showAnswers('3')"><i class="fas fa-eye"></i> View Answers</button>
+    <div id="answers3" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>Nexus (Gap Junctions):</b> Composed of transmembrane proteins called connexins which form hexameric structures known as connexons. <b>Physiological Significance:</b> They allow direct electrical and chemical communication between cells, crucial for synchronized contraction in cardiac and smooth muscle.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>4. In the membrane of cardiac muscle, intracellular Ca²⁺ is exchanged for extracellular Na⁺. Explain this type of transport and give three (3) other relevant examples.</h3>
+    <div class="subquestion">
+      <label>Answer:</label>
+      <textarea id="ans4" placeholder="Explain secondary active transport/antiport..."></textarea>
+    </div>
+    <button class="btn" onclick="showAnswers('4')"><i class="fas fa-eye"></i> View Answers</button>
+    <div id="answers4" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p>This is <b>Secondary Active Transport (Antiport/Counter-transport)</b>, specifically the Sodium-Calcium Exchanger (NCX). <b>Examples:</b> 1. Na⁺/H⁺ exchanger (pH regulation), 2. Cl⁻/HCO₃⁻ exchanger (Chloride shift), 3. Na⁺/Glucose symport (SGLT - though a symport, it is the same category of transport).</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>5. Explain phagocytosis with a labelled diagram.</h3>
+    <div class="subquestion">
+      <label>Answer:</label>
+      <textarea id="ans5" placeholder="Describe chemotaxis, ingestion, and digestion..."></textarea>
+    </div>
+    <button class="btn" onclick="showAnswers('5')"><i class="fas fa-eye"></i> View Answers</button>
+    <div id="answers5" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p>Phagocytosis is the process by which a cell (like a macrophage) engulfs large particles or pathogens. Stages include <b>chemotaxis, adherence, ingestion</b> (forming a phagosome), <b>fusion</b> with lysosomes (forming a phagolysosome), and <b>digestion</b>.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>6. Draw a labelled concept diagram of the Donnan effect and explain its significance.</h3>
+    <div class="subquestion">
+      <label>Answer:</label>
+      <textarea id="ans6" placeholder="Explain Gibbs-Donnan equilibrium and osmotic pressure..."></textarea>
+    </div>
+    <button class="btn" onclick="showAnswers('6')"><i class="fas fa-eye"></i> View Answers</button>
+    <div id="answers6" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p>The <b>Donnan Effect</b> describes the behavior of charged particles near a semi-permeable membrane that fail to distribute evenly due to the presence of non-diffusible ions (like proteins). <b>Significance:</b> It contributes to the resting membrane potential and influences osmotic pressure within cells and capillaries.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>7. Elucidate the concepts of IPSP, EPSP, and depolarization in a nerve membrane.</h3>
+    <div class="subquestion">
+      <label>Answer:</label>
+      <textarea id="ans7" placeholder="Define inhibitory and excitatory potentials..."></textarea>
+    </div>
+    <button class="btn" onclick="showAnswers('7')"><i class="fas fa-eye"></i> View Answers</button>
+    <div id="answers7" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>EPSP:</b> Excitatory Postsynaptic Potential (graded depolarization). <b>IPSP:</b> Inhibitory Postsynaptic Potential (graded hyperpolarization). <b>Depolarization:</b> A change in membrane potential where the interior becomes less negative, moving toward the threshold for an action potential.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>8. Describe the pathophysiology of diarrhea in cholera disease, with examples of IV fluids used at Ndola Hitech Hospital.</h3>
+    <div class="subquestion">
+      <label>Answer:</label>
+      <textarea id="ans8" placeholder="Discuss Vibrio cholerae toxin and cAMP..."></textarea>
+    </div>
+    <button class="btn" onclick="showAnswers('8')"><i class="fas fa-eye"></i> View Answers</button>
+    <div id="answers8" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p>Cholera toxin increases intracellular cAMP, leading to massive secretion of Cl⁻ and water into the intestinal lumen, causing "rice-water" stools. <b>IV Fluids:</b> Ringer's Lactate (preferred for electrolyte replacement) and Normal Saline (0.9% NaCl).</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>1. A medical science student, Ms. Aniya, who has been experiencing persistent insomnia for several weeks. Her family doctor prescribes a sleeping pill known to enhance the effects of GABA in the brain.</h3>
+    
+    <div class="subquestion">
+      <label>Explain, with the aid of diagrams, from a physiological perspective (depolarization, repolarization, and action potentials, etc.), how this medication is likely to promote sleep in Ms. Aniya by focusing on the GABAergic mechanism.</label>
+      <textarea id="ansD1a" placeholder="Describe hyperpolarization, Cl- influx..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>Also, write on transmission at the neuromuscular junction in myasthenia gravis.</label>
+      <textarea id="ansD1b" placeholder="Discuss ACh receptors and muscle weakness..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('D1')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answersD1" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>GABA Mechanism:</b> GABA is an inhibitory neurotransmitter. Enhancing its effect increases Cl⁻ influx into the post-synaptic neuron, causing <b>hyperpolarization</b>. This moves the membrane potential further from the threshold, making action potentials less likely, thus reducing neuronal excitability and promoting sleep.</p>
+      <p><b>Myasthenia Gravis:</b> An autoimmune disorder where antibodies block or destroy nicotinic acetylcholine receptors at the NMJ. This results in reduced end-plate potentials, failure of muscle fiber action potentials, and progressive muscle weakness.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>2. A researcher is investigating the neural basis of different behavioral states in human subjects. They administer various pharmacological agents and observe the resulting changes in physiological responses and reported experiences.</h3>
+    
+    <div class="subquestion">
+      <label>List any FIVE neurotransmitters and their effects on neurotransmission in various parts of the human body.</label>
+      <textarea id="ansD2" placeholder="List 5 neurotransmitters (e.g., ACh, Dopamine, etc.)"></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('D2')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answersD2" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <ol>
+        <li><b>Acetylcholine:</b> Triggers muscle contraction at the NMJ; parasympathetic effects.</li>
+        <li><b>Dopamine:</b> Involved in reward, motivation, and motor control (Basal ganglia).</li>
+        <li><b>Serotoning:</b> Regulates mood, sleep, and appetite.</li>
+        <li><b>Glutamate:</b> The primary excitatory neurotransmitter in the CNS.</li>
+        <li><b>Norepinephrine:</b> Mediates 'fight or flight' responses (Sympathetic).</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>3. A neuroscientist is studying the activity of a neuron in the brain of a research participant...</h3>
+    
+    <div class="subquestion">
+      <label>Explain how the target neuron might reach its threshold for firing an action potential in each of these scenarios (spatial and temporal summation).</label>
+      <textarea id="ansD3a" placeholder="Describe spatial vs temporal summation..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>Write on action potentials in smooth muscles.</label>
+      <textarea id="ansD3b" placeholder="Describe spike potentials, plateaus, and slow waves..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('D3')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answersD3" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>Spatial Summation:</b> Multiple presynaptic neurons fire simultaneously at different locations on the post-synaptic neuron to reach threshold.</p>
+      <p><b>Temporal Summation:</b> A single presynaptic neuron fires in rapid succession, allowing potentials to build up over time to reach threshold.</p>
+      <p><b>Smooth Muscle AP:</b> Can occur as "spike potentials" or action potentials with a plateau. Some exhibit "slow wave" rhythmicity which can trigger APs without external stimuli.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>4. An old man came to NTH with chest pain for a week.</h3>
+    
+    <div class="subquestion">
+      <label>Describe the phases of the action potential in a typical ventricular contractile cell and explain how these phases prevent the heart from developing tetanic contractions.</label>
+      <textarea id="ansD4" placeholder="Describe Phase 0-4 and the refractory period..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('D4')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answersD4" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p>Phases: 0 (Depolarization-Na⁺), 1 (Brief repolarization), 2 (Plateau-Ca²⁺ influx), 3 (Repolarization-K⁺ efflux), 4 (Resting). The <b>long plateau phase</b> results in a long Absolute Refractory Period (ARP), ensuring the muscle relaxes before it can be stimulated again, thus preventing <b>tetany</b>.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>5. The human heart has four chambers, unlike an octopus, which has two hearts in its body.</h3>
+    
+    <div class="subquestion">
+      <label>Explain how the prepotential (pacemaker potential) in SA node cells contributes to the automaticity of the heart, and describe the ionic changes responsible for this phase.</label>
+      <textarea id="ansD5" placeholder="Discuss 'funny' channels, Ca2+ influx..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('D5')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answersD5" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p>Automaticity is due to a slow, spontaneous depolarization (prepotential). It is caused by the opening of <b>"funny" Na⁺ channels (If)</b>, followed by transient <b>T-type Ca²⁺ channels</b>, which bring the membrane to threshold without neural input.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Section E: 1. Draw a labelled diagram of the pump that resolves the problem caused by the Donnan Equilibrium in the cells.</h3>
+    
+    <div class="subquestion">
+      <label>Answer:</label>
+      <textarea id="ansE1" placeholder="Describe the Na+/K+ ATPase pump..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('E1')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answersE1" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p>The <b>Na⁺/K⁺-ATPase pump</b> (Sodium-Potassium pump). It actively pumps 3 Na⁺ ions out and 2 K⁺ ions in. This prevents the osmotic swelling of the cell that would otherwise be caused by the Donnan Effect.</p>
+    </div>
+  </div>
+
+ </section>
+
+<script>
+  
+// Short explanation text for each question
+const answerExplanations = {
+  q1: "Nephrons regulate ECF volume over the long term by adjusting sodium and water excretion.",
+  q2: "Sodium chloride (NaCl) is the primary determinant of ECF osmolarity.",
+  q3: "Interstitial fluid is the portion of ECF outside the vascular space (ECF minus Plasma).",
+  q4: "An osmole is defined by the molecular weight divided by the number of dissociable particles.",
+  q5: "Osmolarity is the concentration of osmotic solution expressed as osmoles per liter.",
+  q6: "The Donnan effect leads to a higher intracellular osmotic pressure, causing water to enter the cell."
+};
+
+// MCQ Functionality
+const correctAnswers = { 
+  q1: "c", 
+  q2: "a", 
+  q3: "b", 
+  q4: "b", 
+  q5: "b", 
+  q6: "a" 
+};
+
+ 
+  function submitQuiz() {
+     let score = 0;
+     const total = Object.keys(correctAnswers).length;
+ 
+     // Clear any previous inline feedback
+     document.querySelectorAll('.question-feedback').forEach(el => el.innerHTML = '');
+ 
+     for (let key in correctAnswers) {
+       const radios = Array.from(document.querySelectorAll(`input[name="${key}"]`));
+       const selected = radios.find(r => r.checked);
+       const correct = correctAnswers[key];
+ 
+       // Score calc
+       if (selected && selected.value === correct) score++;
+ 
+       const feedbackEl = document.getElementById(`feedback-${key}`);
+       if (!feedbackEl) continue;
+ 
+       let feedbackHTML = `<div class="answer-block"><strong>Question ${key.replace(/^q/, '')}</strong><div class="answer-list">`;
+ 
+       radios.forEach(r => {
+         let label = r.parentElement;
+         let text = label ? label.textContent.trim() : r.value;
+ 
+         let classes = ['answer-item'];
+         if (r.value === correct) classes.push('answer-correct');
+         if (r.checked && r.value !== correct) classes.push('answer-wrong', 'user-choice');
+         if (r.checked && r.value === correct) classes.push('user-choice');
+ 
+         feedbackHTML += `<div class="${classes.join(' ')}">${text}${r.checked ? ' ◀' : ''}</div>`;
+       });
+ 
+       feedbackHTML += `</div>`;
+ 
+       const correctRadio = radios.find(rr => rr.value === correct);
+       const correctText = correctRadio && correctRadio.parentElement ? correctRadio.parentElement.textContent.trim() : correct;
+       const explanationText = answerExplanations[key] || '';
+ 
+       if (selected) {
+         if (selected.value === correct) {
+           feedbackHTML += `<div class="explanation">✅ Correct — ${explanationText}</div>`;
+         } else {
+           feedbackHTML += `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+         }
+       } else {
+         feedbackHTML += `<div class="explanation wrong">No answer selected. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+       }
+ 
+       feedbackHTML += `</div>`;
+       feedbackEl.innerHTML = feedbackHTML;
+     }
+ 
+     const percentage = Math.round((score / total) * 100);
+     document.getElementById("score").innerText = "0%";
+     const resultBox = document.getElementById("resultBox");
+     resultBox.style.display = "block";
+     document.getElementById("answers").innerHTML = '';
+ 
+     let start = 0;
+     const timer = setInterval(() => {
+       if (start >= percentage) clearInterval(timer);
+       document.getElementById("score").innerText = start + "%";
+       start++;
+     }, 20);
+ 
+     document.querySelectorAll('#quizForm input').forEach(i => i.disabled = true);
+   }
+ 
+   // Essay Section
+   function showEssayAnswers() {
+     document.querySelectorAll(".essay-answer").forEach(a => a.style.display = "block");
+   }
+
+   // Show/hide model answers for an essay card
+   function showAnswers(id) {
+     const el = document.getElementById('answers' + id);
+     if (!el) return;
+     const isVisible = el.classList.toggle('visible');
+     el.setAttribute('aria-hidden', !isVisible);
+     if (isVisible) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+   }
+ 
+   // Mode switching (from first file)
+   const mode = localStorage.getItem("examMode"); // "mcq" or "essay"
+   if (mode === "essay") {
+     document.getElementById("mcq-section").style.display = "none";
+     document.getElementById("essay-section").style.display = "block";
+   }
+ 
+   // Navigate to the previous page if available, otherwise fall back to index.html
+   function goBack() {
+     if (history.length > 1) {
+       history.back();
+     } else {
+       window.location.href = "index.html";
+     }
+   }
+ 
+   // header back button hookup (same behaviour)
+   const backBtn = document.getElementById('backBtn');
+   if (backBtn) backBtn.addEventListener('click', (e) => { e.preventDefault(); goBack(); });
+ </script>
+
+</body>
+</html>
