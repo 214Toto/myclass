@@ -15,6 +15,11 @@
       --radius: 12px;
     }
 
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
     body {
       font-family: "Segoe UI", sans-serif;
       background: linear-gradient(180deg, #f5f7fb, #eef6f6);
@@ -27,6 +32,11 @@
       background: linear-gradient(135deg, var(--primary), var(--dark));
       color: white;
       padding: 1.1rem 0;
+      position: fixed; /* Keeps it at the top when scrolling */
+      top: 0;          /* Added: Ensures it starts at the absolute top */
+      left: 0;         /* Added: Ensures it stretches from the left edge */
+      width: 100%;
+      z-index: 1000;   /* Added: Keeps header above all other elements */
       box-shadow: 0 6px 18px rgba(11,36,36,0.12);
     }
 
@@ -54,7 +64,8 @@
     .container {
       width: 92%;
       max-width: 900px;
-      margin: 0 auto;
+      /* Adjust this value based on how tall your header is */
+      margin: 100px auto 0 auto; 
       padding: 1.5rem 0;
     }
 
@@ -180,9 +191,9 @@
     /* Explanation box shown under each question in feedback */
     .explanation {
       margin-top: 8px;
-      padding: 10px 12px;
+      padding: 10px 12px;                                                                                                                                                                                 
       border-radius: 8px;
-      background: #ecfdf5;           /* subtle greenish background */
+      background: #363d3a;           /* subtle greenish background */
       color: #065f46;                /* dark green text */
       font-size: 0.95rem;
       line-height: 1.4;
@@ -197,13 +208,14 @@
     }
 
     /* small label styling for feedback header */
-    .answer-block { margin-bottom: 12px; }
-    .answer-block strong { display:block; margin-bottom:8px; color:var(--primary); }
-    .question-feedback {
+    .answer-block { color: var(--primary); margin-bottom: 12px; }
+    .answer-block strong { display:block; margin-bottom:8px; color: rgb(7, 113, 95); }
+    .question-feedback { 
       margin-top: 14px;
       padding: 14px 16px;
+      color: white;
       border-radius: 12px;
-      background: #f8fafc;
+      background: #a82525;
       border: 1px solid #d6e7eb;
     }
     .question-feedback .answer-list {
@@ -243,6 +255,16 @@
       resize:vertical;
       font-family:inherit;
     }
+
+    .mutwe {
+      max-width: 900px; 
+      margin: 0 auto; 
+      width: 92%; 
+      display:flex; 
+      align-items:center; 
+      justify-content:space-between;
+    }
+
     #essay-section .answers {
       display:none;
       margin-top:14px;
@@ -262,10 +284,10 @@
 <body>
 
   <header>
-    <div class="container" style="display:flex;align-items:center;justify-content:space-between;">
-      <div class="logo">
+    <div style="max-width: 900px; margin: 0 auto; width: 92%; display:flex; align-items:center; justify-content:space-between;">
+      <div class="logo" style="display: flex; align-items: center;">
         <i class="fas fa-book-medical"></i>
-        <h1>2024 Exam | ToToZ Collection</h1>
+        <h1>2025 Physiology Test 1</h1>
       </div>
       <button id="backBtn" class="btn"><i class="fas fa-arrow-left"></i> Back</button>
     </div>
@@ -285,6 +307,7 @@
     <label><input type="radio" name="q1" value="d"> Medullary osmolality</label>
     <label><input type="radio" name="q1" value="e"> Bone density</label>
   </div>
+      <div class="question-feedback" id="feedback-q1"></div>
 </div>
 
 <div class="question">
@@ -296,6 +319,7 @@
     <label><input type="radio" name="q2" value="d"> Ca2+</label>
     <label><input type="radio" name="q2" value="e"> Fe+</label>
   </div>
+      <div class="question-feedback" id="feedback-q2"></div>
 </div>
 
 <div class="question">
@@ -307,6 +331,7 @@
     <label><input type="radio" name="q3" value="d"> TBW + ECF</label>
     <label><input type="radio" name="q3" value="e"> TBW + plasma volume</label>
   </div>
+      <div class="question-feedback" id="feedback-q3"></div>
 </div>
 
 <div class="question">
@@ -318,6 +343,7 @@
     <label><input type="radio" name="q4" value="d"> Osmolarity</label>
     <label><input type="radio" name="q4" value="e"> Polarity</label>
   </div>
+      <div class="question-feedback" id="feedback-q4"></div>
 </div>
 
 <div class="question">
@@ -329,6 +355,7 @@
     <label><input type="radio" name="q5" value="d"> Parity</label>
     <label><input type="radio" name="q5" value="e"> Extrapolation</label>
   </div>
+      <div class="question-feedback" id="feedback-q5"></div>
 </div>
 
 <div class="question">
@@ -340,6 +367,7 @@
     <label><input type="radio" name="q6" value="d"> Become circular</label>
     <label><input type="radio" name="q6" value="e"> Become sickled</label>
   </div>
+      <div class="question-feedback" id="feedback-q6"></div>
 </div>
     
 
@@ -432,6 +460,7 @@
     <div id="answers6" class="answers" aria-hidden="true">
       <h3>Model Answers</h3>
       <p>The <b>Donnan Effect</b> describes the behavior of charged particles near a semi-permeable membrane that fail to distribute evenly due to the presence of non-diffusible ions (like proteins). <b>Significance:</b> It contributes to the resting membrane potential and influences osmotic pressure within cells and capillaries.</p>
+      <img src="../MBS-220-pics/physio-donan.PNG">
     </div>
   </div>
 
@@ -444,7 +473,7 @@
     <button class="btn" onclick="showAnswers('7')"><i class="fas fa-eye"></i> View Answers</button>
     <div id="answers7" class="answers" aria-hidden="true">
       <h3>Model Answers</h3>
-      <p><b>EPSP:</b> Excitatory Postsynaptic Potential (graded depolarization). <b>IPSP:</b> Inhibitory Postsynaptic Potential (graded hyperpolarization). <b>Depolarization:</b> A change in membrane potential where the interior becomes less negative, moving toward the threshold for an action potential.</p>
+      <p><b>EPSP:</b> Excitatory Postsynaptic Potential (graded depolarization) is the temporal depolarization of the postsynaptic membrane caused by the flow of positively charged ions into the postsynaptic cell  . <b>IPSP:</b> Inhibitory Postsynaptic Potential (graded hyperpolarization) temporal hyperpolarization of the postsynaptic membrane by inreasing the negative charge inside the cell. <b>Depolarization:</b> A change in membrane potential where the interior becomes less negative, moving toward the threshold for an action potential.</p>
     </div>
   </div>
 
@@ -506,10 +535,10 @@
   </div>
 
   <div class="card">
-    <h3>3. A neuroscientist is studying the activity of a neuron in the brain of a research participant...</h3>
+    <h3>3. A neuroscientist is studying the activity of a neuron in the brain of a research participant. They deliver a series of subthreshold excitatory stimuli to different neurons that synapse onto this target neuron. They also deliver a rapid sequence of threshold excitatory stimuli to a single presynaptic neuron that also synapses onto the sam target neuron...</h3>
     
     <div class="subquestion">
-      <label>Explain how the target neuron might reach its threshold for firing an action potential in each of these scenarios (spatial and temporal summation).</label>
+      <label>Explain how the target neuron might reach its threshold for firing an action potential in each of these scenarios detailing the process of spatial and temporal summation (with need diagrams labelled) in synaptic transmission.</label>
       <textarea id="ansD3a" placeholder="Describe spatial vs temporal summation..."></textarea>
     </div>
 
@@ -683,12 +712,16 @@ const correctAnswers = {
      if (isVisible) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
    }
  
-   // Mode switching (from first file)
-   const mode = localStorage.getItem("examMode"); // "mcq" or "essay"
-   if (mode === "essay") {
-     document.getElementById("mcq-section").style.display = "none";
-     document.getElementById("essay-section").style.display = "block";
-   }
+   const mode = localStorage.getItem("examMode");
+
+    if (mode === "essay") {
+      document.getElementById("mcq-section").style.display = "none";
+      document.getElementById("essay-section").style.display = "block";
+    } 
+    else if (mode === "tf") {
+      document.getElementById("mcq-section").style.display = "none";
+      document.getElementById("tf-section").style.display = "block";
+    }
  
    // Navigate to the previous page if available, otherwise fall back to index.html
    function goBack() {

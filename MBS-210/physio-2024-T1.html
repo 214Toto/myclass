@@ -15,6 +15,11 @@
       --radius: 12px;
     }
 
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
     body {
       font-family: "Segoe UI", sans-serif;
       background: linear-gradient(180deg, #f5f7fb, #eef6f6);
@@ -27,6 +32,11 @@
       background: linear-gradient(135deg, var(--primary), var(--dark));
       color: white;
       padding: 1.1rem 0;
+      position: fixed; /* Keeps it at the top when scrolling */
+      top: 0;          /* Added: Ensures it starts at the absolute top */
+      left: 0;         /* Added: Ensures it stretches from the left edge */
+      width: 100%;
+      z-index: 1000;   /* Added: Keeps header above all other elements */
       box-shadow: 0 6px 18px rgba(11,36,36,0.12);
     }
 
@@ -54,7 +64,8 @@
     .container {
       width: 92%;
       max-width: 900px;
-      margin: 0 auto;
+      /* Adjust this value based on how tall your header is */
+      margin: 100px auto 0 auto; 
       padding: 1.5rem 0;
     }
 
@@ -180,9 +191,9 @@
     /* Explanation box shown under each question in feedback */
     .explanation {
       margin-top: 8px;
-      padding: 10px 12px;
+      padding: 10px 12px;                                                                                                                                                                                 
       border-radius: 8px;
-      background: #ecfdf5;           /* subtle greenish background */
+      background: #363d3a;           /* subtle greenish background */
       color: #065f46;                /* dark green text */
       font-size: 0.95rem;
       line-height: 1.4;
@@ -197,13 +208,14 @@
     }
 
     /* small label styling for feedback header */
-    .answer-block { margin-bottom: 12px; }
-    .answer-block strong { display:block; margin-bottom:8px; color:var(--primary); }
-    .question-feedback {
+    .answer-block { color: var(--primary); margin-bottom: 12px; }
+    .answer-block strong { display:block; margin-bottom:8px; color: rgb(7, 113, 95); }
+    .question-feedback { 
       margin-top: 14px;
       padding: 14px 16px;
+      color: white;
       border-radius: 12px;
-      background: #f8fafc;
+      background: #a82525;
       border: 1px solid #d6e7eb;
     }
     .question-feedback .answer-list {
@@ -243,6 +255,16 @@
       resize:vertical;
       font-family:inherit;
     }
+
+    .mutwe {
+      max-width: 900px; 
+      margin: 0 auto; 
+      width: 92%; 
+      display:flex; 
+      align-items:center; 
+      justify-content:space-between;
+    }
+
     #essay-section .answers {
       display:none;
       margin-top:14px;
@@ -262,10 +284,10 @@
 <body>
 
   <header>
-    <div class="container" style="display:flex;align-items:center;justify-content:space-between;">
+    <div class="mutwe">
       <div class="logo">
         <i class="fas fa-book-medical"></i>
-        <h1>2024 Exam | ToToZ Collection</h1>
+        <h1>2024 Physiology Test 1 </h1>
       </div>
       <button id="backBtn" class="btn"><i class="fas fa-arrow-left"></i> Back</button>
     </div>
@@ -284,6 +306,7 @@
     <label><input type="radio" name="q29" value="c"> Thrombin, fibrin, prothrombin activator</label>
     <label><input type="radio" name="q29" value="d"> Thrombin, prothrombin activator, fibrin</label>
   </div>
+      <div class="question-feedback" id="feedback-q29"></div>
 </div>
 
 <div class="question">
@@ -294,6 +317,7 @@
     <label><input type="radio" name="q30" value="c"> Biliverdin and bilirubin impart color to bile</label>
     <label><input type="radio" name="q30" value="d"> Macrophages in the liver and spleen destroy worn out red blood cells</label>
   </div>
+      <div class="question-feedback" id="feedback-q30"></div>
 </div>
 
 <div class="question">
@@ -304,6 +328,7 @@
     <label><input type="radio" name="q31" value="c"> 5% Dextrose</label>
     <label><input type="radio" name="q31" value="d"> Ringer's Glucose</label>
   </div>
+      <div class="question-feedback" id="feedback-q31"></div>
 </div>
 
 <div class="question">
@@ -314,6 +339,7 @@
     <label><input type="radio" name="q32" value="c"> 3K+ inside</label>
     <label><input type="radio" name="q32" value="d"> 3K+ outside</label>
   </div>
+      <div class="question-feedback" id="feedback-q32"></div>
 </div>
 
 <div class="question">
@@ -324,6 +350,7 @@
     <label><input type="radio" name="q33" value="c"> Actin</label>
     <label><input type="radio" name="q33" value="d"> Band 3</label>
   </div>
+      <div class="question-feedback" id="feedback-q33"></div>
 </div>
 
 <div class="question">
@@ -334,6 +361,7 @@
     <label><input type="radio" name="q34" value="c"> Protects cell from toxic substances</label>
     <label><input type="radio" name="q34" value="d"> Maintain the size of the cell</label>
   </div>
+      <div class="question-feedback" id="feedback-q34"></div>
 </div>
 
 <div class="question">
@@ -344,6 +372,7 @@
     <label><input type="radio" name="q35" value="c"> Primary active transport</label>
     <label><input type="radio" name="q35" value="d"> Endocytosis</label>
   </div>
+      <div class="question-feedback" id="feedback-q35"></div>
 </div>
 
 <div class="question">
@@ -354,6 +383,7 @@
     <label><input type="radio" name="q36" value="c"> Filtration</label>
     <label><input type="radio" name="q36" value="d"> Facilitated transport</label>
   </div>
+      <div class="question-feedback" id="feedback-q36"></div>
 </div>
 
 <div class="question">
@@ -364,6 +394,7 @@
     <label><input type="radio" name="q37" value="c"> Oestrone</label>
     <label><input type="radio" name="q37" value="d"> Adrenaline</label>
   </div>
+      <div class="question-feedback" id="feedback-q37"></div>
 </div>
 
 <div class="question">
@@ -374,6 +405,7 @@
     <label><input type="radio" name="q38" value="c"> Release of Na+ triggers muscle contraction</label>
     <label><input type="radio" name="q38" value="d"> Interacts with Troponin C</label>
   </div>
+      <div class="question-feedback" id="feedback-q38"></div>
 </div>
 
 <div class="question">
@@ -384,6 +416,7 @@
     <label><input type="radio" name="q39" value="c"> There are one thick filaments for every two thin filaments</label>
     <label><input type="radio" name="q39" value="d"> There are two thin filaments for every thick filament</label>
   </div>
+      <div class="question-feedback" id="feedback-q39"></div>
 </div>
 
 <div class="question">
@@ -394,6 +427,7 @@
     <label><input type="radio" name="q40" value="c"> Basic functional unit of a myofibril</label>
     <label><input type="radio" name="q40" value="d"> Store and release Ca++</label>
   </div>
+      <div class="question-feedback" id="feedback-q40"></div>
 </div>
 
 <div class="question">
@@ -404,6 +438,7 @@
     <label><input type="radio" name="q41" value="c"> Convert ATP to glucose of motion</label>
     <label><input type="radio" name="q41" value="d"> Each myosin molecule protrude outward as a head</label>
   </div>
+      <div class="question-feedback" id="feedback-q41"></div>
 </div>
 
 <div class="question">
@@ -414,6 +449,7 @@
     <label><input type="radio" name="q42" value="c"> Tropomyosin</label>
     <label><input type="radio" name="q42" value="d"> Troponin-T</label>
   </div>
+      <div class="question-feedback" id="feedback-q42"></div>
 </div>
 
 <div class="question">
@@ -424,6 +460,7 @@
     <label><input type="radio" name="q43" value="c"> Motor units activated</label>
     <label><input type="radio" name="q43" value="d"> Stimulus strength</label>
   </div>
+      <div class="question-feedback" id="feedback-q43"></div>
 </div>
 
 <div class="question">
@@ -434,6 +471,7 @@
     <label><input type="radio" name="q44" value="c"> Myosin-binding sites are covered by tropomyosin</label>
     <label><input type="radio" name="q44" value="d"> Power stroke of myosin occurs</label>
   </div>
+      <div class="question-feedback" id="feedback-q44"></div>
 </div>
 
 <div class="question">
@@ -444,6 +482,7 @@
     <label><input type="radio" name="q45" value="c"> It is the decrease in cell electropositivity inside membrane</label>
     <label><input type="radio" name="q45" value="d"> It is the decrease in cell electronegativity outside</label>
   </div>
+      <div class="question-feedback" id="feedback-q45"></div>
 </div>
 
 <div class="question">
@@ -454,6 +493,7 @@
     <label><input type="radio" name="q46" value="c"> Is associated with a transient decrease in membrane permeability to potassium</label>
     <label><input type="radio" name="q46" value="d"> Is associated with a transient increase in membrane permeability to sodium</label>
   </div>
+      <div class="question-feedback" id="feedback-q46"></div>
 </div>
 
 <div class="question">
@@ -464,6 +504,7 @@
     <label><input type="radio" name="q47" value="c"> Breaks down ATP to power ion transport</label>
     <label><input type="radio" name="q47" value="d"> The Na+/K+ pump does not require it beta subunit to operate</label>
   </div>
+      <div class="question-feedback" id="feedback-q47"></div>
 </div>
 
 <div class="question">
@@ -474,6 +515,7 @@
     <label><input type="radio" name="q48" value="c"> Autonomic motor neurons</label>
     <label><input type="radio" name="q48" value="d"> Autonomic sensory neurons</label>
   </div>
+      <div class="question-feedback" id="feedback-q48"></div>
 </div>
 
 <div class="question">
@@ -484,6 +526,7 @@
     <label><input type="radio" name="q49" value="c"> Endothelial cells</label>
     <label><input type="radio" name="q49" value="d"> Basal laminar cells</label>
   </div>
+      <div class="question-feedback" id="feedback-q49"></div>
 </div>
 
 <div class="question">
@@ -494,7 +537,9 @@
     <label><input type="radio" name="q50" value="c"> Generate force during contraction</label>
     <label><input type="radio" name="q50" value="d"> Align the thick and thin filaments properly</label>
   </div>
+      <div class="question-feedback" id="feedback-q50"></div>
 </div>
+
 
     
 
@@ -513,62 +558,119 @@
   <h2 style="margin-bottom:1rem;color:var(--dark)">Short Essay Questions</h2>
 
   <div class="card">
-    <h3>1. Describe the physiological responses that occur following an acute loss of blood volume.</h3>
+    <h3>26. Michael Mumba, LeBron James, Kareem Abdul-Jabbar are men who have changed the history of basketball. What would happen to membrane electricity, if one of these players had increased potassium in the ECF. Outline the physiology that would be disrupted at plasma membrane level. [5 marks]</h3>
 
     <div class="subquestion">
-      <label>a) Immediate cardiovascular compensations</label>
-      <textarea id="ans1a" placeholder="Describe immediate changes (heart rate, vascular tone, etc.)"></textarea>
+      <label>Disruption of Resting Membrane Potential (RMP)</label>
+      <textarea id="ans26" placeholder="Describe the effect of hyperkalemia on membrane potential..."></textarea>
     </div>
 
-    <div class="subquestion">
-      <label>b) Neurohormonal responses</label>
-      <textarea id="ans1b" placeholder="Describe catecholamines, ADH, RAAS, etc."></textarea>
+    <button class="btn" onclick="showAnswers('26')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers26" class="answers" aria-hidden="true">
+      <h3>Model Answer</h3>
+      <p>Increased extracellular potassium (hyperkalemia) decreases the concentration gradient for K+ exit from the cell. According to the Nernst equation, this causes <b>depolarization</b> of the Resting Membrane Potential (making it less negative). Initially, this brings the membrane closer to threshold, increasing excitability; however, persistent depolarization leads to the inactivation of voltage-gated sodium channels, ultimately decreasing excitability and disrupting action potential conduction in excitable tissues like the heart and skeletal muscle.</p>
     </div>
-
-    <div class="subquestion">
-      <label>c) Longer-term hematologic / renal compensation</label>
-      <textarea id="ans1c" placeholder="Describe erythropoiesis, fluid retention, renal changes"></textarea>
-    </div>
-
-    <button class="btn" onclick="showAnswers('1')"><i class="fas fa-eye"></i> View Answers</button>
-
-    <div id="answers1" class="answers" aria-hidden="true">
-      <h3>Model Answers</h3>
-      <p><b>a)</b> Rapid sympathetic activation increases heart rate and contractility; peripheral vasoconstriction raises systemic vascular resistance to maintain perfusion.</p>
-      <p><b>b)</b> Release of catecholamines, ADH secretion and activation of RAAS promote vasoconstriction and fluid retention to support blood pressure.</p>
-      <p><b>c)</b> Kidneys increase erythropoietin to stimulate erythropoiesis; renal sodium/water retention and mobilization of interstitial fluid restore plasma volume over days to weeks.</p>
-    </div>
-
   </div>
 
-  <!-- New short essay question (added) -->
   <div class="card">
-    <h3>2. Explain the kidney's role in maintaining electrolyte and fluid balance.</h3>
+    <h3>27. What would happen if one of these players had electrolyte derangements during the game? Outline the physiological balance and distribution of normal electrolytes in body fluids. [5 marks]</h3>
 
     <div class="subquestion">
-      <label>a) Describe how the proximal tubule handles sodium and water.</label>
-      <textarea id="ans2a" placeholder="Answer A — proximal tubule handling..."></textarea>
+      <label>Electrolyte Balance and Distribution</label>
+      <textarea id="ans27" placeholder="Outline normal distribution and consequences of derangement..."></textarea>
     </div>
 
-    <div class="subquestion">
-      <label>b) Explain the role of aldosterone in distal nephron sodium handling.</label>
-      <textarea id="ans2b" placeholder="Answer B — aldosterone actions..."></textarea>
-    </div>
+    <button class="btn" onclick="showAnswers('27')"><i class="fas fa-eye"></i> View Answers</button>
 
-    <div class="subquestion">
-      <label>c) Outline how the kidney adapts to changes in body hydration (antidiuretic hormone/ADH).</label>
-      <textarea id="ans2c" placeholder="Answer C — ADH and urine concentration..."></textarea>
-    </div>
-
-    <button class="btn" onclick="showAnswers('2')"><i class="fas fa-eye"></i> View Answers</button>
-
-    <div id="answers2" class="answers" aria-hidden="true">
-      <h3>Model Answers</h3>
-      <p><b>a)</b> The proximal tubule reabsorbs the bulk of filtered sodium and water via coupled transporters and passive water movement; most solute and isoosmotic fluid is reclaimed here.</p>
-      <p><b>b)</b> Aldosterone acts on distal tubule and collecting duct principal cells to increase expression of ENaC and Na+/K+ ATPase, enhancing sodium reabsorption and potassium secretion.</p>
-      <p><b>c)</b> ADH increases water permeability of the collecting duct by inserting aquaporin-2 channels, concentrating urine when the body is dehydrated and reducing free-water excretion.</p>
+    <div id="answers27" class="answers" aria-hidden="true">
+      <h3>Model Answer</h3>
+      <p>Electrolytes are asymmetrically distributed: <b>Extracellular Fluid (ECF)</b> is rich in Sodium ($Na^+$) and Chloride ($Cl^-$), while <b>Intracellular Fluid (ICF)</b> is rich in Potassium ($K^+$) and Phosphates. Derangements (e.g., hyponatremia or hypokalemia) disrupt osmotic balance, leading to cellular swelling or shrinkage, and impair neuromuscular transmission and cardiac rhythm, potentially causing muscle cramps, arrhythmias, or neurological deficits during physical exertion.</p>
     </div>
   </div>
+
+  <div class="card">
+    <h3>28. Compare and contrast the applied CLINICAL significance of osmolarity and osmolality. [5 marks]</h3>
+
+    <div class="subquestion">
+      <label>Clinical Comparison</label>
+      <textarea id="ans28" placeholder="Compare osmolarity vs osmolality in a clinical setting..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('28')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers28" class="answers" aria-hidden="true">
+      <h3>Model Answer</h3>
+      <p><b>Osmolarity</b> is the concentration of solutes per liter of solution (volumetric), which can be affected by temperature and pressure. <b>Osmolality</b> is the concentration per kilogram of solvent (mass) and is more clinically accurate because it is independent of temperature. Osmolality is more accurate than osmolarity, because volume varies with temperature, but weight does not.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>29. Discuss succinctly the types of IV fluids that are needed to correct his electrolyte imbalance based on tonicity. [5 marks]</h3>
+
+    <div class="subquestion">
+      <label>IV Fluid Types by Tonicity</label>
+      <textarea id="ans29" placeholder="Discuss isotonic, hypotonic, and hypertonic fluids..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('29')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers29" class="answers" aria-hidden="true">
+      <h3>Model Answer</h3>
+      <p><b>Isotonic fluids</b> (e.g., 0.9% NaCl) have the same effective osmolality as plasma; they expand ECF volume without causing fluid shifts. <b>Hypotonic fluids</b> (e.g., 0.45% NaCl) have lower tonicity, causing water to move from ECF into cells (ICF), used for cellular dehydration. <b>Hypertonic fluids</b> (e.g., 3% NaCl) have higher tonicity, drawing water out of cells into the ECF, used cautiously to treat severe symptomatic hyponatremia or cerebral edema.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>30. COMPARE and CONTRAST the physiology of gap junctions and tight junctions with needed EXAMPLES. [5 marks]</h3>
+
+    <div class="subquestion">
+      <label>Gap Junctions vs Tight Junctions</label>
+      <textarea id="ans30" placeholder="Compare structure, function, and give examples..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('30')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers30" class="answers" aria-hidden="true">
+      <h3>Model Answer</h3>
+      <p><b>Tight Junctions (Zonula Occludens)</b> create a "leak-proof" seal between cells to prevent the movement of molecules between them; <i>Example:</i> Blood-brain barrier or intestinal epithelium. <b>Gap Junctions</b> consist of connexons that form channels allowing direct electrical and chemical communication between adjacent cells; <i>Example:</i> Cardiac muscle cells (allowing synchronized contraction) or smooth muscle in the GI tract.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>3. As per UN reports, nearly 40% of people in Tigray region of Ethiopia are currently suffering from lack of food to eat.</h3>
+
+    <div class="subquestion">
+      <label>a) How does this affect body fluid balance and homeostasis in terms of malabsorption diarrhoea? [5 marks]</label>
+      <textarea id="ans3a" placeholder="Describe osmotic shifts and fluid loss..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>b) What lab tests can assist in patient assessment? Highlight the normal values in mEq/L [5 marks]</label>
+      <textarea id="ans3b" placeholder="List electrolytes and normal ranges..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>c) Elucidate the role of plasma membrane and channels in maintaining body fluid electrolytes. [5 marks]</label>
+      <textarea id="ans3c" placeholder="Describe selective permeability and active transport..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>d) Under normal cell conditions, Is Donnan effect hazardous? How is this prevented inside the human body cells? DISCUSS this physiological concept [5 marks]</label>
+      <textarea id="ans3d" placeholder="Discuss Gibbs-Donnan equilibrium and Na/K pump..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('3')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers3" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>a)</b> Malnutrition leads to mucosal atrophy and loss of digestive enzymes. Unabsorbed solutes remain in the intestinal lumen, creating an osmotic gradient that draws water out of the ECF into the gut (osmotic diarrhea), leading to severe dehydration and hypovolemia.</p>
+      <p><b>b)</b> Serum Electrolyte Panel: Sodium (135–145 mEq/L), Potassium (3.5–5.0 mEq/L), Chloride (98–107 mEq/L), and Bicarbonate (22–28 mEq/L). Also, Urinalysis and Serum Albumin to assess protein status.</p>
+      <p><b>c)</b> The plasma membrane acts as a semi-permeable barrier. <b>Ion channels</b> allow facilitated diffusion of specific ions, while <b>Active Transport</b> (like the $Na^+/K^+$ ATPase pump) moves ions against their gradients using ATP to maintain high intracellular $K^+$ and high extracellular $Na^+$.</p>
+      <p><b>d)</b> The Donnan effect (accumulation of ions due to non-diffusible intracellular proteins) is potentially hazardous because it would cause water to enter cells by osmosis, leading to cell bursting. It is prevented by the <b>$Na^+/K^+$ ATPase pump</b>, which actively extrudes 3 $Na^+$ ions for every 2 $K^+$ ions brought in, effectively "pumping out" the excess osmotic pressure.</p>
+    </div>
+  </div>
+
  </section>
 
 <script>
@@ -688,12 +790,16 @@ const correctAnswers = {
      if (isVisible) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
    }
  
-   // Mode switching (from first file)
-   const mode = localStorage.getItem("examMode"); // "mcq" or "essay"
-   if (mode === "essay") {
-     document.getElementById("mcq-section").style.display = "none";
-     document.getElementById("essay-section").style.display = "block";
-   }
+   const mode = localStorage.getItem("examMode");
+
+    if (mode === "essay") {
+      document.getElementById("mcq-section").style.display = "none";
+      document.getElementById("essay-section").style.display = "block";
+    } 
+    else if (mode === "tf") {
+      document.getElementById("mcq-section").style.display = "none";
+      document.getElementById("tf-section").style.display = "block";
+    }
  
    // Navigate to the previous page if available, otherwise fall back to index.html
    function goBack() {

@@ -15,6 +15,11 @@
       --radius: 12px;
     }
 
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
     body {
       font-family: "Segoe UI", sans-serif;
       background: linear-gradient(180deg, #f5f7fb, #eef6f6);
@@ -27,6 +32,11 @@
       background: linear-gradient(135deg, var(--primary), var(--dark));
       color: white;
       padding: 1.1rem 0;
+      position: fixed; /* Keeps it at the top when scrolling */
+      top: 0;          /* Added: Ensures it starts at the absolute top */
+      left: 0;         /* Added: Ensures it stretches from the left edge */
+      width: 100%;
+      z-index: 1000;   /* Added: Keeps header above all other elements */
       box-shadow: 0 6px 18px rgba(11,36,36,0.12);
     }
 
@@ -54,7 +64,8 @@
     .container {
       width: 92%;
       max-width: 900px;
-      margin: 0 auto;
+      /* Adjust this value based on how tall your header is */
+      margin: 100px auto 0 auto; 
       padding: 1.5rem 0;
     }
 
@@ -180,9 +191,9 @@
     /* Explanation box shown under each question in feedback */
     .explanation {
       margin-top: 8px;
-      padding: 10px 12px;
+      padding: 10px 12px;                                                                                                                                                                                 
       border-radius: 8px;
-      background: #ecfdf5;           /* subtle greenish background */
+      background: #363d3a;           /* subtle greenish background */
       color: #065f46;                /* dark green text */
       font-size: 0.95rem;
       line-height: 1.4;
@@ -197,13 +208,14 @@
     }
 
     /* small label styling for feedback header */
-    .answer-block { margin-bottom: 12px; }
-    .answer-block strong { display:block; margin-bottom:8px; color:var(--primary); }
-    .question-feedback {
+    .answer-block { color: var(--primary); margin-bottom: 12px; }
+    .answer-block strong { display:block; margin-bottom:8px; color: rgb(7, 113, 95); }
+    .question-feedback { 
       margin-top: 14px;
       padding: 14px 16px;
+      color: white;
       border-radius: 12px;
-      background: #f8fafc;
+      background: #a82525;
       border: 1px solid #d6e7eb;
     }
     .question-feedback .answer-list {
@@ -243,6 +255,16 @@
       resize:vertical;
       font-family:inherit;
     }
+
+    .mutwe {
+      max-width: 900px; 
+      margin: 0 auto; 
+      width: 92%; 
+      display:flex; 
+      align-items:center; 
+      justify-content:space-between;
+    }
+
     #essay-section .answers {
       display:none;
       margin-top:14px;
@@ -262,10 +284,10 @@
 <body>
 
   <header>
-    <div class="container" style="display:flex;align-items:center;justify-content:space-between;">
+    <div class="mutwe">
       <div class="logo">
         <i class="fas fa-book-medical"></i>
-        <h1>2021 Exam | ToToZ Collection</h1>
+        <h1>2021 Physiology Test 1 </h1>
       </div>
       <button id="backBtn" class="btn"><i class="fas fa-arrow-left"></i> Back</button>
     </div>
@@ -283,6 +305,7 @@
     <label><input type="radio" name="q4" value="d"> molecules are transported in opposite directions across the membrane.</label>
     <label><input type="radio" name="q5" value="e"> it binds to the molecule and changes shape during transport.</label>
   </div>
+      <div class="question-feedback" id="feedback-q1"></div>
 </div>
 
 <div class="question">
@@ -293,6 +316,7 @@
     <label><input type="radio" name="q2" value="c"> is most likely to involve a 'carrier' type transport mechanism.</label>
     <label><input type="radio" name="q2" value="d"> can move a molecule 'up' a gradient if a membrane potential exists.</label>
   </div>
+      <div class="question-feedback" id="feedback-q2"></div>
 </div>
 
 <div class="question">
@@ -304,6 +328,7 @@
     <label><input type="radio" name="q3" value="d"> The cell would very quickly run out of ATP.</label>
     <label><input type="radio" name="q3" value="e"> The cell could not create an action potential.</label>
   </div>
+      <div class="question-feedback" id="feedback-q3"></div>
 </div>
 
 <div class="question">
@@ -314,8 +339,9 @@
     <label><input type="radio" name="q4" value="c"> transport of one ion down its gradient provides the energy to transport another molecule against its gradient.</label>
     <label><input type="radio" name="q4" value="d"> both the concentration gradient and membrane potential determine the rate of transport across the membrane.</label>
   </div>
+      <div class="question-feedback" id="feedback-q4"></div>
 </div>
-
+<!-- 
 <div class="question">
   <p>5. A membrane transporter is said to be 'gated' if it:</p>
   <div class="options">
@@ -324,7 +350,7 @@
     <label><input type="radio" name="q5" value="c"> participates in the formation of the membrane potential.</label>
     <label><input type="radio" name="q5" value="d"> opens in response to a specific stimulus.</label>
   </div>
-</div>
+</div> -->
 
 <div class="question">
   <p>6. All of the following are functions of the cell membrane EXCEPT:</p>
@@ -335,6 +361,7 @@
     <label><input type="radio" name="q6" value="d"> regulating the passage of materials.</label>
     <label><input type="radio" name="q6" value="e"> participating in chemical reactions.</label>
   </div>
+      <div class="question-feedback" id="feedback-q6"></div>
 </div>
 
 <div class="question">
@@ -346,6 +373,7 @@
     <label><input type="radio" name="q7" value="d"> They contain a polar organic group attached to a phosphate group.</label>
     <label><input type="radio" name="q7" value="e"> They contain three fatty acids chains.</label>
   </div>
+      <div class="question-feedback" id="feedback-q7"></div>
 </div>
 
 <div class="question">
@@ -357,6 +385,7 @@
     <label><input type="radio" name="q8" value="d"> hydrophilic</label>
     <label><input type="radio" name="q8" value="e"> hydrophobic</label>
   </div>
+      <div class="question-feedback" id="feedback-q8"></div>
 </div>
 
 <div class="question">
@@ -368,6 +397,7 @@
     <label><input type="radio" name="q9" value="d"> membrane proteins were not uniform and did not form flattened sheets.</label>
     <label><input type="radio" name="q9" value="e"> membrane proteins occurred in regular organized patterns on the surface of membranes.</label>
   </div>
+      <div class="question-feedback" id="feedback-q9"></div>
 </div>
 
 <div class="question">
@@ -379,6 +409,7 @@
     <label><input type="radio" name="q10" value="d"> Singer and Nicolson</label>
     <label><input type="radio" name="q10" value="e"> Davson and Danielli</label>
   </div>
+      <div class="question-feedback" id="feedback-q10"></div>
 </div>
 
 <div class="question">
@@ -390,6 +421,7 @@
     <label><input type="radio" name="q11" value="d"> It is the method of substance transport across the membrane.</label>
     <label><input type="radio" name="q11" value="e"> It is the movement of surface proteins through the membrane.</label>
   </div>
+      <div class="question-feedback" id="feedback-q11"></div>
 </div>
 
 <div class="question">
@@ -401,6 +433,7 @@
     <label><input type="radio" name="q12" value="d"> temperature controller</label>
     <label><input type="radio" name="q12" value="e"> fluidity buffer</label>
   </div>
+      <div class="question-feedback" id="feedback-q12"></div>
 </div>
 
 <div class="question">
@@ -412,6 +445,7 @@
     <label><input type="radio" name="q13" value="d"> are completely embedded within the lipid bilayer.</label>
     <label><input type="radio" name="q13" value="e"> are amphipathic.</label>
   </div>
+      <div class="question-feedback" id="feedback-q13"></div>
 </div>
 
 <div class="question">
@@ -423,6 +457,7 @@
     <label><input type="radio" name="q14" value="d"> completely extends through the membrane.</label>
     <label><input type="radio" name="q14" value="e"> is completely embedded within the membrane.</label>
   </div>
+      <div class="question-feedback" id="feedback-q14"></div>
 </div>
 
 <div class="question">
@@ -434,6 +469,7 @@
     <label><input type="radio" name="q15" value="d"> associating with glycoproteins on the inner membrane surface.</label>
     <label><input type="radio" name="q15" value="e"> bonding to integral proteins through noncovalent interactions.</label>
   </div>
+      <div class="question-feedback" id="feedback-q15"></div>
 </div>
 
 <div class="question">
@@ -445,6 +481,7 @@
     <label><input type="radio" name="q16" value="d"> Enzymes are needed to modify the carbohydrate chains on these proteins.</label>
     <label><input type="radio" name="q16" value="e"> These proteins are initially formed by ribosomes on the rough ER.</label>
   </div>
+      <div class="question-feedback" id="feedback-q16"></div>
 </div>
 
 <div class="question">
@@ -456,6 +493,7 @@
     <label><input type="radio" name="q17" value="d"> made on ribosomes located on the rough endoplasmic reticulum.</label>
     <label><input type="radio" name="q17" value="e"> transported to the plasma membrane within a secretory vesicle.</label>
   </div>
+      <div class="question-feedback" id="feedback-q17"></div>
 </div>
 
 <div class="question">
@@ -467,6 +505,7 @@
     <label><input type="radio" name="q18" value="d"> Proteins on the outside of membrane are made extracellularly and are unable to penetrate the phospholipid bilayer and enter the cell.</label>
     <label><input type="radio" name="q18" value="e"> The external peripheral proteins are weakly attached to the membrane and are readily washed away.</label>
   </div>
+      <div class="question-feedback" id="feedback-q18"></div>
 </div>
 
 <div class="question">
@@ -478,6 +517,7 @@
     <label><input type="radio" name="q19" value="d"> small, hydrophobic molecules.</label>
     <label><input type="radio" name="q19" value="e"> None of these.</label>
   </div>
+      <div class="question-feedback" id="feedback-q19"></div>
 </div>
 
 <div class="question">
@@ -489,6 +529,7 @@
     <label><input type="radio" name="q20" value="d"> potassium ion</label>
     <label><input type="radio" name="q20" value="e"> water</label>
   </div>
+      <div class="question-feedback" id="feedback-q20"></div>
 </div>
 
 <div class="question">
@@ -500,6 +541,7 @@
     <label><input type="radio" name="q21" value="d"> They respond to specific hormones.</label>
     <label><input type="radio" name="q21" value="e"> All of these are functions associated with aquaporins.</label>
   </div>
+      <div class="question-feedback" id="feedback-q21"></div>
 </div>
 
 <div class="question">
@@ -511,6 +553,7 @@
     <label><input type="radio" name="q22" value="d"> large nonpolar molecules</label>
     <label><input type="radio" name="q22" value="e"> water</label>
   </div>
+      <div class="question-feedback" id="feedback-q22"></div>
 </div>
 
 <div class="question">
@@ -522,6 +565,7 @@
     <label><input type="radio" name="q23" value="d"> exocytosis</label>
     <label><input type="radio" name="q23" value="e"> synthesis of more membrane</label>
   </div>
+      <div class="question-feedback" id="feedback-q23"></div>
 </div>
 
 <div class="question">
@@ -533,6 +577,7 @@
     <label><input type="radio" name="q24" value="d"> stable.</label>
     <label><input type="radio" name="q24" value="e"> amphipathic.</label>
   </div>
+      <div class="question-feedback" id="feedback-q24"></div>
 </div>
 
 <div class="question">
@@ -544,6 +589,7 @@
     <label><input type="radio" name="q25" value="d"> higher; lower</label>
     <label><input type="radio" name="q25" value="e"> Answer cannot be determined from the information provided.</label>
   </div>
+      <div class="question-feedback" id="feedback-q25"></div>
 </div>
 
 <div class="question">
@@ -555,6 +601,7 @@
     <label><input type="radio" name="q26" value="d"> have equal concentrations of water but not solute.</label>
     <label><input type="radio" name="q26" value="e"> will exhibit a net movement of water from one solution to the other.</label>
   </div>
+      <div class="question-feedback" id="feedback-q26"></div>
 </div>
 
 <div class="question">
@@ -566,6 +613,7 @@
     <label><input type="radio" name="q27" value="d"> have serious, perhaps fatal consequences because the red blood cells could swell and burst.</label>
     <label><input type="radio" name="q27" value="e"> have no serious effect because the kidney could quickly eliminate excess water.</label>
   </div>
+      <div class="question-feedback" id="feedback-q27"></div>
 </div>
 
 <div class="question">
@@ -577,8 +625,9 @@
     <label><input type="radio" name="q28" value="d"> swell slightly.</label>
     <label><input type="radio" name="q28" value="e"> become crenated.</label>
   </div>
+      <div class="question-feedback" id="feedback-q28"></div>
 </div>
-
+<!-- 
 <div class="question">
   <p>29. Penicillin is toxic to certain dividing bacterial cells because it prevents cell wall formation, causing the cells to burst. This indicates that the bacteria live in:</p>
   <div class="options">
@@ -586,7 +635,7 @@
     <label><input type="radio" name="q29" value="b"> a hypertonic medium.</label>
     <label><input type="radio" name="q29" value="c"> an isotonic medium.</label>
   </div>
-</div>
+</div> -->
 
 <div class="question">
   <p>30. A wilted flower placed in a vase of water for several hours became stiff and stood erect. When it was placed in a salt solution, it wilted. From this information we can say that the cells of the flower are:</p>
@@ -597,6 +646,7 @@
     <label><input type="radio" name="q30" value="d"> hypotonic to fresh water but hypertonic to the salt solution.</label>
     <label><input type="radio" name="q30" value="e"> isotonic to fresh water but hypotonic to the salt solution.</label>
   </div>
+      <div class="question-feedback" id="feedback-q30"></div>
 </div>
 
 <div class="question">
@@ -608,6 +658,7 @@
     <label><input type="radio" name="q31" value="d"> is typically used to transport small nonpolar molecules.</label>
     <label><input type="radio" name="q31" value="e"> All of these.</label>
   </div>
+      <div class="question-feedback" id="feedback-q31"></div>
 </div>
 
 <div class="question">
@@ -619,6 +670,7 @@
     <label><input type="radio" name="q32" value="d"> Both facilitated diffusion and carrier-mediated active transport</label>
     <label><input type="radio" name="q32" value="e"> Facilitated diffusion, carrier-mediated active transport, and osmosis</label>
   </div>
+      <div class="question-feedback" id="feedback-q32"></div>
 </div>
 
 <div class="question">
@@ -630,6 +682,7 @@
     <label><input type="radio" name="q33" value="d"> the active transport of glucose.</label>
     <label><input type="radio" name="q33" value="e"> the ability of the cell to engulf glucose by pinocytosis.</label>
   </div>
+      <div class="question-feedback" id="feedback-q33"></div>
 </div>
 
 <div class="question">
@@ -641,6 +694,7 @@
     <label><input type="radio" name="q34" value="d"> glucose phosphates move readily across the membrane by simple diffusion.</label>
     <label><input type="radio" name="q34" value="e"> glucose moves readily across the membrane by simple diffusion.</label>
   </div>
+      <div class="question-feedback" id="feedback-q34"></div>
 </div>
 
 <div class="question">
@@ -652,6 +706,7 @@
     <label><input type="radio" name="q35" value="d"> facilitated diffusion.</label>
     <label><input type="radio" name="q35" value="e"> osmosis.</label>
   </div>
+      <div class="question-feedback" id="feedback-q35"></div>
 </div>
 
 <div class="question">
@@ -663,6 +718,7 @@
     <label><input type="radio" name="q36" value="d"> It transports 2 sodium ions out of the cell in exchange for 3 potassium ions.</label>
     <label><input type="radio" name="q36" value="e"> It transports water directly out of the cell.</label>
   </div>
+      <div class="question-feedback" id="feedback-q36"></div>
 </div>
 
 <div class="question">
@@ -674,6 +730,7 @@
     <label><input type="radio" name="q37" value="d"> transfer protons to the inside of a cell.</label>
     <label><input type="radio" name="q37" value="e"> transfer protons to the outside of a cell.</label>
   </div>
+      <div class="question-feedback" id="feedback-q37"></div>
 </div>
 
 <div class="question">
@@ -685,6 +742,7 @@
     <label><input type="radio" name="q38" value="d"> ATP causes a conformational change in the carrier protein.</label>
     <label><input type="radio" name="q38" value="e"> an antiport carrier protein is involved.</label>
   </div>
+      <div class="question-feedback" id="feedback-q38"></div>
 </div>
 
 <div class="question">
@@ -696,6 +754,7 @@
     <label><input type="radio" name="q39" value="d"> The phagocytic vacuole would not fuse with the lysosome.</label>
     <label><input type="radio" name="q39" value="e"> Endocytosis would not occur.</label>
   </div>
+      <div class="question-feedback" id="feedback-q39"></div>
 </div>
 
 <div class="question">
@@ -707,6 +766,7 @@
     <label><input type="radio" name="q40" value="d"> is the nonspecific uptake of fluids by pinching inward of the plasma membrane.</label>
     <label><input type="radio" name="q40" value="e"> is movement of molecules against the concentration gradient through a permeable membrane.</label>
   </div>
+      <div class="question-feedback" id="feedback-q40"></div>
 </div>
 
 <div class="question">
@@ -718,6 +778,7 @@
     <label><input type="radio" name="q41" value="d"> does not require energy.</label>
     <label><input type="radio" name="q41" value="e"> is most likely to be found in cells that release large amounts of hormones.</label>
   </div>
+      <div class="question-feedback" id="feedback-q41"></div>
 </div>
 
 <div class="question">
@@ -729,6 +790,7 @@
     <label><input type="radio" name="q42" value="d"> Zymogen granules</label>
     <label><input type="radio" name="q42" value="e"> Aggregates of lipofuscin granules</label>
   </div>
+      <div class="question-feedback" id="feedback-q42"></div>
 </div>
 
 <div class="question">
@@ -740,6 +802,7 @@
     <label><input type="radio" name="q43" value="d"> myosin, kinesin</label>
     <label><input type="radio" name="q43" value="e"> tubulin, kinesin</label>
   </div>
+      <div class="question-feedback" id="feedback-q43"></div>
 </div>
 
 <div class="question">
@@ -751,6 +814,7 @@
     <label><input type="radio" name="q44" value="d"> The phagocytic vacuole would not fuse with the lysosome</label>
     <label><input type="radio" name="q44" value="e"> Endocytosis would not occur</label>
   </div>
+      <div class="question-feedback" id="feedback-q44"></div>
 </div>
 
 <div class="question">
@@ -762,6 +826,7 @@
     <label><input type="radio" name="q45" value="d"> Lipofuscin pigment</label>
     <label><input type="radio" name="q45" value="e"> RNA</label>
   </div>
+      <div class="question-feedback" id="feedback-q45"></div>
 </div>
     
 
@@ -780,20 +845,20 @@
   <h2 style="margin-bottom:1rem;color:var(--dark)">Short Essay Questions</h2>
 
   <div class="card">
-    <h3>1. Describe the physiological responses that occur following an acute loss of blood volume.</h3>
-
+    <h3>1. Concerning transport of glucose across the cell memebrane, study the diagram below [10 marks].</h3>
+    <img src="../MBS-220-pics/physio-transport.PNG">
     <div class="subquestion">
-      <label>a) Immediate cardiovascular compensations</label>
+      <label>a) Label the diagram above from A to C and 1 to 3 </label>
       <textarea id="ans1a" placeholder="Describe immediate changes (heart rate, vascular tone, etc.)"></textarea>
     </div>
 
     <div class="subquestion">
-      <label>b) Neurohormonal responses</label>
+      <label>b) State the process occuring at A, B and C;</label>
       <textarea id="ans1b" placeholder="Describe catecholamines, ADH, RAAS, etc."></textarea>
     </div>
 
     <div class="subquestion">
-      <label>c) Longer-term hematologic / renal compensation</label>
+      <label>c) State one important difference between the processes ocuring at A, B and C</label>
       <textarea id="ans1c" placeholder="Describe erythropoiesis, fluid retention, renal changes"></textarea>
     </div>
 
@@ -810,23 +875,23 @@
 
   <!-- New short essay question (added) -->
   <div class="card">
-    <h3>2. Explain the kidney's role in maintaining electrolyte and fluid balance.</h3>
-
+    <h3>2. State the changes that would happen in te following conditions with regards to ECF volume, ECF osmolarity, ICF volume and ICF osmolarity [5 marks]</h3>
+    <img src="../MBS-220-pics/physio-table.PNG">
     <div class="subquestion">
-      <label>a) Describe how the proximal tubule handles sodium and water.</label>
+      <label>a) What are the changes ? </label>
       <textarea id="ans2a" placeholder="Answer A — proximal tubule handling..."></textarea>
     </div>
 
     <div class="subquestion">
-      <label>b) Explain the role of aldosterone in distal nephron sodium handling.</label>
+      <label>b) Explain breifly the mechanism underlying the therapeutic application of Na/K ATPase in the managemnt of hart Failure [2 marks]</label>
       <textarea id="ans2b" placeholder="Answer B — aldosterone actions..."></textarea>
     </div>
 
     <div class="subquestion">
-      <label>c) Outline how the kidney adapts to changes in body hydration (antidiuretic hormone/ADH).</label>
+      <label>c) State the Reasons why infants and children are more vulnerable to develop dehydration than adults [3 marks]</label>
       <textarea id="ans2c" placeholder="Answer C — ADH and urine concentration..."></textarea>
     </div>
-
+    
     <button class="btn" onclick="showAnswers('2')"><i class="fas fa-eye"></i> View Answers</button>
 
     <div id="answers2" class="answers" aria-hidden="true">
@@ -983,12 +1048,16 @@ const correctAnswers = {
      if (isVisible) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
    }
  
-   // Mode switching (from first file)
-   const mode = localStorage.getItem("examMode"); // "mcq" or "essay"
-   if (mode === "essay") {
-     document.getElementById("mcq-section").style.display = "none";
-     document.getElementById("essay-section").style.display = "block";
-   }
+   const mode = localStorage.getItem("examMode");
+
+    if (mode === "essay") {
+      document.getElementById("mcq-section").style.display = "none";
+      document.getElementById("essay-section").style.display = "block";
+    } 
+    else if (mode === "tf") {
+      document.getElementById("mcq-section").style.display = "none";
+      document.getElementById("tf-section").style.display = "block";
+    }
  
    // Navigate to the previous page if available, otherwise fall back to index.html
    function goBack() {

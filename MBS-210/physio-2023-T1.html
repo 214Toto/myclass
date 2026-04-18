@@ -15,6 +15,11 @@
       --radius: 12px;
     }
 
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
     body {
       font-family: "Segoe UI", sans-serif;
       background: linear-gradient(180deg, #f5f7fb, #eef6f6);
@@ -27,6 +32,11 @@
       background: linear-gradient(135deg, var(--primary), var(--dark));
       color: white;
       padding: 1.1rem 0;
+      position: fixed; /* Keeps it at the top when scrolling */
+      top: 0;          /* Added: Ensures it starts at the absolute top */
+      left: 0;         /* Added: Ensures it stretches from the left edge */
+      width: 100%;
+      z-index: 1000;   /* Added: Keeps header above all other elements */
       box-shadow: 0 6px 18px rgba(11,36,36,0.12);
     }
 
@@ -54,7 +64,8 @@
     .container {
       width: 92%;
       max-width: 900px;
-      margin: 0 auto;
+      /* Adjust this value based on how tall your header is */
+      margin: 100px auto 0 auto; 
       padding: 1.5rem 0;
     }
 
@@ -180,9 +191,9 @@
     /* Explanation box shown under each question in feedback */
     .explanation {
       margin-top: 8px;
-      padding: 10px 12px;
+      padding: 10px 12px;                                                                                                                                                                                 
       border-radius: 8px;
-      background: #ecfdf5;           /* subtle greenish background */
+      background: #363d3a;           /* subtle greenish background */
       color: #065f46;                /* dark green text */
       font-size: 0.95rem;
       line-height: 1.4;
@@ -197,13 +208,14 @@
     }
 
     /* small label styling for feedback header */
-    .answer-block { margin-bottom: 12px; }
-    .answer-block strong { display:block; margin-bottom:8px; color:var(--primary); }
-    .question-feedback {
+    .answer-block { color: var(--primary); margin-bottom: 12px; }
+    .answer-block strong { display:block; margin-bottom:8px; color: rgb(7, 113, 95); }
+    .question-feedback { 
       margin-top: 14px;
       padding: 14px 16px;
+      color: white;
       border-radius: 12px;
-      background: #f8fafc;
+      background: #a82525;
       border: 1px solid #d6e7eb;
     }
     .question-feedback .answer-list {
@@ -243,6 +255,16 @@
       resize:vertical;
       font-family:inherit;
     }
+
+    .mutwe {
+      max-width: 900px; 
+      margin: 0 auto; 
+      width: 92%; 
+      display:flex; 
+      align-items:center; 
+      justify-content:space-between;
+    }
+
     #essay-section .answers {
       display:none;
       margin-top:14px;
@@ -262,10 +284,10 @@
 <body>
 
   <header>
-    <div class="container" style="display:flex;align-items:center;justify-content:space-between;">
+    <div class="mutwe">
       <div class="logo">
         <i class="fas fa-book-medical"></i>
-        <h1>2023 Exam | ToToZ Collection</h1>
+        <h1>2023 Physiology Test 1 </h1>
       </div>
       <button id="backBtn" class="btn"><i class="fas fa-arrow-left"></i> Back</button>
     </div>
@@ -285,6 +307,7 @@
     <label><input type="radio" name="q1" value="d"> Hyperpolarization</label>
     <label><input type="radio" name="q1" value="e"> Uniform all over</label>
   </div>
+      <div class="question-feedback" id="feedback-q1"></div>
 </div>
 
 <div class="question">
@@ -296,6 +319,7 @@
     <label><input type="radio" name="q2" value="d"> There is an increased rate of upward drift of the resting membrane potential of the S-A node</label>
     <label><input type="radio" name="q2" value="e"> Permeability of the cardiac muscle to calcium decreases</label>
   </div>
+      <div class="question-feedback" id="feedback-q2"></div>
 </div>
 
 <div class="question">
@@ -307,6 +331,7 @@
     <label><input type="radio" name="q3" value="d"> Both B & C</label>
     <label><input type="radio" name="q3" value="e"> None</label>
   </div>
+      <div class="question-feedback" id="feedback-q3"></div>
 </div>
 
 <div class="question">
@@ -318,6 +343,7 @@
     <label><input type="radio" name="q4" value="d"> Paralysis</label>
     <label><input type="radio" name="q4" value="e"> Paresis</label>
   </div>
+      <div class="question-feedback" id="feedback-q4"></div>
 </div>
 
 <div class="question">
@@ -329,6 +355,7 @@
     <label><input type="radio" name="q5" value="d"> Unmyelinated fibers</label>
     <label><input type="radio" name="q5" value="e"> Graded potentials</label>
   </div>
+      <div class="question-feedback" id="feedback-q5"></div>
 </div>
 
 <div class="question">
@@ -340,6 +367,7 @@
     <label><input type="radio" name="q6" value="d"> Myosin ATPase</label>
     <label><input type="radio" name="q6" value="e"> Actomyosin ATPase</label>
   </div>
+      <div class="question-feedback" id="feedback-q6"></div>
 </div>
 
 <div class="question">
@@ -351,6 +379,7 @@
     <label><input type="radio" name="q7" value="d"> Spontaneous depolarization of the membrane potential</label>
     <label><input type="radio" name="q7" value="e"> High degree of electrical coupling between cells</label>
   </div>
+      <div class="question-feedback" id="feedback-q7"></div>
 </div>
 
 <div class="question">
@@ -362,6 +391,7 @@
     <label><input type="radio" name="q8" value="d"> Are closed by repolarization</label>
     <label><input type="radio" name="q8" value="e"> Are opened by depolarization</label>
   </div>
+      <div class="question-feedback" id="feedback-q8"></div>
 </div>
 
 <div class="question">
@@ -373,6 +403,7 @@
     <label><input type="radio" name="q9" value="d"> Single-unit muscle produces action potentials spontaneously that spreads to neighbouring cells, while multiunit does not</label>
     <label><input type="radio" name="q9" value="e"> They are all smooth muscles, they do not differ</label>
   </div>
+      <div class="question-feedback" id="feedback-q9"></div>
 </div>
 
 <div class="question">
@@ -384,6 +415,7 @@
     <label><input type="radio" name="q10" value="d"> Troponin I</label>
     <label><input type="radio" name="q10" value="e"> Myosin</label>
   </div>
+      <div class="question-feedback" id="feedback-q10"></div>
 </div>
 
 <div class="question">
@@ -394,6 +426,7 @@
     <label><input type="radio" name="q11" value="c"> Fingers Lactate</label>
     <label><input type="radio" name="q11" value="d"> 9% NaCl</label>
   </div>
+      <div class="question-feedback" id="feedback-q11"></div>
 </div>
 
 <div class="question">
@@ -405,6 +438,7 @@
     <label><input type="radio" name="q12" value="d"> Attitude</label>
     <label><input type="radio" name="q12" value="e"> Blood oxygen level</label>
   </div>
+      <div class="question-feedback" id="feedback-q12"></div>
 </div>
 
 <div class="question">
@@ -416,6 +450,7 @@
     <label><input type="radio" name="q13" value="d"> Ca++ pumped out</label>
     <label><input type="radio" name="q13" value="e"> 3 K+ pumped out</label>
   </div>
+      <div class="question-feedback" id="feedback-q13"></div>
 </div>
 
 <div class="question">
@@ -427,6 +462,7 @@
     <label><input type="radio" name="q14" value="d"> Antigen</label>
     <label><input type="radio" name="q14" value="e"> Spectrin</label>
   </div>
+      <div class="question-feedback" id="feedback-q14"></div>
 </div>
 
 <div class="question">
@@ -438,6 +474,7 @@
     <label><input type="radio" name="q15" value="d"> Transport of nutrients</label>
     <label><input type="radio" name="q15" value="e"> Cell growth</label>
   </div>
+      <div class="question-feedback" id="feedback-q15"></div>
 </div>
 
 <div class="question">
@@ -449,6 +486,7 @@
     <label><input type="radio" name="q16" value="d"> Endocytosis</label>
     <label><input type="radio" name="q16" value="e"> Sodium potassium pump</label>
   </div>
+      <div class="question-feedback" id="feedback-q16"></div>
 </div>
 
 <div class="question">
@@ -460,6 +498,7 @@
     <label><input type="radio" name="q17" value="d"> Secondary active transport</label>
     <label><input type="radio" name="q17" value="e"> Osmosis</label>
   </div>
+      <div class="question-feedback" id="feedback-q17"></div>
 </div>
 
 <div class="question">
@@ -471,6 +510,7 @@
     <label><input type="radio" name="q18" value="d"> Adrenaline</label>
     <label><input type="radio" name="q18" value="e"> T4</label>
   </div>
+      <div class="question-feedback" id="feedback-q18"></div>
 </div>
 
 <div class="question">
@@ -482,6 +522,7 @@
     <label><input type="radio" name="q19" value="d"> Develops action potential</label>
     <label><input type="radio" name="q19" value="e"> Releases sodium ions</label>
   </div>
+      <div class="question-feedback" id="feedback-q19"></div>
 </div>
 <div class="question">
   <p>20. Regarding contractile filaments in a skeletal muscle:</p>
@@ -492,6 +533,7 @@
     <label><input type="radio" name="q20" value="d"> Secrete ca++</label>
     <label><input type="radio" name="q20" value="e"> Myosin are thin filaments</label>
   </div>
+      <div class="question-feedback" id="feedback-q20"></div>
 </div>
 
 <div class="question">
@@ -503,6 +545,7 @@
     <label><input type="radio" name="q21" value="d"> Generate action potential</label>
     <label><input type="radio" name="q21" value="e"> Has voltage</label>
   </div>
+      <div class="question-feedback" id="feedback-q21"></div>
 </div>
 
 <div class="question">
@@ -514,6 +557,7 @@
     <label><input type="radio" name="q22" value="d"> Projections of each myosin molecule protrude outward (myosin head)</label>
     <label><input type="radio" name="q22" value="e"> Actin has cross bridges</label>
   </div>
+      <div class="question-feedback" id="feedback-q22"></div>
 </div>
 
 <div class="question">
@@ -525,6 +569,7 @@
     <label><input type="radio" name="q23" value="d"> Does not contract</label>
     <label><input type="radio" name="q23" value="e"> Has cross bridges</label>
   </div>
+      <div class="question-feedback" id="feedback-q23"></div>
 </div>
 
 <div class="question">
@@ -536,6 +581,7 @@
     <label><input type="radio" name="q24" value="d"> Stimulus strength</label>
     <label><input type="radio" name="q24" value="e"> Energy drink</label>
   </div>
+      <div class="question-feedback" id="feedback-q24"></div>
 </div>
 
 <div class="question">
@@ -547,6 +593,7 @@
     <label><input type="radio" name="q25" value="d"> Power stroke of myosin occurs</label>
     <label><input type="radio" name="q25" value="e"> Binding sites are open always</label>
   </div>
+      <div class="question-feedback" id="feedback-q25"></div>
 </div>
 
 <div class="question">
@@ -558,6 +605,7 @@
     <label><input type="radio" name="q26" value="d"> It is the decrease in cell size</label>
     <label><input type="radio" name="q26" value="e"> No voltage change</label>
   </div>
+      <div class="question-feedback" id="feedback-q26"></div>
 </div>
 
 <div class="question">
@@ -569,6 +617,7 @@
     <label><input type="radio" name="q27" value="d"> Is associated with a transient increase in membrane permeability to sodium</label>
     <label><input type="radio" name="q27" value="e"> Is associated with a transient increase in membrane permeability to Aluminium</label>
   </div>
+      <div class="question-feedback" id="feedback-q27"></div>
 </div>
 
 <div class="question">
@@ -580,6 +629,7 @@
     <label><input type="radio" name="q28" value="d"> Chemical synapses can be found between a neuron and a bone</label>
     <label><input type="radio" name="q28" value="e"> Exist inside blood plasma</label>
   </div>
+      <div class="question-feedback" id="feedback-q28"></div>
 </div>
 
 <div class="question">
@@ -591,6 +641,7 @@
     <label><input type="radio" name="q29" value="d"> The only form of transmission of an impulse from one neuron to another is direct electrical connection</label>
     <label><input type="radio" name="q29" value="e"> Nerve impulse is a fictional signal</label>
   </div>
+      <div class="question-feedback" id="feedback-q29"></div>
 </div>
 
 <div class="question">
@@ -602,6 +653,7 @@
     <label><input type="radio" name="q30" value="d"> Pumps 2 Na+ outside to function</label>
     <label><input type="radio" name="q30" value="e"> Pumps chloride ions</label>
   </div>
+      <div class="question-feedback" id="feedback-q30"></div>
 </div>
 
     
@@ -621,62 +673,222 @@
   <h2 style="margin-bottom:1rem;color:var(--dark)">Short Essay Questions</h2>
 
   <div class="card">
-    <h3>1. Describe the physiological responses that occur following an acute loss of blood volume.</h3>
+    <h3>1. State two functional differences between ENDOCYTOSIS and EXOCYTOSIS across the plasma membrane. [4 marks]</h3>
 
     <div class="subquestion">
-      <label>a) Immediate cardiovascular compensations</label>
-      <textarea id="ans1a" placeholder="Describe immediate changes (heart rate, vascular tone, etc.)"></textarea>
+      <label>Functional Differences</label>
+      <textarea id="ans-end-exo" placeholder="Compare the direction and purpose of transport..."></textarea>
     </div>
 
-    <div class="subquestion">
-      <label>b) Neurohormonal responses</label>
-      <textarea id="ans1b" placeholder="Describe catecholamines, ADH, RAAS, etc."></textarea>
+    <button class="btn" onclick="showAnswers('q1')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answersq1" class="answers" aria-hidden="true">
+      <h3>Model Answer</h3>
+      <p><b>1. Direction of Transport:</b> Endocytosis involves the internalization of extracellular materials (like nutrients or pathogens) by folding the membrane inward to form a vesicle. Exocytosis involves the fusion of internal vesicles with the plasma membrane to release contents (like hormones or neurotransmitters) to the outside.</p>
+      <p><b>2. Membrane Dynamics:</b> Endocytosis <i>removes</i> a portion of the plasma membrane to form internal vesicles, whereas exocytosis <i>adds</i> vesicle membrane back to the plasma membrane, helping to maintain or increase the total surface area of the cell.</p>
     </div>
-
-    <div class="subquestion">
-      <label>c) Longer-term hematologic / renal compensation</label>
-      <textarea id="ans1c" placeholder="Describe erythropoiesis, fluid retention, renal changes"></textarea>
-    </div>
-
-    <button class="btn" onclick="showAnswers('1')"><i class="fas fa-eye"></i> View Answers</button>
-
-    <div id="answers1" class="answers" aria-hidden="true">
-      <h3>Model Answers</h3>
-      <p><b>a)</b> Rapid sympathetic activation increases heart rate and contractility; peripheral vasoconstriction raises systemic vascular resistance to maintain perfusion.</p>
-      <p><b>b)</b> Release of catecholamines, ADH secretion and activation of RAAS promote vasoconstriction and fluid retention to support blood pressure.</p>
-      <p><b>c)</b> Kidneys increase erythropoietin to stimulate erythropoiesis; renal sodium/water retention and mobilization of interstitial fluid restore plasma volume over days to weeks.</p>
-    </div>
-
   </div>
 
-  <!-- New short essay question (added) -->
   <div class="card">
-    <h3>2. Explain the kidney's role in maintaining electrolyte and fluid balance.</h3>
+    <h3>2. What's your perspective on concept of ALL or NONE law? Give example [4 marks]</h3>
 
     <div class="subquestion">
-      <label>a) Describe how the proximal tubule handles sodium and water.</label>
-      <textarea id="ans2a" placeholder="Answer A — proximal tubule handling..."></textarea>
+      <label>All-or-None Law</label>
+      <textarea id="ans-all-none" placeholder="Explain the threshold and the response..."></textarea>
     </div>
 
-    <div class="subquestion">
-      <label>b) Explain the role of aldosterone in distal nephron sodium handling.</label>
-      <textarea id="ans2b" placeholder="Answer B — aldosterone actions..."></textarea>
-    </div>
+    <button class="btn" onclick="showAnswers('q2')"><i class="fas fa-eye"></i> View Answers</button>
 
-    <div class="subquestion">
-      <label>c) Outline how the kidney adapts to changes in body hydration (antidiuretic hormone/ADH).</label>
-      <textarea id="ans2c" placeholder="Answer C — ADH and urine concentration..."></textarea>
-    </div>
-
-    <button class="btn" onclick="showAnswers('2')"><i class="fas fa-eye"></i> View Answers</button>
-
-    <div id="answers2" class="answers" aria-hidden="true">
-      <h3>Model Answers</h3>
-      <p><b>a)</b> The proximal tubule reabsorbs the bulk of filtered sodium and water via coupled transporters and passive water movement; most solute and isoosmotic fluid is reclaimed here.</p>
-      <p><b>b)</b> Aldosterone acts on distal tubule and collecting duct principal cells to increase expression of ENaC and Na+/K+ ATPase, enhancing sodium reabsorption and potassium secretion.</p>
-      <p><b>c)</b> ADH increases water permeability of the collecting duct by inserting aquaporin-2 channels, concentrating urine when the body is dehydrated and reducing free-water excretion.</p>
+    <div id="answersq2" class="answers" aria-hidden="true">
+      <h3>Model Answer</h3>
+      <p>The <b>All-or-None Law</b> states that if a stimulus is strong enough to reach the threshold potential, an action potential of constant magnitude will be generated. If the stimulus does not reach the threshold, no action potential occurs at all. The intensity of the response does not increase with a stronger stimulus once threshold is met. <i>Example:</i> The firing of a single motor neuron or the contraction of a single muscle fiber.</p>
     </div>
   </div>
+
+  <div class="card">
+    <h3>3. Explain the ionic basis for the self generation of voltage observed in the cardiac muscle. [5 marks]</h3>
+
+    <div class="subquestion">
+      <label>Ionic Basis of Cardiac Action Potential</label>
+      <textarea id="ans-cardiac-ionic" placeholder="Describe Na+, Ca2+, and K+ movement..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('q3')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answersq3" class="answers" aria-hidden="true">
+      <h3>Model Answer</h3>
+      <p><b>1. Rapid Depolarization (Phase 0):</b> Caused by the rapid influx of $Na^+$ ions through fast voltage-gated sodium channels.</p>
+      <p><b>2. Plateau Phase (Phase 2):</b> Unique to cardiac muscle, caused by the slow influx of $Ca^{2+}$ ions through L-type calcium channels, balancing the $K^+$ efflux.</p>
+      <p><b>3. Repolarization (Phase 3):</b> Caused by the closure of $Ca^{2+}$ channels and a rapid efflux of $K^+$ ions, restoring the negative resting potential.</p>
+      <p><b>4. Pacemaker Potential:</b> In self-exciting cells (like the SA node), "funny" sodium currents ($I_f$) and $Ca^{2+}$ influx cause a slow spontaneous depolarization toward threshold.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>4. What is the CLINICAL significance of a long refractory period in cardiac muscle tissue? [3 marks]</h3>
+
+    <div class="subquestion">
+      <label>Refractory Period Significance</label>
+      <textarea id="ans-refractory" placeholder="Explain why the heart cannot be tetanized..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('q4')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answersq4" class="answers" aria-hidden="true">
+      <h3>Model Answer</h3>
+      <p>A long absolute refractory period ensures that the heart muscle cannot undergo <b>tetanus</b> (sustained contraction). This is vital because it guarantees a period of relaxation (diastole) between contractions, allowing the ventricles to fill with blood before the next pump. Without this period, the heart would remain contracted and fail to circulate blood.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>5. With respect to the excitation-contraction coupling, give two differences between skeletal and smooth muscles. [5 marks]</h3>
+
+    <div class="subquestion">
+      <label>Skeletal vs Smooth Muscle Coupling</label>
+      <textarea id="ans-muscle-diff" placeholder="Compare calcium sources and binding proteins..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('q5')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answersq5" class="answers" aria-hidden="true">
+      <h3>Model Answer</h3>
+      <p><b>1. Calcium Binding Protein:</b> In skeletal muscle, $Ca^{2+}$ binds to <b>troponin C</b> to move tropomyosin. In smooth muscle, $Ca^{2+}$ binds to <b>calmodulin</b>, which then activates Myosin Light Chain Kinase (MLCK).</p>
+      <p><b>2. Calcium Source:</b> Skeletal muscle relies almost entirely on $Ca^{2+}$ released from the <b>sarcoplasmic reticulum</b>. Smooth muscle relies significantly on <b>extracellular $Ca^{2+}$</b> entering through the plasma membrane (sarcolemma).</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>6. IDENTIFY the types of nerve fibres in human body and CLASSIFY them. [6 marks]</h3>
+
+    <div class="subquestion">
+      <label>Classification of Nerve Fibers</label>
+      <textarea id="ans-nerve-fibres" placeholder="Classify based on diameter, myelination, and function..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('q6')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answersq6" class="answers" aria-hidden="true">
+      <h3>Model Answer</h3>
+      <p>Nerve fibers are typically classified by;</p>
+      <ul>
+        <li><b>Speed of Transmission:</b> Erlanger Gasser System where we have type A, B and C fibers..</li>
+        <li><b>Strucutre:</b> Multipolar neurons having multiple processes from the cell body, Unipolar having only one process, and pseudounipolar where the one process that branches off divides into two.</li>
+        <li><b>Function:</b> Sensory Neurons transmit the stimuli impulse to the CNS, Motor nuerons take the impulses to the effector muscle whereas the interneuron relays signals from the sensory to the motor .</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>7. Label the parts 0-4 in the diagram and state the ionic basis for each [5 marks]</h3>
+    <img src="../MBS-220-pics/physio-AP.PNG">
+    <div class="subquestion">
+      <!-- <label>Classification of Nerve Fibers</label> -->
+      <textarea id="ans-nerve-fibres" placeholder="Classify based on diameter, myelination, and function..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('q7')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answersq7" class="answers" aria-hidden="true">
+      <h3>Model Answer</h3>
+      <p> This the action potential of a cardiac muscle tissue with phases from 0 - 4</b>:</p>
+      <ul>
+        <li><b>Phase 0:</b> Rapid Depolarization where there is rapid influx of Na ions.</li>
+        <li><b>Phase 1:</b> Partial Repolrization when Na channels close and potassium channels open </li>
+        <li><b>Phase 2:</b> Plateu Phase where calcium channels open while the potassium channels are still open.</li>
+        <li><b>Phase 3:</b> Complete Repolarization when the calcium channels close and the potassium channels are still open.</li>
+        <li><b>Phase 4:</b> Resting Phase.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>8. American football game is adored in the nation of South Africa. Some of the veteran players have been diagnosed with muscular degenerative diseases in their middle age.</h3>
+
+    <div class="subquestion">
+      <label>a. What would happen if one of these players had increased potassium in the ECF. Outline the physiology that would be disrupted at plasma membrane level of a nerve. [3 marks]</label>
+      <textarea id="ans8a" placeholder="Describe the effect on resting membrane potential..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>b. Body muscles assist in maintaining the appropriate TONE and posture; Outline the derangements that occur in myasthenia gravis in terms of NMJ in muscle physiology. [5 marks]</label>
+      <textarea id="ans8b" placeholder="Discuss ACh receptors and muscle weakness..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>c. What would happen if one of these players had Renshaw cell inhibition of neurons? Outline how the physiology of disruption occurs at the level of SYNAPSE. [5 marks]</label>
+      <textarea id="ans8c" placeholder="Explain recurrent inhibition and glycine..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('8')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers8" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>a)</b> Increased ECF potassium (hyperkalemia) reduces the concentration gradient for K+, causing the resting membrane potential to become more positive (depolarization). While this initially brings the nerve closer to threshold, prolonged depolarization inactivates voltage-gated $Na^+$ channels, leading to a failure to generate action potentials and subsequent muscle paralysis or "weakness."</p>
+      <p><b>b)</b> In <b>Myasthenia Gravis</b>, autoantibodies block, alter, or destroy nicotinic acetylcholine (ACh) receptors at the post-synaptic Neuromuscular Junction (NMJ). This reduces the end-plate potential (EPP) magnitude. If the EPP fails to reach threshold, the muscle fiber does not fire an action potential, resulting in progressive skeletal muscle weakness and fatigue.</p>
+      <p><b>c)</b> <b>Renshaw cells</b> are inhibitory interneurons in the spinal cord that release <b>glycine</b>. They receive input from motor neuron collaterals and provide "recurrent inhibition" back to the same motor neuron. If Renshaw cells are inhibited (e.g., by strychnine), the motor neurons fire uncontrollably, leading to severe muscle spasms and tetanic contractions.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>9. Compare and contrast the concept of Osmolarity, Osmolality and Tonicity. Write about their clinical significance [5 marks]</h3>
+
+    <div class="subquestion">
+      <label>Comparison and Clinical Significance</label>
+      <textarea id="ans9" placeholder="Define each term and explain their clinical use..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('9')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers9" class="answers" aria-hidden="true">
+      <h3>Model Answer</h3>
+      <p><b>Osmolarity</b> is the concentration of solute particles per Liter of solution (mOsm/L), while <b>Osmolality</b> is the concentration per Kilogram of solvent (mOsm/kg). Clinically, osmolality is preferred as it is independent of temperature. <b>Tonicity</b> refers to the effect a solution has on cell volume (swelling or shrinking) and depends only on <i>non-penetrating</i> solutes. <b>Clinical Significance:</b> These concepts guide IV fluid therapy; for example, hypertonic solutions are used to treat cerebral edema by drawing fluid out of brain cells.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>1. An 18-year-old person came to the emergency room after being stung by a bee... trouble in BREATHING... diagnosed with an anaphylactic reaction.</h3>
+
+    <div class="subquestion">
+      <label>a) Describe the mechanism of excitation-contraction coupling in this muscle type [5 marks]</label>
+      <textarea id="ans1-emerg" placeholder="Focus on smooth muscle in the airways..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('1e')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers1e" class="answers" aria-hidden="true">
+      <h3>Model Answer</h3>
+      <p>The "breathing trouble" involves <b>airway smooth muscle</b>. During contraction: 1. $Ca^{2+}$ enters the cytosol from the ECF and Sarcoplasmic Reticulum. 2. $Ca^{2+}$ binds to <b>Calmodulin</b>. 3. This complex activates <b>Myosin Light Chain Kinase (MLCK)</b>. 4. MLCK phosphorylates myosin heads, allowing them to bind to actin and initiate the power stroke. Epinephrine (the treatment) causes relaxation by increasing cAMP, which inhibits MLCK.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>2. A 35 years old gentleman Mr PP... veteran NATO soldier... severe back muscle spasms and pain. Heart rate 55 bpm, blood electrolytes disturbed.</h3>
+
+    <div class="subquestion">
+      <label>a) Discuss briefly the physiology [function] of anchoring proteins and regulating proteins at level of filaments in skeletal muscles. [5 M]</label>
+      <textarea id="ans2a" placeholder="Discuss Troponin, Tropomyosin, Titin, etc..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>b) Discuss succinctly the types of IV fluids [with examples] that are needed to correct his electrolyte imbalance based on tonicity. Give REASONS and EXAMPLES [5 M]</label>
+      <textarea id="ans2b" placeholder="Categorize fluids by tonicity..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>c) The word BALANCE doesn't necessarily mean equality. Internal environment got to be in balance to stay HEALTHY. Elucidate the [malevolent] role of Donnan effect and how is it corrected back naturally... [5 M]</label>
+      <textarea id="ans2c" placeholder="Discuss Gibbs-Donnan and Na/K Pump..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('2e')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers2e" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>a)</b> <b>Regulatory Proteins:</b> <i>Tropomyosin</i> blocks the myosin-binding sites on actin at rest; <i>Troponin</i> (C, I, and T) binds $Ca^{2+}$ to shift tropomyosin and allow contraction. <b>Anchoring Proteins:</b> <i>Titin</i> anchors thick filaments to Z-disks and provides elasticity; <i>Alpha-actinin</i> anchors actin filaments to the Z-disk.</p>
+      <p><b>b)</b> 1. <b>Isotonic:</b> (e.g., 0.9% Normal Saline) to restore ECF volume without changing cell size. 2. <b>Hypotonic:</b> (e.g., 0.45% Saline) to treat cellular dehydration by moving water into cells. 3. <b>Hypertonic:</b> (e.g., 3% Saline) to draw water out of swollen cells or correct severe hyponatremia.</p>
+      <p><b>c)</b> The <b>Donnan Effect</b> describes the unequal distribution of diffusible ions caused by the presence of non-diffusible, negatively charged proteins inside the cell. This creates an osmotic pressure that would normally cause the cell to swell and burst. It is corrected naturally by the <b>$Na^+/K^+$ ATPase pump</b>, which actively removes osmotic particles ($Na^+$) from the cell to maintain osmotic equilibrium and cell volume.</p>
+    </div>
+  </div>
+
  </section>
 
 <script>
@@ -830,12 +1042,16 @@ const correctAnswers = {
      if (isVisible) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
    }
  
-   // Mode switching (from first file)
-   const mode = localStorage.getItem("examMode"); // "mcq" or "essay"
-   if (mode === "essay") {
-     document.getElementById("mcq-section").style.display = "none";
-     document.getElementById("essay-section").style.display = "block";
-   }
+   const mode = localStorage.getItem("examMode");
+
+    if (mode === "essay") {
+      document.getElementById("mcq-section").style.display = "none";
+      document.getElementById("essay-section").style.display = "block";
+    } 
+    else if (mode === "tf") {
+      document.getElementById("mcq-section").style.display = "none";
+      document.getElementById("tf-section").style.display = "block";
+    }
  
    // Navigate to the previous page if available, otherwise fall back to index.html
    function goBack() {
