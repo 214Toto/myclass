@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exam 2024 | ToToZ Collection</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2b7a78;
+      --accent: #3aafa9;
+      --dark: #17252a;
+      --light: #f8f9fa;
+      --radius: 12px;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #f5f7fb, #eef6f6);
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--dark));
+      color: white;
+      padding: 1.1rem 0;
+      position: fixed; /* Keeps it at the top when scrolling */
+      top: 0;          /* Added: Ensures it starts at the absolute top */
+      left: 0;         /* Added: Ensures it stretches from the left edge */
+      width: 100%;
+      z-index: 1000;   /* Added: Keeps header above all other elements */
+      box-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* Improved heading styling */
+    header h1 {
+      font-size: 1.25rem;
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: 0.35px;
+      color: #ffffff;
+      text-transform: none;
+      display: inline-block;
+      line-height: 1;
+      text-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* logo heading (keeps icon + title aligned) */
+    .logo h1 {
+      font-size: 1.25rem;
+      margin: 0 0 0 6px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 900px;
+      /* Adjust this value based on how tall your header is */
+      margin: 100px auto 0 auto; 
+      padding: 1.5rem 0;
+    }
+
+    h2 {
+      color: var(--primary);
+      margin: 0 0 0.85rem 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    /* responsive tweaks for small screens */
+    @media (max-width: 520px) {
+      header h1, .logo h1 { font-size: 1rem; }
+      h2 { font-size: 1rem; }
+    }
+
+    .question {
+      margin-bottom: 1.5rem;
+    }
+
+    .question p {
+      font-weight: 600;
+    }
+
+    .options label {
+      display: block;
+      background: #f8fafc;
+      border: 1px solid #d9e2ec;
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      margin-top: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .options label:hover {
+      background: #e0f7f6;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .result {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #f1faf9;
+      border-radius: var(--radius);
+      text-align: center;
+      display: none;
+    }
+
+    .score {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin-top: 0.5rem;
+    }
+
+    /* --- Styles for answer feedback --- */
+    .answer-list { text-align: left; margin-top: 12px; }
+    .answer-item {
+      display: block;
+      padding: 8px 10px;
+      border-radius: 8px;
+      margin: 6px 0;
+      border: 1px solid #e6eef3;
+      background: #ffffff;
+      color: var(--dark);
+      font-weight: 600;
+    }
+    .answer-correct {
+      background: #ecfdf5;       /* light green */
+      border-color: #bbf7d0;
+      color: #065f46;           /* dark green text */
+      box-shadow: 0 6px 18px rgba(16,185,129,0.06);
+    }
+    .answer-wrong {
+      background: #fff1f2;       /* light red */
+      border-color: #fca5a5;
+      color: #9f1239;           /* dark red text */
+      box-shadow: 0 6px 18px rgba(239,68,68,0.06);
+    }
+    .user-choice { outline: 2px dashed rgba(0,0,0,0.04); }
+
+    /* Essay Section */
+    textarea {
+      width: 80%;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.75rem;
+      resize: vertical;
+      min-height: 50px;
+      font-size: 1rem;
+    }
+
+    .essay-answer {
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-top: 0.75rem;
+      display: none;
+    }
+
+    .back-btn {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    /* Explanation box shown under each question in feedback */
+    .explanation {
+      margin-top: 8px;
+      padding: 10px 12px;                                                                                                                                                                                 
+      border-radius: 8px;
+      background: #363d3a;           /* subtle greenish background */
+      color: #065f46;                /* dark green text */
+      font-size: 0.95rem;
+      line-height: 1.4;
+      border: 1px solid #bbf7d0;
+    }
+
+    /* For incorrect explanation (when needed) */
+    .explanation.wrong {
+      background: #fff1f2;
+      color: #7f1d1d;
+      border-color: #fca5a5;
+    }
+
+    /* small label styling for feedback header */
+    .answer-block { color: var(--primary); margin-bottom: 12px; }
+    .answer-block strong { display:block; margin-bottom:8px; color: rgb(7, 113, 95); }
+    .question-feedback { 
+      margin-top: 14px;
+      padding: 14px 16px;
+      color: white;
+      border-radius: 12px;
+      background: #a82525;
+      border: 1px solid #d6e7eb;
+    }
+    .question-feedback .answer-list {
+      margin-top: 10px;
+    }
+
+    /* Essay card styles (compact, readable) */
+    #essay-section { padding-top: 0; }
+    #essay-section .card {
+      background: linear-gradient(180deg, #ffffff, #fbfeff);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(18,38,63,0.06);
+      border: 1px solid rgba(43,122,120,0.06);
+      max-width: 900px;
+      margin: 0 auto 1rem auto;
+    }
+    #essay-section .card h3 {
+      margin: 0 0 10px 0;
+      font-size: 1.02rem;
+      color: var(--dark);
+      font-weight: 700;
+    }
+    #essay-section .subquestion { margin-bottom: 12px; }
+    #essay-section .subquestion label {
+      display:block;
+      font-weight:700;
+      margin-bottom:6px;
+      color:var(--dark);
+    }
+    #essay-section textarea {
+      width:100%;
+      min-height:90px;
+      border-radius:8px;
+      border:1px solid #d1dbe0;
+      padding:10px;
+      resize:vertical;
+      font-family:inherit;
+    }
+
+    .mutwe {
+      max-width: 900px; 
+      margin: 0 auto; 
+      width: 92%; 
+      display:flex; 
+      align-items:center; 
+      justify-content:space-between;
+    }
+
+    #essay-section .answers {
+      display:none;
+      margin-top:14px;
+      background:#f1faf9;
+      border-radius:8px;
+      padding:12px;
+      border:1px solid #cfeee6;
+      color:var(--dark);
+    }
+    #essay-section .answers h3 { margin-top:0; }
+    #essay-section .card .btn { margin-top:8px; }
+    /* make answers visible area stand out when shown */
+    #essay-section .answers.visible { display:block; }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="mutwe">
+      <div class="logo" style="display: flex; align-items: center;">
+        <i class="fas fa-book-medical"></i>
+        <h1>2024 Pathology Test 1</h1>
+      </div>
+      <button id="backBtn" class="btn"><i class="fas fa-arrow-left"></i> Back</button>
+    </div>
+  </header>
+
+<div class="container" id="mcq-section">
+  <h2>Multiple Choice Questions</h2>
+
+  <form id="quizForm">
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pathology Quiz</title>
+    <style>
+        .question { margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
+        .options label { display: block; margin: 5px 0; }
+        .question-feedback { margin-top: 10px; font-style: italic; color: #555; }
+    </style>
+</head>
+<body>
+
+    <div class="question">
+        <p>1. Which of the following statement is true about inflammation?</p>
+        <div class="options">
+            <label><input type="radio" name="q1" value="a"> It always results into eliminations of the stimuli.</label>
+            <label><input type="radio" name="q1" value="b"> Normally results into tissue repair and always has an advantage to the host.</label>
+            <label><input type="radio" name="q1" value="c"> The whole purpose of it is to deliver defence mechanisms to the site of injury.</label>
+            <label><input type="radio" name="q1" value="d"> Both macrophages and neutrophils come in the second phase of acute inflammation.</label>
+        </div>
+        <div class="question-feedback" id="feedback-q1"></div>
+    </div>
+
+    <div class="question">
+        <p>2. What is the main difference between acute inflammation and chronic inflammation?</p>
+        <div class="options">
+            <label><input type="radio" name="q2" value="a"> In acute, there is presence of neutrophils</label>
+            <label><input type="radio" name="q2" value="b"> In chronic, there is presence of lymphocytes</label>
+            <label><input type="radio" name="q2" value="c"> In chronic, the response is very specific while in acute its none specific</label>
+            <label><input type="radio" name="q2" value="d"> Acute has 3 phases while chronic has one phase.</label>
+        </div>
+        <div class="question-feedback" id="feedback-q2"></div>
+    </div>
+
+    <div class="question">
+        <p>3. Which one of the following statements is the best about the factors mediating immune system?</p>
+        <div class="options">
+            <label><input type="radio" name="q3" value="a"> Pathogen associated molecular pallets can be recognised by any cell of innate immunity.</label>
+            <label><input type="radio" name="q3" value="b"> The macrophages and dendritic cells have receptors that recognises pathogen associated molecular pallets.</label>
+            <label><input type="radio" name="q3" value="c"> The interactions between Tall like receptors and macrophages start the reactions of phagocytosis.</label>
+            <label><input type="radio" name="q3" value="d"> The interactions of Tall like receptors and the pathogenic pallet results into multiple chemical mediators.</label>
+        </div>
+        <div class="question-feedback" id="feedback-q3"></div>
+    </div>
+
+    <div class="question">
+        <p>4. Which one of the cyclooxygenase end products has multiple chemical mediating functions during acute inflammation?</p>
+        <div class="options">
+            <label><input type="radio" name="q4" value="a"> Prostaglandin I 2</label>
+            <label><input type="radio" name="q4" value="b"> Prostaglandin D 2</label>
+            <label><input type="radio" name="q4" value="c"> Prostaglandin E 2</label>
+            <label><input type="radio" name="q4" value="d"> Prostaglandin I2 and E2</label>
+        </div>
+        <div class="question-feedback" id="feedback-q4"></div>
+    </div>
+
+    <div class="question">
+        <p>5. Which of the following products of 5-lipooxygenase also acts as neutrophils chemotaxis?</p>
+        <div class="options">
+            <label><input type="radio" name="q5" value="a"> Leukotriene B4</label>
+            <label><input type="radio" name="q5" value="b"> Leukotriene C2</label>
+            <label><input type="radio" name="q5" value="c"> Leukotriene D4</label>
+            <label><input type="radio" name="q5" value="d"> Leukotriene E4</label>
+        </div>
+        <div class="question-feedback" id="feedback-q5"></div>
+    </div>
+
+    <div class="question">
+        <p>6. The following may result in stimulations of chronic inflammations except one;</p>
+        <div class="options">
+            <label><input type="radio" name="q6" value="a"> Chronic bacterial infections like E. coli and Mycobacterium</label>
+            <label><input type="radio" name="q6" value="b"> Cancers and fungal infections</label>
+            <label><input type="radio" name="q6" value="c"> Fungal and parasitic infections</label>
+            <label><input type="radio" name="q6" value="d"> Genetic disease that results into autoimmune responses.</label>
+        </div>
+        <div class="question-feedback" id="feedback-q6"></div>
+    </div>
+
+    <div class="question">
+        <p>7. Which of the following is true about pathogen associate molecular pallets associated with MHC II?</p>
+        <div class="options">
+            <label><input type="radio" name="q7" value="a"> It can only be recognised by the CD8 cell.</label>
+            <label><input type="radio" name="q7" value="b"> It results into cytotoxic responses.</label>
+            <label><input type="radio" name="q7" value="c"> Results into immune response activation.</label>
+            <label><input type="radio" name="q7" value="d"> It results into CD4 degradation.</label>
+        </div>
+        <div class="question-feedback" id="feedback-q7"></div>
+    </div>
+
+    <div class="question">
+        <p>8. Which one of the following statements is true about caseating granuloma?</p>
+        <div class="options">
+            <label><input type="radio" name="q8" value="a"> The denoting cell is epithelioid</label>
+            <label><input type="radio" name="q8" value="b"> Can be caused by cat scratch disease.</label>
+            <label><input type="radio" name="q8" value="c"> It has necrotic debris at the centre</label>
+            <label><input type="radio" name="q8" value="d"> Results from sarcoidosis disease.</label>
+        </div>
+        <div class="question-feedback" id="feedback-q8"></div>
+    </div>
+
+    <div class="question">
+        <p>9. All of the following may results in delayed wound healing except...</p>
+        <div class="options">
+            <label><input type="radio" name="q9" value="a"> Lack of zinc in the diet</label>
+            <label><input type="radio" name="q9" value="b"> Lack of vitamin C</label>
+            <label><input type="radio" name="q9" value="c"> Infections</label>
+            <label><input type="radio" name="q9" value="d"> Excessive alcohol intake</label>
+        </div>
+        <div class="question-feedback" id="feedback-q9"></div>
+    </div>
+
+    <div class="question">
+        <p>10. A patient came with a wound measuring 8cm by 12cm, two weeks later, the patient came back with the same wound measuring 3cm by 6cm. Which of the following statements below is correct about the wound mentioned above?</p>
+        <div class="options">
+            <label><input type="radio" name="q10" value="a"> There is too much collagen production that facilitates healing.</label>
+            <label><input type="radio" name="q10" value="b"> The reductions in sizes of the wound is due to actions of collagenase enzymes.</label>
+            <label><input type="radio" name="q10" value="c"> The reductions in the sizes of the wound is due to the actions of fibroblasts.</label>
+            <label><input type="radio" name="q10" value="d"> The whole issue is due to the contractile ability of the myofibroblasts.</label>
+        </div>
+        <div class="question-feedback" id="feedback-q10"></div>
+    </div>
+
+    <div class="question">
+        <p>11. Regarding the history of pathology</p>
+        <div class="options">
+            <label><input type="radio" name="q11" value="a"> Gabriel Fallopius described human lymphoid tissue</label>
+            <label><input type="radio" name="q11" value="b"> Malpighi is known as 'the father of histology'</label>
+            <label><input type="radio" name="q11" value="c"> Rudolf Virchow is known as father of exfoliative cytology</label>
+            <label><input type="radio" name="q11" value="d"> Tijo and Levan described the structure of DNA</label>
+        </div>
+        <div class="question-feedback" id="feedback-q11"></div>
+    </div>
+
+    <div class="question">
+        <p>12. Which of the following may cause Metaplasia</p>
+        <div class="options">
+            <label><input type="radio" name="q12" value="a"> Denervation,</label>
+            <label><input type="radio" name="q12" value="b"> Diminished blood supply</label>
+            <label><input type="radio" name="q12" value="c"> Inadequate nutrition,</label>
+            <label><input type="radio" name="q12" value="d"> Chronic irritation of the epithelium</label>
+        </div>
+        <div class="question-feedback" id="feedback-q12"></div>
+    </div>
+
+    <div class="question">
+        <p>13. Which of the following are features of irreversible injury</p>
+        <div class="options">
+            <label><input type="radio" name="q13" value="a"> Nuclear chromatin clamping</label>
+            <label><input type="radio" name="q13" value="b"> Formation of cytoplasmic blebs</label>
+            <label><input type="radio" name="q13" value="c"> Mitochondria swelling</label>
+            <label><input type="radio" name="q13" value="d"> Nuclear pyknosis</label>
+        </div>
+        <div class="question-feedback" id="feedback-q13"></div>
+    </div>
+
+    <div class="question">
+        <p>14. Coagulative necrosis</p>
+        <div class="options">
+            <label><input type="radio" name="q14" value="a"> Is caused by bacterial infection</label>
+            <label><input type="radio" name="q14" value="b"> Has a cheese-like gross appearance</label>
+            <label><input type="radio" name="q14" value="c"> May be caused by thrombosis</label>
+            <label><input type="radio" name="q14" value="d"> Is a reversible change</label>
+        </div>
+        <div class="question-feedback" id="feedback-q14"></div>
+    </div>
+
+    <div class="question">
+        <p>15. Which of the following is not an intracellular accumulation</p>
+        <div class="options">
+            <label><input type="radio" name="q15" value="a"> Dystrophic calcification</label>
+            <label><input type="radio" name="q15" value="b"> Metastatic calcification</label>
+            <label><input type="radio" name="q15" value="c"> Fatty change</label>
+            <label><input type="radio" name="q15" value="d"> Iron overload</label>
+        </div>
+        <div class="question-feedback" id="feedback-q15"></div>
+    </div>
+
+    <div class="question">
+        <p>16. Calcification</p>
+        <div class="options">
+            <label><input type="radio" name="q16" value="a"> Is a characteristic features of metaplasia</label>
+            <label><input type="radio" name="q16" value="b"> Occurs only in dead cells</label>
+            <label><input type="radio" name="q16" value="c"> Is an extracellular accumulation</label>
+            <label><input type="radio" name="q16" value="d"> may cause organ dysfunction</label>
+        </div>
+        <div class="question-feedback" id="feedback-q16"></div>
+    </div>
+
+    <div class="question">
+        <p>17. Mechanisms of cellular Aging</p>
+        <div class="options">
+            <label><input type="radio" name="q17" value="a"> Increasing DNA damage,</label>
+            <label><input type="radio" name="q17" value="b"> Decreased cellular replication</label>
+            <label><input type="radio" name="q17" value="c"> Reduced regenerative capacity of tissue stem cells</label>
+            <label><input type="radio" name="q17" value="d"> Accumulation of metabolic damage</label>
+        </div>
+        <div class="question-feedback" id="feedback-q17"></div>
+    </div>
+
+    <div class="question">
+        <p>18. Atrophy</p>
+        <div class="options">
+            <label><input type="radio" name="q18" value="a"> Is always a pathological response</label>
+            <label><input type="radio" name="q18" value="b"> Is a decrease in the size of cells</label>
+            <label><input type="radio" name="q18" value="c"> Is characterised by calcification of the organs</label>
+            <label><input type="radio" name="q18" value="d"> Is an increase in the cell size</label>
+        </div>
+        <div class="question-feedback" id="feedback-q18"></div>
+    </div>
+
+    <div class="question">
+        <p>19. Metaplasia</p>
+        <div class="options">
+            <label><input type="radio" name="q19" value="a"> Is an increase in the number of cells</label>
+            <label><input type="radio" name="q19" value="b"> Is synonymous with cancer</label>
+            <label><input type="radio" name="q19" value="c"> Is an irreversible adaptive response</label>
+            <label><input type="radio" name="q19" value="d"> Arise by genetic reprogramming of stem cell</label>
+        </div>
+        <div class="question-feedback" id="feedback-q19"></div>
+    </div>
+
+    <div class="question">
+        <p>20. Pathological calcification</p>
+        <div class="options">
+            <label><input type="radio" name="q20" value="a"> Implies the normal deposition of calcium salts in living tissues.</label>
+            <label><input type="radio" name="q20" value="b"> May cause organ dysfunction</label>
+            <label><input type="radio" name="q20" value="c"> Is an adaptive change in labile tissues</label>
+            <label><input type="radio" name="q20" value="d"> Occurs in dead or dying tissues</label>
+        </div>
+        <div class="question-feedback" id="feedback-q20"></div>
+    </div>
+
+
+    <button type="button" class="btn" onclick="submitQuiz()">Submit</button>
+  </form>
+
+  <div class="result" id="resultBox">
+    <h3>Your Score:</h3>
+    <div class="score" id="score">0%</div>
+    <div id="answers"></div>
+  </div>
+</div>
+
+<div class="container" id="tf-section" style="display:none;">
+  <h2>True / False Questions</h2>
+
+  <form id="tfForm">
+    <div class="question" id="q1a-block">
+      <p>1a. Accumulation of excess fluid in the extravascular tissues.</p>
+      <div class="options">
+        <label><input type="radio" name="q1a" value="true"> True</label>
+        <label><input type="radio" name="q1a" value="false"> False</label>
+      </div>
+      <div class="tf-feedback"></div>
+    </div>
+
+    <div class="question" id="q1b-block">
+      <p>1b. Edema is an abnormal response of the body to inflammation or injury.</p>
+      <div class="options">
+        <label><input type="radio" name="q1b" value="true"> True</label>
+        <label><input type="radio" name="q1b" value="false"> False</label>
+      </div>
+      <div class="tf-feedback"></div>
+    </div>
+
+    <div class="question" id="q1c-block">
+      <p>1c. Exit of fluid from arteriolar end is balanced by inflow at venular end of microcirculation.</p>
+      <div class="options">
+        <label><input type="radio" name="q1c" value="true"> True</label>
+        <label><input type="radio" name="q1c" value="false"> False</label>
+      </div>
+      <div class="tf-feedback"></div>
+    </div>
+
+    <div class="question" id="q1d-block">
+      <p>1d. Small residual amount of excess interstitial fluid is drained by venular end of microcirculation.</p>
+      <div class="options">
+        <label><input type="radio" name="q1d" value="true"> True</label>
+        <label><input type="radio" name="q1d" value="false"> False</label>
+      </div>
+      <div class="tf-feedback"></div>
+    </div>
+
+    <div class="question" id="q1e-block">
+      <p>1e. Immunoglobulins contribute to the colloid osmotic pressure (COP) of blood.</p>
+      <div class="options">
+        <label><input type="radio" name="q1e" value="true"> True</label>
+        <label><input type="radio" name="q1e" value="false"> False</label>
+      </div>
+      <div class="tf-feedback"></div>
+    </div>
+
+    <div class="question" id="q2a-block">
+      <p>2a. Osmosis takes place at the arterial end of the capillary.</p>
+      <div class="options">
+        <label><input type="radio" name="q2a" value="true"> True</label>
+        <label><input type="radio" name="q2a" value="false"> False</label>
+      </div>
+      <div class="tf-feedback"></div>
+    </div>
+
+    <div class="question" id="q2b-block">
+      <p>2b. Gases are exchanged by diffusion.</p>
+      <div class="options">
+        <label><input type="radio" name="q2b" value="true"> True</label>
+        <label><input type="radio" name="q2b" value="false"> False</label>
+      </div>
+      <div class="tf-feedback"></div>
+    </div>
+
+    <div class="question" id="q2c-block">
+      <p>2c. Filtration takes place at the arterial end of the capillary.</p>
+      <div class="options">
+        <label><input type="radio" name="q2c" value="true"> True</label>
+        <label><input type="radio" name="q2c" value="false"> False</label>
+      </div>
+      <div class="tf-feedback"></div>
+    </div>
+
+    <div class="question" id="q2d-block">
+      <p>2d. Osmosis - a process by which molecules of a solvent tend to pass through a semipermeable membrane from a more concentrated solution into a less concentrated one.</p>
+      <div class="options">
+        <label><input type="radio" name="q2d" value="true"> True</label>
+        <label><input type="radio" name="q2d" value="false"> False</label>
+      </div>
+      <div class="tf-feedback"></div>
+    </div>
+
+    <div class="question" id="q2e-block">
+      <p>2e. Increased hydrostatic pressure can contribute to the formation of edema.</p>
+      <div class="options">
+        <label><input type="radio" name="q2e" value="true"> True</label>
+        <label><input type="radio" name="q2e" value="false"> False</label>
+      </div>
+      <div class="tf-feedback"></div>
+    </div>
+
+    <div class="question" id="q3a-block">
+      <p>3a. Reduced plasma oncotic pressure can be a cause of edema.</p>
+      <div class="options">
+        <label><input type="radio" name="q3a" value="true"> True</label>
+        <label><input type="radio" name="q3a" value="false"> False</label>
+      </div>
+      <div class="tf-feedback"></div>
+    </div>
+
+    <div class="question" id="q3b-block">
+      <p>3b. Obstruction of fluid clearance in the lymphatic system contributes to the formation of edema.</p>
+      <div class="options">
+        <label><input type="radio" name="q3b" value="true"> True</label>
+        <label><input type="radio" name="q3b" value="false"> False</label>
+      </div>
+      <div class="tf-feedback"></div>
+    </div>
+
+    <div class="question" id="q3c-block">
+      <p>3c. Inflammatory edema is caused by increased hydrostatic pressure at the arterial end of the capillary.</p>
+      <div class="options">
+        <label><input type="radio" name="q3c" value="true"> True</label>
+        <label><input type="radio" name="q3c" value="false"> False</label>
+      </div>
+      <div class="tf-feedback"></div>
+    </div>
+
+    <div class="question" id="q3d-block">
+      <p>3d. Sodium and water retention plays an important role in pathogenesis of edema.</p>
+      <div class="options">
+        <label><input type="radio" name="q3d" value="true"> True</label>
+        <label><input type="radio" name="q3d" value="false"> False</label>
+      </div>
+      <div class="tf-feedback"></div>
+    </div>
+
+    <div class="question" id="q3e-block">
+      <p>3e. Hypovolemia - an increased volume of circulating blood in the body.</p>
+      <div class="options">
+        <label><input type="radio" name="q3e" value="true"> True</label>
+        <label><input type="radio" name="q3e" value="false"> False</label>
+      </div>
+      <div class="tf-feedback"></div>
+    </div>
+
+    <div class="question" id="q5a-block">
+      <p>5a. Hyperemia is an excess of Blood in an Organ.</p>
+      <div class="options">
+        <label><input type="radio" name="q5a" value="true"> True</label>
+        <label><input type="radio" name="q5a" value="false"> False</label>
+      </div>
+      <div class="tf-feedback"></div>
+    </div>
+
+    <div class="question" id="q5e-block">
+      <p>5e. The impaired venous drainage is called venous congestion or passive hyperemia.</p>
+      <div class="options">
+        <label><input type="radio" name="q5e" value="true"> True</label>
+        <label><input type="radio" name="q5e" value="false"> False</label>
+      </div>
+      <div class="tf-feedback"></div>
+    </div>
+
+    <div class="question" id="q10a-block">
+      <p>10a. Thrombosis is the process of formation of solid mass in circulation from the constituents of flowing blood.</p>
+      <div class="options">
+        <label><input type="radio" name="q10a" value="true"> True</label>
+        <label><input type="radio" name="q10a" value="false"> False</label>
+      </div>
+      <div class="tf-feedback"></div>
+    </div>
+
+    <button type="button" class="btn" onclick="submitTF()">Submit</button>
+  </form>
+
+  <div class="result" id="tfResult">
+    <h3>Your Score:</h3>
+    <div class="score" id="tfScore">0%</div>
+    <div id="tfAnswers"></div>
+  </div>
+</div>
+
+<!-- Short Essay Section (card style with sub-questions) -->
+<section id="essay-section" class="container" style="display:none;">
+  <h2 style="margin-bottom:1rem;color:var(--dark)">Short Essay Questions</h2>
+
+  <div class="card">
+    <h3>Pathology Basics and Cell Injury (Section C, Part A)</h3>
+    <div class="subquestion">
+        <label>1. Discuss the Methods used in the study of pathology</label>
+        <textarea id="ansC_A1" placeholder="Describe histopathology, cytopathology, hematology, etc."></textarea>
+    </div>
+    <div class="subquestion">
+        <label>2. Discuss the 7 causes of cell injury</label>
+        <textarea id="ansC_A2" placeholder="Explain hypoxia, physical agents, chemicals, etc."></textarea>
+    </div>
+    <div class="subquestion">
+        <label>3. Discuss liquefactive necrosis</label>
+        <textarea id="ansC_A3" placeholder="Describe characteristics and examples (e.g., brain infarcts, abscesses)."></textarea>
+    </div>
+    <button class="btn" onclick="showAnswers('C_A')"><i class="fas fa-eye"></i> View Answers</button>
+    <div id="answersC_A" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>Q1)</b>  
+        <br> &rightarrowtail; <b>Gross Examination:</b> This involves looking at the organ with your naked eyezs and identifying hat organ it is and what is wrong with it. You comment on the shape, size, consistency and color.
+        <br> &rightarrowtail; <b>Microscopic Examination</b> utilizies the microscope, primarily the light microscopes like the Bright field/Dark field. to enyance the vizibility of the specimen scientits stain it using different methods such as the common H&E or something as complicated as the Histochemicak stains like the Congo Red, Gram stain, Prussian blue, Acid-fast staining. Stains are utilize the Ag-Ab complex can also be emplyed, things like the Prostate Specific Antigen and Desmin 
+        <br> &rightarrowtail; <b>Ancillary techniques</b> like the use of the ImmunoFlourence Microscopes and Electron Microscopes helps us study pathology and a deeper level than the light miscroscopes.
+        <br> &rightarrowtail; For a nuclear view of the pathology we employ techniques like the PCR and the blottings (western and soouthern) </p>
+      <p><b>Q2)</b> 
+        <br> Depending on severity of stimulus, cells may adapt, undergo injury or die
+        <br> &rightarrowtail; Oxygen deprivation (Hypoxia, celled ischaemia)
+        <br> &rightarrowtail;Physical agents – trauma, temperature extremes, electric shock, radiation
+        <br> &rightarrowtail; Chemical agents and drugs
+        <br> &rightarrowtail;Infectious agents – bacteria, fungi, viruses e.t.c
+        <br> &rightarrowtail;Immunologic reactions – e.g. anaphylactic reaction
+        <br> &rightarrowtail;Genetic derangements – e.g. sickle cell anaemia
+        <br> &rightarrowtail;Nutritional imbalance – Vitamin or protein deficiency</p>
+      <p> In this type of necrosis, enzymes are activated first and they start to degrade the protins structure of the tissues before the tissues can degrade. This leads to the tissue appearing as a fluid mass. It loses its architecture and rigidity and becomes friable and soft. The best examples of liquifactive necrosis are abcess formations</p>
+      <img src="../MBS-220-pics/liquefctive.PNG">
+    </div>
+</div>
+
+<div class="card">
+    <h3>Inflammation and Immune Response (Section C, Part B)</h3>
+    <div class="subquestion">
+        <label>1. Steps involved in transformations of Macrophages to Epithelioid.</label>
+        <textarea id="ansC_B1" placeholder="Explain the role of IFN-gamma and chronic activation."></textarea>
+    </div>
+    <div class="subquestion">
+        <label>2. Types of granulomatous.</label>
+        <textarea id="ansC_B2" placeholder="Discuss foreign body vs. immune granulomas."></textarea>
+    </div>
+    <div class="subquestion">
+        <label>3. Activations of CD8 cytotoxic cells.</label>
+        <textarea id="ansC_B3" placeholder="Describe MHC Class I presentation and clonal expansion."></textarea>
+    </div>
+    <button class="btn" onclick="showAnswers('C_B')"><i class="fas fa-eye"></i> View Answers</button>
+    <div id="answersC_B" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>Q1)</b> 
+        <br> 
+      <img src="../MBS-220-pics/granulomatous.PNG">
+      </p>
+      <p><b>Q2)</b> 
+        <br> 
+      <img src="../MBS-220-pics/granulomatous-types1.PNG">
+      <img src="../MBS-220-pics/granulomatous-types2.PNG">
+      </p>
+      <p><b>Q3)</b> 
+        <br> 
+      <img src="../MBS-220-pics/CD8.PNG">
+      </p>
+    </div>
+</div>
+
+
+<div class="card">
+    <h3>Hemodynamics (Section C, Part C)</h3>
+    <div class="subquestion">
+        <label>1. Discuss gas/air embolism.</label>
+        <textarea id="ansC_C1" placeholder="Explain causes like decompression sickness or trauma."></textarea>
+    </div>
+    <div class="subquestion">
+        <label>2. Discuss arterial thromboembolism.</label>
+        <textarea id="ansC_C2" placeholder="Discuss origins (heart) and target organs (brain, kidneys)."></textarea>
+    </div>
+    <button class="btn" onclick="showAnswers('C_C')"><i class="fas fa-eye"></i> View Answers</button>
+    <div id="answersC_C" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <!-- <p><b>Integrins:</b> Mediate cell-extracellular matrix (ECM) adhesion and signal transduction. <b>Tight Junctions:</b> Create a seal between adjacent epithelial cells to prevent the leakage of molecules (paracellular barrier) and maintain cell polarity.</p> -->
+    </div>
+</div>
+
+<div class="card">
+    <h3>Healing and Inflammation (Section D, Part A)</h3>
+    <div class="subquestion">
+        <label>1. Discuss in details wound healing by repair.</label>
+        <textarea id="ansD_A1" placeholder="Explain phases: inflammation, proliferation, maturation."></textarea>
+    </div>
+    <div class="subquestion">
+        <label>2. Discuss in details the mediators of acute inflammations.</label>
+        <textarea id="ansD_A2" placeholder="Describe histamine, prostaglandins, cytokines, complement system."></textarea>
+    </div>
+    <button class="btn" onclick="showAnswers('D_A')"><i class="fas fa-eye"></i> View Answers</button>
+    <div id="answersD_A" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>Q1)</b> 
+        <br> 
+      <img src="../MBS-220-pics/repair.PNG">
+      <img src="../MBS-220-pics/repair2.PNG">
+      </p>
+      <p><b>Q2)</b> 
+        <br> 
+      <img src="../MBS-220-pics/MAST.PNG">
+      <img src="../MBS-220-pics/AA.PNG">
+      <img src="../MBS-220-pics/TLR1.PNG">
+      <img src="../MBS-220-pics/C-SYSTEM.PNG">
+      <img src="../MBS-220-pics/HAGEMEN.PNG">
+      </p>
+    </div>
+</div>
+
+<div class="card">
+    <h3>Degeneration and Molecular Mechanisms (Section D, Part B)</h3>
+    <div class="subquestion">
+        <label>1. Discuss in detail 2 intracellular and 2 extracellular degenerative changes in tissues.</label>
+        <textarea id="ansD_B1" placeholder="e.g., Fatty change, amyloidosis, hyaline change."></textarea>
+    </div>
+    <div class="subquestion">
+        <label>2. Discuss in detail the 6 molecular mechanisms and biochemical pathway of cell injury.</label>
+        <textarea id="ansD_B2" placeholder="Explain ATP depletion, mitochondrial damage, ROS, etc."></textarea>
+    </div>
+    <button class="btn" onclick="showAnswers('D_B')"><i class="fas fa-eye"></i> View Answers</button>
+    <div id="answersD_B" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>1)</b> The Degeneration my dear Beloved are those things that are left once a cell undergoes cell injury, they are more like remnants or scars of the cell due to the injury. 
+        <br>
+      </p>
+      <p><b>2)</b> 
+        <br><b>a</b> Depletion of ATP; an Injurious agent targets the aerobic Respiration of the cell and the cells diverts to anearobic Respiration where we have few ATp being Produced and Lactic Acid Being produced. 
+        <br><b>b</b> Mitochondrial Damage; When we have low ATP in the cell there will be disfunction of the Ca2+ Pumps together with the ROS and Oxygen Deprovation contributes to the Mitochondrial Damage. 
+        <br><b>c</b> Free Radicles; these guys are particles that have a single unpaired electron in their outermost orbit, this means that for them to be stable they will try and get electrons from other things in the cell such the proteins, lipids and other structural components of the cell. making them lose they normal structure. 
+        <br><b>d</b> DNA Damage; From Lactic Acid Accumulation and Ruptring of the Lysosomes 
+        <br><b>e</b> Defects in Membrane Permability; Failure of the Na+/K+ Pump leads to swelling of the cells and its organelles, when the lysosomes rupture they releas enzymes that break down the plasma membrane. 
+        <br><b>f</b> Influx of Ca2+; Mitochondrial Damage leads to Ca2+ damage as the mitochondrial stores some Ca, also rupturing of other organelles such as the Sarcoplasmic Reticulum. 
+      </p>
+    </div>
+</div>
+
+<div class="card">
+    <h3>Thrombosis (Section D, Part C)</h3>
+    <div class="subquestion">
+        <label>1. Discuss Sequelae of Thrombosis (in details).</label>
+        <textarea id="ansD_C1" placeholder="Discuss propagation, embolization, dissolution, organization/recanalization."></textarea>
+    </div>
+    <button class="btn" onclick="showAnswers('D_C')"><i class="fas fa-eye"></i> View Answers</button>
+    <div id="answersD_C" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>Q1)</b> 
+        <br> 
+      <img src="../MBS-220-pics/SEQUELEA.PNG">
+      </p>
+    </div>
+</div>
+
+ </section>
+
+<script>
+  const tfAnswers = {
+  q1a: "true",
+  q1b: "true",
+  q1c: "false",
+  q1d: "false",
+  q1e: "true",
+  q2a: "false",
+  q2b: "true",
+  q2c: "true",
+  q2d: "false",
+  q2e: "true",
+  q3a: "true",
+  q3b: "true",
+  q3c: "false",
+  q3d: "true",
+  q3e: "false",
+  q5a: "true",
+  q5e: "true",
+  q10a: "true"
+};
+
+const tfExplanations = {
+  q1a: "Edema is defined as the accumulation of excess fluid in interstitial spaces.",
+  q1b: "Inflammation increases capillary permeability, leading to fluid leak (edema).",
+  q1c: "Normally, slightly more fluid leaves the arterial end than returns to the venular end.",
+  q1d: "Residual fluid is drained by the lymphatic system, not the venular end.",
+  q1e: "Plasma proteins, including immunoglobulins and albumin, exert osmotic pressure.",
+  q2a: "Filtration (outward movement) dominates at the arterial end, not osmosis.",
+  q2b: "Oxygen and CO2 move across capillary walls via simple diffusion.",
+  q2c: "Higher hydrostatic pressure at the arterial end drives filtration.",
+  q2d: "Osmosis involves solvent moving from a less concentrated to a more concentrated solution.",
+  q2e: "High hydrostatic pressure forces fluid out of vessels into tissues.",
+  q3a: "Low plasma protein levels reduce the 'pull' of fluid back into vessels.",
+  q3b: "Lymphedema occurs when lymphatics cannot drain the residual interstitial fluid.",
+  q3c: "Inflammatory edema is primarily caused by increased vascular permeability.",
+  q3d: "Sodium holds water; its retention increases blood volume and pressure.",
+  q3e: "Hypovolemia refers to a decreased volume of circulating blood.",
+  q5a: "Hyperemia indicates an active increase in blood volume within a tissue.",
+  q5e: "Congestion is a passive process resulting from blocked outflow.",
+  q10a: "This is the classic pathological definition of thrombosis."
+};
+
+  const correctAnswers = { 
+        q1: "c", q2: "c", q3: "d", q4: "c", q5: "a", 
+        q6: "a", q7: "c", q8: "c", q9: "d", q10: "d",
+        q11: "b", q12: "d", q13: "d", q14: "c", q15: "a",
+        q16: "d", q17: "c", q18: "b", q19: "d", q20: "b"
+    };
+
+    const answerExplanations = {
+        q1: "The primary purpose of inflammation is to bring white blood cells and plasma proteins to the site of injury or infection.",
+        q2: "A and B are true but They are not the MAIN Difference between Acute and Chronic Inflammation.",
+        q3: "TLR interaction with PAMPs (pathogen-associated molecular patterns) leads to the production of cytokines and other chemical mediators.",
+        q4: "PGE2 is a major mediator of fever, pain, and vasodilation.",
+        q5: "Leukotriene B4 is a potent chemotactic agent for neutrophils.",
+        q6: "Option A is tricky; while Mycobacterium causes chronic inflammation, acute E. coli infections usually lead to acute inflammation unless specified as persistent.",
+        q7: "MHC II molecules present antigens to CD4+ T-helper cells, leading to immune activation.",
+        q8: "Caseating granulomas (typical of TB) are distinguished by a central zone of 'cheesy' acellular necrosis.",
+        q9: "While chronic alcoholism can cause nutritional deficiencies, the primary factors listed in pathology texts for delayed healing are Vitamin C, Zinc, and infection.",
+        q10: "Wound contraction is primarily mediated by myofibroblasts, which possess contractile properties similar to smooth muscle.",
+        q11: "Marcello Malpighi is regarded as the father of microscopic anatomy (histology).",
+        q12: "Metaplasia is a reversible change where one adult cell type is replaced by another, usually due to chronic irritation (e.g., smoking).",
+        q13: "Pyknosis (nuclear shrinkage) is a hallmark of cell death, indicating irreversible injury.",
+        q14: "Coagulative necrosis is most commonly caused by ischemia (thrombosis) in all solid organs except the brain.",
+        q15: "Dystrophic calcification is the deposition of calcium in dead or dying tissues, which is an extracellular process. Note that Machiko's Questons are tricky, most of the answers will be correct so you hve to oick th =e most correct among the correct ones ",
+        q16: "Pathologic calcification, whether dystrophic or metastatic, can interfere with organ function (e.g., heart valves).",
+        q17: "As Cells age they loss their Ability to regenerate.",
+        q18: "Atrophy is defined as a reduction in the size of an organ or tissue due to a decrease in cell size and number.",
+        q19: "Metaplasia is a result of a reprogramming of stem cells that are known to exist in normal tissues.",
+        q20: "Pathologic calcification can lead to significant clinical consequences, such as organ dysfunction (e.g., in atherosclerosis or heart valve disease)."
+    };
+
+
+  function submitTF() {
+  let score = 0;
+  const total = Object.keys(tfAnswers).length;
+
+  for (let key in tfAnswers) {
+    const block = document.getElementById(`${key}-block`);
+    const radios = Array.from(document.querySelectorAll(`input[name="${key}"]`));
+    const selected = radios.find(r => r.checked);
+    const correct = tfAnswers[key];
+
+    const feedbackDiv = block.querySelector(".tf-feedback");
+
+    let feedbackHTML = `<div class="answer-list">`;
+
+    // Show both options styled
+    radios.forEach(r => {
+      let label = r.parentElement;
+      let text = label.textContent.trim();
+
+      let classes = ['answer-item'];
+
+      if (r.value === correct) classes.push('answer-correct');
+      if (r.checked && r.value !== correct) classes.push('answer-wrong', 'user-choice');
+      if (r.checked && r.value === correct) classes.push('user-choice');
+
+      feedbackHTML += `<div class="${classes.join(' ')}">${text}${r.checked ? ' ◀' : ''}</div>`;
+    });
+
+    feedbackHTML += `</div>`;
+
+    // Explanation
+    if (selected) {
+      if (selected.value === correct) {
+        score++;
+        feedbackHTML += `<div class="explanation">✅ Correct — ${tfExplanations[key]}</div>`;
+      } else {
+        feedbackHTML += `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correct.toUpperCase()}</strong>. ${tfExplanations[key]}</div>`;
+      }
+    } else {
+      feedbackHTML += `<div class="explanation wrong">No answer selected. Correct answer: <strong>${correct.toUpperCase()}</strong>.</div>`;
+    }
+
+    feedbackDiv.innerHTML = feedbackHTML;
+  }
+
+  // Score (optional display)
+  const percent = Math.round((score / total) * 100);
+  document.getElementById("tfResult").style.display = "block";
+  document.getElementById("tfScore").innerText = percent + "%";
+
+  // Disable inputs after submission
+  document.querySelectorAll('#tfForm input').forEach(i => i.disabled = true);
+}
+
+
+
+  function submitQuiz() {
+     let score = 0;
+     const total = Object.keys(correctAnswers).length;
+ 
+     // Clear any previous inline feedback
+     document.querySelectorAll('.question-feedback').forEach(el => el.innerHTML = '');
+ 
+     for (let key in correctAnswers) {
+       const radios = Array.from(document.querySelectorAll(`input[name="${key}"]`));
+       const selected = radios.find(r => r.checked);
+       const correct = correctAnswers[key];
+ 
+       // Score calc
+       if (selected && selected.value === correct) score++;
+ 
+       const feedbackEl = document.getElementById(`feedback-${key}`);
+       if (!feedbackEl) continue;
+ 
+       let feedbackHTML = `<div class="answer-block"><strong>Question ${key.replace(/^q/, '')}</strong><div class="answer-list">`;
+ 
+       radios.forEach(r => {
+         let label = r.parentElement;
+         let text = label ? label.textContent.trim() : r.value;
+ 
+         let classes = ['answer-item'];
+         if (r.value === correct) classes.push('answer-correct');
+         if (r.checked && r.value !== correct) classes.push('answer-wrong', 'user-choice');
+         if (r.checked && r.value === correct) classes.push('user-choice');
+ 
+         feedbackHTML += `<div class="${classes.join(' ')}">${text}${r.checked ? ' ◀' : ''}</div>`;
+       });
+ 
+       feedbackHTML += `</div>`;
+ 
+       const correctRadio = radios.find(rr => rr.value === correct);
+       const correctText = correctRadio && correctRadio.parentElement ? correctRadio.parentElement.textContent.trim() : correct;
+       const explanationText = answerExplanations[key] || '';
+ 
+       if (selected) {
+         if (selected.value === correct) {
+           feedbackHTML += `<div class="explanation">✅ Correct — ${explanationText}</div>`;
+         } else {
+           feedbackHTML += `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+         }
+       } else {
+         feedbackHTML += `<div class="explanation wrong">No answer selected. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+       }
+ 
+       feedbackHTML += `</div>`;
+       feedbackEl.innerHTML = feedbackHTML;
+     }
+ 
+     const percentage = Math.round((score / total) * 100);
+     document.getElementById("score").innerText = "0%";
+     const resultBox = document.getElementById("resultBox");
+     resultBox.style.display = "block";
+     document.getElementById("answers").innerHTML = '';
+ 
+     let start = 0;
+     const timer = setInterval(() => {
+       if (start >= percentage) clearInterval(timer);
+       document.getElementById("score").innerText = start + "%";
+       start++;
+     }, 20);
+ 
+     document.querySelectorAll('#quizForm input').forEach(i => i.disabled = true);
+   }
+ 
+   // Essay Section
+   function showEssayAnswers() {
+     document.querySelectorAll(".essay-answer").forEach(a => a.style.display = "block");
+   }
+
+   // Show/hide model answers for an essay card
+   function showAnswers(id) {
+     const el = document.getElementById('answers' + id);
+     if (!el) return;
+     const isVisible = el.classList.toggle('visible');
+     el.setAttribute('aria-hidden', !isVisible);
+     if (isVisible) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+   }
+ 
+   const mode = localStorage.getItem("examMode");
+
+    if (mode === "essay") {
+      document.getElementById("mcq-section").style.display = "none";
+      document.getElementById("essay-section").style.display = "block";
+    } 
+    else if (mode === "tf") {
+      document.getElementById("mcq-section").style.display = "none";
+      document.getElementById("tf-section").style.display = "block";
+    }
+ 
+   // Navigate to the previous page if available, otherwise fall back to index.html
+   function goBack() {
+     if (history.length > 1) {
+       history.back();
+     } else {
+       window.location.href = "index.html";
+     }
+   }
+ 
+   // header back button hookup (same behaviour)
+   const backBtn = document.getElementById('backBtn');
+   if (backBtn) backBtn.addEventListener('click', (e) => { e.preventDefault(); goBack(); });
+ </script>
+
+</body>
+</html>
+
+
