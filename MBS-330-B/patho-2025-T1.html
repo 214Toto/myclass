@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Papers | ToToZ Collection</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../nav.css">
+  <style>
+    :root {
+      --primary: #2b7a78;
+      --accent: #3aafa9;
+      --dark: #17252a;
+      --light: #f8f9fa;
+      --radius: 12px;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #f5f7fb, #eef6f6);
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--dark));
+      color: white;
+      padding: 1.1rem 0;
+      position: fixed; /* Keeps it at the top when scrolling */
+      top: 0;          /* Added: Ensures it starts at the absolute top */
+      left: 0;         /* Added: Ensures it stretches from the left edge */
+      width: 100%;
+      z-index: 1000;   /* Added: Keeps header above all other elements */
+      box-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* Improved heading styling */
+    header h1 {
+      font-size: 1.25rem;
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: 0.35px;
+      color: #ffffff;
+      text-transform: none;
+      display: inline-block;
+      line-height: 1;
+      text-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* logo heading (keeps icon + title aligned) */
+    .logo h1 {
+      font-size: 1.25rem;
+      margin: 0 0 0 6px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 900px;
+      /* Adjust this value based on how tall your header is */
+      margin: 100px auto 0 auto; 
+      padding: 1.5rem 0;
+    }
+
+    h2 {
+      color: var(--primary);
+      margin: 0 0 0.85rem 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    /* responsive tweaks for small screens */
+    @media (max-width: 520px) {
+      header h1, .logo h1 { font-size: 1rem; }
+      h2 { font-size: 1rem; }
+    }
+
+    .question {
+      margin-bottom: 1.5rem;
+    }
+
+    .question p {
+      font-weight: 600;
+    }
+
+    .options label {
+      display: block;
+      background: #f8fafc;
+      border: 1px solid #d9e2ec;
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      margin-top: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .options label:hover {
+      background: #e0f7f6;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .result {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #f1faf9;
+      border-radius: var(--radius);
+      text-align: center;
+      display: none;
+    }
+
+    .score {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin-top: 0.5rem;
+    }
+
+    /* --- Styles for answer feedback --- */
+    .answer-list { text-align: left; margin-top: 12px; }
+    .answer-item {
+      display: block;
+      padding: 8px 10px;
+      border-radius: 8px;
+      margin: 6px 0;
+      border: 1px solid #e6eef3;
+      background: #ffffff;
+      color: var(--dark);
+      font-weight: 600;
+    }
+    .answer-correct {
+      background: #ecfdf5;       /* light green */
+      border-color: #bbf7d0;
+      color: #065f46;           /* dark green text */
+      box-shadow: 0 6px 18px rgba(16,185,129,0.06);
+    }
+    .answer-wrong {
+      background: #fff1f2;       /* light red */
+      border-color: #fca5a5;
+      color: #9f1239;           /* dark red text */
+      box-shadow: 0 6px 18px rgba(239,68,68,0.06);
+    }
+    .user-choice { outline: 2px dashed rgba(0,0,0,0.04); }
+
+    /* Essay Section */
+    textarea {
+      width: 80%;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.75rem;
+      resize: vertical;
+      min-height: 50px;
+      font-size: 1rem;
+    }
+
+    .essay-answer {
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-top: 0.75rem;
+      display: none;
+    }
+
+    .back-btn {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    /* Explanation box shown under each question in feedback */
+    .explanation {
+      margin-top: 8px;
+      padding: 10px 12px;                                                                                                                                                                                 
+      border-radius: 8px;
+      background: #363d3a;           /* subtle greenish background */
+      color: #065f46;                /* dark green text */
+      font-size: 0.95rem;
+      line-height: 1.4;
+      border: 1px solid #bbf7d0;
+    }
+
+    /* For incorrect explanation (when needed) */
+    .explanation.wrong {
+      background: #fff1f2;
+      color: #7f1d1d;
+      border-color: #fca5a5;
+    }
+
+    /* small label styling for feedback header */
+    .answer-block { color: var(--primary); margin-bottom: 12px; }
+    .answer-block strong { display:block; margin-bottom:8px; color: rgb(7, 113, 95); }
+    .question-feedback { 
+      margin-top: 14px;
+      padding: 14px 16px;
+      color: white;
+      border-radius: 12px;
+      background: #a82525;
+      border: 1px solid #d6e7eb;
+    }
+    .question-feedback .answer-list {
+      margin-top: 10px;
+    }
+
+    /* Essay card styles (compact, readable) */
+    #essay-section { padding-top: 0; }
+    #essay-section .card {
+      background: linear-gradient(180deg, #ffffff, #fbfeff);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(18,38,63,0.06);
+      border: 1px solid rgba(43,122,120,0.06);
+      max-width: 900px;
+      margin: 0 auto 1rem auto;
+    }
+    #essay-section .card h3 {
+      margin: 0 0 10px 0;
+      font-size: 1.02rem;
+      color: var(--dark);
+      font-weight: 700;
+    }
+    #essay-section .subquestion { margin-bottom: 12px; }
+    #essay-section .subquestion label {
+      display:block;
+      font-weight:700;
+      margin-bottom:6px;
+      color:var(--dark);
+    }
+    #essay-section textarea {
+      width:100%;
+      min-height:90px;
+      border-radius:8px;
+      border:1px solid #d1dbe0;
+      padding:10px;
+      resize:vertical;
+      font-family:inherit;
+    }
+
+    .mutwe {
+      max-width: 900px; 
+      margin: 0 auto; 
+      width: 92%; 
+      display:flex; 
+      align-items:center; 
+      justify-content:space-between;
+    }
+
+    #essay-section .answers {
+      display:none;
+      margin-top:14px;
+      background:#f1faf9;
+      border-radius:8px;
+      padding:12px;
+      border:1px solid #cfeee6;
+      color:var(--dark);
+    }
+    #essay-section .answers h3 { margin-top:0; }
+    #essay-section .card .btn { margin-top:8px; }
+    /* make answers visible area stand out when shown */
+    #essay-section .answers.visible { display:block; }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="mutwe">
+      <div class="logo">
+        <i class="fas fa-book-medical"></i>
+        <h1>2025 Pathology Test 2 </h1>
+      </div>
+      <button id="backBtn" class="btn"><i class="fas fa-arrow-left"></i> Back</button>
+    </div>
+  </header>
+
+<div class="container" id="mcq-section">
+  <h2>Multiple Choice Questions</h2>
+
+  <form id="quizForm">
+    
+    <!-- Questions 1-16 from images 1000028656.jpg, 1000028657.jpg, 1000028658.jpg -->
+
+<div class="question">
+  <p>1. What is the total number of ATP molecules derived from the oxidation of palmitic acid?</p>
+  <div class="options">
+    <label><input type="radio" name="q1" value="a"> 129</label>
+    <label><input type="radio" name="q1" value="b"> 127</label>
+    <label><input type="radio" name="q1" value="c"> 131</label>
+    <label><input type="radio" name="q1" value="d"> 130</label>
+    <label><input type="radio" name="q1" value="e"> 132</label>
+  </div>
+  <div class="question-feedback" id="feedback-q1"></div>
+</div>
+
+<div class="question">
+  <p>2. The increased lipid deposition leads to plaque formation in the blood vessels, causing one of the conditions. What is the likely condition?</p>
+  <div class="options">
+    <label><input type="radio" name="q2" value="a"> Renal disease</label>
+    <label><input type="radio" name="q2" value="b"> Liver disease</label>
+    <label><input type="radio" name="q2" value="c"> Heart disease</label>
+    <label><input type="radio" name="q2" value="d"> Atherosclerosis</label>
+    <label><input type="radio" name="q2" value="e"> Hyperlipidemia</label>
+  </div>
+  <div class="question-feedback" id="feedback-q2"></div>
+</div>
+
+<div class="question">
+  <p>3. What is the name of the transcription factor that controls the HMG CoA reductase gene?</p>
+  <div class="options">
+    <label><input type="radio" name="q3" value="a"> Sterol regulatory element-binding protein (SREBP)</label>
+    <label><input type="radio" name="q3" value="b"> Sterol regulatory element protein (SREP)</label>
+    <label><input type="radio" name="q3" value="c"> Sterol regulatory protein (SRP)</label>
+    <label><input type="radio" name="q3" value="d"> Sterol regulatory binding protein (SRBP)</label>
+    <label><input type="radio" name="q3" value="e"> Sterol regulatory element (SRE)</label>
+  </div>
+  <div class="question-feedback" id="feedback-q3"></div>
+</div>
+
+<div class="question">
+  <p>4. Liver parenchymal cells contain two isoenzymes of HMG CoA synthase. One is present in the cytosol, and the other is in the mitochondria. What is the function of the isoenzyme in the mitochondria?</p>
+  <div class="options">
+    <label><input type="radio" name="q4" value="a"> It participates in cholesterol synthesis</label>
+    <label><input type="radio" name="q4" value="b"> It participates in the synthesis of ketone bodies</label>
+    <label><input type="radio" name="q4" value="c"> It participates in both cholesterol and ketone body generation</label>
+    <label><input type="radio" name="q4" value="d"> It participates in the tricarboxylic acid cycle</label>
+    <label><input type="radio" name="q4" value="e"> It participates in the synthesis of steroid hormones</label>
+  </div>
+  <div class="question-feedback" id="feedback-q4"></div>
+</div>
+
+<div class="question">
+  <p>5. What is the effect of high cholesterol concentration on HMG CoA reductase?</p>
+  <div class="options">
+    <label><input type="radio" name="q5" value="a"> It activates HMG CoA reductase</label>
+    <label><input type="radio" name="q5" value="b"> It activates HMG CoA through AMP-dependent kinase</label>
+    <label><input type="radio" name="q5" value="c"> It inhibits HMG CoA reductase by destabilizing the HMG CoA reductase protein</label>
+    <label><input type="radio" name="q5" value="d"> It inhibits HMG CoA reductase by stabilizing the HMG CoA reductase protein</label>
+    <label><input type="radio" name="q5" value="e"> It stimulates the transcription factor</label>
+  </div>
+  <div class="question-feedback" id="feedback-q5"></div>
+</div>
+
+<div class="question">
+  <p>6. What happens to the propionyl CoA that is given off from oxidation of odd numbered fatty acids?</p>
+  <div class="options">
+    <label><input type="radio" name="q6" value="a"> It is converted to succinyl-CoA</label>
+    <label><input type="radio" name="q6" value="b"> It is degraded to other smaller fatty acids</label>
+    <label><input type="radio" name="q6" value="c"> It is converted to acetyl-CoA</label>
+    <label><input type="radio" name="q6" value="d"> It is taken up in the glycogenic pathway</label>
+    <label><input type="radio" name="q6" value="e"> It is taken up into the chylomicrons</label>
+  </div>
+  <div class="question-feedback" id="feedback-q6"></div>
+</div>
+
+<div class="question">
+  <p>7. What is the source of low-density lipoprotein?</p>
+  <div class="options">
+    <label><input type="radio" name="q7" value="a"> High-density lipoproteins</label>
+    <label><input type="radio" name="q7" value="b"> Chylomicrons</label>
+    <label><input type="radio" name="q7" value="c"> Very low-density lipoproteins</label>
+    <label><input type="radio" name="q7" value="d"> Adipose tissues</label>
+    <label><input type="radio" name="q7" value="e"> Liver</label>
+  </div>
+  <div class="question-feedback" id="feedback-q7"></div>
+</div>
+
+<div class="question">
+  <p>8. Cholesterol is one of the components of lipoproteins. Which of the following lipoproteins has the highest concentration of cholesterol?</p>
+  <div class="options">
+    <label><input type="radio" name="q8" value="a"> HDL</label>
+    <label><input type="radio" name="q8" value="b"> VLDL</label>
+    <label><input type="radio" name="q8" value="c"> IDL</label>
+    <label><input type="radio" name="q8" value="d"> LDL</label>
+    <label><input type="radio" name="q8" value="e"> Chylomicrons</label>
+  </div>
+  <div class="question-feedback" id="feedback-q8"></div>
+</div>
+
+<div class="question">
+  <p>9. The following are not part of chylomicrons except:</p>
+  <div class="options">
+    <label><input type="radio" name="q9" value="a"> Apo B 100</label>
+    <label><input type="radio" name="q9" value="b"> Apo A 1</label>
+    <label><input type="radio" name="q9" value="c"> Apo B 48</label>
+    <label><input type="radio" name="q9" value="d"> Apo A 2</label>
+    <label><input type="radio" name="q9" value="e"> Apo B 58</label>
+  </div>
+  <div class="question-feedback" id="feedback-q9"></div>
+</div>
+
+<div class="question">
+  <p>10. The primary function of LDL particles is to provide cholesterol to the peripheral tissues. They do so by binding to cell-surface membrane LDL receptors, which are also known as:</p>
+  <div class="options">
+    <label><input type="radio" name="q10" value="a"> Apo B-100/apo E</label>
+    <label><input type="radio" name="q10" value="b"> Apo B-100/apo A</label>
+    <label><input type="radio" name="q10" value="c"> Apo B-48/apo E</label>
+    <label><input type="radio" name="q10" value="d"> Apo B-100/apo B 48</label>
+    <label><input type="radio" name="q10" value="e"> Apo B-48/apo A1</label>
+  </div>
+  <div class="question-feedback" id="feedback-q10"></div>
+</div>
+
+<div class="question">
+  <p>11. During prolonged starvation, gluconeogenesis mainly shuts down. What is the major reason why this is so?</p>
+  <div class="options">
+    <label><input type="radio" name="q11" value="a"> This is due to the depletion of glucose molecules in the blood</label>
+    <label><input type="radio" name="q11" value="b"> This is due to the depletion of oxaloacetate in the system</label>
+    <label><input type="radio" name="q11" value="c"> This is due to the enough availability of energy because of the glucose release</label>
+    <label><input type="radio" name="q11" value="d"> This is due to the presence of acetyl-CoA which inhibits pyruvate carboxylase</label>
+    <label><input type="radio" name="q11" value="e"> This is due to the depletion of NADH</label>
+  </div>
+  <div class="question-feedback" id="feedback-q11"></div>
+</div>
+
+<div class="question">
+  <p>12. Which of the following molecules is the largest?</p>
+  <div class="options">
+    <label><input type="radio" name="q12" value="a"> VLDL</label>
+    <label><input type="radio" name="q12" value="b"> HDL</label>
+    <label><input type="radio" name="q12" value="c"> IDL</label>
+    <label><input type="radio" name="q12" value="d"> Chylomicrons</label>
+    <label><input type="radio" name="q12" value="e"> LDL</label>
+  </div>
+  <div class="question-feedback" id="feedback-q12"></div>
+</div>
+
+<div class="question">
+  <p>13. The continuous process of secretion of bile salts into the bile, their passage through the duodenum, where some are converted to bile acids, and their subsequent return to the liver as a mixture of bile acids and salts is termed:</p>
+  <div class="options">
+    <label><input type="radio" name="q13" value="a"> Enterohepatic circulation</label>
+    <label><input type="radio" name="q13" value="b"> Enterohepatic reabsorption</label>
+    <label><input type="radio" name="q13" value="c"> Enterohepatic absorption</label>
+    <label><input type="radio" name="q13" value="d"> Enterohepatic shunt</label>
+    <label><input type="radio" name="q13" value="e"> Enterohepatic shunt and reabsorption</label>
+  </div>
+  <div class="question-feedback" id="feedback-q13"></div>
+</div>
+
+<div class="question">
+  <p>14. Ketogenesis takes place in the:</p>
+  <div class="options">
+    <label><input type="radio" name="q14" value="a"> Cytosol</label>
+    <label><input type="radio" name="q14" value="b"> Peroxisomes</label>
+    <label><input type="radio" name="q14" value="c"> Golgi apparatus</label>
+    <label><input type="radio" name="q14" value="d"> Mitochondria</label>
+    <label><input type="radio" name="q14" value="e"> Endoplasmic reticulum</label>
+  </div>
+  <div class="question-feedback" id="feedback-q14"></div>
+</div>
+
+<div class="question">
+  <p>15. How many carbon atoms make up the cholesterol molecule?</p>
+  <div class="options">
+    <label><input type="radio" name="q15" value="a"> 28</label>
+    <label><input type="radio" name="q15" value="b"> 29</label>
+    <label><input type="radio" name="q15" value="c"> 27</label>
+    <label><input type="radio" name="q15" value="d"> 30</label>
+    <label><input type="radio" name="q15" value="e"> 31</label>
+  </div>
+  <div class="question-feedback" id="feedback-q15"></div>
+</div>
+
+<div class="question">
+  <p>16. The synthesis of the squalene molecule is as a result of condensing two molecules of farnesyl pyrophosphate. In which fashion do these two condense?</p>
+  <div class="options">
+    <label><input type="radio" name="q16" value="a"> Head to tail</label>
+    <label><input type="radio" name="q16" value="b"> Tail to tail</label>
+    <label><input type="radio" name="q16" value="c"> Tail to head</label>
+    <label><input type="radio" name="q16" value="d"> Head-to-head</label>
+    <label><input type="radio" name="q16" value="e"> Head-to-Head to Tail</label>
+  </div>
+  <div class="question-feedback" id="feedback-q16"></div>
+</div>
+
+<!-- Questions 17-22 from image 1000028659.jpg -->
+
+<div class="question">
+  <p>17. What is the regulatory enzyme of cholesterol synthesis intracellularly?</p>
+  <div class="options">
+    <label><input type="radio" name="q17" value="a"> HMG CoA synthase</label>
+    <label><input type="radio" name="q17" value="b"> HMG CoA reductase</label>
+    <label><input type="radio" name="q17" value="c"> Acetoacetyl CoA synthase</label>
+    <label><input type="radio" name="q17" value="d"> Thiolase</label>
+    <label><input type="radio" name="q17" value="e"> Cholesterol esterase</label>
+  </div>
+  <div class="question-feedback" id="feedback-q17"></div>
+</div>
+
+<div class="question">
+  <p>18. How does the modification of nascent chylomicrons to mature chylomicrons occur?</p>
+  <div class="options">
+    <label><input type="radio" name="q18" value="a"> By adding apo C-II and apo E</label>
+    <label><input type="radio" name="q18" value="b"> By adding apo C-III and apo E</label>
+    <label><input type="radio" name="q18" value="c"> By adding apo A and apo B 100</label>
+    <label><input type="radio" name="q18" value="d"> By adding apo C-II and apo B 48</label>
+    <label><input type="radio" name="q18" value="e"> By adding apo C-II and apo A1</label>
+  </div>
+  <div class="question-feedback" id="feedback-q18"></div>
+</div>
+
+<div class="question">
+  <p>19. Which two parts of the body are responsible for the synthesis of HDL?</p>
+  <div class="options">
+    <label><input type="radio" name="q19" value="a"> Liver and intestines</label>
+    <label><input type="radio" name="q19" value="b"> Liver and kidneys</label>
+    <label><input type="radio" name="q19" value="c"> Liver and ovaries</label>
+    <label><input type="radio" name="q19" value="d"> Liver and muscle</label>
+    <label><input type="radio" name="q19" value="e"> Liver and spleen</label>
+  </div>
+  <div class="question-feedback" id="feedback-q19"></div>
+</div>
+
+<div class="question">
+  <p>20. What are the net ATP molecules derived from the oxidation of a fatty acid with 11 carbon atoms?</p>
+  <div class="options">
+    <label><input type="radio" name="q20" value="a"> 74</label>
+    <label><input type="radio" name="q20" value="b"> 20</label>
+    <label><input type="radio" name="q20" value="c"> 72</label>
+    <label><input type="radio" name="q20" value="d"> 68</label>
+    <label><input type="radio" name="q20" value="e"> 48</label>
+  </div>
+  <div class="question-feedback" id="feedback-q20"></div>
+</div>
+
+<div class="question">
+  <p>21. Glutathione is a tripeptide possessing reducing properties. Which amino acid residue is responsible for the reductive properties of glutathione?</p>
+  <div class="options">
+    <label><input type="radio" name="q21" value="a"> Cysteine</label>
+    <label><input type="radio" name="q21" value="b"> Glutamic acid</label>
+    <label><input type="radio" name="q21" value="c"> Glycine</label>
+    <label><input type="radio" name="q21" value="d"> Valine</label>
+    <label><input type="radio" name="q21" value="e"> Aspartic acid</label>
+  </div>
+  <div class="question-feedback" id="feedback-q21"></div>
+</div>
+
+<div class="question">
+  <p>22. Ammonia is a very poisonous chemical, especially for the nervous system. Which amino acid plays a particularly active part in the detoxification of ammonia in brain tissue?</p>
+  <div class="options">
+    <label><input type="radio" name="q22" value="a"> Glutamic acid</label>
+    <label><input type="radio" name="q22" value="b"> Lysine</label>
+    <label><input type="radio" name="q22" value="c"> Proline</label>
+    <label><input type="radio" name="q22" value="d"> Histidine</label>
+    <label><input type="radio" name="q22" value="e"> Alanine</label>
+  </div>
+  <div class="question-feedback" id="feedback-q22"></div>
+</div>
+
+<!-- Questions 23-27 from image 1000028660.jpg -->
+
+<div class="question">
+  <p>23. Laboratory analysis of the urine of a 6-day-old infant displayed excessive concentration of phenylpyruvate and phenylacetate. Metabolism of which amino acid is disturbed in the body of this child?</p>
+  <div class="options">
+    <label><input type="radio" name="q23" value="a"> Phenylalanine</label>
+    <label><input type="radio" name="q23" value="b"> Tryptophan</label>
+    <label><input type="radio" name="q23" value="c"> Methionine</label>
+    <label><input type="radio" name="q23" value="d"> Histidine</label>
+    <label><input type="radio" name="q23" value="e"> Arginine</label>
+  </div>
+  <div class="question-feedback" id="feedback-q23"></div>
+</div>
+
+<div class="question">
+  <p>24. The main process of ammonia neutralization occurs in the liver. The arginine decomposition reaction that produces urea as a result is catalyzed by arginase. What group of enzymes does arginase belong to?</p>
+  <div class="options">
+    <label><input type="radio" name="q24" value="a"> Hydrolases</label>
+    <label><input type="radio" name="q24" value="b"> Synthetases</label>
+    <label><input type="radio" name="q24" value="c"> Oxidoreductases</label>
+    <label><input type="radio" name="q24" value="d"> Transferases</label>
+    <label><input type="radio" name="q24" value="e"> Isomerases</label>
+  </div>
+  <div class="question-feedback" id="feedback-q24"></div>
+</div>
+
+<div class="question">
+  <p>25. A patient has been diagnosed with alkaptonuria. Choose an enzyme that can cause this pathology when deficient:</p>
+  <div class="options">
+    <label><input type="radio" name="q25" value="a"> Homogentisic acid oxidase</label>
+    <label><input type="radio" name="q25" value="b"> Phenylalanine hydroxylase</label>
+    <label><input type="radio" name="q25" value="c"> Glutamate dehydrogenase</label>
+    <label><input type="radio" name="q25" value="d"> Pyruvate dehydrogenase</label>
+    <label><input type="radio" name="q25" value="e"> Dioxyphenylalanine decarboxylase</label>
+  </div>
+  <div class="question-feedback" id="feedback-q25"></div>
+</div>
+
+<div class="question">
+  <p>26. A 2-year-old child with mental and physical retardation has been delivered to a hospital. He presents with frequent vomiting after having meals. There is phenylpyruvic acid in urine. Which metabolic abnormality is the reason for this pathology?</p>
+  <div class="options">
+    <label><input type="radio" name="q26" value="a"> Amino acid metabolism</label>
+    <label><input type="radio" name="q26" value="b"> Lipidic metabolism</label>
+    <label><input type="radio" name="q26" value="c"> Carbohydrate metabolism</label>
+    <label><input type="radio" name="q26" value="d"> Water-salt metabolism</label>
+    <label><input type="radio" name="q26" value="e"> Phosphoric calcium metabolism</label>
+  </div>
+  <div class="question-feedback" id="feedback-q26"></div>
+</div>
+
+<div class="question">
+  <p>27. During intensive muscle work, there is a large amount of ammonia produced in the muscles. What amino acid plays the main role in the transportation of ammonia to the liver and participates in gluconeogenesis reactions?</p>
+  <div class="options">
+    <label><input type="radio" name="q27" value="a"> Glycine</label>
+    <label><input type="radio" name="q27" value="b"> Arginine</label>
+    <label><input type="radio" name="q27" value="c"> Lysine</label>
+    <label><input type="radio" name="q27" value="d"> Ornithine</label>
+    <label><input type="radio" name="q27" value="e"> Aspartate</label>
+  </div>
+  <div class="question-feedback" id="feedback-q27"></div>
+</div>
+
+<!-- Questions 28-30 from image 1000028661.jpg -->
+
+<div class="question">
+  <p>28. The greater amount of nitrogen is excreted from the organism in the form of urea. The decreased activity of the following liver enzyme induces inhibition of urea synthesis and accumulation of ammonia in blood and tissues:</p>
+  <div class="options">
+    <label><input type="radio" name="q28" value="a"> Carbamoyl phosphate synthetase</label>
+    <label><input type="radio" name="q28" value="b"> Aspartate aminotransferase</label>
+    <label><input type="radio" name="q28" value="c"> Urease</label>
+    <label><input type="radio" name="q28" value="d"> Amylase</label>
+    <label><input type="radio" name="q28" value="e"> Pepsin</label>
+  </div>
+  <div class="question-feedback" id="feedback-q28"></div>
+</div>
+
+<div class="question">
+  <p>29. For the diagnosis of certain illnesses, determination of blood transaminase activity is required. Which vitamin is a component of the cofactors of the enzymes?</p>
+  <div class="options">
+    <label><input type="radio" name="q29" value="a"> B6</label>
+    <label><input type="radio" name="q29" value="b"> B12</label>
+    <label><input type="radio" name="q29" value="c"> B3</label>
+    <label><input type="radio" name="q29" value="d"> B8</label>
+    <label><input type="radio" name="q29" value="e"> B5</label>
+  </div>
+  <div class="question-feedback" id="feedback-q29"></div>
+</div>
+
+<div class="question">
+  <p>30. Approximately 12 hours after an acute attack of retrosternal pain, a patient presented an increase in aspartate aminotransferase activity in blood serum. What pathology is this deviation typical of?</p>
+  <div class="options">
+    <label><input type="radio" name="q30" value="a"> Myocardium infarction</label>
+    <label><input type="radio" name="q30" value="b"> Viral hepatitis</label>
+    <label><input type="radio" name="q30" value="c"> Collagenosis</label>
+    <label><input type="radio" name="q30" value="d"> Diabetes mellitus</label>
+    <label><input type="radio" name="q30" value="e"> Diabetes insipidus</label>
+  </div>
+  <div class="question-feedback" id="feedback-q30"></div>
+</div>
+
+
+
+
+
+    
+
+    <button type="button" class="btn" onclick="submitQuiz()">Submit</button>
+  </form>
+
+  <div class="result" id="resultBox">
+    <h3>Your Score:</h3>
+    <div class="score" id="score">0%</div>
+    <div id="answers"></div>
+  </div>
+</div>
+
+<!-- Short Essay Section (card style with sub-questions) -->
+<section id="essay-section" class="container" style="display:none;">
+  <h2 style="margin-bottom:1rem;color:var(--dark)">Short Essay Questions</h2>
+  
+  
+  <!-- Question 1: Hypoglycemia Case (Source: 1000028662.jpg) -->
+<div class="card">
+    <h3>1. A 34-year-old woman with known type 1 diabetes mellitus was admitted following a 'blackout' while driving. She had recently increased her insulin dose and missed two meals.</h3>
+    <div class="subquestion">
+      <label>Answer:</label>
+      <textarea id="ans1" placeholder="Detect abnormality from lab results..."></textarea>
+    </div>
+    <button class="btn" onclick="showAnswers('1')"><i class="fas fa-eye"></i> View Answers</button>
+    <div id="answers1" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>a) Detection:</b> Hypoglycemia. The plasma glucose is 1.5 mmol/L, significantly below the 5.5-11.1 mmol/L range. (1 Mark)</p>
+      <p><b>b) Cause:</b> 1. Increased insulin dose (exogenous hyperinsulinemia) and 2. Starvation/missed meals, leading to excessive glucose uptake by tissues without replacement. (2 Marks)</p>
+      <p><b>c) Complications:</b> 1. Neurological dysfunction (Neuroglycopenia/low ATP in brain), 2. Ketoacidosis (accumulation of ketone bodies), and 3. Respiratory distress or weight loss. (3 Marks)</p>
+      <p><b>d) Emergency Treatment:</b> Immediate administration of oral glucose or intravenous dextrose/glucagon to raise blood sugar levels. (2 Marks)</p>
+      <p><b>e) Advice:</b> Adjust insulin dosage according to meal frequency and ensure insulin is taken 30 minutes before a meal. (2 Marks)</p>
+    </div>
+</div>
+
+<!-- Question 2: Diabetic Ketoacidosis (Source: 1000028663.jpg & 1000028664.jpg) -->
+<div class="card">
+    <h3>2. A 24-year-old woman presented in a coma. Glucose: 35 mmol/L, pH: 7.10, Bicarbonate: 10 mmol/L, and Urine positive for ketones.</h3>
+    <div class="subquestion">
+      <label>Answer:</label>
+      <textarea id="ans2" placeholder="Diagnose and explain biochemical basis..."></textarea>
+    </div>
+    <button class="btn" onclick="showAnswers('2')"><i class="fas fa-eye"></i> View Answers</button>
+    <div id="answers2" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>a) Diagnosis:</b> Diabetic Ketoacidosis (DKA) / Hyperglycemic Metabolic Acidosis. (1 Mark)</p>
+      <p><b>b) Associated Condition:</b> Diabetes Mellitus Type 1. (1 Mark)</p>
+      <p><b>c) Other Findings:</b> 1. Hyperkalemia (Elevated Potassium), 2. Hyponatremia (Low Sodium), and 3. Hypocapnia/Hyperventilation (Reduced partial pressure of CO₂). (3 Marks)</p>
+      <p><b>d) Pathophysiology:</b> Reduced insulin leads to low glucose uptake and ATP production. This triggers lipolysis (fat breakdown) for energy, resulting in excessive ketone body production and metabolic acidosis. (3 Marks)</p>
+    </div>
+</div>
+
+<!-- Question 3: Gouty Arthritis (Source: 1000028664.jpg & 1000028665.jpg) -->
+<div class="card">
+    <h3>3. A 46-year-old male presents with severe right big toe pain, redness, and swelling. Synovial fluid shows negatively birefringent rod-shaped crystals.</h3>
+    <div class="subquestion">
+      <label>Answer:</label>
+      <textarea id="ans3" placeholder="Diagnosis, tests, and biochemical basis..."></textarea>
+    </div>
+    <button class="btn" onclick="showAnswers('3')"><i class="fas fa-eye"></i> View Answers</button>
+    <div id="answers3" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>a) Diagnosis:</b> Gouty Arthritis. (2 Marks)</p>
+      <p><b>b) Definitive Tests:</b> 1. Serum Uric Acid measurement and 2. Synovial Fluid Examination for monosodium urate crystals. (2 Marks)</p>
+      <p><b>c) Biochemical Basis:</b> Increased production of uric acid from purine catabolism. The enzyme Xanthine Oxidase converts hypoxanthine/guanine to xanthine and then to uric acid. (3 Marks)</p>
+      <p><b>d) Interventions:</b> 1. NSAIDs (e.g., Betamethasone) to reduce inflammation/pain. 2. Allopurinol (Xanthine Oxidase inhibitor) to reduce uric acid synthesis. (2 Marks)</p>
+    </div>
+</div>
+
+<!-- Question 4: Cholesterol Metabolism (Source: 1000028665.jpg & 1000028666.jpg) -->
+<div class="card">
+    <h3>4. Discuss the biosynthesis and regulation of Cholesterol in human tissues.</h3>
+    <div class="subquestion">
+      <label>Answer:</label>
+      <textarea id="ans4" placeholder="Outline steps and regulation mechanisms..."></textarea>
+    </div>
+    <button class="btn" onclick="showAnswers('4')"><i class="fas fa-eye"></i> View Answers</button>
+    <div id="answers4" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>a) Biosynthesis Steps:</b> 1. Condensation of 3 Acetyl CoA to form HMG-CoA. 2. HMG-CoA to Mevalonate. 3. Formation of Isoprenoid units. 4. Cyclization of Squalene to Cholesterol. (4 Marks)</p>
+      <p><b>b) Regulatory Enzyme:</b> HMG-CoA Reductase. (2 Marks)</p>
+      <p><b>c) Regulation Mechanisms:</b> 
+        1. <b>Sterol Dependent:</b> SREBP stimulates gene expression when cholesterol is low.
+        2. <b>Hormonal:</b> Insulin activates (dephosphorylation) and Glucagon inhibits HMG-CoA reductase.
+        3. <b>Allosteric:</b> Feedback inhibition by high cholesterol levels.
+        4. <b>Statins:</b> Drugs like Lovastatin competitively inhibit the enzyme. (4 Marks)
+      </p>
+    </div>
+</div>
+
+
+  
+  
+  <!-- Question 1: Hypoglycemia Case Study (Source: 1000028662.jpg) -->
+<div class="card">
+    <h3>1. A 34-year-old woman with type 1 diabetes was admitted following a 'blackout' while driving. She recently increased her insulin dose due to 'the flu' and missed two meals.</h3>
+    <div class="subquestion">
+      <p><b>a) What can you detect from the Laboratory results? (1 Mark)</b></p>
+      <p><b>Answer:</b> Hypoglycemia (Plasma glucose is 1.5 mmol/L, well below the reference range of 5.5-11.1 mmol/L).</p>
+    </div>
+    <div class="subquestion">
+      <p><b>b) What is the cause of the condition in (a)? (2 Marks)</b></p>
+      <p><b>Answer:</b> 1. Increased insulin dosage (exogenous hyperinsulinemia) and 2. Starvation/fasting (missed two meals), leading to excessive glucose uptake and insufficient glucose intake.</p>
+    </div>
+    <div class="subquestion">
+      <p><b>c) State three (3) complications of the condition mentioned in (a)? (3 Marks)</b></p>
+      <p><b>Answer:</b> 1. Neurological dysfunction (Neuroglycopenia due to low ATP in brain tissue), 2. Ketoacidosis (excess ketone bodies in blood), and 3. Weight loss/Respiratory distress.</p>
+    </div>
+    <div class="subquestion">
+      <p><b>d) What is the treatment in emergencies? (2 Marks)</b></p>
+      <p><b>Answer:</b> Immediate administration of oral glucose (if conscious) or intravenous dextrose/glucagon (if unconscious).</p>
+    </div>
+    <div class="subquestion">
+      <p><b>e) What advice can you give to the patient? (2 Marks)</b></p>
+      <p><b>Answer:</b> Adjust insulin dose according to meal intake and take insulin supplements 30 minutes before a meal to ensure proper glucose regulation.</p>
+    </div>
+</div>
+
+<!-- Question 2: Diabetic Ketoacidosis (Source: 1000028663.jpg & 1000028664.jpg) -->
+<div class="card">
+    <h3>2. A 24-year-old woman presented in a coma. Glucose: 35 mmol/L, pH: 7.10, Bicarbonate: 10 mmol/L, Urine positive for ketones.</h3>
+    <div class="subquestion">
+      <p><b>a) What is the diagnosis? (1 Mark)</b></p>
+      <p><b>Answer:</b> Diabetic Ketoacidosis (DKA) / Hyperglycemic Metabolic Acidosis.</p>
+    </div>
+    <div class="subquestion">
+      <p><b>b) In which condition will the disease in (a) be presented in? (1 Mark)</b></p>
+      <p><b>Answer:</b> Diabetes Mellitus Type 1.</p>
+    </div>
+    <div class="subquestion">
+      <p><b>c) What three (3) other conditions can be detected from the biochemical results? (3 Marks)</b></p>
+      <p><b>Answer:</b> 1. Hyperkalemia (Elevated Potassium), 2. Hyponatremia (Low Sodium), and 3. Hyperventilation (Reduced partial pressure of CO₂).</p>
+    </div>
+    <div class="subquestion">
+      <p><b>d) Explain briefly how the condition mentioned in (b) is brought about (3 Marks)</b></p>
+      <p><b>Answer:</b> Reduced insulin levels lead to reduced glucose uptake and ATP production. The body compensates by initiating lipolysis (fat breakdown) to produce energy, resulting in an accumulation of ketone bodies and metabolic acidosis.</p>
+    </div>
+</div>
+
+<!-- Question 3: Gout and Uric Acid (Source: 1000028664.jpg & 1000028665.jpg) -->
+<div class="card">
+    <h3>3. A 46-year-old male presents with severe right toe pain, redness, and swelling. Synovial fluid shows negatively birefringent rod-shaped crystals.</h3>
+    <div class="subquestion">
+      <p><b>a) What is the tentative diagnosis? (2 Marks)</b></p>
+      <p><b>Answer:</b> Gouty Arthritis.</p>
+    </div>
+    <div class="subquestion">
+      <p><b>b) What laboratory tests would you carry out to arrive at the definitive diagnosis? (2 Marks)</b></p>
+      <p><b>Answer:</b> 1. Measurement of Serum Uric Acid levels and 2. Synovial Fluid Analysis for the presence of monosodium urate crystals.</p>
+    </div>
+    <div class="subquestion">
+      <p><b>c) What is the biochemical basis of the condition in (a)? (3 Marks)</b></p>
+      <p><b>Answer:</b> Increased production of uric acid from purine catabolism. The enzyme Xanthine Oxidase catalyzes the conversion of hypoxanthine to xanthine and then to uric acid. Overproduction or under-excretion leads to hyperuricemia.</p>
+    </div>
+    <div class="subquestion">
+      <p><b>d) List the interventions that you would suggest as a Medical Doctor in charge (2 Marks)</b></p>
+      <p><b>Answer:</b> 1. Administer NSAIDs/Beta-methasone to reduce inflammation and pain. 2. Administer Allopurinol (Xanthine Oxidase inhibitor) to reduce uric acid synthesis.</p>
+    </div>
+</div>
+
+<!-- Question 4: Cholesterol Biosynthesis (Source: 1000028665.jpg & 1000028666.jpg) -->
+<div class="card">
+    <h3>4. Cholesterol is synthesized by virtually all tissues in humans.</h3>
+    <div class="subquestion">
+      <p><b>a) In four (4) steps, outline the biosynthesis of cholesterol (4 Marks)</b></p>
+      <p><b>Answer:</b> 1. Condensation of 3 Acetyl CoA molecules to form HMG-CoA. 2. Conversion of HMG-CoA to Mevalonate. 3. Formation of Isoprenoid units. 4. Cyclization of Squalene to Cholesterol.</p>
+    </div>
+    <div class="subquestion">
+      <p><b>b) What is the regulatory enzyme in the cholesterol biosynthetic pathway? (2 Marks)</b></p>
+      <p><b>Answer:</b> HMG-CoA Reductase.</p>
+    </div>
+    <div class="subquestion">
+      <p><b>c) List and explain four mechanisms that exist in the regulation of cholesterol synthesis (4 Marks)</b></p>
+      <p><b>Answer:</b> 
+        1. <b>Sterol Dependent Regulation:</b> SREBP protein stimulates HMG-CoA Reductase gene expression when cholesterol levels are low.
+        2. <b>Hormonal Regulation:</b> Insulin activates HMG-CoA reductase (via dephosphorylation), while Glucagon/Epinephrine inhibit it.
+        3. <b>Allosteric Regulation:</b> High cholesterol levels act as a feedback inhibitor of the enzyme.
+        4. <b>Pharmacological (Statins):</b> Drugs like Lovastatin competitively inhibit HMG-CoA Reductase.
+      </p>
+    </div>
+</div>
+
+  
+  
+  
+  
+      <div class="card">
+    <h3>Question 1 [10 Marks Total]</h3>
+    <div class="subquestion">
+        <p><strong>a) What can you detect from the Laboratory results? (1 Mark)</strong></p>
+        <p><strong>Answer:</strong> Hypoglycemia. The plasma glucose level is 1.5 mmol/L, which is significantly below the normal range of 5.5-11.1 mmol/L.</p>
+    </div>
+    <div class="subquestion">
+        <p><strong>b) What is the cause of the condition in (a)? (2 Marks)</strong></p>
+        <p><strong>Answer:</strong> The condition was caused by 1) an <strong>excessive insulin dose</strong> (relative to needs) and 2) <strong>inadequate caloric intake</strong> (missed meals). Insulin promotes glucose uptake into cells, and without food intake, blood glucose drops dangerously low.</p>
+    </div>
+    <div class="subquestion">
+        <p><strong>c) State three (3) complications of the condition mentioned in (a)? (3 Marks)</strong></p>
+        <p><strong>Answer:</strong> 
+            <ul>
+                <li><strong>Neuroglycopenia:</strong> Brain dysfunction due to lack of glucose (confusion, blackouts, seizures).</li>
+                <li><strong>Permanent Brain Damage:</strong> Prolonged severe hypoglycemia can lead to neuronal death.</li>
+                <li><strong>Rebound Hyperglycemia (Somogyi Effect):</strong> Counter-regulatory hormones trigger a glucose spike after the crash.</li>
+            </ul>
+        </p>
+    </div>
+    <div class="subquestion">
+        <p><strong>d) What is the treatment in emergencies? (2 Marks)</strong></p>
+        <p><strong>Answer:</strong> Immediate administration of <strong>IV Dextrose (e.g., 50% Dextrose)</strong> if the patient is unconscious, or <strong>IM Glucagon</strong> if IV access is unavailable.</p>
+    </div>
+    <div class="subquestion">
+        <p><strong>e) What advice can you give to the patient? (2 Marks)</strong></p>
+        <p><strong>Answer:</strong> 1) Never skip meals, especially when taking insulin. 2) Monitor blood glucose more frequently during illness (sick day rules) and adjust insulin only under medical guidance.</p>
+    </div>
+</div>
+
+  
+  <div class="card">
+    <h3>Question 2 [10 Marks Total]</h3>
+    <div class="subquestion">
+        <p><strong>a) What is the diagnosis? (1 Mark)</strong></p>
+        <p><strong>Answer:</strong> Diabetic Ketoacidosis (DKA).</p>
+    </div>
+    <div class="subquestion">
+        <p><strong>b) In which condition will the disease in (a) be presented in? (1 Mark)</strong></p>
+        <p><strong>Answer:</strong> Diabetes Mellitus Type 1.</p>
+    </div>
+    <div class="subquestion">
+        <p><strong>c) What three (3) other conditions can be detected from the biochemical results? (3 Marks)</strong></p>
+        <p><strong>Answer:</strong> 
+            <ul>
+                <li><strong>Metabolic Acidosis:</strong> Indicated by pH 7.10 and low bicarbonate (10 mmol/L).</li>
+                <li><strong>Hyperkalemia:</strong> Potassium is 5.9 mmol/L (normal: 3.5-5.0).</li>
+                <li><strong>Hyponatremia:</strong> Sodium is slightly low at 130 mmol/L.</li>
+            </ul>
+        </p>
+    </div>
+    <div class="subquestion">
+        <p><strong>d) Explain briefly how the condition mentioned in (b) is brought about (3 Marks)</strong></p>
+        <p><strong>Answer:</strong> Absolute insulin deficiency prevents cells from using glucose for energy. The body compensates by breaking down fats (lipolysis), leading to an overproduction of <strong>ketone bodies</strong> (acetoacetate, beta-hydroxybutyrate), which are acidic and lower the blood pH.</p>
+    </div>
+    <div class="subquestion">
+        <p><strong>e) State two principles of managing the condition in (b) (2 Marks)</strong></p>
+        <p><strong>Answer:</strong> 1) <strong>Fluid Resuscitation:</strong> IV normal saline to correct dehydration. 2) <strong>Insulin Therapy:</strong> IV insulin to lower glucose and stop ketone production.</p>
+    </div>
+</div>
+
+  
+  <div class="card">
+    <h3>Question 3 [10 Marks Total]</h3>
+    <div class="subquestion">
+        <p><strong>a) What is the tentative diagnosis? (2 Marks)</strong></p>
+        <p><strong>Answer:</strong> Gouty Arthritis (Gout).</p>
+    </div>
+    <div class="subquestion">
+        <p><strong>b) What laboratory tests would you carry out to arrive at the definitive diagnosis? (2 Marks)</strong></p>
+        <p><strong>Answer:</strong> 1) <strong>Synovial fluid analysis</strong> to identify Monosodium Urate (MSU) crystals. 2) <strong>Serum Uric Acid</strong> levels.</p>
+    </div>
+    <div class="subquestion">
+        <p><strong>c) What is the biochemical basis of the condition in (a)? (3 Marks)</strong></p>
+        <p><strong>Answer:</strong> It is caused by <strong>Hyperuricemia</strong> (excess uric acid in the blood). This results from either overproduction of uric acid due to <strong>purine catabolism</strong> (often fueled by high-purine diets/alcohol) or under-excretion by the kidneys.</p>
+    </div>
+    <div class="subquestion">
+        <p><strong>d) List the interventions that you would suggest as a Medical Doctor in charge (2 Marks)</strong></p>
+        <p><strong>Answer:</strong> 1) <strong>NSAIDs or Colchicine</strong> to reduce acute inflammation/pain. 2) <strong>Allopurinol</strong> (Xanthine oxidase inhibitor) for long-term management to lower uric acid production.</p>
+    </div>
+    <div class="subquestion">
+        <p><strong>e) What advice would you give to the patient? (1 Mark)</strong></p>
+        <p><strong>Answer:</strong> Dietary modification: Avoid high-purine foods (red meats, seafood) and limit alcohol consumption, particularly beer.</p>
+    </div>
+</div>
+ 
+  
+  
+ </section>
+
+<script>
+  // Short explanation text for each question (keyed by question id)
+const answerExplanations = {
+  // Section A: Biochemistry (from images)
+  q1: "The net yield from the β-oxidation of palmitic acid (16C) is 129 ATP after accounting for the initial activation cost of 2 ATP.",
+  q2: "Plaque formation due to lipid deposition in the vessel walls is the hallmark of atherosclerosis.",
+  q3: "Sterol Regulatory Element-Binding Protein (SREBP) is the primary transcription factor regulating the HMG-CoA reductase gene.",
+  q4: "While the cytosolic HMG-CoA synthase is for cholesterol, the mitochondrial isoenzyme is dedicated to ketogenesis (ketone body synthesis).",
+  q5: "High cholesterol levels lead to the degradation and destabilization of the HMG-CoA reductase protein to inhibit further synthesis.",
+  q6: "Propionyl-CoA enters the TCA cycle by being converted into succinyl-CoA via the methylmalonyl-CoA pathway.",
+  q7: "LDL is produced in the bloodstream as a 'remnant' after VLDL has been depleted of its triacylglycerols.",
+  q8: "LDL is the primary carrier of cholesterol in the blood and has the highest cholesterol concentration among lipoproteins.",
+  q9: "Apo B-48 is the characteristic structural apolipoprotein for chylomicrons synthesized in the intestine.",
+  q10: "The LDL receptor is also known as the Apo B-100/Apo E receptor because it recognizes both of these apoproteins.",
+  q11: "During starvation, high levels of acetyl-CoA from fatty acid oxidation inhibit pyruvate carboxylase, shifting gluconeogenic flux.",
+  q12: "Chylomicrons are the largest and least dense of all the lipoprotein particles due to their high triglyceride content.",
+  q13: "Enterohepatic circulation describes the recycling of bile salts between the liver and the small intestine.",
+  q14: "Unlike cholesterol synthesis which occurs in the cytosol, ketogenesis takes place within the mitochondrial matrix.",
+  q15: "The mature cholesterol molecule is a sterol containing exactly 27 carbon atoms.",
+  q16: "Squalene is formed by the tail-to-tail condensation of two 15-carbon farnesyl pyrophosphate molecules.",
+  q17: "HMG-CoA reductase is the rate-limiting and primary regulatory enzyme in the cholesterol biosynthetic pathway.",
+  q18: "Nascent chylomicrons receive Apo C-II and Apo E from HDL particles in the blood to become mature.",
+  q19: "Both the liver and the intestinal mucosa are the primary sites for the synthesis of HDL.",
+  q20: "The oxidation of an 11-carbon (odd-chain) fatty acid yields 72 net ATP, finishing with a propionyl-CoA residue.",
+  q21: "The sulfhydryl (-SH) group of the cysteine residue provides the essential reductive power for glutathione.",
+  q22: "In the brain, glutamate (glutamic acid) reacts with ammonia to form glutamine, effectively detoxifying the ammonia.",
+  q23: "Excessive phenylpyruvate and phenylacetate in urine are markers of disturbed phenylalanine metabolism (PKU).",
+  q24: "Arginase uses water to cleave arginine into urea and ornithine, classifying it as a hydrolase.",
+  q25: "Alkaptonuria is caused by a deficiency in homogentisic acid oxidase, leading to dark urine and joint issues.",
+  q26: "Phenylketonuria (PKU) is a primary disorder of amino acid metabolism specifically involving phenylalanine.",
+  q27: "Alanine (derived from pyruvate) plays the main role in transporting muscle-derived ammonia to the liver for gluconeogenesis.",
+  q28: "Carbamoyl phosphate synthetase I is the rate-limiting step of the urea cycle; its inhibition causes ammonia accumulation.",
+  q29: "Pyridoxal phosphate, derived from Vitamin B6, is the essential cofactor for all transaminases.",
+  q30: "An increase in AST activity approximately 12 hours after chest pain is a classic diagnostic marker for myocardial infarction.",
+
+  // Section B: General Physiology (from provided text)
+  q31: "5% Dextrose in water (D5W) is considered isotonic in the bag, though it becomes hypotonic once metabolized.",
+  q32: "To maintain osmotic balance, the pump moves 3 sodium ions out for every 2 potassium ions in.",
+  q33: "Band 3 is a major integral membrane protein of the erythrocyte that acts as an anion exchanger.",
+  q34: "Semi-permeability regulates solute movement, which is critical for establishing the electrical gradient (RMP).",
+  q35: "Facilitated transport (facilitated diffusion) is a passive process because it follows a concentration gradient.",
+  q36: "Endocytosis is a form of bulk active transport requiring cellular energy (ATP).",
+  q37: "Growth hormone and testosterone are primary triggers for muscle protein synthesis and hypertrophy.",
+  q38: "The SR is a specialized endoplasmic reticulum that sequesters and releases Ca2+ to regulate contraction.",
+  q39: "In skeletal muscle, thin filaments outnumber thick filaments (the ratio is usually 2:1 in a cross-section).",
+  q40: "The sarcomere is defined as the repeating structural and functional unit of the myofibril between two Z-lines.",
+  q41: "Myosin molecules consist of a tail and a globular head that forms cross-bridges with actin.",
+  q42: "Tropomyosin blocks the myosin-binding sites on actin when the muscle is at rest.",
+  q43: "Recruitment of more motor units increases the total tension produced by a muscle.",
+  q44: "Relaxation occurs when Ca2+ is pumped back into the SR and tropomyosin covers the binding sites again.",
+  q45: "Repolarization restores the internal negative charge by moving positive ions (potassium) out of the cell.",
+  q46: "The rising phase of an action potential is caused by a rapid influx of sodium ions due to increased permeability.",
+  q47: "The Na+/K+-ATPase uses energy from ATP hydrolysis to transport ions against their gradients.",
+  q48: "Somatic motor neurons originate in the central nervous system and trigger voluntary muscle movement.",
+  q49: "Satellite cells are myogenic stem cells located between the sarcolemma and basal lamina that aid in repair.",
+  q50: "Actin and myosin are the contractile proteins responsible for generating tension and shortening the muscle."
+};
+
+const correctAnswers = {
+  q1: "a", q2: "d", q3: "a", q4: "b", q5: "c", q6: "a", q7: "c", q8: "d", q9: "c", q10: "a",
+  q11: "d", q12: "d", q13: "a", q14: "d", q15: "c", q16: "b", q17: "b", q18: "a", q19: "a", q20: "c",
+  q21: "a", q22: "a", q23: "a", q24: "a", q25: "a", q26: "a", q27: "b", q28: "a", q29: "a", q30: "a",
+  q31: "c", q32: "b", q33: "d", q34: "b", q35: "b", q36: "a", q37: "b", q38: "b", q39: "d", q40: "c",
+  q41: "d", q42: "c", q43: "c", q44: "c", q45: "c", q46: "d", q47: "c", q48: "b", q49: "b", q50: "c"
+};
+
+
+ 
+  function submitQuiz() {
+     let score = 0;
+     const total = Object.keys(correctAnswers).length;
+ 
+     // Clear any previous inline feedback
+     document.querySelectorAll('.question-feedback').forEach(el => el.innerHTML = '');
+ 
+     for (let key in correctAnswers) {
+       const radios = Array.from(document.querySelectorAll(`input[name="${key}"]`));
+       const selected = radios.find(r => r.checked);
+       const correct = correctAnswers[key];
+ 
+       // Score calc
+       if (selected && selected.value === correct) score++;
+ 
+       const feedbackEl = document.getElementById(`feedback-${key}`);
+       if (!feedbackEl) continue;
+ 
+       let feedbackHTML = `<div class="answer-block"><strong>Question ${key.replace(/^q/, '')}</strong><div class="answer-list">`;
+ 
+       radios.forEach(r => {
+         let label = r.parentElement;
+         let text = label ? label.textContent.trim() : r.value;
+ 
+         let classes = ['answer-item'];
+         if (r.value === correct) classes.push('answer-correct');
+         if (r.checked && r.value !== correct) classes.push('answer-wrong', 'user-choice');
+         if (r.checked && r.value === correct) classes.push('user-choice');
+ 
+         feedbackHTML += `<div class="${classes.join(' ')}">${text}${r.checked ? ' ◀' : ''}</div>`;
+       });
+ 
+       feedbackHTML += `</div>`;
+ 
+       const correctRadio = radios.find(rr => rr.value === correct);
+       const correctText = correctRadio && correctRadio.parentElement ? correctRadio.parentElement.textContent.trim() : correct;
+       const explanationText = answerExplanations[key] || '';
+ 
+       if (selected) {
+         if (selected.value === correct) {
+           feedbackHTML += `<div class="explanation">✅ Correct — ${explanationText}</div>`;
+         } else {
+           feedbackHTML += `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+         }
+       } else {
+         feedbackHTML += `<div class="explanation wrong">No answer selected. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+       }
+ 
+       feedbackHTML += `</div>`;
+       feedbackEl.innerHTML = feedbackHTML;
+     }
+ 
+     const percentage = Math.round((score / total) * 100);
+     document.getElementById("score").innerText = "0%";
+     const resultBox = document.getElementById("resultBox");
+     resultBox.style.display = "block";
+     document.getElementById("answers").innerHTML = '';
+ 
+     let start = 0;
+     const timer = setInterval(() => {
+       if (start >= percentage) clearInterval(timer);
+       document.getElementById("score").innerText = start + "%";
+       start++;
+     }, 20);
+ 
+     document.querySelectorAll('#quizForm input').forEach(i => i.disabled = true);
+   }
+ 
+   // Essay Section
+   function showEssayAnswers() {
+     document.querySelectorAll(".essay-answer").forEach(a => a.style.display = "block");
+   }
+
+   // Show/hide model answers for an essay card
+   function showAnswers(id) {
+     const el = document.getElementById('answers' + id);
+     if (!el) return;
+     const isVisible = el.classList.toggle('visible');
+     el.setAttribute('aria-hidden', !isVisible);
+     if (isVisible) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+   }
+ 
+   const mode = localStorage.getItem("examMode");
+
+    if (mode === "essay") {
+      document.getElementById("mcq-section").style.display = "none";
+      document.getElementById("essay-section").style.display = "block";
+    } 
+    else if (mode === "tf") {
+      document.getElementById("mcq-section").style.display = "none";
+      document.getElementById("tf-section").style.display = "block";
+    }
+ 
+   // Navigate to the previous page if available, otherwise fall back to index.html
+   function goBack() {
+     if (history.length > 1) {
+       history.back();
+     } else {
+       window.location.href = "index.html";
+     }
+   }
+ 
+   // header back button hookup (same behaviour)
+   const backBtn = document.getElementById('backBtn');
+   if (backBtn) backBtn.addEventListener('click', (e) => { e.preventDefault(); goBack(); });
+ </script>
+
+</body>
+</html>
