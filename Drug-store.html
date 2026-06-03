@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drug Library</title>
+
+<style>
+
+   :root {
+    --primary: #2b7a78;
+    --secondary: #afc4c4;
+    --accent: #3aafa9;
+    --dark: #17252a;
+    --light: #f8f9fa;
+    --white: #ffffff;
+}
+
+/* GLOBAL */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:linear-gradient(135deg,#f8f9fa,#eef5f5);
+    color:var(--dark);
+    min-height:100vh;
+    padding:30px;
+}
+
+h1 {
+    
+}
+
+/* HEADER */
+
+.header{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.header h1{
+    font-family:'Outfit', sans-serif;
+    font-size:3.2rem;
+    font-weight:800;
+    background:linear-gradient(
+        135deg,
+        var(--primary),
+        var(--dark)
+    );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+
+    text-align:center;
+    letter-spacing:1px;
+}
+
+.header p{
+    color:#666;
+    font-size:1rem;
+}
+
+/* CONDITION BUTTONS */
+
+.condition-container{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:15px;
+    margin-bottom:40px;
+}
+
+.condition-btn{
+    background:var(--primary);
+    color:white;
+    border:none;
+    padding:14px 24px;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:600;
+
+    transition:all .3s ease;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.condition-btn:hover{
+    transform:translateY(-4px);
+    background:var(--accent);
+    box-shadow:0 10px 25px rgba(43,122,120,.25);
+}
+
+.condition-btn.active{
+    background:var(--dark);
+}
+
+/* DRUG SECTION */
+
+.drug-section{
+    display:none;
+    animation:fadeIn .5s ease;
+}
+
+/* DRUG CARD */
+
+.drug-card{
+    background:rgba(255,255,255,.95);
+    border-radius:18px;
+    padding:25px;
+    margin-bottom:20px;
+
+    border-left:6px solid var(--primary);
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.08);
+
+    transition:all .3s ease;
+}
+
+.drug-card:hover{
+    transform:translateY(-6px);
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.12);
+}
+
+/* DRUG NAME */
+
+.drug-name{
+    color:var(--primary);
+    font-size:1.6rem;
+    margin-bottom:15px;
+}
+
+/* DRUG INFO */
+
+.drug-info{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:12px;
+}
+
+.info-item{
+    padding:12px;
+    background:#f8fbfb;
+    border-radius:10px;
+}
+
+.label{
+    color:var(--primary);
+    font-weight:700;
+    display:block;
+    margin-bottom:5px;
+}
+
+/* AUDIO */
+
+audio{
+    width:100%;
+    margin-top:18px;
+    border-radius:10px;
+}
+
+/* SEARCH BAR */
+
+.search-box{
+    max-width:500px;
+    margin:0 auto 30px auto;
+}
+
+.search-box input{
+    width:100%;
+    padding:15px;
+    border:2px solid var(--secondary);
+    border-radius:12px;
+    font-size:16px;
+
+    transition:.3s;
+}
+
+.search-box input:focus{
+    outline:none;
+    border-color:var(--primary);
+    box-shadow:0 0 15px rgba(58,175,169,.25);
+}
+
+/* BADGES */
+
+.class-badge{
+    display:inline-block;
+    background:var(--accent);
+    color:white;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:.85rem;
+    margin-bottom:15px;
+}
+
+/* ANIMATION */
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    body{
+        padding:15px;
+    }
+
+    .header h1{
+        font-size:2rem;
+    }
+
+    .condition-btn{
+        width:100%;
+    }
+
+    .drug-card{
+        padding:20px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Drug Library</h1>
+</div>
+
+<div class="condition-container">
+    <button class="condition-btn" onclick="showCondition('hypertension')">
+        Hypertension
+    </button>
+
+    <button class="condition-btn" onclick="showCondition('arrhythmia')">
+        Anti-arrhythmic Drugs
+    </button>
+
+    <button class="condition-btn" onclick="showCondition('angina')">
+        Drugs used in Angina 
+    </button>
+</div>
+
+<!-- HYPERTENSION -->
+<!-- HYPERTENSION -->
+<div id="hypertension" class="drug-section">
+    
+    
+     <div class="drug-card">
+    <h2 class="drug-name">Thiazides</h2>
+    <span class="class-badge">Diuretic</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Reduces BP (blood pressure) by reducing sodium stores, blood volume, and CO (cardiac output).</li>
+                <li>Sodium is believed to contribute to vascular resistance by increasing vessel stiffness and neural reactivity.</li>
+            </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Monotherapy in mild-moderate hypertension</li>
+                <li>Combined with sympatholytics or vasodilators in severe hypertension (to counteract salt and water retention induced by those agents)</li>
+                <li>Recommended in elderly patients</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Potassium depletion / Hypokalemia</li>
+                <li>Magnesium depletion</li>
+                <li>Impaired glucose tolerance</li>
+                <li>Increased serum lipid concentrations</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/thiazides.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+<div class="drug-card">
+    <h2 class="drug-name">Frusemide</h2>
+    <span class="class-badge">Loop Diuretic</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Reduces BP (blood pressure) by reducing sodium stores, blood volume, and CO (cardiac output) via action on the Loop of Henle.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Severe hypertension</li>
+                <li>Hypertension with co-existing chronic renal failure</li>
+                <li>Hypertension with co-existing CCF (Congestive Cardiac Failure)</li>
+                <li>Resistance to combination therapy</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Potassium depletion / Hypokalemia</li>
+                <li>Magnesium depletion</li>
+                <li>Impaired glucose tolerance</li>
+                <li>Increased serum lipid concentrations</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/frusemide.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+<div class="drug-card">
+    <h2 class="drug-name">Labetalol</h2>
+    <span class="class-badge">Alpha/Beta Blocker</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Blocks both alpha and beta-adrenergic receptors to rapidly reduce systemic vascular resistance and blood pressure.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Hypertensive emergencies (administered intravenously)</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects & Features</span>
+            <ul>
+                <li>Does not produce salt and water retention</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/labetalol.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+<div class="drug-card">
+    <h2 class="drug-name">Carvedilol</h2>
+    <span class="class-badge">Beta Blocker with &alpha;1-Blocking Activity</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Combines non-selective beta-blockade with additional &alpha;1-receptor blocking effects, leading to peripheral vasodilation.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Hypertension</li>
+                <li>Useful when both heart rate reduction and direct vasodilation are therapeutic goals</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects & Features</span>
+            <ul>
+                <li>Does not produce salt and water retention</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/carvedilol.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+<div class="drug-card">
+    <h2 class="drug-name">Atenolol</h2>
+    <span class="class-badge">Selective Beta Blocker (&beta;1)</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Selectively blocks &beta;1 receptors in the heart and juxtaglomerular cells.</li>
+                <li>Lowers CO or PVR (peripheral vascular resistance) to various degrees depending on cardioselectivity.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Hypertension (Effective for all grades)</li>
+                <li>Recommended in young, non-obese patients</li>
+                <li>Used in combination with vasodilators in severe hypertension to prevent reflex tachycardia</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects & Features</span>
+            <ul>
+                <li>Does not produce postural hypotension</li>
+                <li>Does not produce salt and water retention</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/atenolol.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+
+<div class="drug-card">
+    <h2 class="drug-name">Propranolol</h2>
+    <span class="class-badge">Non-Selective Beta Blocker</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Blocks beta receptors in the heart and juxtaglomerular cells.</li>
+                <li>Decreases blood pressure primarily by lowering cardiac output (CO).</li>
+                <li>Inhibits the stimulation of renin production by catecholamines (mediated by &beta;1 receptors).</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Hypertension (Effective for all grades)</li>
+                <li>Recommended in young, non-obese patients</li>
+                <li>Used in combination with vasodilators in severe hypertension to prevent reflex tachycardia</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects & Features</span>
+            <ul>
+                <li>Does not produce postural hypotension</li>
+                <li>Does not produce salt and water retention</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/propranolol.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+<div class="drug-card">
+    <h2 class="drug-name">ACE Inhibitors</h2>
+    <span class="class-badge">Angiotensin Converting Enzyme Inhibitors</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action & Physiological Effects</span>
+            <ul>
+                <li><strong>Vascular Effects:</strong> Reduces PVR (Peripheral Vascular Resistance) via arteriolar and venular dilatation without causing postural hypotension. Promotes natriuresis.</li>
+                <li><strong>Cardiac Effects:</strong> Induces minimal change in CO or heart rate (blunts sympathetic reflexes and inhibits Angiotensin II-induced norepinephrine release, preventing reflex tachycardia). Decreases preload/filling pressures, improving pulmonary and venous congestion.</li>
+                <li><strong>Renal & Cerebral Protection:</strong> Reduces renovascular resistance to maintain renal blood flow. Cerebral and coronary blood flows are well maintained.</li>
+                <li><strong>Ventricular Remodeling:</strong> Reverses ventricular remodeling by reducing preload/afterload, preventing the trophic effects of Angiotensin II on myocytes, and attenuating aldosterone-induced cardiac fibrosis.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications & Therapeutic Uses</span>
+            <ul>
+                <li><strong>Essential Hypertension:</strong> First-line drug as monotherapy in mild-to-moderate cases, or combined with diuretics, CCBs, or &beta;-blockers.</li>
+                <li><strong>Hypertension with Co-morbidities:</strong> 1st choice for patients with diabetes or nephropathy (improves glucose tolerance). Most appropriate for left ventricular hypertrophy and high-renin hypertension (e.g., unilateral renal artery stenosis).</li>
+                <li><strong>Congestive Cardiac Failure (CCF):</strong> Combined with a diuretic to delay the progress of heart failure and improve quality of life.</li>
+                <li><strong>Post-Myocardial Infarction:</strong> Therapy started immediately after infarction to prevent myocardial hypertrophy, preserve left ventricular function, and aid remodeling.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects & Adverse Drug Reactions (ADRs)</span>
+            <ul>
+                <li>First-dose hypotension (mitigated by starting with a low dose)</li>
+                <li>Persistent dry cough (due to preservation of kinins causing vasodilation)</li>
+                <li>Skin rash</li>
+                <li>Temporary loss of taste</li>
+                <li>Proteinuria and nephrotic syndrome (particularly in patients with pre-existing renal disease)</li>
+                <li>Neutropenia (Rare but serious)</li>
+                <li>No metabolic adverse effects (does not alter blood uric acid or cholesterol levels)</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Drug Interactions</span>
+            <ul>
+                <li><strong>$K^+$ supplements and $K^+$-sparing diuretics:</strong> Risk of inducing hyperkalemia due to the reduction of aldosterone secretion.</li>
+                <li><strong>NSAIDs:</strong> Attenuates the antihypertensive effects of ACEIs.</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/ace_inhibitors.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+<div class="drug-card">
+    <h2 class="drug-name">ARBs</h2>
+    <span class="class-badge">Angiotensin II Receptor Blockers</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Provides a more complete inhibition of the effect of Angiotensin II compared to ACE inhibitors.</li>
+                <li>Has no effect on bradykinin metabolism (meaning it does not cause the dry cough associated with kinin accumulation).</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Hypertension</li>
+                <li>Often used as an alternative for patients who cannot tolerate ACE inhibitors due to dry cough.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects & Adverse Drug Reactions (ADRs)</span>
+            <ul>
+                <li>Foetopathic (contraindicated in pregnancy)</li>
+                <li>Severe hypotension in hypovolemic patients</li>
+                <li>Hyperkalaemia in patients with underlying renal disease</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/arbs.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+<div class="drug-card">
+    <h2 class="drug-name">Dihydropyridines</h2>
+    <span class="class-badge">Calcium Channel Blocker (Vascular Selective)</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism & Physiological Effects</span>
+            <ul>
+                <li><strong>Vascular Smooth Muscle:</strong> Highly potent at relaxing arterial smooth muscles (Dihydropyridines > Verapamil > Diltiazem). They relax vascular smooth muscles at much lower concentrations than those required to induce negative inotropism.</li>
+                <li><strong>Cardiac Effects:</strong> Vasodilation leads to reflex sympathetic activation, which clinically overcomes their intrinsic negative inotropic effect.</li>
+                <li><strong>AV Nodal Conduction:</strong> Nifedipine has no effect on AV conduction.</li>
+                <li><strong>Hemodynamics:</strong> Decreases blood pressure (BP) and decreases the overall work done by the heart via reduced contractility and vasodilation.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Preferable in elderly hypertensives.</li>
+                <li>Effective in low renin hypertension (provided there is no Heart Failure [HF] and no volume depletion).</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/dihydropyridines.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+
+<div class="drug-card">
+    <h2 class="drug-name">Verapamil & Diltiazem</h2>
+    <span class="class-badge">Calcium Channel Blocker (Cardioselective)</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism & Physiological Effects</span>
+            <ul>
+                <li><strong>Myocardial Contractility:</strong> All CCBs produce a negative inotropic effect, but it is most pronounced in this class (Verapamil > Diltiazem).</li>
+                <li><strong>AV Nodal Conduction:</strong> Verapamil and Diltiazem significantly decrease heart rate (HR) and delay AV conduction.</li>
+                <li><strong>Vascular Effect:</strong> Relax arterial smooth muscles, but less potently than dihydropyridines.</li>
+                <li><strong>Hemodynamics:</strong> Decreases blood pressure (BP) and decreases the work done by the heart by directly lowering contractility and heart rate.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Preferable in elderly hypertensives.</li>
+                <li>Effective in low renin hypertension (provided there is no Heart Failure [HF] and no volume depletion).</li>
+                <li>Particularly useful when hypertension co-exists with a need for heart rate control (e.g., certain tachyarrhythmias).</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/non_dihydropyridines.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+<div class="drug-card">
+    <h2 class="drug-name">Hydralazine</h2>
+    <span class="class-badge">Vasodilator</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Molecular mechanism is not fully known.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Used in severe hypertension.</li>
+                <li>Cannot be used as monotherapy due to the rapid development of tachyphylaxis.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects & Management</span>
+            <ul>
+                <li>Increases Heart Rate (HR) and Cardiac Output (CO) via reflex sympathetic activation; must be combined with &beta;-blockers.</li>
+                <li>Causes fluid retention; must be combined with a diuretic.</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/hydralazine.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+
+<div class="drug-card">
+    <h2 class="drug-name">Minoxidil</h2>
+    <span class="class-badge">Arteriolar Dilator</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Opens K+ channels in vascular smooth muscle membranes, hyperpolarizing and relaxing the tissue.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Alternative to hydralazine when maximal doses of hydralazine are not effective.</li>
+                <li>Used in combination with diuretics and &beta;-blockers to avoid fluid retention and tachyphylaxis.</li>
+                <li>Topical minoxidil is used as a hair growth stimulant in alopecia.</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/minoxidil.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+
+<div class="drug-card">
+    <h2 class="drug-name">Sodium Nitroprusside</h2>
+    <span class="class-badge">Parenteral Vasodilator</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism & Handling</span>
+            <ul>
+                <li>Rapidly metabolized by uptake into RBCs with the liberation of cyanide.</li>
+                <li>Highly sensitive to light: solution must be freshly prepared and protected by covering with opaque foil.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Toxicity & Adverse Effects</span>
+            <ul>
+                <li><strong>Cyanide Accumulation:</strong> Can lead to metabolic acidosis, excessive hypotension, arrhythmias, and methaemoglobinemia.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Antidote / Treatment</span>
+            <ul>
+                <li>Treatment of cyanide toxicity includes administration of hydroxycobalamine and sodium thiosulfate.</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/sodium_nitroprusside.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+<div class="drug-card">
+    <h2 class="drug-name">Diazoxide</h2>
+    <span class="class-badge">Vasodilator</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Opens K+ channels and stabilizes the vascular smooth muscle membrane potential.</li>
+                <li>Chemically similar to thiazide diuretics but possesses absolutely no diuretic effect.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Administration & Dosage</span>
+            <ul>
+                <li>Given by rapid IV infusion at a rate of 15 mg/min until blood pressure (BP) is controlled.</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/diazoxide.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+<div class="drug-card">
+    <h2 class="drug-name">Fenoldopam</h2>
+    <span class="class-badge">D1 Agonist / Arteriolar Dilator</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Acts as a selective dopamine D1 receptor agonist.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Functions as an arteriolar dilator utilized strictly for hypertensive emergencies.</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/fenoldopam.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+
+
+
+
+</div>
+
+<!-- DIABETES -->
+<div id="arrhythmia" class="drug-section">
+    
+    <div class="drug-card">
+    <h2 class="drug-name">Quinidine</h2>
+    <span class="class-badge">Class Ia Anti-Arrhythmic</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Na+ channel blocker: Reduces the maximum rate of depolarization (Vmax), decreasing conduction velocity and depressing excitability.</li>
+                <li>Inhibits spontaneous depolarization of automatic fibers, decreasing their rate of discharge.</li>
+                <li>Increases action potential duration (APD) through prolonging repolarization by blocking K+ channels.</li>
+                <li>Exhibits autonomic effects: Atropine-like action and Alpha-blocking action (causing hypotension and reflex tachycardia).</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Broad spectrum anti-arrhythmic, especially used in Atrial flutter or Atrial fibrillation refractory to other agents.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li><strong>Cardiac toxicity:</strong> SAN block, AVN block, ventricular arrhythmias, syncope, death, and paradoxical ventricular tachycardia in patients with Atrial fibrillation.</li>
+                <li><strong>Extracardiac toxicity:</strong> GIT upset, Hypotension.</li>
+                <li><strong>Cinchonism:</strong> Tinnitus, loss of hearing, blurred vision, and photophobia.</li>
+                <li><strong>Other:</strong> Drug fever, thrombocytopenia, anaphylactic shock, and embolism following conversion of Atrial fibrillation to sinus rhythm.</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/quinidine.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+<div class="drug-card">
+    <h2 class="drug-name">Disopyramide</h2>
+    <span class="class-badge">Class Ia Anti-Arrhythmic</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Na+ channel blocker that decreases conduction velocity and responsiveness.</li>
+                <li>Similar to Quinidine with a marked anti-cholinergic effect.</li>
+                <li>Exhibits a marked negative inotropic effect.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Broad spectrum anti-arrhythmic used in:</li>
+                <li>Ventricular arrhythmias.</li>
+                <li>Supraventricular arrhythmias.</li>
+                <li>Wolff-Parkinson-White Syndrome.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Anticholinergic effects (e.g., dry mouth, urinary retention, blurred vision).</li>
+                <li>Negative inotropic effects (can exacerbate or precipitate heart failure).</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/disopyramide.mp3" type="audio/mpeg">
+    </audio>
+</div>
+<div class="drug-card">
+    <h2 class="drug-name">Procainamide</h2>
+    <span class="class-badge">Class Ia Anti-Arrhythmic</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Blocks Na+ channels reducing Vmax leading to moderate decrease in conduction velocity.</li>
+                <li>Increases APD through prolonging repolarization (blocks K+ channels).</li>
+                <li>Inhibits spontaneous depolarization of automatic fibers decreasing their rate of discharge.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Broad spectrum Anti-arrhythmic: used in treatment of ventricular arrhythmias after cardiac infarction.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Systemic Lupus Erythematosus.</li>
+                <li>Congestive heart failure (negative inotropic effect).</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/procainamide.mp3" type="audio/mpeg">
+    </audio>
+</div>
+<div class="drug-card">
+    <h2 class="drug-name">Lidocaine</h2>
+    <span class="class-badge">Class Ib Anti-Arrhythmic</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Na+ channel blocker that decreases conduction velocity and excitability.</li>
+                <li>Decreases APD through enhancing repolarization (activate K+ channels).</li>
+                <li>No effect on atrial or AVN conduction therefore ineffective in supraventricular arrhythmias.</li>
+                <li>Selective on ventricular tissue especially when ischemic.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Ventricular arrhythmias (in cardiac surgery, acute myocardial infarction, Digitalis toxicity).</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li><strong>CNS:</strong> Parasthesia, tremors, dizziness, slurred speech and disturbs hearing.</li>
+                <li><strong>Cardiac effects:</strong> It is the least cardiotoxic anti-arrhythmic drug. However, in diseased hearts, it may precipitate SAN standstill or worsen impaired conduction.</li>
+                <li><strong>Pharmacokinetics note:</strong> Not effective orally due to extensive first pass metabolism. Administered as a loading dose (1 – 2mg/kg) I.V bolus followed by maintenance infusion.</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/lidocaine.mp3" type="audio/mpeg">
+    </audio>
+</div>
+<div class="drug-card">
+    <h2 class="drug-name">Mexiletine</h2>
+    <span class="class-badge">Class Ib Anti-Arrhythmic</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Na+ channel blocker (Class Ib characteristics similar to Lidocaine).</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Given orally in Ventricular arrhythmias of acute myocardial infarction.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Gastrointestinal upset, dizziness, and tremors (typical of Class Ib oral analogues).</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/mexiletine.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+<div class="drug-card">
+    <h2 class="drug-name">Phenytoin</h2>
+    <span class="class-badge">Class Ib Anti-Arrhythmic</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Na+ channel blocker that alters conduction properties, particularly useful in reversing digitalis-induced conduction alterations.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>May be used in Digitalis-induced arrhythmias.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Nystagmus, ataxia, drowsiness, and gingival hyperplasia (with prolonged use).</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/phenytoin.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+<div class="drug-card">
+    <h2 class="drug-name">Propafenone</h2>
+    <span class="class-badge">Class Ic Anti-Arrhythmic</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Na+ channel blocker that produces a marked reduction in conduction velocity.</li>
+                <li>No effect on action potential duration (APD).</li>
+                <li>Possesses complex multi-channel blocking properties: weak Beta-blocking activity, weak K+ channel blocking activity, and weak Ca++ channel blocking properties.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Supraventricular arrhythmias.</li>
+                <li>Ventricular arrhythmias if there is no heart failure.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Cardiac arrhythmias.</li>
+                <li>AV block.</li>
+                <li>Heart failure (due to its negative inotropic and weak beta-blocking potential).</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/propafenone.mp3" type="audio/mpeg">
+    </audio>
+</div>
+<!-- Sotalol Card -->
+<div class="drug-card">
+    <h2 class="drug-name">Sotalol</h2>
+    <span class="class-badge">Class II Beta-Blocker</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Blocks intrinsic sympathetic activity resulting in decreased spontaneous depolarization of autonomic fibers.</li>
+                <li>Protects against sympathetic-induced ectopic focus.</li>
+                <li>Possesses K+ channel blocking action and hence prolongs the action potential duration and ERP (Effective Refractory Period).</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Supraventricular arrhythmias, particularly those associated with sympathetic overactivity (e.g., Thyrotoxicosis, Exercise-induced arrhythmias, Pheochromocytoma).</li>
+                <li>Prophylactic use to prevent ventricular arrhythmias following myocardial infarction.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Bradycardia, hypotension, bronchospasm, fatigue, and potential for Torsades de Pointes (due to prolonged QT interval from K+ channel blockade).</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/sotalol.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+<!-- Esmolol Card -->
+<div class="drug-card">
+    <h2 class="drug-name">Esmolol</h2>
+    <span class="class-badge">Class II Beta-Blocker</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Ultra-short-acting beta-blocker that blocks intrinsic sympathetic activity, resulting in decreased spontaneous depolarization of autonomic fibers.</li>
+                <li>Protects against sympathetic-induced ectopic focus.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Used I.V in acute arrhythmias during surgery or emergency.</li>
+                <li>Supraventricular arrhythmias associated with sympathetic overactivity.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Infusion-site reactions, hypotension, bradycardia, and heart failure exacerbation.</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/esmolol.mp3" type="audio/mpeg">
+    </audio>
+</div>
+<div class="drug-card">
+    <h2 class="drug-name">Amiodarone</h2>
+    <span class="class-badge">Class III Anti-Arrhythmic</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Heavily iodinated K+ channel blocking agent; blockade of K+ channels delays depolarization, increasing APD and ERP.</li>
+                <li>Possesses multi-channel blocking action: Na+ channel blocking action, weak Ca++ channel blocker, and Beta-receptor blocker.</li>
+                <li>Causes slowing of sinus rate and AVN conduction.</li>
+                <li>Exhibits a vasodilator effect on coronary and peripheral vessels.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Treatment and Prophylaxis of supraventricular arrhythmias.</li>
+                <li>Arrhythmias associated with Wolff-Parkinson-White syndrome.</li>
+                <li>Refractory cases of Ventricular arrhythmias.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Corneal deposits (reversible).</li>
+                <li>Alteration of thyroid function (due to being heavily iodinated).</li>
+                <li>Photosensitivity.</li>
+                <li>Pulmonary infiltrates and pulmonary fibrosis.</li>
+                <li>Proximal myopathy and neuropathy.</li>
+                <li>AV block and sinus bradycardia.</li>
+                <li><strong>Pharmacokinetics & Interactions note:</strong> Long $t_{1/2}$ (weeks), given once daily. Loading dose: 0.8 – 1.2 gram/day for 2-4 weeks; maintenance: 0.2 gram/day. Potentiates Warfarin and increases Digoxin and Quinidine levels.</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/amiodarone.mp3" type="audio/mpeg">
+    </audio>
+</div>
+<div class="drug-card">
+    <h2 class="drug-name">Sotalol</h2>
+    <span class="class-badge">Class II and III Anti-Arrhythmic</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Blocks intrinsic sympathetic activity resulting in decreased spontaneous depolarization of autonomic fibers (Class II action).</li>
+                <li>Protects against sympathetic-induced ectopic focus.</li>
+                <li>Possesses K+ channel blocking action and hence prolongs the action potential duration and ERP (Class III action).</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Broad spectrum in supraventricular and ventricular arrhythmias.</li>
+                <li>Wolff-Parkinson-White syndrome.</li>
+                <li>Particularly useful for arrhythmias associated with sympathetic overactivity (e.g., Thyrotoxicosis, Exercise-induced arrhythmias, Pheochromocytoma).</li>
+                <li>Prophylactic use to prevent ventricular arrhythmias following myocardial infarction.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Bradycardia, hypotension, bronchospasm, fatigue, and potential for Torsades de Pointes (due to prolonged QT interval from K+ channel blockade).</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/sotalol.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+<div class="drug-card">
+    <h2 class="drug-name">Verapamil</h2>
+    <span class="class-badge">Class IV Anti-Arrhythmic</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Calcium channel blocker that blocks the slow Ca++ current.</li>
+                <li>Slows SAN firing rate and AVN conduction velocity.</li>
+                <li>Suppresses slow responses in cardiac tissue during ischemia and Digitalis toxicity.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Supraventricular tachycardia.</li>
+                <li>Used to reduce ventricular rate in atrial flutter and atrial fibrillation.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Bradycardia, AV block, hypotension, constipation, and peripheral edema.</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/verapamil.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+<div class="drug-card">
+    <h2 class="drug-name">Diltiazem</h2>
+    <span class="class-badge">Class IV Anti-Arrhythmic</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Calcium channel blocker that blocks the slow Ca++ current.</li>
+                <li>Slows SAN firing rate and AVN conduction.</li>
+                <li>Suppresses slow responses in ischemia and Digitalis toxicity.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Supraventricular tachycardia.</li>
+                <li>Used to reduce ventricular rate in atrial flutter and atrial fibrillation.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Bradycardia, AV block, hypotension, dizziness, and flushing.</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/diltiazem.mp3" type="audio/mpeg">
+    </audio>
+</div>
+<div class="drug-card">
+    <h2 class="drug-name">Adenosine</h2>
+    <span class="class-badge">Miscellaneous Anti-Arrhythmic</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>K+ channel opener producing hyperpolarization leading to Ca++ channel blockade, thereby slowing AVN conduction.</li>
+                <li>Dilates coronary and peripheral blood vessels.</li>
+                <li>Has a very short duration of action (about 15 seconds).</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Drug of choice in paroxysmal Supra-ventricular tachycardia.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Bronchospasm.</li>
+                <li>Flushing and headache.</li>
+                <li>Chest pain.</li>
+                <li><strong>Contraindications:</strong> Bronchial asthma and AV block.</li>
+                <li><strong>Dosage note:</strong> Rapid bolus of 6mg (I.V) which may be repeated after 1-2 minutes.</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/adenosine.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+
+    
+
+</div>
+
+<!-- ASTHMA -->
+<div id="angina" class="drug-section">
+    
+    <div class="drug-card">
+    <h2 class="drug-name">Nitroglycerine</h2>
+    <span class="class-badge">Nitrates / Organic Nitrates</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Denitration of the drug in smooth muscle cells releases NO (a vasodilator).</li>
+                <li>Nitrates bind to nitrate receptors in vascular endothelium and smooth muscle cells causing release of Nitric oxide. Nitric oxide stimulates guanylate cyclase (Soluble isoform), increasing levels of cGMP. This in turn causes dephosphorylation of myosin light chains, leading to reduction of Ca++ entry or promoting Ca++ exit and this leads to relaxation of smooth muscles (Vasodilation).</li>
+                <li>Reduces cardiac oxygen demand in classical angina (produces effect within 3 min in most patients).</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Angina pectoris (Prevention and treatment of all types of Angina, including Classical, Variant, and Unstable angina)</li>
+                <li>C.H.F. (Congestive Heart Failure - reduces preload and relieves pulmonary congestion)</li>
+                <li>Acute Myocardial Infarction (may reduce the area of myocardial damage and preserve viable tissues)</li>
+                <li>Spasmolytic (to relieve pain due to spasm of urinary, biliary, and GIT)</li>
+                <li>Cyanide poisoning (Sodium nitrate I.V. may be used)</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Flushing and throbbing headache</li>
+                <li>Postural hypotension, dizziness, and even syncope</li>
+                <li>Tachycardia, palpitation, and worsening of Angina</li>
+                <li>Tolerance (especially during chronic exposure)</li>
+                <li>Methemoglobinemia (may occur after chronic high doses)</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/nitroglycerine.mp3" type="audio/mpeg">
+    </audio>
+</div>
+<div class="drug-card">
+    <h2 class="drug-name">Isosorbide Dinitrate</h2>
+    <span class="class-badge">Nitrates / Organic Nitrates</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Denitration of the drug in smooth muscle cells releases NO (a vasodilator).</li>
+                <li>Nitrates bind to nitrate receptors in vascular endothelium and smooth muscle cells causing release of Nitric oxide. Nitric oxide stimulates guanylate cyclase, increasing levels of cGMP, leading to relaxation of smooth muscles (Vasodilation).</li>
+                <li>Effectively absorbed sublingually with a slower onset of action and longer duration of action compared to Nitroglycerine.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Angina pectoris (Prevention and treatment of all types of Angina)</li>
+                <li>C.H.F. (Congestive Heart Failure)</li>
+                <li>Acute Myocardial Infarction</li>
+                <li>Spasmolytic (urinary, biliary, and GIT spasm relief)</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Flushing and throbbing headache</li>
+                <li>Postural hypotension, dizziness, and syncope</li>
+                <li>Tachycardia, palpitation, and worsening of Angina</li>
+                <li>Tolerance during chronic exposure</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/isosorbide-dinitrate.mp3" type="audio/mpeg">
+    </audio>
+</div>
+<div class="drug-card">
+    <h2 class="drug-name">Isosorbide Mononitrate</h2>
+    <span class="class-badge">Nitrates / Organic Nitrates</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Denitration of the drug in smooth muscle cells releases NO, stimulating guanylate cyclase and increasing cGMP to cause smooth muscle relaxation (Vasodilation).</li>
+                <li>Bypasses hepatic metabolism and has increased bioavailability (long-acting preparation).</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Angina pectoris (Long-term prophylaxis and treatment)</li>
+                <li>C.H.F. (Congestive Heart Failure)</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Flushing and throbbing headache</li>
+                <li>Postural hypotension and dizziness</li>
+                <li>Tachycardia and palpitations</li>
+                <li>Nitrate tolerance</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/isosorbide-mononitrate.mp3" type="audio/mpeg">
+    </audio>
+</div>
+<div class="drug-card">
+    <h2 class="drug-name">Verapamil</h2>
+    <span class="class-badge">Calcium Channel Blocker (Phenylalkylamine)</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Blocks L-type Ca2+ channels in smooth and cardiac muscle cells, reducing intracellular calcium.</li>
+                <li>Mainly affects the heart; slows atrioventricular (AV) conduction directly and blocks recovery of channels.</li>
+                <li>Decreases heart rate, myocardial contractility (greater negative inotropic effect than amlodipine), and pacemaker activity.</li>
+                <li>Dilates arterioles, decreasing total peripheral resistance, afterload, and myocardial oxygen demand. Has some alpha-adrenergic blocking activity.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Angina Pectoris (Angina of Effort, Variant Angina, and Unstable Angina in refractory cases)</li>
+                <li>Cardiac arrhythmias (Highly effective in PSVT and supraventricular arrhythmias)</li>
+                <li>Hypertrophic cardiomyopathy (Salutary effect due to negative inotropic action)</li>
+                <li>Other uses: Suppressing migraine headaches and nocturnal leg cramps</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Bradycardia</li>
+                <li>Headache and flushing</li>
+                <li>Dizziness and lethargy</li>
+                <li>Constipation</li>
+                <li>Risk of heart failure or heart block</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/verapamil.mp3" type="audio/mpeg">
+    </audio>
+</div>
+<div class="drug-card">
+    <h2 class="drug-name">Diltiazem</h2>
+    <span class="class-badge">Calcium Channel Blocker (Benzothiazepine)</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Blocks L-type Ca2+ channels in smooth and cardiac muscle cells, reducing intracellular calcium.</li>
+                <li>Intermediate in its actions between verapamil (heart-selective) and nifedipine (vessel-selective).</li>
+                <li>Slows AV conduction, decreases the rate of firing of the sinus node pacemaker, and blocks recovery of channels.</li>
+                <li>Acts as a coronary artery vasodilator and relieves coronary artery spasm; less potent vasodilator than nifedipine and verapamil, with modest direct negative inotropic action.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Angina Pectoris (Angina of Effort, Unstable Angina, and particularly useful in Variant Angina)</li>
+                <li>Cardiac arrhythmias (Highly effective in PSVT and supraventricular arrhythmias)</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Dizziness and lethargy</li>
+                <li>Headache and flushing</li>
+                <li>Risk of heart failure or heart block</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/diltiazem.mp3" type="audio/mpeg">
+    </audio>
+</div>
+<div class="drug-card">
+    <h2 class="drug-name">Nifedipine</h2>
+    <span class="class-badge">Calcium Channel Blocker (Dihydropyridine)</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Prototype DHP with a rapid onset and short duration of action (usually administered as an extended-release formulation).</li>
+                <li>Has a greater effect on smooth muscles of vessels than the heart itself; causes arteriolar dilatation, decreasing total peripheral resistance and afterload.</li>
+                <li>Improves myocardial oxygen balance by increasing coronary blood flow (vasodilation) and decreasing oxygen demand.</li>
+                <li>Causes direct depressant action on the heart only at higher doses.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Angina Pectoris (Angina of Effort, Variant Angina, and Unstable Angina in refractory cases)</li>
+                <li>Raynaud's phenomenon</li>
+                <li>Management of premature labour (alternative drug)</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Reflex tachycardia and palpitations</li>
+                <li>Ankle edema (due to increased capillary pressure from arteriolar dilatation during chronic use)</li>
+                <li>Flushing, hypotension, headache, dizziness, drowsiness, and nausea</li>
+                <li>Paradoxically increased frequency of angina in some patients</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/nifedipine.mp3" type="audio/mpeg">
+    </audio>
+</div>
+<div class="drug-card">
+    <h2 class="drug-name">Nicorandil</h2>
+    <span class="class-badge">K+ Channel Opener / NO Donor</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Mediated through ATP-sensitive K+ channels, causing increased outflow of K+ ions from the higher intracellular concentration. This leads to hyperpolarization of vascular smooth muscles.</li>
+                <li>Also acts as a Nitric Oxide (NO) donor.</li>
+                <li>Combined mechanism results in both arteriolar and venodilator effects, with a prominent action of smooth muscle relaxation.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Angina pectoris (Newer antianginal therapy)</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Flushing and palpitations</li>
+                <li>Weakness and headache</li>
+                <li>Dizziness and nausea</li>
+                <li>Vomiting</li>
+                <li>Painful aphthous ulcers in the mouth</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/nicorandil.mp3" type="audio/mpeg">
+    </audio>
+</div>
+<div class="drug-card">
+    <h2 class="drug-name">Dipyridamole</h2>
+    <span class="class-badge">Other Antianginal Drugs</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Inhibits platelet aggregation.</li>
+                <li>Acts as a powerful coronary dilator.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Management of Angina Pectoris</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Not specified in source material</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/dipyridamole.mp3" type="audio/mpeg">
+    </audio>
+</div>
+<div class="drug-card">
+    <h2 class="drug-name">Trimetazidine</h2>
+    <span class="class-badge">Other Antianginal Drugs</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Acts by non-hemodynamic mechanisms (mechanism of action is uncertain).</li>
+                <li>May improve cellular tolerance to ischaemia by inhibiting mitochondrial long-chain 3-ketoacyl-CoA thiolase.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Management of Angina Pectoris</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Not specified in source material</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/trimetazidine.mp3" type="audio/mpeg">
+    </audio>
+</div>
+<div class="drug-card">
+    <h2 class="drug-name">Ranolazine</h2>
+    <span class="class-badge">Novel Antianginal Drug</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Primarily acts by inhibiting a late Na+ current (late I_Na) in the myocardium.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Management of Angina Pectoris</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Not specified in source material</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/ranolazine.mp3" type="audio/mpeg">
+    </audio>
+</div>
+<div class="drug-card">
+    <h2 class="drug-name">Ivabradine</h2>
+    <span class="class-badge">Pure Heart Rate Lowering Antianginal Drug</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Blocks cardiac pacemaker (sino-atrial) cell 'f' channels ("funny" channels).</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Management of Angina Pectoris (introduced recently as an alternative to beta-blockers)</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Not specified in source material</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/ivabradine.mp3" type="audio/mpeg">
+    </audio>
+</div>
+<div class="drug-card">
+    <h2 class="drug-name">Oxyphedrine</h2>
+    <span class="class-badge">Other Antianginal Drugs</span>
+    <div class="drug-info">
+        <div class="info-item">
+            <span class="label">Mechanism of Action</span>
+            <ul>
+                <li>Improves myocardial metabolism.</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Indications</span>
+            <ul>
+                <li>Management of Angina Pectoris</li>
+            </ul>
+        </div>
+        <div class="info-item">
+            <span class="label">Side Effects</span>
+            <ul>
+                <li>Not specified in source material</li>
+            </ul>
+        </div>
+    </div>
+    <audio controls>
+        <source src="audio/oxyphedrine.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+
+</div>
+
+<script>
+
+function showCondition(conditionId) {
+
+    let sections = document.querySelectorAll('.drug-section');
+
+    sections.forEach(section => {
+        section.style.display = 'none';
+    });
+
+    document.getElementById(conditionId).style.display = 'block';
+}
+
+</script>
+
+</body>
+</html>
