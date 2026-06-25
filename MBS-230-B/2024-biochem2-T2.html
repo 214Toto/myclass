@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Papers | ToToZ Collection</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../nav.css">
+  <style>
+    :root {
+      --primary: #2b7a78;
+      --accent: #3aafa9;
+      --dark: #17252a;
+      --light: #f8f9fa;
+      --radius: 12px;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #f5f7fb, #eef6f6);
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--dark));
+      color: white;
+      padding: 1.1rem 0;
+      position: fixed; /* Keeps it at the top when scrolling */
+      top: 0;          /* Added: Ensures it starts at the absolute top */
+      left: 0;         /* Added: Ensures it stretches from the left edge */
+      width: 100%;
+      z-index: 1000;   /* Added: Keeps header above all other elements */
+      box-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* Improved heading styling */
+    header h1 {
+      font-size: 1.25rem;
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: 0.35px;
+      color: #ffffff;
+      text-transform: none;
+      display: inline-block;
+      line-height: 1;
+      text-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* logo heading (keeps icon + title aligned) */
+    .logo h1 {
+      font-size: 1.25rem;
+      margin: 0 0 0 6px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 900px;
+      /* Adjust this value based on how tall your header is */
+      margin: 100px auto 0 auto; 
+      padding: 1.5rem 0;
+    }
+
+    h2 {
+      color: var(--primary);
+      margin: 0 0 0.85rem 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    /* responsive tweaks for small screens */
+    @media (max-width: 520px) {
+      header h1, .logo h1 { font-size: 1rem; }
+      h2 { font-size: 1rem; }
+    }
+
+    .question {
+      margin-bottom: 1.5rem;
+    }
+
+    .question p {
+      font-weight: 600;
+    }
+
+    .options label {
+      display: block;
+      background: #f8fafc;
+      border: 1px solid #d9e2ec;
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      margin-top: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .options label:hover {
+      background: #e0f7f6;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .result {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #f1faf9;
+      border-radius: var(--radius);
+      text-align: center;
+      display: none;
+    }
+
+    .score {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin-top: 0.5rem;
+    }
+
+    /* --- Styles for answer feedback --- */
+    .answer-list { text-align: left; margin-top: 12px; }
+    .answer-item {
+      display: block;
+      padding: 8px 10px;
+      border-radius: 8px;
+      margin: 6px 0;
+      border: 1px solid #e6eef3;
+      background: #ffffff;
+      color: var(--dark);
+      font-weight: 600;
+    }
+    .answer-correct {
+      background: #ecfdf5;       /* light green */
+      border-color: #bbf7d0;
+      color: #065f46;           /* dark green text */
+      box-shadow: 0 6px 18px rgba(16,185,129,0.06);
+    }
+    .answer-wrong {
+      background: #fff1f2;       /* light red */
+      border-color: #fca5a5;
+      color: #9f1239;           /* dark red text */
+      box-shadow: 0 6px 18px rgba(239,68,68,0.06);
+    }
+    .user-choice { outline: 2px dashed rgba(0,0,0,0.04); }
+
+    /* Essay Section */
+    textarea {
+      width: 80%;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.75rem;
+      resize: vertical;
+      min-height: 50px;
+      font-size: 1rem;
+    }
+
+    .essay-answer {
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-top: 0.75rem;
+      display: none;
+    }
+
+    .back-btn {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    /* Explanation box shown under each question in feedback */
+    .explanation {
+      margin-top: 8px;
+      padding: 10px 12px;                                                                                                                                                                                 
+      border-radius: 8px;
+      background: #363d3a;           /* subtle greenish background */
+      color: #065f46;                /* dark green text */
+      font-size: 0.95rem;
+      line-height: 1.4;
+      border: 1px solid #bbf7d0;
+    }
+
+    /* For incorrect explanation (when needed) */
+    .explanation.wrong {
+      background: #fff1f2;
+      color: #7f1d1d;
+      border-color: #fca5a5;
+    }
+
+    /* small label styling for feedback header */
+    .answer-block { color: var(--primary); margin-bottom: 12px; }
+    .answer-block strong { display:block; margin-bottom:8px; color: rgb(7, 113, 95); }
+    .question-feedback { 
+      margin-top: 14px;
+      padding: 14px 16px;
+      color: white;
+      border-radius: 12px;
+      background: #a82525;
+      border: 1px solid #d6e7eb;
+    }
+    .question-feedback .answer-list {
+      margin-top: 10px;
+    }
+
+    /* Essay card styles (compact, readable) */
+    #essay-section { padding-top: 0; }
+    #essay-section .card {
+      background: linear-gradient(180deg, #ffffff, #fbfeff);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(18,38,63,0.06);
+      border: 1px solid rgba(43,122,120,0.06);
+      max-width: 900px;
+      margin: 0 auto 1rem auto;
+    }
+    #essay-section .card h3 {
+      margin: 0 0 10px 0;
+      font-size: 1.02rem;
+      color: var(--dark);
+      font-weight: 700;
+    }
+    #essay-section .subquestion { margin-bottom: 12px; }
+    #essay-section .subquestion label {
+      display:block;
+      font-weight:700;
+      margin-bottom:6px;
+      color:var(--dark);
+    }
+    #essay-section textarea {
+      width:100%;
+      min-height:90px;
+      border-radius:8px;
+      border:1px solid #d1dbe0;
+      padding:10px;
+      resize:vertical;
+      font-family:inherit;
+    }
+
+    .mutwe {
+      max-width: 900px; 
+      margin: 0 auto; 
+      width: 92%; 
+      display:flex; 
+      align-items:center; 
+      justify-content:space-between;
+    }
+
+    #essay-section .answers {
+      display:none;
+      margin-top:14px;
+      background:#f1faf9;
+      border-radius:8px;
+      padding:12px;
+      border:1px solid #cfeee6;
+      color:var(--dark);
+    }
+    #essay-section .answers h3 { margin-top:0; }
+    #essay-section .card .btn { margin-top:8px; }
+    /* make answers visible area stand out when shown */
+    #essay-section .answers.visible { display:block; }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="mutwe">
+      <div class="logo">
+        <i class="fas fa-book-medical"></i>
+        <h1>2024 Physiology Test 1 </h1>
+      </div>
+      <button id="backBtn" class="btn"><i class="fas fa-arrow-left"></i> Back</button>
+    </div>
+  </header>
+
+<div class="container" id="mcq-section">
+  <h2>Multiple Choice Questions</h2>
+
+  <form id="quizForm">
+
+<div class="question">
+  <p>1. A newly diagnosed patient with diabetes avoided table sugar because he knew he had "sugar diabetes," but he continued to consume fruits, fruit drinks, milk, honey, and vegetables, with the result being poor diabetic control. The diet the patient was following contained carbohydrate primarily in which form?</p>
+  <div class="options">
+    <label><input type="radio" name="q1" value="a"> (a) Sucrose</label>
+    <label><input type="radio" name="q1" value="b"> (b) Glucose</label>
+    <label><input type="radio" name="q1" value="c"> (c) Fructose</label>
+    <label><input type="radio" name="q1" value="d"> (d) Lactose</label>
+    <label><input type="radio" name="q1" value="e"> (e) Xylulose</label>
+  </div>
+  <div class="question-feedback" id="feedback-q1"></div>
+</div>
+
+<div class="question">
+  <p>2. A 10-year-old patient had 3 days of severe diarrhea after developing a viral gastroenteritis. Now, whenever she drinks milk, she experiences nausea, abdominal pain, and flatulence. She never had this happen before after drinking milk. Which one of the following would be the best advice for this patient?</p>
+  <div class="options">
+    <label><input type="radio" name="q2" value="a"> (a) She should never consume milk products again.</label>
+    <label><input type="radio" name="q2" value="b"> (b) Her children will have lactose deficiency at birth.</label>
+    <label><input type="radio" name="q2" value="c"> (c) Her ability to drink milk should return in a few days.</label>
+    <label><input type="radio" name="q2" value="d"> (d) She has developed viral gastroenteritis again and should receive antibiotics.</label>
+    <label><input type="radio" name="q2" value="e"> (e) The cause of the symptoms is a defect in the colon.</label>
+  </div>
+  <div class="question-feedback" id="feedback-q2"></div>
+</div>
+
+<div class="question">
+  <p>3. A runner wanted to "carb load" just before a race, and she wanted to pick something to eat that has a high glycemic index. Which one of the following foods should the runner pick?</p>
+  <div class="options">
+    <label><input type="radio" name="q3" value="a"> (a) Ice cream</label>
+    <label><input type="radio" name="q3" value="b"> (b) Malted milk balls</label>
+    <label><input type="radio" name="q3" value="c"> (c) Oatmeal cookies</label>
+    <label><input type="radio" name="q3" value="d"> (d) Spaghetti</label>
+    <label><input type="radio" name="q3" value="e"> (e) Potato chips</label>
+  </div>
+  <div class="question-feedback" id="feedback-q3"></div>
+</div>
+
+<div class="question">
+  <p>4. Viruses cause many human infections such as hepatitis, encephalitis, and the common cold. Which one of the following is a common trait of all these viruses?</p>
+  <div class="options">
+    <label><input type="radio" name="q4" value="a"> (a) They are small, circular DNA molecules that enter bacteria and replicate outside the host genome.</label>
+    <label><input type="radio" name="q4" value="b"> (b) Upon infecting eukaryotic cells, they are called phages.</label>
+    <label><input type="radio" name="q4" value="c"> (c) All the common cold viruses contain both DNA and RNA genomes.</label>
+    <label><input type="radio" name="q4" value="d"> (d) In order to reproduce, they must use the infected cell's DNA, RNA, and protein-synthesizing machinery.</label>
+    <label><input type="radio" name="q4" value="e"> (e) Upon becoming infectious, they are called plasmids.</label>
+  </div>
+  <div class="question-feedback" id="feedback-q4"></div>
+</div>
+
+<div class="question">
+  <p>5. Many drugs used to treat cancers inhibit DNA replication, whereas some will inhibit the pathways required to synthesize proteins from certain genes. Which one of the following accurately describes a step leading from DNA replication to the synthesis of a protein?</p>
+  <div class="options">
+    <label><input type="radio" name="q5" value="a"> (a) Translation of a gene generates a single-stranded RNA that is complementary to both strands of the DNA.</label>
+    <label><input type="radio" name="q5" value="b"> (b) Transcription of a gene generates a single-stranded RNA that is complementary to one of the DNA strands.</label>
+    <label><input type="radio" name="q5" value="c"> (c) tRNA encodes the proteins during translation.</label>
+    <label><input type="radio" name="q5" value="d"> (d) mRNA encodes the proteins during transcription.</label>
+    <label><input type="radio" name="q5" value="e"> (e) rRNA encodes the proteins during transcription.</label>
+  </div>
+  <div class="question-feedback" id="feedback-q5"></div>
+</div>
+
+<div class="question">
+  <p>6. Gout is caused by the deposition of urate crystals in the joints and kidney. Purines are metabolized to uric acid, whereas pyrimidines, when metabolized, do not generate uric acid. Which one of the following should be restricted in the diet of a patient with gout?</p>
+  <div class="options">
+    <label><input type="radio" name="q6" value="a"> (a) Cytosine</label>
+    <label><input type="radio" name="q6" value="b"> (b) Guanine</label>
+    <label><input type="radio" name="q6" value="c"> (c) Thymine</label>
+    <label><input type="radio" name="q6" value="d"> (d) Uracil</label>
+    <label><input type="radio" name="q6" value="e"> (e) Deoxyribose</label>
+  </div>
+  <div class="question-feedback" id="feedback-q6"></div>
+</div>
+
+<div class="question">
+  <p>7. A patient has a microcytic, hypochromic anemia. In order to ascertain the cause of the anemia, the patient's hemoglobin was isolated, and it was determined that there was much more &beta;-chain present than &alpha;-chain, indicating an &alpha;-thalassemia. To determine the genetic basis of the thalassemia, nucleic acids were isolated from the blood of the patient. During the procedure of isolating the nucleic acids, both heat and alkali treatment were required. The alkali and heat were included owing to which ONE of the following?</p>
+  <div class="options">
+    <label><input type="radio" name="q7" value="a"> (a) Alkali causes the two strands of DNA and RNA to separate.</label>
+    <label><input type="radio" name="q7" value="b"> (b) Heat causes the two strands of DNA and RNA to separate.</label>
+    <label><input type="radio" name="q7" value="c"> (c) Alkali cleaves the phosphodiester bonds of DNA and RNA, degrading them to nucleotides.</label>
+    <label><input type="radio" name="q7" value="d"> (d) Alkali separates the strands of DNA and degrades RNA to nucleotides.</label>
+    <label><input type="radio" name="q7" value="e"> (e) Alkali separates the strands of RNA and degrades DNA to nucleotides.</label>
+  </div>
+  <div class="question-feedback" id="feedback-q7"></div>
+</div>
+
+<div class="question">
+  <p>8. Targeting certain structural features of eukaryotic mRNA can result in an inhibition of protein synthesis. Which one of the following describes a unique aspect of eukaryotic mRNA?</p>
+  <div class="options">
+    <label><input type="radio" name="q8" value="a"> (a) A polyguanosine tail is found at the 3'-end.</label>
+    <label><input type="radio" name="q8" value="b"> (b) The 5'-end begins with a leader sequence that contains an adenine cap.</label>
+    <label><input type="radio" name="q8" value="c"> (c) The cap and tail of the mRNA are added posttranscriptionally.</label>
+    <label><input type="radio" name="q8" value="d"> (d) The leader sequence contains a guanosine cap at the 3'-end of the mRNA.</label>
+    <label><input type="radio" name="q8" value="e"> (e) The poly(A) tail is found at the 3'-end of the mRNA.</label>
+  </div>
+  <div class="question-feedback" id="feedback-q8"></div>
+</div>
+
+<div class="question">
+  <p>9. Some chemotherapeutic drugs alter the ability of DNA polymerase to faithfully replicate. For the DNA sequence 5'-ATCGATCGATCGATCG-3', which one of the following represents the sequence and polarity of the complementary strand?</p>
+  <div class="options">
+    <label><input type="radio" name="q9" value="a"> (a) 5'-ATCTATCGATCGATCG-3'</label>
+    <label><input type="radio" name="q9" value="b"> (b) 3'-ATCGATCGATCGATCG-5'</label>
+    <label><input type="radio" name="q9" value="c"> (c) 5'-CGAUCGAUCAUCGAU-3'</label>
+    <label><input type="radio" name="q9" value="d"> (d) 5'-CGATCGATCGATCGAT-3'</label>
+    <label><input type="radio" name="q9" value="e"> (e) 3'-CGATCGATCGATCGAT-5'</label>
+  </div>
+  <div class="question-feedback" id="feedback-q9"></div>
+</div>
+
+<div class="question">
+  <p>10. If the DNA strand, 5'-GCTATGCATCGTGATCGAATTGCGT-3', serves as a template for the synthesis of RNA, which one of the following choices gives the sequence and polarity of the newly synthesized RNA?</p>
+  <div class="options">
+    <label><input type="radio" name="q10" value="a"> (a) 5'-ACGCAATTCGATCACGATGCATAGC-3'</label>
+    <label><input type="radio" name="q10" value="b"> (b) 5'-UGCGUUAAGCUGUGCUACGUAUCG-3'</label>
+    <label><input type="radio" name="q10" value="c"> (c) 5'-ACGCAAUUCGAUCACGAUGCAUAGC-3'</label>
+    <label><input type="radio" name="q10" value="d"> (d) 5'-CGAUACGUAGCACUAGCUUAACGCA-3'</label>
+    <label><input type="radio" name="q10" value="e"> (e) 5'-GCTATGCATCGTGATCGAATTGCGT-3'</label>
+  </div>
+  <div class="question-feedback" id="feedback-q10"></div>
+</div>
+
+<div class="question">
+  <p>11. Understanding the structure of DNA, and the process of replication, enabled various drugs to be developed that interfered with DNA replication. In DNA, the bond between the deoxyribose sugar and the phosphate is best described by which one of the following?</p>
+  <div class="options">
+    <label><input type="radio" name="q11" value="a"> (a) A polar bond</label>
+    <label><input type="radio" name="q11" value="b"> (b) An ionic bond</label>
+    <label><input type="radio" name="q11" value="c"> (c) A hydrogen bond</label>
+    <label><input type="radio" name="q11" value="d"> (d) A covalent bond</label>
+    <label><input type="radio" name="q11" value="e"> (e) A van der Waals bond</label>
+  </div>
+  <div class="question-feedback" id="feedback-q11"></div>
+</div>
+
+<div class="question">
+  <p>12. Certain drugs can intercalate between DNA bases and alter the backbone of the DNA. The backbone of a DNA strand is composed of which of the following?</p>
+  <div class="options">
+    <label><input type="radio" name="q12" value="a"> (a) Phosphates and sugars</label>
+    <label><input type="radio" name="q12" value="b"> (b) Bases and phosphates</label>
+    <label><input type="radio" name="q12" value="c"> (c) Nucleotides and sugars</label>
+    <label><input type="radio" name="q12" value="d"> (d) Phosphates and nucleosides</label>
+    <label><input type="radio" name="q12" value="e"> (e) Sugars and bases</label>
+  </div>
+  <div class="question-feedback" id="feedback-q12"></div>
+</div>
+
+<div class="question">
+  <p>13. Which of the following is correct about dietary fiber?</p>
+  <div class="options">
+    <label><input type="radio" name="q13" value="a"> (a) It is digested in a way similar to that of dietary carbohydrate</label>
+    <label><input type="radio" name="q13" value="b"> (b) It enhances triglyceride formation in the liver</label>
+    <label><input type="radio" name="q13" value="c"> (c) It is found primarily in animal products</label>
+    <label><input type="radio" name="q13" value="d"> (d) It enhances the rate at which chyme moves through the intestine</label>
+    <label><input type="radio" name="q13" value="e"> (e) It tends to decrease stool bulk</label>
+  </div>
+  <div class="question-feedback" id="feedback-q13"></div>
+</div>
+
+<div class="question">
+  <p>14. Which of the following statements is false?</p>
+  <div class="options">
+    <label><input type="radio" name="q14" value="a"> (a) Saturated fats should predominate over unsaturated fats in the diet</label>
+    <label><input type="radio" name="q14" value="b"> (b) Dietary cholesterol intake should be less than 300mg/day</label>
+    <label><input type="radio" name="q14" value="c"> (c) Total fat intake should be 30% or less of total calories</label>
+    <label><input type="radio" name="q14" value="d"> (d) Cholesterol is not an essential nutrient</label>
+    <label><input type="radio" name="q14" value="e"> (e) Arachidonic acid can be synthesized from linoleic acid</label>
+  </div>
+  <div class="question-feedback" id="feedback-q14"></div>
+</div>
+
+<div class="question">
+  <p>15. Which of the following enzymes is used in the diagnosis of thiamine deficiency?</p>
+  <div class="options">
+    <label><input type="radio" name="q15" value="a"> (a) Aldolase</label>
+    <label><input type="radio" name="q15" value="b"> (b) Pyruvate kinase</label>
+    <label><input type="radio" name="q15" value="c"> (c) Glucose-6-phosphatase</label>
+    <label><input type="radio" name="q15" value="d"> (d) Transketolase</label>
+    <label><input type="radio" name="q15" value="e"> (e) Pyruvate carboxylase</label>
+  </div>
+  <div class="question-feedback" id="feedback-q15"></div>
+</div>
+
+<div class="question">
+  <p>16. Of the following hormones, which one is responsible for lowering blood glucose levels by promoting glucose uptake into the cells?</p>
+  <div class="options">
+    <label><input type="radio" name="q16" value="a"> (a) Insulin</label>
+    <label><input type="radio" name="q16" value="b"> (b) Glucagon</label>
+    <label><input type="radio" name="q16" value="c"> (c) Cortisol</label>
+    <label><input type="radio" name="q16" value="d"> (d) Epinephrine</label>
+    <label><input type="radio" name="q16" value="e"> (e) Thyroxine</label>
+  </div>
+  <div class="question-feedback" id="feedback-q16"></div>
+</div>
+
+<div class="question">
+  <p>17. Which of the following statements best describes the structure of glycogen?</p>
+  <div class="options">
+    <label><input type="radio" name="q17" value="a"> (a) Polymer of glucose and galactose</label>
+    <label><input type="radio" name="q17" value="b"> (b) Residues in straight chains are less than the branched residues</label>
+    <label><input type="radio" name="q17" value="c"> (c) Branch points contain &alpha;-1,4 glycosidic linkages</label>
+    <label><input type="radio" name="q17" value="d"> (d) Residues of monosaccharides alternate between D and L glucose</label>
+    <label><input type="radio" name="q17" value="e"> (e) There is formation of hemiacetal when new glucose molecules are added to C1 aldehyde group</label>
+  </div>
+  <div class="question-feedback" id="feedback-q17"></div>
+</div>
+
+<div class="question">
+  <p>18. Which forces/bonds hold the two strands of DNA together?</p>
+  <div class="options">
+    <label><input type="radio" name="q18" value="a"> (a) Ionic bonds</label>
+    <label><input type="radio" name="q18" value="b"> (b) Phosphodiester bonds</label>
+    <label><input type="radio" name="q18" value="c"> (c) Van der Waals forces</label>
+    <label><input type="radio" name="q18" value="d"> (d) Covalent bonds</label>
+    <label><input type="radio" name="q18" value="e"> (e) Hydrogen bonds</label>
+  </div>
+  <div class="question-feedback" id="feedback-q18"></div>
+</div>
+
+<div class="question">
+  <p>19. Which of the following statements is true about the structure of DNA?</p>
+  <div class="options">
+    <label><input type="radio" name="q19" value="a"> (a) It was proposed by Watson and Crick</label>
+    <label><input type="radio" name="q19" value="b"> (b) It is also known as A-DNA</label>
+    <label><input type="radio" name="q19" value="c"> (c) It is composed of polyribonucleotides</label>
+    <label><input type="radio" name="q19" value="d"> (d) The hydrophilic ribonucleotides on in the interior of the structure</label>
+    <label><input type="radio" name="q19" value="e"> (e) The bases are parallel to the super helix axis</label>
+  </div>
+  <div class="question-feedback" id="feedback-q19"></div>
+</div>
+
+<div class="question">
+  <p>20. Which one of these is a major lipid in adipose tissue?</p>
+  <div class="options">
+    <label><input type="radio" name="q20" value="a"> (a) Phospholipids</label>
+    <label><input type="radio" name="q20" value="b"> (b) Triacylglycerol</label>
+    <label><input type="radio" name="q20" value="c"> (c) Sphingolipid</label>
+    <label><input type="radio" name="q20" value="d"> (d) Cholesterol</label>
+    <label><input type="radio" name="q20" value="e"> (e) Cerebrosides</label>
+  </div>
+  <div class="question-feedback" id="feedback-q20"></div>
+</div>
+
+<div class="question">
+  <p>21. Which of the following vitamins would necessitate increased dietary requirement in increased carbohydrate consumption?</p>
+  <div class="options">
+    <label><input type="radio" name="q21" value="a"> (a) Thiamine</label>
+    <label><input type="radio" name="q21" value="b"> (b) Folic acid</label>
+    <label><input type="radio" name="q21" value="c"> (c) Niacin</label>
+    <label><input type="radio" name="q21" value="d"> (d) Pyridoxine</label>
+    <label><input type="radio" name="q21" value="e"> (e) Vitamin C</label>
+  </div>
+  <div class="question-feedback" id="feedback-q21"></div>
+</div>
+
+<div class="question">
+  <p>22. Which one of these describes thiamine?</p>
+  <div class="options">
+    <label><input type="radio" name="q22" value="a"> (a) Synthesized in the body</label>
+    <label><input type="radio" name="q22" value="b"> (b) Fat soluble vitamin</label>
+    <label><input type="radio" name="q22" value="c"> (c) Water soluble vitamin</label>
+    <label><input type="radio" name="q22" value="d"> (d) Purine base</label>
+    <label><input type="radio" name="q22" value="e"> (e) Pyrimidine base</label>
+  </div>
+  <div class="question-feedback" id="feedback-q22"></div>
+</div>
+
+<div class="question">
+  <p>23. Which of the following is not a function of vitamins?</p>
+  <div class="options">
+    <label><input type="radio" name="q23" value="a"> (a) Aid in blood clotting</label>
+    <label><input type="radio" name="q23" value="b"> (b) Provide energy in the form of fat</label>
+    <label><input type="radio" name="q23" value="c"> (c) Protect cells from free radicals</label>
+    <label><input type="radio" name="q23" value="d"> (d) Help in absorption of calcium</label>
+    <label><input type="radio" name="q23" value="e"> (e) Help in vision</label>
+  </div>
+  <div class="question-feedback" id="feedback-q23"></div>
+</div>
+
+<div class="question">
+  <p>24. The facilitative transporter that is most responsible for transporting fructose from the blood into cells is which one of the following?</p>
+  <div class="options">
+    <label><input type="radio" name="q24" value="a"> (a) GLUT 1</label>
+    <label><input type="radio" name="q24" value="b"> (b) GLUT 2</label>
+    <label><input type="radio" name="q24" value="c"> (c) GLUT 3</label>
+    <label><input type="radio" name="q24" value="d"> (d) GLUT 4</label>
+    <label><input type="radio" name="q24" value="e"> (e) GLUT 5</label>
+  </div>
+  <div class="question-feedback" id="feedback-q24"></div>
+</div>
+
+<div class="question">
+  <p>25. A patient with alcoholism developed pancreatitis that affected his exocrine pancreatic function. He exhibited discomfort after eating a high carbohydrate meal. The patient most likely had a reduced ability to digest which one of the following?</p>
+  <div class="options">
+    <label><input type="radio" name="q25" value="a"> (a) Starch</label>
+    <label><input type="radio" name="q25" value="b"> (b) Lactose</label>
+    <label><input type="radio" name="q25" value="c"> (c) Fiber</label>
+    <label><input type="radio" name="q25" value="d"> (d) Sucrose</label>
+    <label><input type="radio" name="q25" value="e"> (e) Maltose</label>
+  </div>
+  <div class="question-feedback" id="feedback-q25"></div>
+</div>
+
+<div class="question">
+  <p>26. A man with type 1 diabetes neglects to take his insulin injections while on a weekend vacation. Cells found within which tissue will be most greatly affected by this mistake?</p>
+  <div class="options">
+    <label><input type="radio" name="q26" value="a"> (a) Brain</label>
+    <label><input type="radio" name="q26" value="b"> (b) Liver</label>
+    <label><input type="radio" name="q26" value="c"> (c) Muscle</label>
+    <label><input type="radio" name="q26" value="d"> (d) Red blood cells</label>
+    <label><input type="radio" name="q26" value="e"> (e) Pancreas</label>
+  </div>
+  <div class="question-feedback" id="feedback-q26"></div>
+</div>
+
+<div class="question">
+  <p>27. After digestion of a piece of cake that contains flour, milk, and sucrose as its primary ingredients, the major carbohydrate products that enter the blood are which of the following?</p>
+  <div class="options">
+    <label><input type="radio" name="q27" value="a"> (a) Glucose</label>
+    <label><input type="radio" name="q27" value="b"> (b) Fructose and galactose</label>
+    <label><input type="radio" name="q27" value="c"> (c) Galactose and glucose</label>
+    <label><input type="radio" name="q27" value="d"> (d) Fructose and glucose</label>
+    <label><input type="radio" name="q27" value="e"> (e) Glucose, galactose and fructose</label>
+  </div>
+  <div class="question-feedback" id="feedback-q27"></div>
+</div>
+
+<div class="question">
+  <p>28. A patient has a genetic defect that causes intestinal epithelial cells to produce disaccharidases of much lower activity than normal. Compared with a normal person, after eating a bowl of oatmeal and milk sweetened with table sugar, this patient will exhibit higher levels of which of the following?</p>
+  <div class="options">
+    <label><input type="radio" name="q28" value="a"> (a) Maltose, sucrose, and lactose in the stool</label>
+    <label><input type="radio" name="q28" value="b"> (b) Starch in the stool</label>
+    <label><input type="radio" name="q28" value="c"> (c) Galactose and fructose in the blood</label>
+    <label><input type="radio" name="q28" value="d"> (d) Glycogen in the muscles</label>
+    <label><input type="radio" name="q28" value="e"> (e) Insulin in the blood</label>
+  </div>
+  <div class="question-feedback" id="feedback-q28"></div>
+</div>
+
+<div class="question">
+  <p>29. The majority of calories in the US diet are derived from carbohydrates, which can contain a variety of glycosidic bonds. Which one of the following carbohydrates contains glucosyl units linked through &alpha;-1,6 glycosidic bonds?</p>
+  <div class="options">
+    <label><input type="radio" name="q29" value="a"> (a) Amylose</label>
+    <label><input type="radio" name="q29" value="b"> (b) Amylopectin</label>
+    <label><input type="radio" name="q29" value="c"> (c) Lactose</label>
+    <label><input type="radio" name="q29" value="d"> (d) Sucrose</label>
+    <label><input type="radio" name="q29" value="e"> (e) Maltose</label>
+  </div>
+  <div class="question-feedback" id="feedback-q29"></div>
+</div>
+
+<div class="question">
+  <p>30. A patient has increased her dietary fiber intake in an effort to decrease constipation. She recently noticed abdominal cramping and bloating as well as increased flatulence. Which of the following best explains why this is happening?</p>
+  <div class="options">
+    <label><input type="radio" name="q30" value="a"> (a) Human enzymes in the small intestine break down the fiber and produce H2, CO2, and methane as byproducts.</label>
+    <label><input type="radio" name="q30" value="b"> (b) Bacteria in the small intestine can convert fiber to H2, CO2, and methane.</label>
+    <label><input type="radio" name="q30" value="c"> (c) Viruses in the unwashed vegetables convert fiber to H2, CO2, and methane.</label>
+    <label><input type="radio" name="q30" value="d"> (d) Bacteria in the colon can convert fiber to H2, CO2, and methane.</label>
+    <label><input type="radio" name="q30" value="e"> (e) Human enzymes in the colon can convert fiber to H2, CO2, and methane.</label>
+  </div>
+  <div class="question-feedback" id="feedback-q30"></div>
+</div>
+
+
+
+
+    
+
+    <button type="button" class="btn" onclick="submitQuiz()">Submit</button>
+  </form>
+
+  <div class="result" id="resultBox">
+    <h3>Your Score:</h3>
+    <div class="score" id="score">0%</div>
+    <div id="answers"></div>
+  </div>
+</div>
+
+<!-- Short Essay Section (card style with sub-questions) -->
+<section id="essay-section" class="container" style="display:none;">
+  <h2 style="margin-bottom:1rem;color:var(--dark)">Short Essay Questions</h2>
+
+<div class="card">
+  <h3>1. A 35-year-old man reported in the hospital OPD with complaints of lack of appetite, and weakness of legs. Often he had a feeling of heaviness and numbness of legs with "pin and needle" sensation. Relatives reported that he takes alcohol quite a lot. He appeared malnourished and came from poor socio-economic background. Laboratory investigations showed raised plasma pyruvic acid level. The doctor requested that activity of a certain enzyme in red blood cells be determined.</h3>
+
+  <div class="subquestion">
+    <label>a) What is the most probable diagnosis? (1 mark)</label>
+    <textarea id="ans1a" placeholder="Enter diagnosis..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>b) Mention the cause of the neurotic symptoms in this patient (1 mark)</label>
+    <textarea id="ans1b" placeholder="Explain the primary biological cause behind neurological defects..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>c) Explain the biochemical changes in this disorder (1 mark)</label>
+    <textarea id="ans1c" placeholder="Describe the biochemical impact of this deficiency..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>d) Why are some vitamins referred to as energy releasing vitamins? (1 mark)</label>
+    <textarea id="ans1d" placeholder="Explain the metabolic function of these vitamins..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>e) Why should the intake of water soluble vitamins be so frequent? (0.5 mark)</label>
+    <textarea id="ans2e" placeholder="Explain absorption and physiological clearance..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>f) Name two main general sources of vitamins (0.5 mark)</label>
+    <textarea id="ans2f" placeholder="List general source categories..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>g) Name the vitamin and it's corresponding coenzyme in the above figure. (0.5 mark)<br>
+    <img src="../ppts-3/2024-q2-f.jpeg"></label>
+    <textarea id="ans2g" placeholder="Identify chemical structure..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>h) Name the group that is transferred in reactions involving the above coenzyme (0.5 mark)</label>
+    <textarea id="ans2h" placeholder="State group transferred..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>i) What is the general term given to reactions where this coenzyme is required? (1 mark)</label>
+    <textarea id="ans2i" placeholder="State reaction class..."></textarea>
+  </div>
+
+
+  <button class="btn" onclick="showAnswers('1')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answers1" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>a)</b> <b>Dry Beriberi</b> (Thiamine / Vitamin {B_1}$ deficiency with predominantly neurological symptoms).</p>
+    <p><b>b)</b> Lack of Acetyl CoA, Precursor for the synthesis of neurotransmitter Acetylcholine. <br> Also Synthesis of Lipids for myelination is disturbed </p>
+    <p><b>c)</b> Severe thiamine deficiency inactivates <b>Pyruvate Dehydrogenase (PDH)</b> and <b>alpha-Ketoglutarate Dehydrogenase</b>. This stops pyruvate from converting into Acetyl-CoA, stalling the Krebs cycle (TCA), causing a severe drop in cellular ATP synthesis, and elevating upstream plasma pyruvic acid levels.</p>
+    <p><b>d)</b> Becoz they are involved in Energy Yeilding Catabolic Reactions </p>
+    <p><b>e)</b> They are not stored in the body and they are Lost in Urine
+    </p>
+    <p><b>f)</b> Diet and Intetinal Micro-organisms</p>
+    <p><b>g)</b> Vitamin is Thiamine and the co enzymes is Thiamine Pyrophosphate (TPP)</p>
+    <p><b>h)</b> Aldehyde Group</p>
+    <p><b>i)</b> Carbohydrate Metabolism Reactions</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>2. DNA is the largest macromolecule in the body, consisting of millions of nucleotide units that are linked covalently. DNA is the storehouse of the genetic information which is translated into perceptible traits like the colour of skin, hair texture, height, etc. <br><br>
+  <img src="../ppts-3/2024-q2.jpeg"></h3>
+
+  <div class="subquestion">
+    <label>a) Explain the antiparallel nature of the DNA structure (1 mark)</label>
+    <textarea id="ans2a" placeholder="Explain strand orientation..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>b) What is the size of the human genome in terms of base pairs? (0.5 mark)</label>
+    <textarea id="ans2b" placeholder="State size in billions of base pairs..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>c) Each strand of DNA is wound into a right-handed helix. How many base pairs does each turn accommodate? (0.5 mark)</label>
+    <textarea id="ans2c" placeholder="State number of base pairs per turn..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>d) State three properties that DNA fulfills as carrier of genetic material (2 marks)</label>
+    <textarea id="ans2d" placeholder="List three biological requirements..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>e) Mention events which proved that DNA is the genetic material (1 mark)</label>
+    <textarea id="ans1e" placeholder="List historical experiments..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>f) Outline the structural features of DNA double helix (1 mark)</label>
+    <textarea id="ans1f" placeholder="Detail the Watson-Crick model features..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>g) What are the distinctive structural features of eukaryotic DNA? (2 marks)</label>
+    <textarea id="ans1g" placeholder="Contrast eukaryotic DNA properties from prokaryotes..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>h) What are the alternative higher order forms of DNA and how are they different from B-DNA? (1 mark)</label>
+    <textarea id="ans1h" placeholder="Describe A-DNA, Z-DNA, etc..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>i) Outline the experiments that show that DNA replicates by semiconservative mechanism. Describe the mechanism of DNA replication (2 marks)</label>
+    <textarea id="ans1i" placeholder="Explain the historical experiment and the core steps of replication..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>j) Why does DNA contain thymine and not uracil? (1 mark)</label>
+    <textarea id="ans1j" placeholder="Explain the evolutionary advantage concerning deamination..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>k) Several chemicals alter DNA bases or the structure of DNA, which often leads to mutations. Types of chemical mutagens are deaminating agents, base analogues etc. Define a base analogue and explain how some analogues are used as drugs (2 marks)</label>
+    <textarea id="ans2k" placeholder="Define and explain pharmacology..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>l) ACGCATA is sequence of one DNA strand. What is the sequence of opposite strand? (0.5 mark)</label>
+    <textarea id="ans2l" placeholder="Provide complementary sequence..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>m) What is t-RNA? What is its role? (1 mark)</label>
+    <textarea id="ans2m" placeholder="Define tRNA and role..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>n) Identify the two structures (a) and (b) in the above figure. (0.5 mark)<br>
+    <img src="../ppts-3/2024-q2-m.jpeg"></label>
+    <textarea id="ans2n" placeholder="Identify structures a and b..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>o) At 3' end of most of eukaryotic mRNA, a polymer of adenylate (poly A) is found as tail. Poly A tail. What is the role of this tail? (1 mark)</label>
+    <textarea id="ans2o" placeholder="List metabolic protection tasks..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>p) In prokaryotes 5' end of mRNA contains a sequence rich in A and G. Such sequence is known as Shine-Dalgarno sequence. What is role of this sequence? (1 mark)</label>
+    <textarea id="ans2p" placeholder="Describe the function in translation..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>q) Explain the hairpin or loop like structure of the mRNA (2 marks)</label>
+    <textarea id="ans2q" placeholder="Describe internal base pairing origins..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>r) What kind of linkage joins the nucleotides in the RNA? (0.5 mark)</label>
+    <textarea id="ans2r" placeholder="State chemical linkage..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>s) What are the three main types of RNAs? Of these, which one accounts for the highest percentage of the total RNA? (1.5 marks)</label>
+    <textarea id="ans2s" placeholder="List the types and the most abundant one..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>t) Explain the observation that in RNA, the sum of purine bases is not equal to sum pyrimidine bases (1 mark)</label>
+    <textarea id="ans2t" placeholder="State structural configuration properties..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>u) Explain why it is possible to hydrolyse RNA with alkali, but there is resistance in DNA (0.5 mark)</label>
+    <textarea id="ans2u" placeholder="Identify the crucial chemical difference..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('2')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answers2" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>a)</b> The two strands run in opposite directions; one strand is oriented in the <b>5' to 3'</b> direction, while its complementary strand is aligned <b>3' to 5'</b>.</p>
+    <p><b>b)</b> Approximately <b>3.1 billion base pairs</b> (3.1 X 10^9 base pairs) per haploid genome.</p>
+    <p><b>c)</b> Approximately <b>10 base pairs</b> (often rounded to 10) per full structural helical turn in standard B-DNA.</p>
+    <p><b>d)</b> 
+      <ol>
+        <li>It must contain complex information in a stable chemical structure.</li>
+        <li>It must replicate with high precision to preserve characteristics across generations.</li>
+        <li>It must be capable of undergoing rare, inherited variations (mutations) to allow evolution.</li>
+      </ol>
+    </p>
+    <p><b>e)</b> The Avery, MacLeod, and McCarty Experiment (1944): They demonstrated that DNA (and not protein or RNA) was the "transforming principle" responsible for turning harmless R-strain Streptococcus pneumoniae bacteria into the virulent S-strain. 
+      <br>The Hershey and Chase Experiment (1952): Using radioactive isotopes <sup>32</sup>P and <sup>35</sup>S to label bacteriophages, they definitively proved that DNA is the specific hereditary material injected into bacterial cells to direct the generation of new viruses.</p>
+    <p><b>f)</b> Consists of 2 polydeoxyribonucleiotides of opposite polarity wound around each each other on a common axis in a right handed helical structure.</p>
+    <p><b>g)</b> <b>Vitamin:</b> Thiamine (Vitamin {B_1}$) <br><b>Coenzyme:</b> Thiamine Pyrophosphate (TPP)</p>
+    <p><b>h)</b> A-DNA: A right-handed helix that is shorter, wider, and more compact than B-DNA. It forms under dehydrated (low water) conditions. Has about 11 Base Pairs per turn
+      <br> Z-DNA: A left-handed helix with a characteristic zigzag sugar-phosphate backbone. It forms in regions with alternating purine-pyrimidine sequences (e.g., GC repeats) and high salt concentrations. Has about 12 base pairs per turn.</p>
+    <p><b>i)</b> The Meselson-Stahl experiment proved that DNA replication is semiconservative (where each strand of the original molecule serves as a template for a new strand). 
+      <br>  The Mechanism of Replication - <b>Unwind</b>: Helicase opens the DNA helix at the origin (ori) to create a replication fork. Topoisomerase (DNA gyrase) relieves mechanical strain ahead of it, and SSB proteins keep the strands separated. <br> <b>Build</b>: Primase lays down a short RNA primer. DNA Polymerase III builds new strands only in the 5' to 3' direction: Leading strand: Built continuously toward the fork. Lagging strand: Built discontinuously away from the fork in short Okazaki fragments. <br>Seal: DNA Polymerase I replaces the RNA primers with DNA, and DNA Ligase glues the fragments together. </p>
+    <p><b>j)</b> Thymine Readily undergoes deamination to form Uracil. Whereas synthesis of thymine requires a complex pathway and a lot of energy.</p>
+    <p><b>k)</b> A <b>base analogue</b> is a chemical compound structurally similar to normal nitrogenous bases ($A, T, G, C$). Because of this likeness, polymerases mistakenly insert them into replicating strands during cell division. As drugs, they stall transcription/replication or create massive replication errors, selectively halting rapidly dividing cancerous or viral cell populations.</p>
+    <p><b>l)</b> 3'-TGCGTAT-5' (or 5'-TATGCGT-3')</p>
+    <p><b>m)</b> <b>Transfer RNA</b> is a small structural RNA molecule (75-90 nucleotides). Its role is to carry amino acids from the cytoplasm to ribosomes, matching its specific anticodon loop with the corresponding mRNA codon during translation.</p>
+    <p><b>n)</b> <b>(a)</b> Secondary structure of tRNA (Cloverleaf model)<br><b>(b)</b> Tertiary structure of tRNA (L-shaped model)</p>
+    <p><b>o)</b> It protects the mature transcript from enzymatic degradation by 3' exonucleases, assists in nuclear export pathways, and dramatically increases translation efficiency on cytoplasmic ribosomes.</p>
+    <p><b>p)</b> It acts as the ribosome-binding site that pairs with the complementary 16S rRNA sequence within the small (30S) bacterial ribosomal subunit, precisely positioning the start codon (AUG) to initiate protein synthesis.</p>
+    <p><b>q)</b> It is formed when a single strand of RNA contains local <b>inverted palindrome sequences</b>. The single strand loops back on itself, forming complementary hydrogen-bonded base pairs (the stem) while leaving un-paired nucleotides at the bend (the loop).</p>
+    <p><b>r)</b> <b>Phosphodiester bonds</b> (linking the 3'-hydroxyl of one ribose to the 5'-phosphate of the next).</p>
+    <p><b>s)</b> Ribosomal RNA (rRNA), Transfer RNA (tRNA), and Messenger RNA (mRNA). <b>Ribosomal RNA (rRNA)</b> accounts for the highest percentage (approx 80%) of total cellular RNA.</p>
+    <p><b>t)</b> RNA is typically a <b>single-stranded molecule</b>. Because it does not exist as a double-stranded helix along its entire length, it does not conform to Chargaff's rules ($\text{A}+\text{G} \neq \text{C}+\text{U}$).</p>
+    <p><b>u)</b> RNA contains a <b>2'-hydroxyl (-OH) group</b> on its ribose sugar component. This group behaves as a nucleophile under basic conditions, attacking the adjacent phosphodiester bond to break the backbone. Deoxyribose in DNA lacks this 2'-OH group, making it highly stable against alkaline hydrolysis.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>3. Carbohydrates are present in humans, animal tissues, plants and in micro-organisms. They are also present in tissue fluids, blood, milk, secretions and excretions of animals.</h3>
+
+  <div class="subquestion">
+    <label>a) Give an example from each class/subclass (1 mark)</label>
+    <textarea id="ans3a" placeholder="Monosaccharide, Disaccharide, Polysaccharide examples..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>b) Name three most common disaccharides and their constituent monosaccharides (3 marks)</label>
+    <textarea id="ans3b" placeholder="List the 3 disaccharides and their building blocks..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>c) Explain why starch can be utilized in humans but not cellulose? (1 mark)</label>
+    <textarea id="ans3c" placeholder="Explain enzyme specificity regarding glycosidic bonds..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>d) What class of isomers are most of the carbohydrates found in human body (D or L)? (0.5 mark)</label>
+    <textarea id="ans3d" placeholder="State D or L isomers..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>e) Name two important properties that the presence of an asymmetric carbon imparts to the molecule (2 marks)</label>
+    <textarea id="ans3e" placeholder="List properties such as optical activity..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>f) What is the difference in terms of orientation of groups between the two isomers? (1 mark)</label>
+    <textarea id="ans3f" placeholder="Describe spatial non-superimposability..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>g) The linkage between aldehyde group of glucose and its hydroxyl group of 5th carbon atom is... (0.5 mark)</label>
+    <textarea id="ans3g" placeholder="Identify cyclic linkage type..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>h) Glucose and fructose are the examples of... (0.5 mark)</label>
+    <textarea id="ans3h" placeholder="State relation type..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>i) Compare starch and glycogen with respect to: (3 marks)<br>
+    i. Source <br>
+    ii. Structure <br>
+    iii. Function</label>
+    <textarea id="ans3i" placeholder="Provide comparison for source, structure, and function..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>j) What are aminosugars? (1 mark)</label>
+    <textarea id="ans3j" placeholder="Define aminosugars..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>k) What is the biomedical importance of aminosugars? (1 mark)</label>
+    <textarea id="ans3k" placeholder="Describe physiological structural roles..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('3')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answers3" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>3. a)</b> <b>Monosaccharide:</b> Glucose; <b>Disaccharide:</b> Sucrose; <b>Polysaccharide:</b> Glycogen.</p>
+    <p><b>3. b)</b> 
+      <ul>
+        <li><b>Sucrose:</b> Glucose + Fructose</li>
+        <li><b>Lactose:</b> Glucose + Galactose</li>
+        <li><b>Maltose:</b> Glucose + Glucose</li>
+      </ul>
+    </p>
+    <p><b>3. c)</b> Humans possess the digestive enzyme <b>-amylase</b> which explicitly targets and hydrolyzes the alpha (1-4) glycosidic bonds found in starch. They lack the enzyme cellulase required to break the structural beta(1-4) glycosidic linkages present in cellulose.</p>
+    <p><b>3. d)</b> <b>D-isomers</b></p>
+    <p><b>3. e)</b> It allows the molecule to show <b>optical activity</b> (the capacity to rotate plane-polarized light) and establishes <b>stereoisomerism</b> (the formation of non-superimposable mirror images/enantiomers).</p>
+    <p><b>3. f)</b> The isomers differ in the spatial configuration of their OH groups around the asymmetric carbon center, rendering them non-superimposable mirror images of one another.</p>
+    <p><b>3. g)</b> <b>Hemiacetal linkage</b> (forming an intramolecular cyclic ring).</p>
+    <p><b>3. h)</b> <b>Functional Isomers</b> (Glucose is an aldohexose, while Fructose is a ketohexose).</p>
+    <p><b>3. i)</b> 
+      <table border="1" cellpadding="5" style="border-collapse:collapse; text-align:left;">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Starch</th>
+            <th>Glycogen</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Source</b></td>
+            <td>Plants (e.g., potatoes, grains)</td>
+            <td>Animals (stored in liver and muscles)</td>
+          </tr>
+          <tr>
+            <td><b>Structure</b></td>
+            <td>Mixture of unbranched amylose (alpha-1,4) and moderately branched amylopectin (alpha-1,4 and alpha-1,6)</td>
+            <td>Highly branched polymer with frequent alpha-1,6 branch points every 8–12 glucose units</td>
+          </tr>
+          <tr>
+            <td><b>Function</b></td>
+            <td>Primary energy storage molecule in plant tissues</td>
+            <td>Main quick-access glucose storage depot in animal systems</td>
+          </tr>
+        </tbody>
+      </table>
+    </p>
+    <p><b>3. j)</b> Aminosugars are carbohydrate molecules where a hydroxyl ($-\mathrm{OH}$) group (typically at carbon 2) has been substituted by an amino ($-\mathrm{NH_2}$) group (e.g., Glucosamine, Galactosamine).</p>
+    <p><b>3. k)</b> They serve as agents that are able to kill bacteria (Bactericidal) and agents that are able to stop the growth of bacteria (Bacteriostatic).</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>4. Vitamins are organic nutrients of low molecular mass that play a central role in metabolism. Most vitamins are either not synthesized or are synthesized in inadequate amounts by the human organism; therefore, they must be obtained from an exogenous source, such as diet or bacterial flora in the gut. Dietary vitamin deficiency may lead to diseases and even death. Vitamins and their utility for humans were known much before their structure and function were elucidated.</h3>
+
+  <div class="subquestion">
+    <label>a) What is niacin? (0.5 mark)</label>
+    <textarea id="ans4a" placeholder="State vitamin number/name..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>b) What are the biological active forms of niacin? (0.5 mark)</label>
+    <textarea id="ans4b" placeholder="List active coenzymes..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>c) What is the condition that arises in human being when they lack niacin? (0.5 mark)</label>
+    <textarea id="ans4c" placeholder="Identify deficiency disease..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>d) What do the 3 Ds in niacin deficient patients, stand for? (1.5 marks)</label>
+    <textarea id="ans4d" placeholder="List the 3 Ds..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>e) Is niacin deficiency be drug-induced? Justify your answer (1.5 marks)</label>
+    <textarea id="ans4e" placeholder="Detail pharmacological causes..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>f) What type of reactions does the niacin coenzyme participate in? (0.5 mark)</label>
+    <textarea id="ans4f" placeholder="State chemical reaction type..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('4')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answers4" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>4. a)</b> Niacin is <b>Vitamin B_3</b> (Nicotinic acid / Nicotinamide).</p>
+    <p><b>4. b)</b> <b>NAD^+</b> (Nicotinamide Adenine Dinucleotide) and <b>NADP^+</b> (Nicotinamide Adenine Dinucleotide Phosphate).</p>
+    <p><b>4. c)</b> <b>Pellagra</b></p>
+    <p><b>4. d)</b> <b>Dermatitis</b>, <b>Diarrhea</b>, and <b>Dementia</b> (if left entirely untreated, it leads to a 4th D: Death).</p>
+    <p><b>4. e)</b> <b>Yes</b>. Prolonged therapy with the antituberculosis medication <b>Isoniazid</b> induces niacin deficiency. Isoniazid blocks pyridoxine (Vitamin {B_6}$), which is an essential cofactor for the enzyme kynureninase in the metabolic pathway that converts the amino acid tryptophan into endogenous niacin.</p>
+    <p><b>4. f)</b> <b>Oxidation-reduction (redox) reactions</b>, serving as crucial hydrogen/electron carriers.</p>
+  </div>
+</div>
+
+
+ </section>
+
+<script>
+  // Short explanation text for each question (keyed by question id)
+const answerExplanations = {
+  q1: "Fruits, fruit drinks, and honey contain free fructose or fructose paired with glucose in high ratios, leading to poor glycemic management if unmonitored.",
+  q2: "Viral gastroenteritis often destroys or damages the microvilli architecture, resulting in transient/secondary lactase deficiency that resolves when cells regenerate.",
+  q3: "Potato chips and simple starches with low fat/protein content feature significantly high glycemic indexes compared to dense pasta like spaghetti.",
+  q4: "All viruses are obligate intracellular parasites that must hijack host cellular machinery to process nucleic acids and synthesize protective protein capsids.",
+  q5: "Transcription is the standard step downstream of replication where one strand of genomic DNA acts as a template for synthesizing an RNA transcript.",
+  q6: "Gout management requires restricting high-purine foods because purine breakdown pathways generate poorly soluble uric acid.",
+  q7: "Alkali separates DNA strands without disrupting the phosphodiester bonds, whereas it induces alkaline hydrolysis of the 2'-OH group on RNA, completely breaking down the RNA chain.",
+  q8: "Eukaryotic mRNAs are uniquely characterized by a protective polyadenylated [poly(A)] tail attached directly to their 3' terminus during post-transcriptional processing.",
+  q9: "DNA strands run antiparallel. The perfect Watson-Crick complement to 5'-ATCGATCGATCGATCG-3' aligned from 5' to 3' is 5'-CGATCGATCGATCGAT-3'.",
+  q10: "The newly generated RNA runs antiparallel to the template strand. Translating base-pairs to RNA gives 5'-ACGCAAUUCGAUCACGAUGCAUAGC-3'.",
+  q11: "The DNA sugar-phosphate backbone contains covalent phosphodiester bonds that link adjacent nucleosides.",
+  q12: "The permanent structure/backbone supporting a nucleic acid macromolecule alternates repeating sugar subunits and phosphate units.",
+  q13: "Insoluble dietary fiber accelerates peristalsis, decreasing transit time and increasing the overall speed at which chyme traverses the gastrointestinal tract.",
+  q14: "Nutritional standard guidelines recommend restricting saturated fats in favor of unsaturated fats for optimal lipid profile health.",
+  q15: "Transketolase is a thiamine pyrophosphate (TPP)-dependent enzyme in red blood cells; its activity assays diagnose dietary thiamine status.",
+  q16: "Insulin lowers circulating systemic glucose by driving the recruitment of functional GLUT transporters to cell membranes.",
+  q17: "Glycogen branches form via specialized alpha-1,6 glycosidic bonds, while linear chains extend using alpha-1,4 glycosidic linkages.",
+  q18: "Complementary purines and pyrimidines across double-stranded DNA interact via specialized non-covalent hydrogen bonding.",
+  q19: "The classic antiparallel, double-helical structure model of B-DNA was famously elucidated and proposed by James Watson and Francis Crick.",
+  q20: "Adipocytes store metabolic energy efficiently in the form of highly reduced hydrophobic triacylglycerols (triglycerides).",
+  q21: "Thiamine (Vitamin B1) serves as an essential cofactor for carbohydrate-cleaving multienzyme complexes like pyruvate dehydrogenase.",
+  q22: "Thiamine belongs to the group of readily excreted B-complex vitamins, which are classified as water-soluble.",
+  q23: "Vitamins function primarily as metabolic cofactors, modulators, or biological antioxidants, but do not undergo direct beta-oxidation to yield caloric fat energy.",
+  q24: "GLUT 5 is a specialized facilitative hexose carrier displaying distinct selectivity for transporting fructose across cellular membranes.",
+  q25: "Chronic exocrine pancreatic damage cuts off the secretion of lumenal pancreatic alpha-amylase, which is critical for hydrolyzing starch polymers.",
+  q26: "Skeletal muscle relies heavily on insulin-dependent GLUT4 translocation to capture glucose from circulation; a lack of insulin significantly impairs this uptake.",
+  q27: "Flour yields glucose, milk yields glucose and galactose, and sucrose yields glucose and fructose, resulting in a pool of all three monosaccharides.",
+  q28: "Low disaccharidase activity limits the conversion of maltose, sucrose, and lactose into absorbable monomer units, leaving them to collect inside the stool.",
+  q29: "Amylopectin contains branched chain architectures anchored precisely at alpha-1,6 glycosidic linkage intersections.",
+  q30: "Anaerobic bacteria dwelling within the large intestine (colon) ferment undigested complex dietary fiber, producing gas byproducts like hydrogen, carbon dioxide, and methane."
+};
+
+const correctAnswers = {
+  q1: "c", q2: "c", q3: "e", q4: "d", q5: "b", q6: "b",
+  q7: "d", q8: "e", q9: "d", q10: "c", q11: "d", q12: "a",
+  q13: "d", q14: "a", q15: "d", q16: "a", q17: "c", q18: "e",
+  q19: "a", q20: "b", q21: "a", q22: "c", q23: "b", q24: "e",
+  q25: "a", q26: "c", q27: "e", q28: "a", q29: "b", q30: "d"
+};
+
+
+ 
+  function submitQuiz() {
+     let score = 0;
+     const total = Object.keys(correctAnswers).length;
+ 
+     // Clear any previous inline feedback
+     document.querySelectorAll('.question-feedback').forEach(el => el.innerHTML = '');
+ 
+     for (let key in correctAnswers) {
+       const radios = Array.from(document.querySelectorAll(`input[name="${key}"]`));
+       const selected = radios.find(r => r.checked);
+       const correct = correctAnswers[key];
+ 
+       // Score calc
+       if (selected && selected.value === correct) score++;
+ 
+       const feedbackEl = document.getElementById(`feedback-${key}`);
+       if (!feedbackEl) continue;
+ 
+       let feedbackHTML = `<div class="answer-block"><strong>Question ${key.replace(/^q/, '')}</strong><div class="answer-list">`;
+ 
+       radios.forEach(r => {
+         let label = r.parentElement;
+         let text = label ? label.textContent.trim() : r.value;
+ 
+         let classes = ['answer-item'];
+         if (r.value === correct) classes.push('answer-correct');
+         if (r.checked && r.value !== correct) classes.push('answer-wrong', 'user-choice');
+         if (r.checked && r.value === correct) classes.push('user-choice');
+ 
+         feedbackHTML += `<div class="${classes.join(' ')}">${text}${r.checked ? ' ◀' : ''}</div>`;
+       });
+ 
+       feedbackHTML += `</div>`;
+ 
+       const correctRadio = radios.find(rr => rr.value === correct);
+       const correctText = correctRadio && correctRadio.parentElement ? correctRadio.parentElement.textContent.trim() : correct;
+       const explanationText = answerExplanations[key] || '';
+ 
+       if (selected) {
+         if (selected.value === correct) {
+           feedbackHTML += `<div class="explanation">✅ Correct — ${explanationText}</div>`;
+         } else {
+           feedbackHTML += `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+         }
+       } else {
+         feedbackHTML += `<div class="explanation wrong">No answer selected. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+       }
+ 
+       feedbackHTML += `</div>`;
+       feedbackEl.innerHTML = feedbackHTML;
+     }
+ 
+     const percentage = Math.round((score / total) * 100);
+     document.getElementById("score").innerText = "0%";
+     const resultBox = document.getElementById("resultBox");
+     resultBox.style.display = "block";
+     document.getElementById("answers").innerHTML = '';
+ 
+     let start = 0;
+     const timer = setInterval(() => {
+       if (start >= percentage) clearInterval(timer);
+       document.getElementById("score").innerText = start + "%";
+       start++;
+     }, 20);
+ 
+     document.querySelectorAll('#quizForm input').forEach(i => i.disabled = true);
+   }
+ 
+   // Essay Section
+   function showEssayAnswers() {
+     document.querySelectorAll(".essay-answer").forEach(a => a.style.display = "block");
+   }
+
+   // Show/hide model answers for an essay card
+   function showAnswers(id) {
+     const el = document.getElementById('answers' + id);
+     if (!el) return;
+     const isVisible = el.classList.toggle('visible');
+     el.setAttribute('aria-hidden', !isVisible);
+     if (isVisible) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+   }
+ 
+   const mode = localStorage.getItem("examMode");
+
+    if (mode === "essay") {
+      document.getElementById("mcq-section").style.display = "none";
+      document.getElementById("essay-section").style.display = "block";
+    } 
+    else if (mode === "tf") {
+      document.getElementById("mcq-section").style.display = "none";
+      document.getElementById("tf-section").style.display = "block";
+    }
+ 
+   // Navigate to the previous page if available, otherwise fall back to index.html
+   function goBack() {
+     if (history.length > 1) {
+       history.back();
+     } else {
+       window.location.href = "index.html";
+     }
+   }
+ 
+   // header back button hookup (same behaviour)
+   const backBtn = document.getElementById('backBtn');
+   if (backBtn) backBtn.addEventListener('click', (e) => { e.preventDefault(); goBack(); });
+ </script>
+
+</body>
+</html>

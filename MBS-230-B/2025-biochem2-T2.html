@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exam 2024 | ToToZ Collection</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+    :root {
+      --primary: #2b7a78;
+      --accent: #3aafa9;
+      --dark: #17252a;
+      --light: #f8f9fa;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #f5f7fb, #eef6f6);
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--dark));
+      color: white;
+      padding: 1.1rem 0;
+      position: fixed; /* Keeps it at the top when scrolling */
+      top: 0;          /* Added: Ensures it starts at the absolute top */
+      left: 0;         /* Added: Ensures it stretches from the left edge */
+      width: 100%;
+      z-index: 1000;   /* Added: Keeps header above all other elements */
+      box-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* Improved heading styling */
+    header h1 {
+      font-size: 1.25rem;
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: 0.35px;
+      color: #ffffff;
+      text-transform: none;
+      display: inline-block;
+      line-height: 1;
+      text-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* logo heading (keeps icon + title aligned) */
+    .logo h1 {
+      font-size: 1.25rem;
+      margin: 0 0 0 6px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 900px;
+      /* Adjust this value based on how tall your header is */
+      margin: 100px auto 0 auto; 
+      padding: 1.5rem 0;
+    }
+
+    h2 {
+      color: var(--primary);
+      margin: 0 0 0.85rem 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    /* responsive tweaks for small screens */
+    @media (max-width: 520px) {
+      header h1, .logo h1 { font-size: 1rem; }
+      h2 { font-size: 1rem; }
+    }
+
+    .question {
+      margin-bottom: 1.5rem;
+    }
+
+    .question p {
+      font-weight: 600;
+    }
+
+    .options label {
+      display: block;
+      background: #f8fafc;
+      border: 1px solid #d9e2ec;
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      margin-top: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .options label:hover {
+      background: #e0f7f6;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .result {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #f1faf9;
+      border-radius: var(--radius);
+      text-align: center;
+      display: none;
+    }
+
+    .score {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin-top: 0.5rem;
+    }
+
+    /* --- Styles for answer feedback --- */
+    .answer-list { text-align: left; margin-top: 12px; }
+    .answer-item {
+      display: block;
+      padding: 8px 10px;
+      border-radius: 8px;
+      margin: 6px 0;
+      border: 1px solid #e6eef3;
+      background: #ffffff;
+      color: var(--dark);
+      font-weight: 600;
+    }
+    .answer-correct {
+      background: #ecfdf5;       /* light green */
+      border-color: #bbf7d0;
+      color: #065f46;           /* dark green text */
+      box-shadow: 0 6px 18px rgba(16,185,129,0.06);
+    }
+    .answer-wrong {
+      background: #fff1f2;       /* light red */
+      border-color: #fca5a5;
+      color: #9f1239;           /* dark red text */
+      box-shadow: 0 6px 18px rgba(239,68,68,0.06);
+    }
+    .user-choice { outline: 2px dashed rgba(0,0,0,0.04); }
+
+    /* Essay Section */
+    textarea {
+      width: 80%;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.75rem;
+      resize: vertical;
+      min-height: 50px;
+      font-size: 1rem;
+    }
+
+    .essay-answer {
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-top: 0.75rem;
+      display: none;
+    }
+
+    .back-btn {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    /* Explanation box shown under each question in feedback */
+    .explanation {
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: #363d3a;           /* subtle greenish background */
+      color: #065f46;                /* dark green text */
+      font-size: 0.95rem;
+      line-height: 1.4;
+      border: 1px solid #bbf7d0;
+    }
+
+    /* For incorrect explanation (when needed) */
+    .explanation.wrong {
+      background: #fff1f2;
+      color: #7f1d1d;
+      border-color: #fca5a5;
+    }
+
+    /* small label styling for feedback header */
+    .answer-block { color: white; margin-bottom: 12px; }
+    .answer-block strong { display:block; margin-bottom:8px; color: white; }
+    .question-feedback {
+      margin-top: 14px;
+      padding: 14px 16px;
+      color: white;
+      border-radius: 12px;
+      background: #a82525;
+      border: 1px solid #d6e7eb;
+    }
+    .question-feedback .answer-list {
+      margin-top: 10px;
+    }
+
+    /* Essay card styles (compact, readable) */
+    #essay-section { padding-top: 0; }
+    #essay-section .card {
+      background: linear-gradient(180deg, #ffffff, #fbfeff);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(18,38,63,0.06);
+      border: 1px solid rgba(43,122,120,0.06);
+      max-width: 900px;
+      margin: 0 auto 1rem auto;
+    }
+    #essay-section .card h3 {
+      margin: 0 0 10px 0;
+      font-size: 1.02rem;
+      color: var(--dark);
+      font-weight: 700;
+    }
+    #essay-section .subquestion { margin-bottom: 12px; }
+    #essay-section .subquestion label {
+      display:block;
+      font-weight:700;
+      margin-bottom:6px;
+      color:var(--dark);
+    }
+    #essay-section textarea {
+      width:100%;
+      min-height:90px;
+      border-radius:8px;
+      border:1px solid #d1dbe0;
+      padding:10px;
+      resize:vertical;
+      font-family:inherit;
+    }
+    #essay-section .answers {
+      display:none;
+      margin-top:14px;
+      background:#f1faf9;
+      border-radius:8px;
+      padding:12px;
+      border:1px solid #cfeee6;
+      color:var(--dark);
+    }
+    #essay-section .answers h3 { margin-top:0; }
+    #essay-section .card .btn { margin-top:8px; }
+    /* make answers visible area stand out when shown */
+    #essay-section .answers.visible { display:block; }
+
+  </style>
+
+</head>
+<body>
+
+  <header>
+    <div style="max-width: 900px; margin: 0 auto; width: 92%; display:flex; align-items:center; justify-content:space-between;">
+      <div class="logo" style="display: flex; align-items: center;">
+        <i class="fas fa-book-medical"></i>
+        <h1>2025 Biochemistry Test 2</h1>
+      </div>
+      <button id="backBtn" class="btn"><i class="fas fa-arrow-left"></i> Back</button>
+    </div>
+  </header>
+
+<div class="container" id="mcq-section">
+  <h2>Multiple Choice Questions</h2>
+
+  <form id="quizForm">
+
+    <div class="question">
+      <p>1. Dietary fatty acids are precursors for sphingolipids. Of the following, which one is formed from sphingolipids?</p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="a"> Lung surfactant</label>
+        <label><input type="radio" name="q1" value="b"> Myelin sheath</label>
+        <label><input type="radio" name="q1" value="c"> Bile</label>
+        <label><input type="radio" name="q1" value="d"> Arachidonic acid</label>
+        <label><input type="radio" name="q1" value="e"> Blood lipoproteins</label>
+      </div>
+      <div class="question-feedback" id="feedback-q1"></div>
+    </div>
+
+    <div class="question">
+      <p>2. Low-dose aspirin is used as a prevention of platelet aggregation and heart attacks. Low-dose aspirin is used to block the formation of which eicosanoid?</p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="a"> Prostaglandins</label>
+        <label><input type="radio" name="q2" value="b"> Thromboxanes</label>
+        <label><input type="radio" name="q2" value="c"> Leukotrienes</label>
+        <label><input type="radio" name="q2" value="d"> Lysoxins</label>
+        <label><input type="radio" name="q2" value="e"> Epoxides</label>
+      </div>
+      <div class="question-feedback" id="feedback-q2"></div>
+    </div>
+
+    <div class="question">
+      <p>3. In humans, prostaglandins are derived primarily from which one of the following?</p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="a"> Glucose</label>
+        <label><input type="radio" name="q3" value="b"> Acetyl-CoA</label>
+        <label><input type="radio" name="q3" value="c"> Arachidonic acid</label>
+        <label><input type="radio" name="q3" value="d"> Oleic acid</label>
+        <label><input type="radio" name="q3" value="e"> Leukotrienes</label>
+      </div>
+      <div class="question-feedback" id="feedback-q3"></div>
+    </div>
+
+    <div class="question">
+      <p>4. Some premature babies suffer from respiratory distress syndrome. Which class of lipids do these infants fail to secrete?</p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="a"> Triacyl glycerol</label>
+        <label><input type="radio" name="q4" value="b"> Sphingomyelin</label>
+        <label><input type="radio" name="q4" value="c"> Glycerophospholipids</label>
+        <label><input type="radio" name="q4" value="d"> Glycolipids</label>
+        <label><input type="radio" name="q4" value="e"> Plasmalogens</label>
+      </div>
+      <div class="question-feedback" id="feedback-q4"></div>
+    </div>
+
+    <div class="question">
+      <p>5. Which of these enzymes is found in venoms of poisonous snakes and is responsible for the hydrolysis of fatty acids leading to formation of lysolecithin?</p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="a"> Phospholipase A2</label>
+        <label><input type="radio" name="q5" value="b"> Phosphatase A2</label>
+        <label><input type="radio" name="q5" value="c"> Lysase A2</label>
+        <label><input type="radio" name="q5" value="d"> Ligase A2</label>
+        <label><input type="radio" name="q5" value="e"> Isomerase A2</label>
+      </div>
+      <div class="question-feedback" id="feedback-q5"></div>
+    </div>
+
+    <div class="question">
+      <p>6. Which ether glycerolipid is produced in significant amounts in the fetus in late pregnancy and is responsible for stimulating the production of foetal lung surfactant?</p>
+      <div class="options">
+        <label><input type="radio" name="q6" value="a"> Platelet activating factor</label>
+        <label><input type="radio" name="q6" value="b"> Plasmalogen</label>
+        <label><input type="radio" name="q6" value="c"> Sphingosine</label>
+        <label><input type="radio" name="q6" value="d"> Lipoprotein</label>
+        <label><input type="radio" name="q6" value="e"> Myelin</label>
+      </div>
+      <div class="question-feedback" id="feedback-q6"></div>
+    </div>
+
+    <div class="question">
+      <p>7. Which genetic disease arises when there is accumulation of sphingomyelin in the brain, liver and spleen and the condition is due to deficiency in sphingomyelinase enzyme?</p>
+      <div class="options">
+        <label><input type="radio" name="q7" value="a"> Nieman Pick</label>
+        <label><input type="radio" name="q7" value="b"> Gaucher's</label>
+        <label><input type="radio" name="q7" value="c"> Tay Sachs</label>
+        <label><input type="radio" name="q7" value="d"> Glucocerebrosidosis</label>
+        <label><input type="radio" name="q7" value="e"> Sphingocerebrosidosis</label>
+      </div>
+      <div class="question-feedback" id="feedback-q7"></div>
+    </div>
+
+    <div class="question">
+      <p>8. Which of the following best describes the structure of a steroid?</p>
+      <div class="options">
+        <label><input type="radio" name="q8" value="a"> Three six-membered rings and one five membered ring all fused together</label>
+        <label><input type="radio" name="q8" value="b"> Two six-membered rings and one five membered ring all fused together</label>
+        <label><input type="radio" name="q8" value="c"> Four five-membered rings and one five membered ring all fused together</label>
+        <label><input type="radio" name="q8" value="d"> One three-membered rings and one five membered ring all fused together</label>
+        <label><input type="radio" name="q8" value="e"> Three six-membered rings and one three membered ring all fused together</label>
+      </div>
+      <div class="question-feedback" id="feedback-q8"></div>
+    </div>
+
+    <div class="question">
+      <p>9. Which of the following steroids is a precursor of all animal steroids?</p>
+      <div class="options">
+        <label><input type="radio" name="q9" value="a"> Testosterone</label>
+        <label><input type="radio" name="q9" value="b"> Cortisol</label>
+        <label><input type="radio" name="q9" value="c"> Aldosterone</label>
+        <label><input type="radio" name="q9" value="d"> Estradiol</label>
+        <label><input type="radio" name="q9" value="e"> Cholesterol</label>
+      </div>
+      <div class="question-feedback" id="feedback-q9"></div>
+    </div>
+
+    <div class="question">
+      <p>10. Which of the following is an example of covalent modification used mainly for regulation of enzyme activity?</p>
+      <div class="options">
+        <label><input type="radio" name="q10" value="a"> Amination</label>
+        <label><input type="radio" name="q10" value="b"> Acetylation</label>
+        <label><input type="radio" name="q10" value="c"> Phosphorylation</label>
+        <label><input type="radio" name="q10" value="d"> Methylation</label>
+        <label><input type="radio" name="q10" value="e"> Decarboxylation</label>
+      </div>
+      <div class="question-feedback" id="feedback-q10"></div>
+    </div>
+
+    <div class="question">
+      <p>11. Which of the following statements is correct about most enzymes?</p>
+      <div class="options">
+        <label><input type="radio" name="q11" value="a"> They increase the activation energy so that the reaction occurs</label>
+        <label><input type="radio" name="q11" value="b"> can make a reaction happen faster</label>
+        <label><input type="radio" name="q11" value="c"> are used once and need to be replaced after catalyzing a reaction</label>
+        <label><input type="radio" name="q11" value="d"> they are stable in both high acid and high alkaline solutions</label>
+        <label><input type="radio" name="q11" value="e"> are not specific to the type of substrate they receive</label>
+      </div>
+      <div class="question-feedback" id="feedback-q11"></div>
+    </div>
+
+    <div class="question">
+      <p>12. Which one of the following statements concerning glutamine is correct?</p>
+      <div class="options">
+        <label><input type="radio" name="q12" value="a"> Contains an amide group</label>
+        <label><input type="radio" name="q12" value="b"> Has Glu as its three letter abbreviation</label>
+        <label><input type="radio" name="q12" value="c"> Classified as an acidic amino acid</label>
+        <label><input type="radio" name="q12" value="d"> Has a charged polar side chain</label>
+        <label><input type="radio" name="q12" value="e"> Doesn't have a chiral carbon</label>
+      </div>
+      <div class="question-feedback" id="feedback-q12"></div>
+    </div>
+
+    <div class="question">
+      <p>13. Succinate dehydrogenase catalyses the dehydrogenation of succinate to fumarate. Malonic acid is used to inhibit the action of this enzyme. What type of inhibition is this?</p>
+      <div class="options">
+        <label><input type="radio" name="q13" value="a"> Competitive</label>
+        <label><input type="radio" name="q13" value="b"> Uncompetitive</label>
+        <label><input type="radio" name="q13" value="c"> Non competitive</label>
+        <label><input type="radio" name="q13" value="d"> Feed back</label>
+        <label><input type="radio" name="q13" value="e"> Allosteric</label>
+      </div>
+      <div class="question-feedback" id="feedback-q13"></div>
+    </div>
+
+    <div class="question">
+      <p>14. ................................ is associated with a condition known as phenylketonuria.</p>
+      <div class="options">
+        <label><input type="radio" name="q14" value="a"> Proline</label>
+        <label><input type="radio" name="q14" value="b"> Methionine</label>
+        <label><input type="radio" name="q14" value="c"> Phenylalanine</label>
+        <label><input type="radio" name="q14" value="d"> Histidine</label>
+        <label><input type="radio" name="q14" value="e"> Valine</label>
+      </div>
+      <div class="question-feedback" id="feedback-q14"></div>
+    </div>
+
+    <div class="question">
+      <p>15. An amino acid that yields acetoacetyl CoA during catabolism of its carbon skeleton is................</p>
+      <div class="options">
+        <label><input type="radio" name="q15" value="a"> Glucogenic</label>
+        <label><input type="radio" name="q15" value="b"> Ketogenic</label>
+        <label><input type="radio" name="q15" value="c"> Hydrophobic</label>
+        <label><input type="radio" name="q15" value="d"> Polar</label>
+        <label><input type="radio" name="q15" value="e"> Polar and hydrophobic</label>
+      </div>
+      <div class="question-feedback" id="feedback-q15"></div>
+    </div>
+
+    <div class="question">
+      <p>16. ................................is an amino acid the contains an imidazole ring</p>
+      <div class="options">
+        <label><input type="radio" name="q16" value="a"> Tyrosine</label>
+        <label><input type="radio" name="q16" value="b"> Phenylalanine</label>
+        <label><input type="radio" name="q16" value="c"> Histidine</label>
+        <label><input type="radio" name="q16" value="d"> Proline</label>
+        <label><input type="radio" name="q16" value="e"> Tryptophan</label>
+      </div>
+      <div class="question-feedback" id="feedback-q16"></div>
+    </div>
+
+    <div class="question">
+      <p>17. A 50-year-old patient is brought to the emergency department with the diagnosis of myocardial infarction. Which lactate dehydrogenase (LDH) isoenzyme activity would prevail in the patient's serum in the first two days after hospitalisation?</p>
+      <div class="options">
+        <label><input type="radio" name="q17" value="a"> LDH1</label>
+        <label><input type="radio" name="q17" value="b"> LDH2</label>
+        <label><input type="radio" name="q17" value="c"> LDH3</label>
+        <label><input type="radio" name="q17" value="d"> LDH4</label>
+        <label><input type="radio" name="q17" value="e"> LDH5</label>
+      </div>
+      <div class="question-feedback" id="feedback-q17"></div>
+    </div>
+
+    <div class="question">
+      <p>18. A chiral carbon of an amino acid arises from the fact that it................................</p>
+      <div class="options">
+        <label><input type="radio" name="q18" value="a"> is symmetric</label>
+        <label><input type="radio" name="q18" value="b"> is bonded to both amino and carboxylic groups</label>
+        <label><input type="radio" name="q18" value="c"> is bonded to four different chemical groups</label>
+        <label><input type="radio" name="q18" value="d"> has net charge of zero</label>
+        <label><input type="radio" name="q18" value="e"> assumes an L configuration</label>
+      </div>
+      <div class="question-feedback" id="feedback-q18"></div>
+    </div>
+
+    <div class="question">
+      <p>19. The stability of protein structures is supported by a number of bonds. Which bonds support the primary structure?</p>
+      <div class="options">
+        <label><input type="radio" name="q19" value="a"> Ionic</label>
+        <label><input type="radio" name="q19" value="b"> Peptide</label>
+        <label><input type="radio" name="q19" value="c"> Hydrogen</label>
+        <label><input type="radio" name="q19" value="d"> Hydrophilic</label>
+        <label><input type="radio" name="q19" value="e"> Hydrophobic</label>
+      </div>
+      <div class="question-feedback" id="feedback-q19"></div>
+    </div>
+
+    <div class="question">
+      <p>20. The normal hemoglobin of an adult person consists of two identical α and two identical β polypeptide chains. What is this level of structure called?</p>
+      <div class="options">
+        <label><input type="radio" name="q20" value="a"> Primary</label>
+        <label><input type="radio" name="q20" value="b"> Secondary</label>
+        <label><input type="radio" name="q20" value="c"> Quaternary</label>
+        <label><input type="radio" name="q20" value="d"> Tertiary</label>
+        <label><input type="radio" name="q20" value="e"> Binary</label>
+      </div>
+      <div class="question-feedback" id="feedback-q20"></div>
+    </div>
+
+    <div class="question">
+      <p>21. One of the common laboratory experiments in Biochemistry determines electrophoretic spectrum of plasma proteins. What is the physiochemical properties of proteins utilized in this method?</p>
+      <div class="options">
+        <label><input type="radio" name="q21" value="a"> Inability to denaturation</label>
+        <label><input type="radio" name="q21" value="b"> Presence of charge</label>
+        <label><input type="radio" name="q21" value="c"> Optical activity</label>
+        <label><input type="radio" name="q21" value="d"> Solubility</label>
+        <label><input type="radio" name="q21" value="e"> Viscosity</label>
+      </div> 
+      <div class="question-feedback" id="feedback-q21"></div>
+    </div>
+
+    <div class="question">
+      <p>22. Amino acids are an important substrate for gluconeogenesis during fasting. Which one of the following is a major gluconeogenic amino acid received by the liver?</p>
+      <div class="options">
+        <label><input type="radio" name="q22" value="a"> Alanine</label>
+        <label><input type="radio" name="q22" value="b"> Glycine</label>
+        <label><input type="radio" name="q22" value="c"> Cysteine</label>
+        <label><input type="radio" name="q22" value="d"> Pyruvate</label>
+        <label><input type="radio" name="q22" value="e"> Tryptophan</label>
+      </div>
+      <div class="question-feedback" id="feedback-q22"></div>
+    </div>
+
+    <div class="question">
+      <p>23. Which amino acid is involved in producing glutathione, an important antioxidant?</p>
+      <div class="options">
+        <label><input type="radio" name="q23" value="a"> Glutamine</label>
+        <label><input type="radio" name="q23" value="b"> Glutamate</label>
+        <label><input type="radio" name="q23" value="c"> Proline</label>
+        <label><input type="radio" name="q23" value="d"> Ornithine</label>
+        <label><input type="radio" name="q23" value="e"> Arginine</label>
+      </div>
+      <div class="question-feedback" id="feedback-q23"></div>
+    </div>
+
+    <div class="question">
+      <p>24. A protein's activity is altered when a particular serine side chain is phosphorylated. Which of the following amino acid substitutions at this position could lead to a permanent alteration in normal enzyme activity?</p>
+      <div class="options">
+        <label><input type="radio" name="q24" value="a"> Serine to Glutamic acid</label>
+        <label><input type="radio" name="q24" value="b"> Serine to Threonine</label>
+        <label><input type="radio" name="q24" value="c"> Serine to Tyrosine</label>
+        <label><input type="radio" name="q24" value="d"> Serine to Lysine</label>
+        <label><input type="radio" name="q24" value="e"> Serine to Leucine</label>
+      </div>
+      <div class="question-feedback" id="feedback-q24"></div>
+    </div>
+
+    <div class="question">
+      <p>25. One of the main sources of non-volatile acid in the body is sulfuric acid generated from the sulfur-containing compounds in ingested food or from the metabolism of the sulfur-containing amino acids. Which of the following amino acids would lead to sulfuric acid formation?</p>
+      <div class="options">
+        <label><input type="radio" name="q25" value="a"> Cysteine and isoleucine</label>
+        <label><input type="radio" name="q25" value="b"> Cysteine and alanine</label>
+        <label><input type="radio" name="q25" value="c"> Cysteine and methionine</label>
+        <label><input type="radio" name="q25" value="d"> Methionine and isoleucine</label>
+        <label><input type="radio" name="q25" value="e"> Isoleucine and alanine</label>
+      </div>
+      <div class="question-feedback" id="feedback-q25"></div>
+    </div>
+
+    <div class="question">
+      <p>26. What would be the most likely composition of amino acids that form a portion of a transmembrane protein located within the plasma membrane?</p>
+      <div class="options">
+        <label><input type="radio" name="q26" value="a"> acidic</label>
+        <label><input type="radio" name="q26" value="b"> basic</label>
+        <label><input type="radio" name="q26" value="c"> hydrophobic</label>
+        <label><input type="radio" name="q26" value="d"> glycosylated</label>
+        <label><input type="radio" name="q26" value="e"> acetylated</label>
+      </div>
+      <div class="question-feedback" id="feedback-q26"></div>
+    </div>
+
+    <div class="question">
+      <p>27. Five isoenzymic forms of lactate dehydrogenase from the human blood serum were isolated and their properties studied. What property indicates that the isoenzymic forms were isolated from the same enzyme?</p>
+      <div class="options">
+        <label><input type="radio" name="q27" value="a"> Same physiochemical properties</label>
+        <label><input type="radio" name="q27" value="b"> Catalyzation of the same reaction</label>
+        <label><input type="radio" name="q27" value="c"> The same electrophoretic mobility</label>
+        <label><input type="radio" name="q27" value="d"> Tissue localisation</label>
+        <label><input type="radio" name="q27" value="e"> Same molecular weight</label>
+      </div>
+      <div class="question-feedback" id="feedback-q27"></div>
+    </div>
+
+    <div class="question">
+      <p>28. Which one of the following can influence the charge of amino acid residues in the active site of an enzyme?</p>
+      <div class="options">
+        <label><input type="radio" name="q28" value="a"> Competitive inhibitor</label>
+        <label><input type="radio" name="q28" value="b"> Excess substrate</label>
+        <label><input type="radio" name="q28" value="c"> pH of medium</label>
+        <label><input type="radio" name="q28" value="d"> Temperature</label>
+        <label><input type="radio" name="q28" value="e"> Atmospheric pressure</label>
+      </div>
+      <div class="question-feedback" id="feedback-q28"></div>
+    </div>
+
+    <div class="question">
+      <p>29. Regulation of enzyme activity is the basis for feedback inhibition in enzyme catalysis. Which one of the following represents the most common type of regulation?</p>
+      <div class="options">
+        <label><input type="radio" name="q29" value="a"> Covalent modification</label>
+        <label><input type="radio" name="q29" value="b"> Allosteric regulation</label>
+        <label><input type="radio" name="q29" value="c"> Proteolysis</label>
+        <label><input type="radio" name="q29" value="d"> Carboxylation</label>
+        <label><input type="radio" name="q29" value="e"> Hydroxylation</label>
+      </div>
+      <div class="question-feedback" id="feedback-q29"></div>
+    </div>
+
+    <div class="question">
+      <p>30. Which of these is an example of the secondary structure of a protein?</p>
+      <div class="options">
+        <label><input type="radio" name="q30" value="a"> Peptide bonding between amino acids</label>
+        <label><input type="radio" name="q30" value="b"> Hydrophobic interactions</label>
+        <label><input type="radio" name="q30" value="c"> Hydrogen bonding between R groups</label>
+        <label><input type="radio" name="q30" value="d"> Disulphide bonds between cysteine residues</label>
+        <label><input type="radio" name="q30" value="e"> Hydrogen bonding an amine and carbonyl group</label>
+      </div>
+      <div class="question-feedback" id="feedback-q30"></div>
+    </div>
+
+    <div class="question">
+      <p>31. Which level of protein structure is determined only by hydrogen bonds?</p>
+      <div class="options">
+        <label><input type="radio" name="q31" value="a"> Primary</label>
+        <label><input type="radio" name="q31" value="b"> Tertiary</label>
+        <label><input type="radio" name="q31" value="c"> Secondary</label>
+        <label><input type="radio" name="q31" value="d"> Quaternary</label>
+        <label><input type="radio" name="q31" value="e"> Ovoidal</label>
+      </div>
+      <div class="question-feedback" id="feedback-q31"></div>
+    </div>
+
+    <div class="question">
+      <p>32. Which globin chains are affected in glycosylated Hemoglobin?</p>
+      <div class="options">
+        <label><input type="radio" name="q32" value="a"> γ-globin chains</label>
+        <label><input type="radio" name="q32" value="b"> α-globin chains</label>
+        <label><input type="radio" name="q32" value="c"> β-globin chains</label>
+        <label><input type="radio" name="q32" value="d"> δ-globin chains</label>
+        <label><input type="radio" name="q32" value="e"> both γ and α-globin chains</label>
+      </div>
+      <div class="question-feedback" id="feedback-q32"></div>
+    </div>
+
+    <div class="question">
+      <p>33. Patients, homozygous for hemoglobin C, have a condition that arises from............................</p>
+      <div class="options">
+        <label><input type="radio" name="q33" value="a"> substitution of lysine by glutamic acid in the β-chain</label>
+        <label><input type="radio" name="q33" value="b"> substitution of glutamic acid by lysine in the β-chain</label>
+        <label><input type="radio" name="q33" value="c"> substitution of valine by glutamic acid in the β-chain</label>
+        <label><input type="radio" name="q33" value="d"> substitution of a polar amino acid by a non-polar one in the β-chain</label>
+        <label><input type="radio" name="q33" value="e"> substitution of one of the α-chains by a β-chain</label>
+      </div>
+      <div class="question-feedback" id="feedback-q33"></div>
+    </div>
+
+    <div class="question">
+      <p>34. Which one of these statements is correct about Thalassemias?</p>
+      <div class="options">
+        <label><input type="radio" name="q34" value="a"> hereditary hemolytic diseases in which there is an imbalance in the synthesis of globin chains</label>
+        <label><input type="radio" name="q34" value="b"> they are polygenic disorders</label>
+        <label><input type="radio" name="q34" value="c"> only α-globin chains are affected</label>
+        <label><input type="radio" name="q34" value="d"> they are not in a class of hemoglobinopathies</label>
+        <label><input type="radio" name="q34" value="e"> Only γ- chains are affected</label>
+      </div>
+      <div class="question-feedback" id="feedback-q34"></div>
+    </div>
+
+    <div class="question">
+      <p>35. Which two amino acids in collagen usually undergo post translational modification?</p>
+      <div class="options">
+        <label><input type="radio" name="q35" value="a"> lysine and histidine</label>
+        <label><input type="radio" name="q35" value="b"> glycine and alanine</label>
+        <label><input type="radio" name="q35" value="c"> valine and isoleucine</label>
+        <label><input type="radio" name="q35" value="d"> lysine and proline</label>
+        <label><input type="radio" name="q35" value="e"> leucine and glutamic acid</label>
+      </div>
+      <div class="question-feedback" id="feedback-q35"></div>
+    </div>
+
+    <div class="question">
+      <p>36. Lack of post translational modifications of some amino acids in collagen leads to non-cross linkage of the fibers. Which one of the following refers to the condition that arises?</p>
+      <div class="options">
+        <label><input type="radio" name="q36" value="a"> sickle cell anemia</label>
+        <label><input type="radio" name="q36" value="b"> pernicious anemia</label>
+        <label><input type="radio" name="q36" value="c"> scurvy</label>
+        <label><input type="radio" name="q36" value="d"> phenylketonuria</label>
+        <label><input type="radio" name="q36" value="e"> hemosiderosis</label>
+      </div>
+      <div class="question-feedback" id="feedback-q36"></div>
+    </div>
+
+    <div class="question">
+      <p>37. Which of the following is responsible for specifying the 3-dimensional shape of a protein?</p>
+      <div class="options">
+        <label><input type="radio" name="q37" value="a"> The peptide bond</label>
+        <label><input type="radio" name="q37" value="b"> The amino acid sequence</label>
+        <label><input type="radio" name="q37" value="c"> Interaction with other polypeptides</label>
+        <label><input type="radio" name="q37" value="d"> Interaction with molecular chaperons</label>
+        <label><input type="radio" name="q37" value="e"> Interaction with water molecules</label>
+      </div>
+      <div class="question-feedback" id="feedback-q37"></div>
+    </div>
+
+    <div class="question">
+      <p>38. Which one of these would not be considered as a function of lipids?</p>
+      <div class="options">
+        <label><input type="radio" name="q38" value="a"> Energy storage</label>
+        <label><input type="radio" name="q38" value="b"> Structural components of cell membranes</label>
+        <label><input type="radio" name="q38" value="c"> Protection of internal organs</label>
+        <label><input type="radio" name="q38" value="d"> Help in absorption of water soluble vitamins</label>
+        <label><input type="radio" name="q38" value="e"> Act as detergent agents</label>
+      </div>
+      <div class="question-feedback" id="feedback-q38"></div>
+    </div>
+
+    <div class="question">
+      <p>39. Which one of these will not be considered as derived lipids?</p>
+      <div class="options">
+        <label><input type="radio" name="q39" value="a"> Terpenes</label>
+        <label><input type="radio" name="q39" value="b"> Steroids</label>
+        <label><input type="radio" name="q39" value="c"> Carotenoids</label>
+        <label><input type="radio" name="q39" value="d"> Male sex hormones</label>
+        <label><input type="radio" name="q39" value="e"> Tocopherols</label>
+      </div>
+      <div class="question-feedback" id="feedback-q39"></div>
+    </div>
+
+    <div class="question">
+      <p>40. Which one of these lipid compounds have choline part structure?</p>
+      <div class="options">
+        <label><input type="radio" name="q40" value="a"> Sphingosine</label>
+        <label><input type="radio" name="q40" value="b"> Lecithin</label>
+        <label><input type="radio" name="q40" value="c"> Gerniol</label>
+        <label><input type="radio" name="q40" value="d"> Triacylglycerol</label>
+        <label><input type="radio" name="q40" value="e"> Phosphatidic acid</label>
+      </div>
+      <div class="question-feedback" id="feedback-q40"></div>
+    </div>
+
+    
+
+    <button type="button" class="btn" onclick="submitQuiz()">Submit</button>
+  </form>
+
+  <div class="result" id="resultBox">
+    <h3>Your Score:</h3>
+    <div class="score" id="score">0%</div>
+    <div id="answers"></div>
+  </div>
+</div>
+
+<!-- Short Essay Section (card style with sub-questions) -->
+<section id="essay-section" class="container" style="display:none;">
+  <h2 style="margin-bottom:1rem;color:var(--dark)">Short Essay Questions</h2>
+
+  <div class="card">
+    <h3>1. A 30year old patient gives a history to the doctor that she always experiences wsevere diarrhoea, nausea .</h3>
+
+    <div class="subquestion">
+      <label>i. What is the normal reference range for total plasma proteins? (1 mark)</label>
+      <textarea id="ans1i" placeholder="Enter reference range here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>ii. What is the term given to plasma that lacks coagulation factors? (1 mark)</label>
+      <textarea id="ans1ii" placeholder="Enter term here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>iii. How are normal reference ranges for biochemical parameters established? (2 marks)</label>
+      <textarea id="ans1iii" placeholder="Describe the process of establishing ranges..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>iv. Which one is a major plasma protein and what is its percentage concentration (1 mark)</label>
+      <textarea id="ans1iv" placeholder="Name protein and percentage..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>v. Name at least one function of this protein (1 mark)</label>
+      <textarea id="ans1v" placeholder="Describe a function..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>vi. Which plasma protein is elevated during inflammation and infections? (1 mark)</label>
+      <textarea id="ans1vi" placeholder="Enter protein name..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>vii. What is its classification? (1 mark)</label>
+      <textarea id="ans1vii" placeholder="Enter classification..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>viii. Where are most plasma proteins synthesized? (1 mark)</label>
+      <textarea id="ans1viii" placeholder="Enter site of synthesis..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('1')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers1" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>i.</b> The normal reference range is typically 6.0 to 8.3 g/dL (60-83 g/L).</p>
+      <p><b>ii.</b> Serum.</p>
+      <p><b>iii.</b> Ranges are established by testing a large, healthy representative population and calculating the mean value ± 2 standard deviations (capturing 95% of the healthy population).</p>
+      <p><b>iv.</b> Albumin; it makes up approximately 55-60% of total plasma proteins.</p>
+      <p><b>v.</b> Maintenance of colloid osmotic pressure (oncotic pressure) or transport of various substances (e.g., hormones, fatty acids, drugs).</p>
+      <p><b>vi.</b> C-reactive protein (CRP) or Fibrinogen (Acute phase reactants).</p>
+      <p><b>vii.</b> Acute phase reactant / Globulin.</p>
+      <p><b>viii.</b> The Liver.</p>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h3>2. A new drug is developed which selectively cleaves covalent bonds between two sulfur atoms of non-adjacent amino acids in a polypeptide chain.</h3>
+
+    <div class="subquestion">
+      <label>i. Which level of protein structure in affected molecules would be most directly affected by the drug? (1 mark)</label>
+      <textarea id="ans2i" placeholder="Identify the structural level..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>ii. Explain why this level is affected (1 mark)</label>
+      <textarea id="ans2ii" placeholder="Provide explanation..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>iii. Describe the other levels of protein structure (4 marks)</label>
+      <textarea id="ans2iii" placeholder="Describe primary, secondary, and quaternary levels..."></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>iv. Which forces or interactions maintain levels of protein structures. Note, for each level indicate the force/interaction (2 marks)</label>
+      <textarea id="ans2iv" placeholder="List levels and their corresponding forces..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('2')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers2" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <p><b>i.</b> Tertiary structure (and potentially Quaternary structure).</p>
+      <p><b>ii.</b> The drug cleaves disulfide bonds (covalent bonds between two sulfur atoms). These bonds are critical for stabilizing the three-dimensional folding of a single polypeptide chain (tertiary) or the interaction between multiple subunits (quaternary).</p>
+      <p><b>iii.</b> 
+        <ul>
+          <li><b>Primary:</b> The linear sequence of amino acids in a polypeptide chain.</li>
+          <li><b>Secondary:</b> Local folding patterns such as alpha-helices and beta-pleated sheets.</li>
+          <li><b>Quaternary:</b> The spatial arrangement and association of multiple polypeptide subunits.</li>
+        </ul>
+      </p>
+      <p><b>iv.</b> 
+        <ul>
+          <li><b>Primary:</b> Peptide bonds (covalent).</li>
+          <li><b>Secondary:</b> Hydrogen bonds between backbone atoms.</li>
+          <li><b>Tertiary/Quaternary:</b> Hydrophobic interactions, hydrogen bonds, ionic bonds (salt bridges), and disulfide bridges.</li>
+        </ul>
+      </p>
+    </div>
+
+  </div>
+
+  </div> <div class="card"> 
+    <h3>3. Beta cells of the pancreas synthesize insulin as a prohormone. Proinsulin is a single polypeptide chain with 86 amino acids. Biologically active insulin (2 chains) is formed by removal of the central portion of the pro-insulin before release.</h3>
+    <img src="../MBS-230-B-pics/q1.PNG">
+
+    <div class="subquestion">
+      <label>i. Why does the pancreas produce insulin as a prohormone? (1 mark)</label>
+      <textarea id="ans3a"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>ii. How is the prohormone converted to an active hormone? (1 mark)</label>
+      <textarea id="ans3b"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>iii. What happens to the connecting polypeptide indicated in the figure? (1 mark)</label>
+      <textarea id="ans3c"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>iv. What is the general term for enzymes that cut at the sites indicated by arrows? (1 mark)</label>
+      <textarea id="ans3d"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>v. Which amino acid is responsible for producing the S-S linkages in the figure? (1 mark)</label>
+      <textarea id="ans3e"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>vi. Explain the fact that species variation in insulin is restricted to position 8, 9, 10 in the A chain and to position 30 in the B chain (3 marks)</label>
+      <textarea id="ans3f"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>vii. What is the full name of a peptide formed by carboxyl group of glycine with amino group of Alanine and then carboxyl group of Alanine with amino group of Valine? (1 mark)</label>
+      <textarea id="ans3g"></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('3')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers3" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <!-- Add the answers for the respective questions here -->
+    </div>
+  </div>
+
+  </div> 
+  
+  <div class="card"> 
+    <h3>4. Polyunsaturated fatty acids (PUFAs) are essential fatty acids required by the body and cannot be synthesized and so they have to be included in diet</h3>
+    <img src="../MBS-230-B-pics/q3.PNG">
+
+  </div>
+
+  <div class="card"> 
+    <h3>5. Refer to the figure below as you answer the questions below</h3>
+    <img src="../MBS-230-B-pics/q4.PNG">
+
+    <div class="subquestion">
+      <label>i. What are the two products of hydrolysis of the above Triacylglycerol? (1 mark)</label>
+      <textarea id="ans5a"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>ii. Name two tissues where these products are metabolised (1 mark)</label>
+      <textarea id="ans5b"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>iii. Give two reasons as to why triacylglycerols are highly concentrated stores of energy (2 marks)</label>
+      <textarea id="ans5c"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>iv. How much energy is realised from complete oxidation of a gram of a fatty acid? (1 mark)</label>
+      <textarea id="ans5d"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>v. How many carbon atoms are realised per cycle in: (2 marks)</label>
+      <textarea id="ans5e"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>vi. When does omega oxidation become active? (1 mark)</label>
+      <textarea id="ans5f"></textarea>
+    </div>
+
+    <div class="subquestion">
+      <label>vii. How many fatty acid chains are in the structure above? (1 mark)</label>
+      <textarea id="ans5g"></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('5')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers5" class="answers" aria-hidden="true">
+      <h3>Model Answers</h3>
+      <!-- Add the answers for the respective questions here -->
+    </div>
+  </div>
+
+ </section>
+
+<script>
+  // Short explanation text for each question (keyed by question id)
+  const answerExplanations = {
+    q1: "Sphingomyelin is a major component of the myelin sheath insulating nerve fibers.",
+    q2: "Aspirin irreversibly inhibits COX enzymes, primarily blocking Thromboxane A2 (TXA2) in platelets to prevent aggregation.",
+    q3: "Arachidonic acid, an omega-6 fatty acid, is the primary precursor for the synthesis of prostaglandins via the cyclooxygenase pathway.",
+    q4: "Respiratory Distress Syndrome (RDS) is caused by a deficiency in pulmonary surfactant, which is primarily composed of glycerophospholipids like dipalmitoylphosphatidylcholine.",
+    q5: "Snake venom often contains Phospholipase A2, which cleaves the fatty acid at the C2 position of phospholipids, producing lysolecithin which can cause hemolysis.",
+    q6: "Platelet-activating factor (PAF) is a potent ether-linked glycerophospholipid involved in many physiological processes, including the stimulation of surfactant synthesis in fetal lungs.",
+    q7: "Niemann-Pick disease (specifically types A and B) is caused by a deficiency in acid sphingomyelinase, leading to the accumulation of sphingomyelin in various organs.",
+    q8: "The core structure of a steroid consists of seventeen carbon atoms, bonded in four fused rings: three six-membered cyclohexane rings and one five-membered cyclopentane ring.",
+    q9: "Cholesterol is the fundamental precursor from which all other steroid hormones in animals, including glucocorticoids and sex hormones, are synthesized.",
+    q10: "Phosphorylation is one of the most common and vital forms of reversible covalent modification used to switch enzymes between active and inactive states.",
+    q11: "Enzymes act as biological catalysts by lowering the activation energy, thereby increasing the rate of the reaction.",
+    q12: "Glutamine is a polar, uncharged amino acid that contains an amide group in its side chain (abbreviated as Gln).",
+    q13: "Malonate is a classic competitive inhibitor of succinate dehydrogenase because it is structurally similar to the substrate succinate.",
+    q14: "Phenylketonuria (PKU) is an autosomal recessive disorder caused by a deficiency of phenylalanine hydroxylase, leading to the accumulation of phenylalanine.",
+    q15: "Ketogenic amino acids are those that are catabolized into acetoacetate, acetyl-CoA, or acetoacetyl-CoA.",
+    q16: "Histidine is uniquely characterized by the presence of an imidazole functional group in its side chain.",
+    q17: "LDH1 is the predominant isoenzyme found in heart muscle; its levels rise significantly following a myocardial infarction.",
+    q18: "Chirality in amino acids is due to the alpha-carbon being asymmetric, meaning it is bonded to four distinct chemical groups.",
+    q19: "The primary structure is the linear sequence of amino acids, which is held together by covalent peptide bonds.",
+    q20: "Quaternary structure involves the assembly of multiple polypeptide subunits, such as the two alpha and two beta chains in adult hemoglobin.",
+    q21: "Electrophoresis separates proteins based on their movement in an electric field, which depends primarily on their net electrical charge.",
+    q22: "Alanine is a key gluconeogenic amino acid that is released by muscle and taken up by the liver via the Glucose-Alanine cycle.",
+    q23: "Glutathione is a tripeptide (Glu-Cys-Gly) synthesized from glutamate, cysteine, and glycine.",
+    q24: "Glutamic acid (and Aspartic acid) are negatively charged and can mimic a permanently phosphorylated serine (phosphomimetic), thus permanently altering activity.", 
+    q25: "Methionine and Cysteine are the only two standard amino acids containing sulfur; their metabolism yields sulfuric acid.",
+    q26: "The interior of the lipid bilayer is non-polar, so transmembrane domains must consist primarily of hydrophobic amino acids to be stable.",
+    q27: "Isoenzymes (isozymes) are different physical forms of an enzyme that catalyze the exact same chemical reaction but differ in amino acid sequence.",
+    q28: "The ionization state (charge) of amino acid side chains, especially those with acidic or basic groups, is directly determined by the pH of the surrounding medium.",
+    q29: "Allosteric regulation is the most common mechanism for feedback inhibition, where the final product of a pathway binds to and inhibits an enzyme at the start of the pathway.",
+    q30: "Secondary structure (like the alpha-helix) is formed by hydrogen bonding between the amine hydrogen and the carbonyl oxygen of the polypeptide backbone.",
+    q31: "Secondary structures are exclusively stabilized by regular patterns of hydrogen bonds along the backbone.",
+    q32: "HbA1c specifically involves the non-enzymatic glycosylation of the N-terminal valine of the β-globin chains.",
+    q33: "Hemoglobin C (HbC) results from a point mutation where glutamic acid is replaced by lysine at position 6 of the β-globin chain.",
+    q34: "Thalassemias are quantitative defects characterized by reduced or absent synthesis of either the alpha or beta globin chains, leading to imbalance.",
+    q35: "Lysine and proline are hydroxylated to hydroxylysine and hydroxyproline by Vitamin C-dependent enzymes to stabilize the triple helix.",
+    q36: "Scurvy results from Vitamin C deficiency, preventing the hydroxylation of proline and lysine, which leads to weak collagen fibers that cannot cross-link.",
+    q37: "Anfinsen's dogma states that the native structure of a protein is determined solely by its primary amino acid sequence.",
+    q38: "Lipids facilitate the absorption of fat-soluble vitamins (A, D, E, K), not water-soluble ones like Vitamin C or B-complex.",
+    q39: "Carotenoids are often classified as tetraterpenes under the umbrella of derived lipids. (Note: Depending on the curriculum, some classify specific pigments differently, but lipid derivatives generally include steroids and terpenes).",
+    q40: "Lecithin, also known as phosphatidylcholine, is a phospholipid that contains a choline head group.",
+  };
+
+  // MCQ Functionality
+  const correctAnswers = { 
+    q1: "b", 
+    q2: "b", 
+    q3: "c", 
+    q4: "c", 
+    q5: "a",
+    q6: "a", 
+    q7: "a", 
+    q8: "a", 
+    q9: "e", 
+    q10: "c",
+    q11: "b", 
+    q12: "a", 
+    q13: "a", 
+    q14: "c", 
+    q15: "b", 
+    q16: "c", 
+    q17: "a", 
+    q18: "c", 
+    q19: "b", 
+    q20: "c", 
+    q21: "b", 
+    q22: "a", 
+    q23: "b",
+    q24: "a",
+    q25: "c", 
+    q26: "c", 
+    q27: "b", 
+    q28: "c", 
+    q29: "b", 
+    q30: "e", 
+    q31: "c", 
+    q32: "c", 
+    q33: "b", 
+    q34: "a", 
+    q35: "d", 
+    q36: "c",
+    q37: "b", 
+    q38: "d", 
+    q39: "c", 
+    q40: "b"
+  };
+ 
+  function submitQuiz() {
+     let score = 0;
+     const total = Object.keys(correctAnswers).length;
+ 
+     // Clear any previous inline feedback
+     document.querySelectorAll('.question-feedback').forEach(el => el.innerHTML = '');
+ 
+     for (let key in correctAnswers) {
+       const radios = Array.from(document.querySelectorAll(`input[name="${key}"]`));
+       const selected = radios.find(r => r.checked);
+       const correct = correctAnswers[key];
+ 
+       // Score calc
+       if (selected && selected.value === correct) score++;
+ 
+       const feedbackEl = document.getElementById(`feedback-${key}`);
+       if (!feedbackEl) continue;
+ 
+       let feedbackHTML = `<div class="answer-block"><strong>Question ${key.replace(/^q/, '')}</strong><div class="answer-list">`;
+ 
+       radios.forEach(r => {
+         let label = r.parentElement;
+         let text = label ? label.textContent.trim() : r.value;
+ 
+         let classes = ['answer-item'];
+         if (r.value === correct) classes.push('answer-correct');
+         if (r.checked && r.value !== correct) classes.push('answer-wrong', 'user-choice');
+         if (r.checked && r.value === correct) classes.push('user-choice');
+ 
+         feedbackHTML += `<div class="${classes.join(' ')}">${text}${r.checked ? ' ◀' : ''}</div>`;
+       });
+ 
+       feedbackHTML += `</div>`;
+ 
+       const correctRadio = radios.find(rr => rr.value === correct);
+       const correctText = correctRadio && correctRadio.parentElement ? correctRadio.parentElement.textContent.trim() : correct;
+       const explanationText = answerExplanations[key] || '';
+ 
+       if (selected) {
+         if (selected.value === correct) {
+           feedbackHTML += `<div class="explanation">✅ Correct — ${explanationText}</div>`;
+         } else {
+           feedbackHTML += `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+         }
+       } else {
+         feedbackHTML += `<div class="explanation wrong">No answer selected. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+       }
+ 
+       feedbackHTML += `</div>`;
+       feedbackEl.innerHTML = feedbackHTML;
+     }
+ 
+     const percentage = Math.round((score / total) * 100);
+     document.getElementById("score").innerText = "0%";
+     const resultBox = document.getElementById("resultBox");
+     resultBox.style.display = "block";
+     document.getElementById("answers").innerHTML = '';
+ 
+     let start = 0;
+     const timer = setInterval(() => {
+       if (start >= percentage) clearInterval(timer);
+       document.getElementById("score").innerText = start + "%";
+       start++;
+     }, 20);
+ 
+     document.querySelectorAll('#quizForm input').forEach(i => i.disabled = true);
+   }
+ 
+   // Essay Section
+   function showEssayAnswers() {
+     document.querySelectorAll(".essay-answer").forEach(a => a.style.display = "block");
+   }
+
+   // Show/hide model answers for an essay card
+   function showAnswers(id) {
+     const el = document.getElementById('answers' + id);
+     if (!el) return;
+     const isVisible = el.classList.toggle('visible');
+     el.setAttribute('aria-hidden', !isVisible);
+     if (isVisible) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+   }
+ 
+   // Mode switching (from first file)
+   const mode = localStorage.getItem("examMode"); // "mcq" or "essay"
+   if (mode === "essay") {
+     document.getElementById("mcq-section").style.display = "none";
+     document.getElementById("essay-section").style.display = "block";
+   }
+ 
+   // Navigate to the previous page if available, otherwise fall back to index.html
+   function goBack() {
+     if (history.length > 1) {
+       history.back();
+     } else {
+       window.location.href = "index.html";
+     }
+   }
+ 
+   // header back button hookup (same behaviour)
+   const backBtn = document.getElementById('backBtn');
+   if (backBtn) backBtn.addEventListener('click', (e) => { e.preventDefault(); goBack(); });
+ </script>
+
+</body>
+</html>

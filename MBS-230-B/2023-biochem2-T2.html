@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Papers | ToToZ Collection</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../nav.css">
+  <style>
+    :root {
+      --primary: #2b7a78;
+      --accent: #3aafa9;
+      --dark: #17252a;
+      --light: #f8f9fa;
+      --radius: 12px;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #f5f7fb, #eef6f6);
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--dark));
+      color: white;
+      padding: 1.1rem 0;
+      position: fixed; /* Keeps it at the top when scrolling */
+      top: 0;          /* Added: Ensures it starts at the absolute top */
+      left: 0;         /* Added: Ensures it stretches from the left edge */
+      width: 100%;
+      z-index: 1000;   /* Added: Keeps header above all other elements */
+      box-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* Improved heading styling */
+    header h1 {
+      font-size: 1.25rem;
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: 0.35px;
+      color: #ffffff;
+      text-transform: none;
+      display: inline-block;
+      line-height: 1;
+      text-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* logo heading (keeps icon + title aligned) */
+    .logo h1 {
+      font-size: 1.25rem;
+      margin: 0 0 0 6px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 900px;
+      /* Adjust this value based on how tall your header is */
+      margin: 100px auto 0 auto; 
+      padding: 1.5rem 0;
+    }
+
+    h2 {
+      color: var(--primary);
+      margin: 0 0 0.85rem 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    /* responsive tweaks for small screens */
+    @media (max-width: 520px) {
+      header h1, .logo h1 { font-size: 1rem; }
+      h2 { font-size: 1rem; }
+    }
+
+    .question {
+      margin-bottom: 1.5rem;
+    }
+
+    .question p {
+      font-weight: 600;
+    }
+
+    .options label {
+      display: block;
+      background: #f8fafc;
+      border: 1px solid #d9e2ec;
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      margin-top: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .options label:hover {
+      background: #e0f7f6;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .result {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #f1faf9;
+      border-radius: var(--radius);
+      text-align: center;
+      display: none;
+    }
+
+    .score {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin-top: 0.5rem;
+    }
+
+    /* --- Styles for answer feedback --- */
+    .answer-list { text-align: left; margin-top: 12px; }
+    .answer-item {
+      display: block;
+      padding: 8px 10px;
+      border-radius: 8px;
+      margin: 6px 0;
+      border: 1px solid #e6eef3;
+      background: #ffffff;
+      color: var(--dark);
+      font-weight: 600;
+    }
+    .answer-correct {
+      background: #ecfdf5;       /* light green */
+      border-color: #bbf7d0;
+      color: #065f46;           /* dark green text */
+      box-shadow: 0 6px 18px rgba(16,185,129,0.06);
+    }
+    .answer-wrong {
+      background: #fff1f2;       /* light red */
+      border-color: #fca5a5;
+      color: #9f1239;           /* dark red text */
+      box-shadow: 0 6px 18px rgba(239,68,68,0.06);
+    }
+    .user-choice { outline: 2px dashed rgba(0,0,0,0.04); }
+
+    /* Essay Section */
+    textarea {
+      width: 80%;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.75rem;
+      resize: vertical;
+      min-height: 50px;
+      font-size: 1rem;
+    }
+
+    .essay-answer {
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-top: 0.75rem;
+      display: none;
+    }
+
+    .back-btn {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    /* Explanation box shown under each question in feedback */
+    .explanation {
+      margin-top: 8px;
+      padding: 10px 12px;                                                                                                                                                                                 
+      border-radius: 8px;
+      background: #363d3a;           /* subtle greenish background */
+      color: #065f46;                /* dark green text */
+      font-size: 0.95rem;
+      line-height: 1.4;
+      border: 1px solid #bbf7d0;
+    }
+
+    /* For incorrect explanation (when needed) */
+    .explanation.wrong {
+      background: #fff1f2;
+      color: #7f1d1d;
+      border-color: #fca5a5;
+    }
+
+    /* small label styling for feedback header */
+    .answer-block { color: var(--primary); margin-bottom: 12px; }
+    .answer-block strong { display:block; margin-bottom:8px; color: rgb(7, 113, 95); }
+    .question-feedback { 
+      margin-top: 14px;
+      padding: 14px 16px;
+      color: white;
+      border-radius: 12px;
+      background: #a82525;
+      border: 1px solid #d6e7eb;
+    }
+    .question-feedback .answer-list {
+      margin-top: 10px;
+    }
+
+    /* Essay card styles (compact, readable) */
+    #essay-section { padding-top: 0; }
+    #essay-section .card {
+      background: linear-gradient(180deg, #ffffff, #fbfeff);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(18,38,63,0.06);
+      border: 1px solid rgba(43,122,120,0.06);
+      max-width: 900px;
+      margin: 0 auto 1rem auto;
+    }
+    #essay-section .card h3 {
+      margin: 0 0 10px 0;
+      font-size: 1.02rem;
+      color: var(--dark);
+      font-weight: 700;
+    }
+    #essay-section .subquestion { margin-bottom: 12px; }
+    #essay-section .subquestion label {
+      display:block;
+      font-weight:700;
+      margin-bottom:6px;
+      color:var(--dark);
+    }
+    #essay-section textarea {
+      width:100%;
+      min-height:90px;
+      border-radius:8px;
+      border:1px solid #d1dbe0;
+      padding:10px;
+      resize:vertical;
+      font-family:inherit;
+    }
+
+    .mutwe {
+      max-width: 900px; 
+      margin: 0 auto; 
+      width: 92%; 
+      display:flex; 
+      align-items:center; 
+      justify-content:space-between;
+    }
+
+    #essay-section .answers {
+      display:none;
+      margin-top:14px;
+      background:#f1faf9;
+      border-radius:8px;
+      padding:12px;
+      border:1px solid #cfeee6;
+      color:var(--dark);
+    }
+    #essay-section .answers h3 { margin-top:0; }
+    #essay-section .card .btn { margin-top:8px; }
+    /* make answers visible area stand out when shown */
+    #essay-section .answers.visible { display:block; }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="mutwe">
+      <div class="logo">
+        <i class="fas fa-book-medical"></i>
+        <h1>2024 Physiology Test 1 </h1>
+      </div>
+      <button id="backBtn" class="btn"><i class="fas fa-arrow-left"></i> Back</button>
+    </div>
+  </header>
+
+<div class="container" id="mcq-section">
+  <h2>Multiple Choice Questions</h2>
+
+  <form id="quizForm">
+    
+    <div class="question">
+  <p>1. Which of the following is used as a plasma expander?</p>
+  <div class="options">
+    <label><input type="radio" name="q1" value="a"> Dextrol</label>
+    <label><input type="radio" name="q1" value="b"> Hexose</label>
+    <label><input type="radio" name="q1" value="c"> Dextrin</label>
+    <label><input type="radio" name="q1" value="d"> Dextran</label>
+    <label><input type="radio" name="q1" value="e"> Dextrose</label>
+  </div>
+  <div class="question-feedback" id="feedback-q1"></div>
+</div>
+
+<div class="question">
+  <p>2. Which sugar acid is used for the detoxification of the foreign compound?</p>
+  <div class="options">
+    <label><input type="radio" name="q2" value="a"> Gluconic acid</label>
+    <label><input type="radio" name="q2" value="b"> Glucuronic acids</label>
+    <label><input type="radio" name="q2" value="c"> Neuraminic acid</label>
+    <label><input type="radio" name="q2" value="d"> Mucic acid</label>
+    <label><input type="radio" name="q2" value="e"> Lactic acid</label>
+  </div>
+  <div class="question-feedback" id="feedback-q2"></div>
+</div>
+
+<div class="question">
+  <p>3. Glycogen is reserve food material in humans. Which of the following tissues are having highest total glycogen content?</p>
+  <div class="options">
+    <label><input type="radio" name="q3" value="a"> Heart and kidneys</label>
+    <label><input type="radio" name="q3" value="b"> Kidneys and liver</label>
+    <label><input type="radio" name="q3" value="c"> Liver and muscle</label>
+    <label><input type="radio" name="q3" value="d"> Brain and Liver</label>
+    <label><input type="radio" name="q3" value="e"> Brain and kidneys</label>
+  </div>
+  <div class="question-feedback" id="feedback-q3"></div>
+</div>
+
+<div class="question">
+  <p>4. Which of the following could stabilize the tertiary structure of proteins enabling them to resist the denaturation when subjected to dehydration hence used to store and transport vaccines in poor countries with a hot climate?</p>
+  <div class="options">
+    <label><input type="radio" name="q4" value="a"> Glucose</label>
+    <label><input type="radio" name="q4" value="b"> Fructose</label>
+    <label><input type="radio" name="q4" value="c"> Lactose</label>
+    <label><input type="radio" name="q4" value="d"> Trehalose</label>
+    <label><input type="radio" name="q4" value="e"> Fucose</label>
+  </div>
+  <div class="question-feedback" id="feedback-q4"></div>
+</div>
+
+<div class="question">
+  <p>5. Which one of the following is used to treat oedema because of its properties that if introduced parenterally cannot be utilised, but it can change the osmotic condition of the blood and causes a flow of water from the tissues into the blood?</p>
+  <div class="options">
+    <label><input type="radio" name="q5" value="a"> Glucose</label>
+    <label><input type="radio" name="q5" value="b"> Fructose</label>
+    <label><input type="radio" name="q5" value="c"> Sucrose</label>
+    <label><input type="radio" name="q5" value="d"> Hexose</label>
+    <label><input type="radio" name="q5" value="e"> Dextrose</label>
+  </div>
+  <div class="question-feedback" id="feedback-q5"></div>
+</div>
+
+<div class="question">
+  <p>6. Which of the following glycosaminoglycans is present in cornea and maintains the overall shape of the eye?</p>
+  <div class="options">
+    <label><input type="radio" name="q6" value="a"> Heparin</label>
+    <label><input type="radio" name="q6" value="b"> Hyaluronic acid</label>
+    <label><input type="radio" name="q6" value="c"> Chondroitin Sulfate</label>
+    <label><input type="radio" name="q6" value="d"> Dermatan Sulfate</label>
+    <label><input type="radio" name="q6" value="e"> Heparan sulphate</label>
+  </div>
+  <div class="question-feedback" id="feedback-q6"></div>
+</div>
+
+<div class="question">
+  <p>7. Accumulation of polyols causes cataract by cell damage through swelling. Polyol is formed due to which of the following chemical changes?</p>
+  <div class="options">
+    <label><input type="radio" name="q7" value="a"> Oxidation of sugars</label>
+    <label><input type="radio" name="q7" value="b"> Reduction of sugars</label>
+    <label><input type="radio" name="q7" value="c"> Hydrolysis of polysaccharides</label>
+    <label><input type="radio" name="q7" value="d"> Polymerization of monosaccharides</label>
+    <label><input type="radio" name="q7" value="e"> Hydrolysis of disaccharides</label>
+  </div>
+  <div class="question-feedback" id="feedback-q7"></div>
+</div>
+
+<div class="question">
+  <p>8. Which of the following lipids is deficient in infants with respiratory distress syndrome?</p>
+  <div class="options">
+    <label><input type="radio" name="q8" value="a"> Sphingomyelins</label>
+    <label><input type="radio" name="q8" value="b"> Cardiolipins</label>
+    <label><input type="radio" name="q8" value="c"> Leukotrienes</label>
+    <label><input type="radio" name="q8" value="d"> Dipalmitoyl phosphatidylcholine</label>
+    <label><input type="radio" name="q8" value="e"> Phosphatidylethanolamine</label>
+  </div>
+  <div class="question-feedback" id="feedback-q8"></div>
+</div>
+
+<div class="question">
+  <p>9. The smell of the fat turned rancid is due to:</p>
+  <div class="options">
+    <label><input type="radio" name="q9" value="a"> Presence of vit E</label>
+    <label><input type="radio" name="q9" value="b"> Presence of quinones</label>
+    <label><input type="radio" name="q9" value="c"> Phenols</label>
+    <label><input type="radio" name="q9" value="d"> Volatile fatty acids</label>
+    <label><input type="radio" name="q9" value="e"> Cholesterol.</label>
+  </div>
+  <div class="question-feedback" id="feedback-q9"></div>
+</div>
+
+<div class="question">
+  <p>10. Fatty liver is caused due to accumulation of .............</p>
+  <div class="options">
+    <label><input type="radio" name="q10" value="a"> Fatty acids</label>
+    <label><input type="radio" name="q10" value="b"> Cholesterol</label>
+    <label><input type="radio" name="q10" value="c"> Phospholipids</label>
+    <label><input type="radio" name="q10" value="d"> Triacylglycerol</label>
+    <label><input type="radio" name="q10" value="e"> Bile salts</label>
+  </div>
+  <div class="question-feedback" id="feedback-q10"></div>
+</div>
+
+<div class="question">
+  <p>11. Which among the following is a cardio protective fatty acid?</p>
+  <div class="options">
+    <label><input type="radio" name="q11" value="a"> Palmitic acid</label>
+    <label><input type="radio" name="q11" value="b"> Stearic acid</label>
+    <label><input type="radio" name="q11" value="c"> Oleic acid</label>
+    <label><input type="radio" name="q11" value="d"> Omega-3 fatty acid</label>
+    <label><input type="radio" name="q11" value="e"> Unsaturated fatty acid</label>
+  </div>
+  <div class="question-feedback" id="feedback-q11"></div>
+</div>
+
+<div class="question">
+  <p>12. A patient with an obstructive deep vein thrombosis is usually advised to start on heparin to further prevent the clot from enlarging. Heparin is an example of which of the following?</p>
+  <div class="options">
+    <label><input type="radio" name="q12" value="a"> Sphingolipid</label>
+    <label><input type="radio" name="q12" value="b"> Cerebroside</label>
+    <label><input type="radio" name="q12" value="c"> Ganglioside</label>
+    <label><input type="radio" name="q12" value="d"> Glycosaminoglycan</label>
+    <label><input type="radio" name="q12" value="e"> Prostaglandin</label>
+  </div>
+  <div class="question-feedback" id="feedback-q12"></div>
+</div>
+
+<div class="question">
+  <p>13. Which of the following glycolipids is known to be the receptor in human intestine for cholera toxin?</p>
+  <div class="options">
+    <label><input type="radio" name="q13" value="a"> Ganglioside GM1</label>
+    <label><input type="radio" name="q13" value="b"> Ganglioside GM3</label>
+    <label><input type="radio" name="q13" value="c"> Globoside</label>
+    <label><input type="radio" name="q13" value="d"> Cerebroside</label>
+    <label><input type="radio" name="q13" value="e"> Glucoside</label>
+  </div>
+  <div class="question-feedback" id="feedback-q13"></div>
+</div>
+
+<div class="question">
+  <p>14. An athlete is tested at an Olympic event and steroids are found in the bloodstream. Which of biologically important molecules are steroids related to?</p>
+  <div class="options">
+    <label><input type="radio" name="q14" value="a"> Carbohydrates</label>
+    <label><input type="radio" name="q14" value="b"> Proteins</label>
+    <label><input type="radio" name="q14" value="c"> Nucleic acids</label>
+    <label><input type="radio" name="q14" value="d"> Lipids</label>
+    <label><input type="radio" name="q14" value="e"> Inorganics</label>
+  </div>
+  <div class="question-feedback" id="feedback-q14"></div>
+</div>
+
+<div class="question">
+  <p>15. Cellular second messenger is produced from .............</p>
+  <div class="options">
+    <label><input type="radio" name="q15" value="a"> Phosphatidylinositol</label>
+    <label><input type="radio" name="q15" value="b"> Phosphatidylserine</label>
+    <label><input type="radio" name="q15" value="c"> Phosphatidylcholine</label>
+    <label><input type="radio" name="q15" value="d"> Cholesterol</label>
+    <label><input type="radio" name="q15" value="e"> Glycerol</label>
+  </div>
+  <div class="question-feedback" id="feedback-q15"></div>
+</div>
+
+<div class="question">
+  <p>16. An eicosanoid acting as chemotactic agent is.............</p>
+  <div class="options">
+    <label><input type="radio" name="q16" value="a"> Prostacyclin I₂</label>
+    <label><input type="radio" name="q16" value="b"> Leukotriene B₄</label>
+    <label><input type="radio" name="q16" value="c"> Lipoxin A₄</label>
+    <label><input type="radio" name="q16" value="d"> Thromboxane A₂</label>
+    <label><input type="radio" name="q16" value="e"> Prostaglandin E₂</label>
+  </div>
+  <div class="question-feedback" id="feedback-q16"></div>
+</div>
+
+<div class="question">
+  <p>17. The precursor for synthesis of vitamin D and bile acids in our body is .............</p>
+  <div class="options">
+    <label><input type="radio" name="q17" value="a"> Cholesterol</label>
+    <label><input type="radio" name="q17" value="b"> Arachidonic acid</label>
+    <label><input type="radio" name="q17" value="c"> Triacylglycerol</label>
+    <label><input type="radio" name="q17" value="d"> Phospholipids</label>
+    <label><input type="radio" name="q17" value="e"> Prostaglandins</label>
+  </div>
+  <div class="question-feedback" id="feedback-q17"></div>
+</div>
+
+<div class="question">
+  <p>18. Consumption of which one of the following fatty acids for a long time may raise the risk of cardiovascular diseases and coronary artery diseases?</p>
+  <div class="options">
+    <label><input type="radio" name="q18" value="a"> Cis-fatty acids</label>
+    <label><input type="radio" name="q18" value="b"> Trans-fatty acids</label>
+    <label><input type="radio" name="q18" value="c"> Essential fatty acids</label>
+    <label><input type="radio" name="q18" value="d"> Omega 3 fatty acids</label>
+    <label><input type="radio" name="q18" value="e"> Polyunsaturated fatty acids</label>
+  </div>
+  <div class="question-feedback" id="feedback-q18"></div>
+</div>
+
+<div class="question">
+  <p>19. Which one of the following prostaglandins stimulates smooth muscle contraction, hence induce labour?</p>
+  <div class="options">
+    <label><input type="radio" name="q19" value="a"> PGD2</label>
+    <label><input type="radio" name="q19" value="b"> PGE1</label>
+    <label><input type="radio" name="q19" value="c"> PGE2</label>
+    <label><input type="radio" name="q19" value="d"> PGI2</label>
+    <label><input type="radio" name="q19" value="e"> PGF2α</label>
+  </div>
+  <div class="question-feedback" id="feedback-q19"></div>
+</div>
+
+<div class="question">
+  <p>20. Which of the following is secreted primarily by the platelets and they promote the formation of blood clots?</p>
+  <div class="options">
+    <label><input type="radio" name="q20" value="a"> Prostacyclins</label>
+    <label><input type="radio" name="q20" value="b"> Thromboxanes</label>
+    <label><input type="radio" name="q20" value="c"> Leukotrienes</label>
+    <label><input type="radio" name="q20" value="d"> Histamine</label>
+    <label><input type="radio" name="q20" value="e"> Prostaglandins</label>
+  </div>
+  <div class="question-feedback" id="feedback-q20"></div>
+</div>
+
+<div class="question">
+  <p>21. A cell nucleus contains which of the following?<br>I. DNA, II. PROTEIN, III. RNA</p>
+  <div class="options">
+    <label><input type="radio" name="q21" value="a"> I only</label>
+    <label><input type="radio" name="q21" value="b"> II only</label>
+    <label><input type="radio" name="q21" value="c"> III only</label>
+    <label><input type="radio" name="q21" value="d"> I and II only</label>
+    <label><input type="radio" name="q21" value="e"> I, II, and III</label>
+  </div>
+  <div class="question-feedback" id="feedback-q21"></div>
+</div>
+
+<div class="question">
+  <p>22. You are studying a newly discovered species and want to analyze its genetic information. What type of molecule would you analyze?</p>
+  <div class="options">
+    <label><input type="radio" name="q22" value="a"> Nucleic Acid</label>
+    <label><input type="radio" name="q22" value="b"> Carbohydrate</label>
+    <label><input type="radio" name="q22" value="c"> Lipid</label>
+    <label><input type="radio" name="q22" value="d"> Protein</label>
+    <label><input type="radio" name="q22" value="e"> Amino acids</label>
+  </div>
+  <div class="question-feedback" id="feedback-q22"></div>
+</div>
+
+<div class="question">
+  <p>23. Which of the following indicates the correct sequence of chromosome constituents, going from smaller to larger?</p>
+  <div class="options">
+    <label><input type="radio" name="q23" value="a"> Chromatin fibril, nucleosome, histone octamer, and chromosome loop</label>
+    <label><input type="radio" name="q23" value="b"> Nucleosome, chromatin fibril, chromosome loop, and histone octamer</label>
+    <label><input type="radio" name="q23" value="c"> Chromatin fibril, histone octamer, nucleosome, and chromosome loop</label>
+    <label><input type="radio" name="q23" value="d"> Nucleosome, histone octamer, chromosome loop, and chromosome fibril</label>
+    <label><input type="radio" name="q23" value="e"> Histone octamer, nucleosome, chromatin fibril, and chromosome loop</label>
+  </div>
+  <div class="question-feedback" id="feedback-q23"></div>
+</div>
+
+<div class="question">
+  <p>24. Nucleotides perform all of the following functions except:</p>
+  <div class="options">
+    <label><input type="radio" name="q24" value="a"> Structural units of DNA and RNA</label>
+    <label><input type="radio" name="q24" value="b"> Catalytic in nature</label>
+    <label><input type="radio" name="q24" value="c"> Regulators of metabolic reactions</label>
+    <label><input type="radio" name="q24" value="d"> Components of certain coenzymes</label>
+    <label><input type="radio" name="q24" value="e"> Antimetabolites</label>
+  </div>
+  <div class="question-feedback" id="feedback-q24"></div>
+</div>
+
+<div class="question">
+  <p>25. At the physiological pH, the DNA molecules are:</p>
+  <div class="options">
+    <label><input type="radio" name="q25" value="a"> Positively charged</label>
+    <label><input type="radio" name="q25" value="b"> Negatively charged</label>
+    <label><input type="radio" name="q25" value="c"> Neutral</label>
+    <label><input type="radio" name="q25" value="d"> Amphipathic</label>
+    <label><input type="radio" name="q25" value="e"> None of the above</label>
+  </div>
+  <div class="question-feedback" id="feedback-q25"></div>
+</div>
+
+<div class="question">
+  <p>26. Chargaff's rule states that:</p>
+  <div class="options">
+    <label><input type="radio" name="q26" value="a"> A + C = T + G</label>
+    <label><input type="radio" name="q26" value="b"> A / T = G / C</label>
+    <label><input type="radio" name="q26" value="c"> A = U = T = G = C</label>
+    <label><input type="radio" name="q26" value="d"> A + T = G + C</label>
+    <label><input type="radio" name="q26" value="e"> A + G = C + T</label>
+  </div>
+  <div class="question-feedback" id="feedback-q26"></div>
+</div>
+
+<div class="question">
+  <p>27. Each codon is specific for only one amino acid. Which of the following nucleotide bases is not present in codons?</p>
+  <div class="options">
+    <label><input type="radio" name="q27" value="a"> Adenine</label>
+    <label><input type="radio" name="q27" value="b"> Guanine</label>
+    <label><input type="radio" name="q27" value="c"> Thymine</label>
+    <label><input type="radio" name="q27" value="d"> Cytosine</label>
+    <label><input type="radio" name="q27" value="e"> Uracil</label>
+  </div>
+  <div class="question-feedback" id="feedback-q27"></div>
+</div>
+
+<div class="question">
+  <p>28. The smallest unit of DNA capable of coding for the synthesis of a polypeptide is</p>
+  <div class="options">
+    <label><input type="radio" name="q28" value="a"> Operon</label>
+    <label><input type="radio" name="q28" value="b"> Repressor</label>
+    <label><input type="radio" name="q28" value="c"> Cistron</label>
+    <label><input type="radio" name="q28" value="d"> Replicon</label>
+    <label><input type="radio" name="q28" value="e"> Polysome</label>
+  </div>
+  <div class="question-feedback" id="feedback-q28"></div>
+</div>
+
+<div class="question">
+  <p>29. In contrast to eukaryotic m-RNA, prokaryotic m-RNA is characterized by................</p>
+  <div class="options">
+    <label><input type="radio" name="q29" value="a"> Having 7-methyl guanosine triphosphate at the 5'-end</label>
+    <label><input type="radio" name="q29" value="b"> Being polycistronic</label>
+    <label><input type="radio" name="q29" value="c"> Being only monocistronic</label>
+    <label><input type="radio" name="q29" value="d"> Being synthesized with introns</label>
+    <label><input type="radio" name="q29" value="e"> Having a poly-A tail</label>
+  </div>
+  <div class="question-feedback" id="feedback-q29"></div>
+</div>
+
+<div class="question">
+  <p>30. Certain nucleoside analog drugs used to treat infectious diseases inhibit DNA synthesis because they lack which of the following properties required for normal DNA polymerization?</p>
+  <div class="options">
+    <label><input type="radio" name="q30" value="a"> A 5'-phosphate</label>
+    <label><input type="radio" name="q30" value="b"> A 3'-hydroxyl</label>
+    <label><input type="radio" name="q30" value="c"> A 7-methyl G modification</label>
+    <label><input type="radio" name="q30" value="d"> A poly(A) tail</label>
+    <label><input type="radio" name="q30" value="e"> A consensus sequence</label>
+  </div>
+  <div class="question-feedback" id="feedback-q30"></div>
+</div>
+    
+
+    <button type="button" class="btn" onclick="submitQuiz()">Submit</button>
+  </form>
+
+  <div class="result" id="resultBox">
+    <h3>Your Score:</h3>
+    <div class="score" id="score">0%</div>
+    <div id="answers"></div>
+  </div>
+</div>
+
+<!-- Short Essay Section (card style with sub-questions) -->
+<section id="essay-section" class="container" style="display:none;">
+  <h2 style="margin-bottom:1rem;color:var(--dark)">Short Essay Questions</h2>
+
+
+<!-- SECTION B: DESCRIPTIVE / SCENARIO-BASED QUESTIONS -->
+
+
+<div class="card">
+    <h3>1. Diarrhea from infection or malnutrition is the world’s most prevalent killer of children. A 2-month-old Caucasian girl develops chronic diarrhea and liver inflammation in early infancy when the mother begins using formula that includes corn syrup. Evaluation of the child demonstrates sensitivity to fructose in the diet.</h3>
+
+    <div class="subquestion">
+        <label>a) What is the probable disorder in this case? [0.5 mark]</label>
+        <textarea id="ans1a" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>b) Name a dietary glycoside (disaccharide) that contains fructose and therefore should be avoided when feeding or treating this infant. [0.5 mark]</label>
+        <textarea id="ans1b" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>c) Draw the structure of the above-specified glycoside. [1 mark]</label>
+        <textarea id="ans1c" placeholder="Draw or describe the structure here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>d) Identify and name the chemical bond which connects the monosaccharide units in the above-specified/drawn glycoside. [0.5 mark]</label>
+        <textarea id="ans1d" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>e) Describe briefly how the above-specified glycoside is digested (specify the enzyme) and absorbed (specify the transporter) in our body. [1 mark]</label>
+        <textarea id="ans1e" placeholder="Describe digestion and absorption here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>f) What is the functional group in fructose and which qualitative test is used to identify the presence of molecules with the same functional group in biochemistry lab? [1 mark]</label>
+        <textarea id="ans1f" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>g) Is fructose a reducing sugar or non-reducing sugar? Explain. [1 mark]</label>
+        <textarea id="ans1g" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>h) Name a qualitative test, which is most commonly used in biochemistry labs to identify the presence of reducing sugars in urine. How is this test result interpreted? [1 mark]</label>
+        <textarea id="ans1h" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>i) What is the name of osazone formed from fructose and how is it different from the osazone formed from glucose by its shape? [1 mark]</label>
+        <textarea id="ans1i" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>j) What is the major purpose of seminiferous tubular epithelial cells forming fructose from glucose? [0.5 mark]</label>
+        <textarea id="ans1j" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>k) Distinguish fucose from fructose and mention a physiological importance of fucose. [1 mark]</label>
+        <textarea id="ans1k" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>l) Name a homopolysaccharide of fructose along with one major clinical importance of the same. [1 mark]</label>
+        <textarea id="ans1l" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('1')">
+        <i class="fas fa-eye"></i> View Answers
+    </button>
+
+    <div id="answers1" class="answers" aria-hidden="true">
+        <h3>Model Answers</h3>
+
+        <p><b>a)</b> Hereditary Fructose Intolerance (HFI).</p>
+
+        <p><b>b)</b> Sucrose.</p>
+
+        <p><b>c)</b> Sucrose consists of α-D-glucose linked to β-D-fructose through an α(1→2)β glycosidic bond.</p>
+
+        <p><b>d)</b> α(1→2)β glycosidic bond.</p>
+
+        <p><b>e)</b> Sucrose is hydrolyzed by the enzyme <b>sucrase (invertase)</b> in the small intestine into glucose and fructose. Glucose is absorbed via <b>SGLT-1</b> while fructose is absorbed via <b>GLUT-5</b>; both exit enterocytes via <b>GLUT-2</b>.</p>
+
+        <p><b>f)</b> Fructose contains a <b>ketone (keto)</b> functional group. The qualitative test used to identify ketoses is <b>Seliwanoff’s test</b>.</p>
+
+        <p><b>g)</b> Fructose is a <b>reducing sugar</b> because it can tautomerize under alkaline conditions to form aldoses that reduce copper ions in Benedict’s or Fehling’s reagent.</p>
+
+        <p><b>h)</b> <b>Benedict’s test.</b> A color change from blue → green → yellow → orange → brick-red indicates increasing concentrations of reducing sugars.</p>
+
+        <p><b>i)</b> <b>Fructosazone.</b> It forms needle-shaped crystals similar to glucosazone; fructose and glucose produce the same osazone crystals because they differ only at C-1 and C-2.</p>
+
+        <p><b>j)</b> To provide an energy source for spermatozoa in semen, supporting sperm motility and viability.</p>
+
+        <p><b>k)</b> Fructose is a ketohexose sugar, whereas fucose is a 6-deoxyhexose sugar. Fucose is important as a component of blood group antigens and glycoproteins.</p>
+
+        <p><b>l)</b> <b>Inulin.</b> Clinically important because it is used to measure glomerular filtration rate (GFR) as it is freely filtered and neither reabsorbed nor secreted by the kidneys.</p>
+    </div>
+</div>
+
+<!-- QUESTION 2 -->
+
+<div class="card">
+    <h3>2. A 14-year-old African American adolescent, who is fed on milk-based foods regularly, presents with abdominal discomfort, abdominal fullness, excess gas, and weight loss. Blood glucose, cholesterol and alkaline phosphatase levels are normal. There is no jaundice or elevations of liver transaminases. The stool tests positive for reducing substances.</h3>
+
+    <div class="subquestion">
+        <label>a) What is the most likely diagnosis? [0.5 mark]</label>
+        <textarea id="ans2a" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>b) Which enzyme is probably deficient in this case? [0.5 mark]</label>
+        <textarea id="ans2b" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>c) Explain briefly the basis of reported symptoms. [1 mark]</label>
+        <textarea id="ans2c" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>d) Which sugar would be present in the stool tests positive for reducing substances? [0.5 mark]</label>
+        <textarea id="ans2d" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>e) What are the monosaccharide units of this sugar? [0.5 mark]</label>
+        <textarea id="ans2e" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>f) Name the glycosaminoglycans derived from these monosaccharides (one each) and mention one of their major biomedical importance, respectively. [1 mark]</label>
+        <textarea id="ans2f" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>g) What is the name and shape of osazone formed by this sugar? [0.5 mark]</label>
+        <textarea id="ans2g" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>h) Compare cariogenicity of this sugar with the cariogenicity of glucose and fructose. [0.5 mark]</label>
+        <textarea id="ans2h" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('2')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers2" class="answers" aria-hidden="true">
+        <h3>Model Answers</h3>
+
+        <p><b>a)</b> Lactose intolerance.</p>
+
+        <p><b>b)</b> Lactase (β-galactosidase) deficiency.</p>
+
+        <p><b>c)</b> Undigested lactose remains in the intestinal lumen causing osmotic diarrhea. Colonic bacteria ferment lactose producing gases (H₂, CO₂, CH₄) and organic acids, resulting in abdominal discomfort, bloating and flatulence.</p>
+
+        <p><b>d)</b> Lactose.</p>
+
+        <p><b>e)</b> Glucose and galactose.</p>
+
+        <p><b>f)</b> Galactose → Keratan sulfate (important in cornea and cartilage). Glucose → Hyaluronic acid (important for lubrication of joints and extracellular matrix).</p>
+
+        <p><b>g)</b> Lactosazone; forms powder-puff (cotton-ball/hedgehog) shaped crystals.</p>
+
+        <p><b>h)</b> Lactose is less cariogenic than glucose and fructose because it is fermented less readily by oral bacteria.</p>
+    </div>
+</div>
+
+
+<!-- QUESTION 3 -->
+
+<div class="card">
+    <h3>3. A 45-year-old Caucasian male is found to have a serum cholesterol of 300 mg/dL after a 12-hour fast. The physician cautioned the patient about the possibilities of coronary heart disease (heart attack) and stroke, and put him on statins to keep serum cholesterol below recommended limits and maximize levels of high-density lipoprotein (HDL).</h3>
+
+    <div class="subquestion">
+        <label>a) What is a lipoprotein? [1 mark]</label>
+        <textarea id="ans3a" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>b) Differentiate proteolipids from lipoproteins. [1 mark]</label>
+        <textarea id="ans3b" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>c) What is the major role of lipoproteins in our body? [1 mark]</label>
+        <textarea id="ans3c" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>d) Which lipoprotein is good? Why? [1 mark]</label>
+        <textarea id="ans3d" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>e) Which lipoprotein is bad? Why? [1 mark]</label>
+        <textarea id="ans3e" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>f) Which lipoprotein has the highest percentage of cholesterol among others? [0.5 mark]</label>
+        <textarea id="ans3f" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>g) Which lipoprotein has the highest percentage of proteins among others? [0.5 mark]</label>
+        <textarea id="ans3g" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>h) What is the normal and desirable level of serum cholesterol (in mg/dL) for an adult human? [0.5 mark]</label>
+        <textarea id="ans3h" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>i) Which two lipoproteins would contribute to plasma cholesterol following a 12-hour fast? [1 mark]</label>
+        <textarea id="ans3i" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>j) What is the major source of extracellular cholesterol for human tissues among the lipoproteins? [0.5 mark]</label>
+        <textarea id="ans3j" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>k) Briefly explain the basis of the possibilities of heart attack in this case. [1 mark]</label>
+        <textarea id="ans3k" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <div class="subquestion">
+        <label>l) Briefly explain the basis of the possibilities of stroke in this case. [1 mark]</label>
+        <textarea id="ans3l" placeholder="Enter your answer here..."></textarea>
+    </div>
+
+    <button class="btn" onclick="showAnswers('3')"><i class="fas fa-eye"></i> View Answers</button>
+
+    <div id="answers3" class="answers" aria-hidden="true">
+        <h3>Model Answers</h3>
+
+        <p><b>a)</b> A lipoprotein is a complex of lipids and proteins (apolipoproteins) that transports lipids in blood.</p>
+
+        <p><b>b)</b> Lipoproteins are non-covalent complexes that transport lipids in plasma, whereas proteolipids are proteins tightly associated with lipids, commonly found in biological membranes.</p>
+
+        <p><b>c)</b> Transport of lipids (cholesterol, triglycerides and phospholipids) in blood.</p>
+
+        <p><b>d)</b> HDL is the “good” lipoprotein because it removes excess cholesterol from tissues and returns it to the liver (reverse cholesterol transport).</p>
+
+        <p><b>e)</b> LDL is the “bad” lipoprotein because it delivers cholesterol to peripheral tissues and promotes atherosclerotic plaque formation.</p>
+
+        <p><b>f)</b> LDL (Low-Density Lipoprotein).</p>
+
+        <p><b>g)</b> HDL (High-Density Lipoprotein).</p>
+
+        <p><b>h)</b> Desirable total serum cholesterol: less than 200 mg/dL.</p>
+
+        <p><b>i)</b> LDL and HDL.</p>
+
+        <p><b>j)</b> LDL.</p>
+
+        <p><b>k)</b> Elevated LDL cholesterol promotes atherosclerotic plaque formation in coronary arteries, narrowing the lumen and reducing blood flow to the heart, which may lead to myocardial infarction.</p>
+
+        <p><b>l)</b> Atherosclerotic plaques can develop in cerebral or carotid arteries causing vessel narrowing or thrombosis, reducing blood supply to the brain and resulting in stroke.</p>
+    </div>
+</div>
+
+<div class="card">
+  <h3>4. Name the enzyme deficiencies and the accumulating metabolites in the following lipid storage diseases.</h3>
+
+  <div class="subquestion">
+    <label>a) Gaucher disease: (1 mark)</label>
+    <textarea id="ans4a" placeholder="Enter enzyme deficiency and accumulating metabolite..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>b) Sandhoff Disease: (1 mark)</label>
+    <textarea id="ans4b" placeholder="Enter enzyme deficiency and accumulating metabolite..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>c) Fabry disease: (1 mark)</label>
+    <textarea id="ans4c" placeholder="Enter enzyme deficiency and accumulating metabolite..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>d) Norum's disease: (1 mark)</label>
+    <textarea id="ans4d" placeholder="Enter enzyme deficiency and accumulating metabolite..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>e) Wolman disease: (1 mark)</label>
+    <textarea id="ans4e" placeholder="Enter enzyme deficiency and accumulating metabolite..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('4')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answers4" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>a)</b> <b>Enzyme Deficiency:</b> $\beta$-Glucosidase (Glucocerebrosidase) <br><b>Accumulating Metabolite:</b> Glucosylceramide (Glucocerebroside)</p>
+    <p><b>b)</b> <b>Enzyme Deficiency:</b> $\beta$-Hexosaminidase A and B <br><b>Accumulating Metabolite:</b> $\mathrm{GM_2}$ ganglioside and globosides</p>
+    <p><b>c)</b> <b>Enzyme Deficiency:</b> $\alpha$-Galactosidase A <br><b>Accumulating Metabolite:</b> Globotriaosylceramide ($\mathrm{Gb_3}$ / Ceramide trihexoside)</p>
+    <p><b>d)</b> <b>Enzyme Deficiency:</b> Lecithin-Cholesterol Acyltransferase (LCAT) <br><b>Accumulating Metabolite:</b> Unesterified cholesterol and phosphatidylcholine (lecithin)</p>
+    <p><b>e)</b> <b>Enzyme Deficiency:</b> Lysosomal Acid Lipase (LAL) <br><b>Accumulating Metabolite:</b> Cholesteryl esters and triglycerides</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>5. The nucleic acids from <u>three</u> viruses were extracted and examined to determine their base composition, and given the following results.<br>
+  (i) 35% A, 35% T, 15% G, and 15% C;<br>
+  (ii) 35% A, 15% T, 25% G, and 25% C.<br>
+  (iii) 35% A, 30% U, 30% G, and 5% C.</h3>
+
+  <div class="subquestion">
+    <label>a) What can you hypothesize about the physical nature of the nucleic acids from the result of virus sample (i)? (0.5 mark)</label>
+    <textarea id="ans5a" placeholder="Hypothesize the structure and type..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>b) What can you hypothesize about the physical nature of the nucleic acids from the result of virus sample (ii)? (0.5 mark)</label>
+    <textarea id="ans5b" placeholder="Hypothesize the structure and type..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>c) What can you hypothesize about the physical nature of the nucleic acids from the result of virus sample (iii)? (0.5 mark)</label>
+    <textarea id="ans5b" placeholder="Hypothesize the structure and type..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>d) What is a genome? (1 mark)</label>
+    <textarea id="ans5d" placeholder="Define genome..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>e) Differentiate a gene from genome. (1 mark)</label>
+    <textarea id="ans5e" placeholder="Explain the structural difference..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>f) Both DNA and RNA are composed of nucleotides. Which molecules combine to form a nucleotide, and what are the different types of bonds that combine these molecules? (1 mark)</label>
+    <textarea id="ans5f" placeholder="List components and bond types..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>g) Distinguish between DNA and RNA (a) chemically, (b) functionally, and (c) by location in the cell (one major difference for each category). (1.5 marks)</label>
+    <textarea id="ans5g" placeholder="Detail differences across the three categories..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>h) The sequence of a strand of viral DNA is 5'-ATTGCCGTC-3'. If this strand serves as the template for DNA synthesis, what will be the sequence of the newly synthesized strand? (1 mark)</label>
+    <textarea id="ans5h" placeholder="Provide the complementary DNA sequence..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>i) If the 5'-ATTGCCGTC-3' as the template for RNA synthesis, what will be the sequence of the newly synthesized strand? (1 mark)</label>
+    <textarea id="ans5i" placeholder="Provide the complementary RNA sequence..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>j) If a viral gene contains 141 codons, how many nucleotides would present in the gene's coding sequence? (1 mark)</label>
+    <textarea id="ans5j" placeholder="Calculate total nucleotides..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>k) The temperature at which one-half of a double-stranded DNA molecule has been denatured is called the melting temperature, Tm. Why does Tm depend directly on the GC content of the DNA? (1 mark)</label>
+    <textarea id="ans5k" placeholder="Explain structural basis behind melting temperature..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('5')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answers5" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>a)</b> It is a <b>Double-Stranded DNA (dsDNA)</b> genome. The presence of Thymine (T) confirms it is DNA, and the equal proportions of adenine to thymine ($\text{A}=\text{T}=35\%$) and guanine to cytosine ($\text{G}=\text{C}=15\%$) conform to Chargaff's rules of base pairing.</p>
+    <p><b>b)</b> It is a <b>Single-Stranded DNA (ssDNA)</b> genome. The presence of Thymine (T) points to DNA, but the unequal proportions of complementary bases ($\text{A} \neq \text{T}$ and $\text{G} = \text{C}$ by coincidence) violate Chargaff's rules for double-stranded structures.</p>
+    <p><b>c)</b> It is a <b>Single-Stranded RNA (ssRNA)</b> genome. The presence of Uracil (U) instead of Thymine (T) establishes that it is RNA, and the asymmetric base ratios ($\text{A} \neq \text{U}$ and $\text{G} \neq \text{C}$) reveal it is single-stranded.</p>
+    <p><b>d)</b> A <b>genome</b> is the complete set of genetic material or hereditary information contained within an organism or a virus, which can consist of either DNA or RNA.</p>
+    <p><b>e)</b> A <b>genome</b> encompasses the entire collective genetic composition of an organism, whereas a <b>gene</b> is a distinct, localized sub-unit of inheritance within that genome that codes for a specific protein or functional RNA molecule.</p>
+    <p><b>f)</b> A nucleotide is formed by the combination of a <b>pentose sugar</b> (ribose or deoxyribose), a <b>phosphate group</b>, and a <b>nitrogenous base</b>. The components are linked together by <b>N-glycosidic bonds</b> (connecting the base to the sugar) and <b>phosphoester bonds</b> (connecting the phosphate to the sugar), while nucleotides are connected via <b>phosphodiester bonds</b> along the backbone and stabilized by <b>hydrogen bonds</b> between complementary strands.</p>
+    <p><b>g)</b> 
+      <ul>
+        <li><b>Chemically:</b> DNA contains deoxyribose sugar and the base thymine (T), whereas RNA contains ribose sugar and the base uracil (U).</li>
+        <li><b>Functionally:</b> DNA long-term stores and preserves primary genetic blueprints, while RNA transiently carries, transfers, and processes that instruction set to synthesize proteins.</li>
+        <li><b>Location:</b> DNA is primarily restricted to the nucleus (and mitochondria/chloroplasts), while RNA is synthesized in the nucleus but predominantly functions in the cytoplasm and ribosomes.</li>
+      </ul>
+    </p>
+    <p><b>h)</b> 3'-TAACGGCAG-5' (or 5'-GACGGCAAT-3')</p>
+    <p><b>i)</b> 3'-UAACGGCAG-5' (or 5'-GACGGCAAU-3')</p>
+    <p><b>j)</b> $141 \text{ codons} \times 3 \text{ nucleotides/codon} = 423\text{ nucleotides}$.</p>
+    <p><b>k)</b> Guanine-Cytosine ($\text{G}\equiv\text{C}$) base pairs are held together by <b>three hydrogen bonds</b>, whereas Adenine-Thymine ($\text{A}=\text{T}$) pairs share only <b>two</b>. Consequently, higher GC content delivers enhanced thermodynamic stability to the double helix, demanding greater thermal energy to disrupt the strands.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>6. DNA replication is carried out in all organisms by a multiprotein complex called the replisome. DNA synthesis always takes place from the 5' to the 3' end. The template strands have opposite directions. Eukaryotic DNA replication is more complex than prokaryotic replication.</h3>
+
+  <div class="subquestion">
+    <label>a) Why is it more important for DNA to be replicated accurately? (0.5 mark)</label>
+    <textarea id="ans6a" placeholder="Explain the genetic consequences of errors..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>b) What ensures fidelity in DNA replication? (1 mark)</label>
+    <textarea id="ans6b" placeholder="Discuss enzymes, checkpoints, and signaling structures..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>c) Which catalytic activity of DNA polymerase helps in proofreading during the process of DNA replication? (0.5 mark)</label>
+    <textarea id="ans6c" placeholder="State specific exonuclease directionality..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>d) Why might eukaryotic cells need more kinds of DNA polymerases than bacteria? (0.5 mark)</label>
+    <textarea id="ans6d" placeholder="Compare cellular structural complexities..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>e) Identify the strand (lagging strand/leading strand) where Okazaki fragments are synthesized. (0.5 mark)</label>
+    <textarea id="ans6e" placeholder="State lagging or leading strand..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>f) Give one reason why eukaryotic DNA replication is more complex than prokaryotic replication? (1 mark)</label>
+    <textarea id="ans6f" placeholder="Identify an operational or structural distinction..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>g) Identify and name the inhibitor, one each, for DNA polymerase and DNA gyrase, so that they can be used as antibiotics. (1 mark)</label>
+    <textarea id="ans6g" placeholder="Provide pharmacological examples..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('6')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answers6" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>a)</b> High fidelity prevents permanent, deleterious mutations and DNA damage that could alter critical proteins, disrupt cell homeostasis, or lead to non-viable offspring or malignancies.</p>
+    <p><b>b)</b> Fidelity is maintained by the strict structural constraints of active-site base-pairing geometry in <b>DNA polymerases</b>, its intrinsic <b>proofreading exonuclease activity</b>, post-replication <b>mismatch repair (MMR) systems</b>, and cellular cell cycle control pathways (such as the <b>p53 tumor suppressor gene</b> protein cascades).</p>
+    <p><b>c)</b> The <b>3' to 5' exonuclease activity</b> of the replicating DNA polymerase.</p>
+    <p><b>d)</b> Eukaryotes manage complex linear chromosomes across multiple replication origins, requiring specialized polymerases to handle initiation, distinct leading/lagging strand synthesis, translesion repair synthesis over damaged regions, telomere maintenance, and organelle (mitochondrial) DNA synthesis.</p>
+    <p><b>e)</b> <b>Lagging strand</b></p>
+    <p><b>f)</b> Eukaryotic DNA is wound tightly around histone octamers forming nucleosomes within complex chromatin architectures that must be disassembled and precisely reassembled during replication, alongside organizing initiation across thousands of firing replication origins simultaneously compared to a bacterium's single origin.</p>
+    <p><b>g)</b> 
+      <ul>
+        <li><b>DNA Gyrase Inhibitor:</b> Ciprofloxacin (or Novobiocin / Nalidixic acid)</li>
+        <li><b>DNA Polymerase Inhibitor:</b> Aphidicolin (or Ara-C / Cytarabine for eukaryotic counterparts; Phosphonoformate for viral variants)</li>
+      </ul>
+    </p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>7. A 10-year-old girl is brought to the dermatologist by her parents. She has many freckles on her face, neck, arms, and hands, and the parents report that she is unusually sensitive to sunlight. Two basal cell carcinomas are identified on her face.<br>
+  Diagnosis: <i>Xeroderma pigmentosum</i></h3>
+
+  <div class="subquestion">
+    <label>a) Which DNA repair mechanism is most likely defective in this case? (0.5 mark)</label>
+    <textarea id="ans7a" placeholder="Identify the standard pathway..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>b) What is the probable cause of this case? (0.5 mark)</label>
+    <textarea id="ans7b" placeholder="Describe the enzymatic or genetic defect..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>c) Which type of DNA damages is likely in this case? (0.5 mark)</label>
+    <textarea id="ans7c" placeholder="State the specific structural lesion..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>d) Name any other two major DNA damages and identify the probable repair mechanism for them. (2 marks)</label>
+    <textarea id="ans7d" placeholder="Damage type 1 + repair; Damage type 2 + repair..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>e) Which repair mechanism is most likely to repair DNA damages of replication errors after replication? (0.5 mark)</label>
+    <textarea id="ans7e" placeholder="Identify the specific pathway..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>f) Why are repair mechanisms there only for DNA when there is no such repair mechanism for RNAs and proteins? (1 mark)</label>
+    <textarea id="ans7f" placeholder="Contrast life cycles and structural redundancy..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('7')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answers7" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>a)</b> <b>Nucleotide Excision Repair (NER)</b></p>
+    <p><b>b)</b> An inherited genetic mutation resulting in a deficiency or complete loss of functioning <b>NER proteins / XP enzymes</b> (such as UV-specific endonucleases, helicases, or photolyase variants in lower systems).</p>
+    <p><b>c)</b> <b>Pyrimidine dimers</b> (specifically, cyclobutane pyrimidine dimers [CPDs] or 6-4 photoproducts) induced by ultraviolet (UV) radiation.</p>
+    <p><b>d)</b> 
+      <ol>
+        <li><b>Deamination of bases (e.g., cytosine to uracil)</b> &rarr; Repaired via <b>Base Excision Repair (BER)</b></li>
+        <li><b>Double-strand breaks (DSBs)</b> &rarr; Repaired via <b>Non-Homologous End Joining (NHEJ)</b> or <b>Homologous Recombination (HR)</b></li>
+      </ol>
+    </p>
+    <p><b>e)</b> <b>Mismatch Repair (MMR)</b></p>
+    <p><b>f)</b> DNA serves as the permanent, irreplaceable blueprint of life; a modification permanently alters the cell lineage. Conversely, mRNA and proteins are transient, continuously degraded, and can simply be re-transcribed or re-translated from an uncompromised master DNA copy without lingering systemic injury.</p>
+  </div>
+</div>
+
+
+<!-- QUESTION 4 -->
+
+
+ </section>
+
+<script>
+  // Short explanation text for each question (keyed by question id)
+const answerExplanations = {
+  q1: "Dextran is a complex branched glucan sheet widely utilized as an antithrombotic agent and a plasma volume expander.",
+  q2: "Glucuronic acid conjugates with xenobiotics and lipophilic toxins in the liver during Phase II detoxification, making them water-soluble for excretion.",
+  q3: "Skeletal muscle stores the largest absolute total amount of glycogen due to its massive tissue bulk, whereas the liver contains the highest concentration per gram of tissue weight.",
+  q4: "Trehalose protects structures against dehydration stress by replacing water molecules around structural protein domains to prevent denaturation.",
+  q5: "Hypertonic sucrose or dextrose delivered parenterally exerts an osmotic draw that pulls excess interstitial fluid back into systemic circulation to reduce edema.",
+  q6: "Keratan sulfate and associated glycosaminoglycans like chondroitin sulfate help organize structural fibrils to maintain corneal clarity and shape, though structurally specific options vary.",
+  q7: "Aldose reductase reduces excess hexose sugars into polyols (such as sorbitol), which accumulate osmotically inside cells and induce cataract formation.",
+  q8: "Dipalmitoylphosphatidylcholine (DPPC) is the primary phospholipid surfactant component essential for reducing alveolar surface tension; its deficiency causes Neonatal Respiratory Distress Syndrome.",
+  q9: "Oxidative rancidity splits unsaturated fats into short-chain, volatile aldehydes, ketones, and volatile fatty acids responsible for the distinct bad smell.",
+  q10: "Fatty liver disease (steatosis) occurs primarily from the metabolic imbalance and structural accumulation of neutral triacylglycerols within hepatic tissue vacuoles.",
+  q11: "Omega-3 polyunsaturated fatty acids reduce structural inflammation, lower triglyceride blood concentrations, and lower total risk profiles for cardiovascular events.",
+  q12: "Heparin is a highly sulfated glycosaminoglycan that activates antithrombin III to inhibit clotting cascades.",
+  q13: "The monosialoganglioside GM1 functions specifically as the intestinal cell-surface entry receptor for the cholera toxin B subunits.",
+  q14: "Steroids are structurally categorized as polycyclic hydrophobic lipids derived from a core four-ring hydrocarbon cholesterol nucleus.",
+  q15: "Phosphatidylinositol 4,5-bisphosphate (PIP2) is cleaved by Phospholipase C to generate secondary messengers IP3 and DAG.",
+  q16: "Leukotriene B4 acts as a highly potent chemotactic signaling lipid that attracts and activates neutrophils at inflammatory sites.",
+  q17: "Cholesterol serves as the core biochemical sterol precursor from which your body synthesizes bile acids, steroid hormones, and Vitamin D.",
+  q18: "Trans-fatty acids pack tightly into arterial membranes, elevate LDL cholesterol, lower HDL levels, and drastically elevate coronary artery disease risk.",
+  q19: "Prostaglandin E2 (dinoprostone) and PGF2α work dynamically to stimulate uterine smooth muscle contractions and initiate active labor.",
+  q20: "Thromboxane A2 is generated and released by platelets during activation to trigger local vasoconstriction and further platelet aggregation.",
+  q21: "The eukaryotic nucleus houses chromosomal DNA wrapped around histone proteins, alongside actively transcribing RNA networks.",
+  q22: "Nucleic acids (DNA and RNA) serve as the fundamental macromolecular storehouses of primary hereditary and genetic sequence information.",
+  q23: "Chromosome assembly advances sequentially from histone octamers wrapping DNA -> nucleosomes -> 30nm chromatin fibrils -> looped domains/chromosomes.",
+  q24: "While synthetic nucleotide base analogs work as antimetabolites in medicine, naturally occurring cellular nucleotides themselves are not inherently classified as antimetabolites.",
+  q25: "At standard physiological pH (~7.4), the external phosphodiester backbone of DNA releases hydrogen ions, leaving the molecule heavily negatively charged.",
+  q26: "Chargaff's rules state that the total quantity of purines equals total pyrimidines, algebraically stated as A + G = C + T.",
+  q27: "Thymine is substituted by Uracil during transcription and is never structurally present in mature mRNA translation codons.",
+  q28: "A cistron is structurally defined as the smallest specific sequence layout of genetic material required to translate a functional polypeptide chain.",
+  q29: "Prokaryotic mRNA lacks complex 5' caps or poly-A tails and is uniquely polycistronic, meaning a single molecule can code for multiple separate proteins.",
+  q30: "Nucleoside analogs like AZT or acyclovir purposefully lack a free 3'-hydroxyl group, preventing the formation of a phosphodiester bond and terminating further DNA strand synthesis."
+};
+
+
+const correctAnswers = {
+  q1: "d", q2: "b", q3: "c", q4: "d", q5: "c", q6: "e",
+  q7: "b", q8: "d", q9: "d", q10: "d", q11: "d", q12: "d",
+  q13: "a", q14: "d", q15: "a", q16: "b", q17: "a", q18: "b",
+  q19: "e", q20: "b", q21: "e", q22: "a", q23: "e", q24: "e",
+  q25: "b", q26: "e", q27: "c", q28: "c", q29: "b", q30: "b"
+};
+
+
+ 
+  function submitQuiz() {
+     let score = 0;
+     const total = Object.keys(correctAnswers).length;
+ 
+     // Clear any previous inline feedback
+     document.querySelectorAll('.question-feedback').forEach(el => el.innerHTML = '');
+ 
+     for (let key in correctAnswers) {
+       const radios = Array.from(document.querySelectorAll(`input[name="${key}"]`));
+       const selected = radios.find(r => r.checked);
+       const correct = correctAnswers[key];
+ 
+       // Score calc
+       if (selected && selected.value === correct) score++;
+ 
+       const feedbackEl = document.getElementById(`feedback-${key}`);
+       if (!feedbackEl) continue;
+ 
+       let feedbackHTML = `<div class="answer-block"><strong>Question ${key.replace(/^q/, '')}</strong><div class="answer-list">`;
+ 
+       radios.forEach(r => {
+         let label = r.parentElement;
+         let text = label ? label.textContent.trim() : r.value;
+ 
+         let classes = ['answer-item'];
+         if (r.value === correct) classes.push('answer-correct');
+         if (r.checked && r.value !== correct) classes.push('answer-wrong', 'user-choice');
+         if (r.checked && r.value === correct) classes.push('user-choice');
+ 
+         feedbackHTML += `<div class="${classes.join(' ')}">${text}${r.checked ? ' ◀' : ''}</div>`;
+       });
+ 
+       feedbackHTML += `</div>`;
+ 
+       const correctRadio = radios.find(rr => rr.value === correct);
+       const correctText = correctRadio && correctRadio.parentElement ? correctRadio.parentElement.textContent.trim() : correct;
+       const explanationText = answerExplanations[key] || '';
+ 
+       if (selected) {
+         if (selected.value === correct) {
+           feedbackHTML += `<div class="explanation">✅ Correct — ${explanationText}</div>`;
+         } else {
+           feedbackHTML += `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+         }
+       } else {
+         feedbackHTML += `<div class="explanation wrong">No answer selected. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+       }
+ 
+       feedbackHTML += `</div>`;
+       feedbackEl.innerHTML = feedbackHTML;
+     }
+ 
+     const percentage = Math.round((score / total) * 100);
+     document.getElementById("score").innerText = "0%";
+     const resultBox = document.getElementById("resultBox");
+     resultBox.style.display = "block";
+     document.getElementById("answers").innerHTML = '';
+ 
+     let start = 0;
+     const timer = setInterval(() => {
+       if (start >= percentage) clearInterval(timer);
+       document.getElementById("score").innerText = start + "%";
+       start++;
+     }, 20);
+ 
+     document.querySelectorAll('#quizForm input').forEach(i => i.disabled = true);
+   }
+ 
+   // Essay Section
+   function showEssayAnswers() {
+     document.querySelectorAll(".essay-answer").forEach(a => a.style.display = "block");
+   }
+
+   // Show/hide model answers for an essay card
+   function showAnswers(id) {
+     const el = document.getElementById('answers' + id);
+     if (!el) return;
+     const isVisible = el.classList.toggle('visible');
+     el.setAttribute('aria-hidden', !isVisible);
+     if (isVisible) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+   }
+ 
+   const mode = localStorage.getItem("examMode");
+
+    if (mode === "essay") {
+      document.getElementById("mcq-section").style.display = "none";
+      document.getElementById("essay-section").style.display = "block";
+    } 
+    else if (mode === "tf") {
+      document.getElementById("mcq-section").style.display = "none";
+      document.getElementById("tf-section").style.display = "block";
+    }
+ 
+   // Navigate to the previous page if available, otherwise fall back to index.html
+   function goBack() {
+     if (history.length > 1) {
+       history.back();
+     } else {
+       window.location.href = "index.html";
+     }
+   }
+ 
+   // header back button hookup (same behaviour)
+   const backBtn = document.getElementById('backBtn');
+   if (backBtn) backBtn.addEventListener('click', (e) => { e.preventDefault(); goBack(); });
+ </script>
+
+</body>
+</html>

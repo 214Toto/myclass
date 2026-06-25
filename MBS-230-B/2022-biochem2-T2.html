@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Papers | ToToZ Collection</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../nav.css">
+  <style>
+    :root {
+      --primary: #2b7a78;
+      --accent: #3aafa9;
+      --dark: #17252a;
+      --light: #f8f9fa;
+      --radius: 12px;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #f5f7fb, #eef6f6);
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--dark));
+      color: white;
+      padding: 1.1rem 0.8;
+      position: fixed; /* Keeps it at the top when scrolling */
+      top: 0;          /* Added: Ensures it starts at the absolute top */
+      left: 0;         /* Added: Ensures it stretches from the left edge */
+      width: 100%;
+      z-index: 1000;   /* Added: Keeps header above all other elements */
+      box-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* Improved heading styling */
+    header h1 {
+      font-size: 1.25rem;
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: 0.35px;
+      color: #ffffff;
+      text-transform: none;
+      display: inline-block;
+      line-height: 1;
+      text-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* logo heading (keeps icon + title aligned) */
+    .logo h1 {
+      font-size: 1.25rem;
+      margin: 0 0 0 6px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 900px;
+      /* Adjust this value based on how tall your header is */
+      margin: 100px auto 0 auto; 
+      padding: 1.5rem 0;
+    }
+
+    h2 {
+      color: var(--primary);
+      margin: 0 0 0.85rem 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    /* responsive tweaks for small screens */
+    @media (max-width: 520px) {
+      header h1, .logo h1 { font-size: 1rem; }
+      h2 { font-size: 1rem; }
+    }
+
+    .question {
+      margin-bottom: 1.5rem;
+    }
+
+    .question p {
+      font-weight: 600;
+    }
+
+    .options label {
+      display: block;
+      background: #f8fafc;
+      border: 1px solid #d9e2ec;
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      margin-top: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .options label:hover {
+      background: #e0f7f6;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .result {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #f1faf9;
+      border-radius: var(--radius);
+      text-align: center;
+      display: none;
+    }
+
+    .score {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin-top: 0.5rem;
+    }
+
+    /* --- Styles for answer feedback --- */
+    .answer-list { text-align: left; margin-top: 12px; }
+    .answer-item {
+      display: block;
+      padding: 8px 10px;
+      border-radius: 8px;
+      margin: 6px 0;
+      border: 1px solid #e6eef3;
+      background: #ffffff;
+      color: var(--dark);
+      font-weight: 600;
+    }
+    .answer-correct {
+      background: #ecfdf5;       /* light green */
+      border-color: #bbf7d0;
+      color: #065f46;           /* dark green text */
+      box-shadow: 0 6px 18px rgba(16,185,129,0.06);
+    }
+    .answer-wrong {
+      background: #fff1f2;       /* light red */
+      border-color: #fca5a5;
+      color: #9f1239;           /* dark red text */
+      box-shadow: 0 6px 18px rgba(239,68,68,0.06);
+    }
+    .user-choice { outline: 2px dashed rgba(0,0,0,0.04); }
+
+    /* Essay Section */
+    textarea {
+      width: 80%;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.75rem;
+      resize: vertical;
+      min-height: 50px;
+      font-size: 1rem;
+    }
+
+    .essay-answer {
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-top: 0.75rem;
+      display: none;
+    }
+
+    .back-btn {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    /* Explanation box shown under each question in feedback */
+    .explanation {
+      margin-top: 8px;
+      padding: 10px 12px;                                                                                                                                                                                 
+      border-radius: 8px;
+      background: #363d3a;           /* subtle greenish background */
+      color: #065f46;                /* dark green text */
+      font-size: 0.95rem;
+      line-height: 1.4;
+      border: 1px solid #bbf7d0;
+    }
+
+    /* For incorrect explanation (when needed) */
+    .explanation.wrong {
+      background: #fff1f2;
+      color: #7f1d1d;
+      border-color: #fca5a5;
+    }
+
+    /* small label styling for feedback header */
+    .answer-block { color: var(--primary); margin-bottom: 12px; }
+    .answer-block strong { display:block; margin-bottom:8px; color: rgb(7, 113, 95); }
+    .question-feedback { 
+      margin-top: 14px;
+      padding: 14px 16px;
+      color: white;
+      border-radius: 12px;
+      background: #a82525;
+      border: 1px solid #d6e7eb;
+    }
+    .question-feedback .answer-list {
+      margin-top: 10px;
+    }
+
+    /* Essay card styles (compact, readable) */
+    #essay-section { padding-top: 0; }
+    #essay-section .card {
+      background: linear-gradient(180deg, #ffffff, #fbfeff);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(18,38,63,0.06);
+      border: 1px solid rgba(43,122,120,0.06);
+      max-width: 900px;
+      margin: 0 auto 1rem auto;
+    }
+    #essay-section .card h3 {
+      margin: 0 0 10px 0;
+      font-size: 1.02rem;
+      color: var(--dark);
+      font-weight: 700;
+    }
+    #essay-section .subquestion { margin-bottom: 12px; }
+    #essay-section .subquestion label {
+      display:block;
+      font-weight:700;
+      margin-bottom:6px;
+      color:var(--dark);
+    }
+    #essay-section textarea {
+      width:100%;
+      min-height:90px;
+      border-radius:8px;
+      border:1px solid #d1dbe0;
+      padding:10px;
+      resize:vertical;
+      font-family:inherit;
+    }
+
+    .mutwe {
+      max-width: 900px; 
+      margin: 0 auto; 
+      width: 92%; 
+      display:flex; 
+      align-items:center; 
+      justify-content:space-between;
+    }
+
+    #essay-section .answers {
+      display:none;
+      margin-top:14px;
+      background:#f1faf9;
+      border-radius:8px;
+      padding:12px;
+      border:1px solid #cfeee6;
+      color:var(--dark);
+    }
+    #essay-section .answers h3 { margin-top:0; }
+    #essay-section .card .btn { margin-top:8px; }
+    /* make answers visible area stand out when shown */
+    #essay-section .answers.visible { display:block; }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="mutwe">
+      <div class="logo">
+        <i class="fas fa-book-medical"></i>
+        <h1>2022 Biochemistry Test 2 </h1>
+      </div>
+      <button id="backBtn" class="btn"><i class="fas fa-arrow-left"></i> Back</button>
+    </div>
+  </header>
+
+<div class="container" id="mcq-section">
+  <h2>Multiple Choice Questions</h2>
+
+  <form id="quizForm">
+
+<div class="question">
+  <p>1. Which of the following indicates the correct sequence of chromosome constituents, going from smaller to larger?</p>
+  <div class="options">
+    <label><input type="radio" name="q1" value="a"> Nucleosome, histone octamer, chromosome loop, and chromosome fibril</label>
+    <label><input type="radio" name="q1" value="b"> Histone octamer, nucleosome, chromatin fibril, and chromosome loop</label>
+    <label><input type="radio" name="q1" value="c"> Chromatin fibril, nucleosome, histone octamer, and chromosome loop</label>
+    <label><input type="radio" name="q1" value="d"> Nucleosome, chromatin fibril, chromosome loop, and histone octamer</label>
+    <label><input type="radio" name="q1" value="e"> Chromatin fibril, histone octamer, nucleosome, and chromosome loop</label>
+  </div>
+  <div class="question-feedback" id="feedback-q1"></div>
+</div>
+
+<div class="question">
+  <p>2. Which of the following statements best describes the structure of glycogen?</p>
+  <div class="options">
+    <label><input type="radio" name="q2" value="a"> New glucose molecules are added to the C1 aldehyde group of chain termini, forming a hemiacetal.</label>
+    <label><input type="radio" name="q2" value="b"> The monosaccharide residues alternate between D- and L-glucose.</label>
+    <label><input type="radio" name="q2" value="c"> Glycogen is a copolymer of glucose and galactose.</label>
+    <label><input type="radio" name="q2" value="d"> There are more branch residues than residues in straight chains.</label>
+    <label><input type="radio" name="q2" value="e"> Branch points contain &alpha;1-4 glycosidic linkages.</label>
+  </div>
+  <div class="question-feedback" id="feedback-q2"></div>
+</div>
+
+<div class="question">
+  <p>3. Which of the following is a nutritionally essential fatty acid along with its usual dietary source?</p>
+  <div class="options">
+    <label><input type="radio" name="q3" value="a"> Palmitoleic acid&mdash;animals</label>
+    <label><input type="radio" name="q3" value="b"> Linolenic acid&mdash;animals</label>
+    <label><input type="radio" name="q3" value="c"> Eicosapentaenoic acid&mdash;plants</label>
+    <label><input type="radio" name="q3" value="d"> Linoleic acid&mdash;plants</label>
+    <label><input type="radio" name="q3" value="e"> Oleic acid&mdash;animals</label>
+  </div>
+  <div class="question-feedback" id="feedback-q3"></div>
+</div>
+
+<div class="question">
+  <p>4. A 45-year-old Caucasian male is found to have serum cholesterol of 300 mg/dL (normal &lt;200 depending on criteria) after a 12-hour fast. Which of the following lipoproteins would contribute to plasma cholesterol following a 12-hour fast?</p>
+  <div class="options">
+    <label><input type="radio" name="q4" value="a"> Chylomicron remnants and very low density lipoproteins (VLDLs)</label>
+    <label><input type="radio" name="q4" value="b"> Low-density lipoproteins (LDLs) and adipocyte lipid droplets</label>
+    <label><input type="radio" name="q4" value="c"> Very low density lipoproteins (VLDLs) and low-density lipoproteins (LDLs)</label>
+    <label><input type="radio" name="q4" value="d"> High-density lipoproteins (HDLs) and low-density lipoproteins (LDLs)</label>
+    <label><input type="radio" name="q4" value="e"> Chylomicrons and very low density lipoproteins (VLDLs)</label>
+  </div>
+  <div class="question-feedback" id="feedback-q4"></div>
+</div>
+
+<div class="question">
+  <p>5. Which of the following carbohydrates would be most abundant in the diet of strict vegetarians?</p>
+  <div class="options">
+    <label><input type="radio" name="q5" value="a"> Maltose</label>
+    <label><input type="radio" name="q5" value="b"> Glycogen</label>
+    <label><input type="radio" name="q5" value="c"> Amylose</label>
+    <label><input type="radio" name="q5" value="d"> Lactose</label>
+    <label><input type="radio" name="q5" value="e"> Cellulose</label>
+  </div>
+  <div class="question-feedback" id="feedback-q5"></div>
+</div>
+
+<div class="question">
+  <p>6. Which of the following is the major source of extracellular cholesterol for human tissues?</p>
+  <div class="options">
+    <label><input type="radio" name="q6" value="a"> Albumin</label>
+    <label><input type="radio" name="q6" value="b"> &gamma;-Globulin</label>
+    <label><input type="radio" name="q6" value="c"> Very low density lipoproteins (VLDLs)</label>
+    <label><input type="radio" name="q6" value="d"> Low-density lipoproteins (LDLs)</label>
+    <label><input type="radio" name="q6" value="e"> High-density lipoproteins (HDLs)</label>
+  </div>
+  <div class="question-feedback" id="feedback-q6"></div>
+</div>
+
+<div class="question">
+  <p>7. Glycogenin is a:</p>
+  <div class="options">
+    <label><input type="radio" name="q7" value="a"> Glycosaminoglycan</label>
+    <label><input type="radio" name="q7" value="b"> Lipoprotein</label>
+    <label><input type="radio" name="q7" value="c"> Polypeptide</label>
+    <label><input type="radio" name="q7" value="d"> Polysaccharide</label>
+    <label><input type="radio" name="q7" value="e"> Lipid</label>
+  </div>
+  <div class="question-feedback" id="feedback-q7"></div>
+</div>
+
+<div class="question">
+  <p>8. Which of the following is not an aldose?</p>
+  <div class="options">
+    <label><input type="radio" name="q8" value="a"> Glycerol</label>
+    <label><input type="radio" name="q8" value="b"> Ribose</label>
+    <label><input type="radio" name="q8" value="c"> Glucose</label>
+    <label><input type="radio" name="q8" value="d"> Mannose</label>
+    <label><input type="radio" name="q8" value="e"> Galactose</label>
+  </div>
+  <div class="question-feedback" id="feedback-q8"></div>
+</div>
+
+<div class="question">
+  <p>9. All are reducing sugars except</p>
+  <div class="options">
+    <label><input type="radio" name="q9" value="a"> Glucose</label>
+    <label><input type="radio" name="q9" value="b"> Fructose</label>
+    <label><input type="radio" name="q9" value="c"> Ribose</label>
+    <label><input type="radio" name="q9" value="d"> Sucrose</label>
+    <label><input type="radio" name="q9" value="e"> Lactose</label>
+  </div>
+  <div class="question-feedback" id="feedback-q9"></div>
+</div>
+
+<div class="question">
+  <p>10. Glycosaminoglycans present in cornea:</p>
+  <div class="options">
+    <label><input type="radio" name="q10" value="a"> Dermatan Sulfate</label>
+    <label><input type="radio" name="q10" value="b"> Heparan sulphate</label>
+    <label><input type="radio" name="q10" value="c"> Keratan Sulfate</label>
+    <label><input type="radio" name="q10" value="d"> Hyaluronic acid</label>
+    <label><input type="radio" name="q10" value="e"> Chondroitin Sulfate</label>
+  </div>
+  <div class="question-feedback" id="feedback-q10"></div>
+</div>
+
+<div class="question">
+  <p>11. Mucopolysaccharide that doesn't contain uronic acid residue is:</p>
+  <div class="options">
+    <label><input type="radio" name="q11" value="a"> Keratan Sulfate</label>
+    <label><input type="radio" name="q11" value="b"> Dermatan Sulfate</label>
+    <label><input type="radio" name="q11" value="c"> Heparan Sulfate</label>
+    <label><input type="radio" name="q11" value="d"> Heparin</label>
+    <label><input type="radio" name="q11" value="e"> Chondroitin Sulfate</label>
+  </div>
+  <div class="question-feedback" id="feedback-q11"></div>
+</div>
+
+<div class="question">
+  <p>12. Which deposition results in cataract?</p>
+  <div class="options">
+    <label><input type="radio" name="q12" value="a"> Sugar alcohols</label>
+    <label><input type="radio" name="q12" value="b"> Sugar acids</label>
+    <label><input type="radio" name="q12" value="c"> Glucose</label>
+    <label><input type="radio" name="q12" value="d"> Galactose</label>
+    <label><input type="radio" name="q12" value="e"> Sugar amines</label>
+  </div>
+  <div class="question-feedback" id="feedback-q12"></div>
+</div>
+
+<div class="question">
+  <p>13. Heparin, the physiological anticoagulant, is a:</p>
+  <div class="options">
+    <label><input type="radio" name="q13" value="a"> Carbohydrate</label>
+    <label><input type="radio" name="q13" value="b"> Glycoprotein</label>
+    <label><input type="radio" name="q13" value="c"> Glycosaminoglycan</label>
+    <label><input type="radio" name="q13" value="d"> Polysaccharide</label>
+    <label><input type="radio" name="q13" value="e"> Proteoglycan</label>
+  </div>
+  <div class="question-feedback" id="feedback-q13"></div>
+</div>
+
+<div class="question">
+  <p>14. The glucose transporter in myocyte stimulated by insulin is:</p>
+  <div class="options">
+    <label><input type="radio" name="q14" value="a"> GLUT-4</label>
+    <label><input type="radio" name="q14" value="b"> GLUT-5</label>
+    <label><input type="radio" name="q14" value="c"> GLUT-1</label>
+    <label><input type="radio" name="q14" value="d"> GLUT-2</label>
+    <label><input type="radio" name="q14" value="e"> GLUT-3</label>
+  </div>
+  <div class="question-feedback" id="feedback-q14"></div>
+</div>
+
+<div class="question">
+  <p>15. A 45-year-old African American female is found unconscious at her desk and rushed to the emergency room via ambulance. She is a known diabetic, and an injectable insulin pen was found on her desk. Serum glucose was less than 20 g/dL as read by glucometer on the way to the hospital. Which of the following statements reflects the pathogenesis of her hypoglycemia?</p>
+  <div class="options">
+    <label><input type="radio" name="q15" value="a"> Her extrahepatic tissues became permeable to glucose through the opposing action of glucagon.</label>
+    <label><input type="radio" name="q15" value="b"> Insulin stimulated glucose uptake into her liver even when the serum glucose became low.</label>
+    <label><input type="radio" name="q15" value="c"> Her liver was suddenly permeable to glucose after added insulin.</label>
+    <label><input type="radio" name="q15" value="d"> Her insulin increased glucose import into extrahepatic tissues using various glucose transporters</label>
+    <label><input type="radio" name="q15" value="e"> Her insulin stimulated liver glucokinase, which phosphorylates glucose only at low glucose concentrations.</label>
+  </div>
+  <div class="question-feedback" id="feedback-q15"></div>
+</div>
+
+<div class="question">
+  <p>16. Inulin-like fructosans are used as prebiotics as they are nondigestible. Resistance to digestion in the upper GI tract results from:</p>
+  <div class="options">
+    <label><input type="radio" name="q16" value="a"> Presence of &alpha;-Glycosidic linkage</label>
+    <label><input type="radio" name="q16" value="b"> Presence of o-Glycosidic linkage</label>
+    <label><input type="radio" name="q16" value="c"> Absence of digestive enzyme in the upper GIT</label>
+    <label><input type="radio" name="q16" value="d"> Beta configuration of anomeric C2</label>
+    <label><input type="radio" name="q16" value="e"> Low pH of the stomach</label>
+  </div>
+  <div class="question-feedback" id="feedback-q16"></div>
+</div>
+
+<div class="question">
+  <p>17. Which among the following is a cardio protective fatty acid?</p>
+  <div class="options">
+    <label><input type="radio" name="q17" value="a"> Omega-3 fatty acid</label>
+    <label><input type="radio" name="q17" value="b"> Unsaturated fatty acid</label>
+    <label><input type="radio" name="q17" value="c"> Palmitic acid</label>
+    <label><input type="radio" name="q17" value="d"> Stearic acid</label>
+    <label><input type="radio" name="q17" value="e"> Oleic acid</label>
+  </div>
+  <div class="question-feedback" id="feedback-q17"></div>
+</div>
+
+<div class="question">
+  <p>18. Which one of these is not present in plants?</p>
+  <div class="options">
+    <label><input type="radio" name="q18" value="a"> Lauric Acid</label>
+    <label><input type="radio" name="q18" value="b"> Ergosterol</label>
+    <label><input type="radio" name="q18" value="c"> Cholesterol</label>
+    <label><input type="radio" name="q18" value="d"> Linolenic acid</label>
+    <label><input type="radio" name="q18" value="e"> Linoleic Acid</label>
+  </div>
+  <div class="question-feedback" id="feedback-q18"></div>
+</div>
+
+<div class="question">
+  <p>19. Cellular second messenger is produced from:</p>
+  <div class="options">
+    <label><input type="radio" name="q19" value="a"> Cholesterol</label>
+    <label><input type="radio" name="q19" value="b"> Glycerol</label>
+    <label><input type="radio" name="q19" value="c"> Phosphatidylinositol</label>
+    <label><input type="radio" name="q19" value="d"> Phosphatidylserine</label>
+    <label><input type="radio" name="q19" value="e"> Phosphatidylcholine</label>
+  </div>
+  <div class="question-feedback" id="feedback-q19"></div>
+</div>
+
+<div class="question">
+  <p>20. Eukaryotic plasma membrane is made up of all except:</p>
+  <div class="options">
+    <label><input type="radio" name="q20" value="a"> Cholesterol</label>
+    <label><input type="radio" name="q20" value="b"> Glycoproteins</label>
+    <label><input type="radio" name="q20" value="c"> Carbohydrates</label>
+    <label><input type="radio" name="q20" value="d"> Triglycerides</label>
+    <label><input type="radio" name="q20" value="e"> Lecithin</label>
+  </div>
+  <div class="question-feedback" id="feedback-q20"></div>
+</div>
+
+<div class="question">
+  <p>21. At the physiological pH, the DNA molecules are:</p>
+  <div class="options">
+    <label><input type="radio" name="q21" value="a"> Amphipathic</label>
+    <label><input type="radio" name="q21" value="b"> None of the above</label>
+    <label><input type="radio" name="q21" value="c"> Positively charged</label>
+    <label><input type="radio" name="q21" value="d"> Negatively charged</label>
+    <label><input type="radio" name="q21" value="e"> Neutral</label>
+  </div>
+  <div class="question-feedback" id="feedback-q21"></div>
+</div>
+
+<div class="question">
+  <p>22. True about DNA structure:</p>
+  <div class="options">
+    <label><input type="radio" name="q22" value="a"> Mainly consists of left-handed helix</label>
+    <label><input type="radio" name="q22" value="b"> 5'-3' Phosphodiester bonding is present</label>
+    <label><input type="radio" name="q22" value="c"> Purines are adenine and guanine and pyrimidines are uracil and cytosine</label>
+    <label><input type="radio" name="q22" value="d"> Watson and Crick discovered DNA structure in 1973</label>
+    <label><input type="radio" name="q22" value="e"> Deoxyribose-phosphate backbone with bases stacked inside</label>
+  </div>
+  <div class="question-feedback" id="feedback-q22"></div>
+</div>
+
+<div class="question">
+  <p>23. The two strands of DNA are held together by:</p>
+  <div class="options">
+    <label><input type="radio" name="q23" value="a"> Ionic interaction</label>
+    <label><input type="radio" name="q23" value="b"> Phosphodiester bond</label>
+    <label><input type="radio" name="q23" value="c"> van der Waals bond</label>
+    <label><input type="radio" name="q23" value="d"> Hydrogen bond</label>
+    <label><input type="radio" name="q23" value="e"> Covalent bond</label>
+  </div>
+  <div class="question-feedback" id="feedback-q23"></div>
+</div>
+
+<div class="question">
+  <p>24. Chargaff rules state that:</p>
+  <div class="options">
+    <label><input type="radio" name="q24" value="a"> A + T = G + C</label>
+    <label><input type="radio" name="q24" value="b"> A + G = C + T</label>
+    <label><input type="radio" name="q24" value="c"> A + G = T + C</label>
+    <label><input type="radio" name="q24" value="d"> A / T = G / C</label>
+    <label><input type="radio" name="q24" value="e"> A = U = T = G = C</label>
+  </div>
+  <div class="question-feedback" id="feedback-q24"></div>
+</div>
+
+<div class="question">
+  <p>25. A nucleic acid was analyzed and found to contain 32% adenine, 18% guanine, 17% cytosine and 33% thymine. The nucleic acid must be:</p>
+  <div class="options">
+    <label><input type="radio" name="q25" value="a"> Double-stranded DNA</label>
+    <label><input type="radio" name="q25" value="b"> Triple-stranded DNA</label>
+    <label><input type="radio" name="q25" value="c"> Single-stranded RNA</label>
+    <label><input type="radio" name="q25" value="d"> Single-stranded DNA</label>
+    <label><input type="radio" name="q25" value="e"> Double-stranded RNA</label>
+  </div>
+  <div class="question-feedback" id="feedback-q25"></div>
+</div>
+
+<div class="question">
+  <p>26. Thermo-stability in DNA is contributed mostly by...................</p>
+  <div class="options">
+    <label><input type="radio" name="q26" value="a"> Parallel arrangement</label>
+    <label><input type="radio" name="q26" value="b"> Number of phosphodiester bonds</label>
+    <label><input type="radio" name="q26" value="c"> A = T</label>
+    <label><input type="radio" name="q26" value="d"> G &equiv; C</label>
+    <label><input type="radio" name="q26" value="e"> Molecular base</label>
+  </div>
+  <div class="question-feedback" id="feedback-q26"></div>
+</div>
+
+<div class="question">
+  <p>27. Which of the following is not hydrolyzed by &alpha;-amylase?</p>
+  <div class="options">
+    <label><input type="radio" name="q27" value="a"> Dextrin</label>
+    <label><input type="radio" name="q27" value="b"> Isomaltose</label>
+    <label><input type="radio" name="q27" value="c"> Starch</label>
+    <label><input type="radio" name="q27" value="d"> Glycogen</label>
+    <label><input type="radio" name="q27" value="e"> Cellulose</label>
+  </div>
+  <div class="question-feedback" id="feedback-q27"></div>
+</div>
+
+<div class="question">
+  <p>28. The reducing ability of a carbohydrate is due to the presence/or formation of...................</p>
+  <div class="options">
+    <label><input type="radio" name="q28" value="a"> Presence of &alpha;1-4 linkage</label>
+    <label><input type="radio" name="q28" value="b"> Formation of ring structure</label>
+    <label><input type="radio" name="q28" value="c"> A free carboxyl group</label>
+    <label><input type="radio" name="q28" value="d"> A free hydroxyl group</label>
+    <label><input type="radio" name="q28" value="e"> Enediol formation</label>
+  </div>
+  <div class="question-feedback" id="feedback-q28"></div>
+</div>
+
+<div class="question">
+  <p>29. Which of the following lipids is deficient in infants with respiratory distress syndrome?</p>
+  <div class="options">
+    <label><input type="radio" name="q29" value="a"> Dipalmitoyl phosphatidylcholine</label>
+    <label><input type="radio" name="q29" value="b"> Phosphatidylethanolamine</label>
+    <label><input type="radio" name="q29" value="c"> Sphingomyelins</label>
+    <label><input type="radio" name="q29" value="d"> Cardiolipins</label>
+    <label><input type="radio" name="q29" value="e"> Leukotrienes</label>
+  </div>
+  <div class="question-feedback" id="feedback-q29"></div>
+</div>
+
+<div class="question">
+  <p>30. Depot fats of mammalian cells comprise mostly of...................</p>
+  <div class="options">
+    <label><input type="radio" name="q30" value="a"> Cerebrosides</label>
+    <label><input type="radio" name="q30" value="b"> Triacylglycerol</label>
+    <label><input type="radio" name="q30" value="c"> Cholesterol</label>
+    <label><input type="radio" name="q30" value="d"> Cholesterol esters</label>
+    <label><input type="radio" name="q30" value="e"> Phospholipids</label>
+  </div>
+  <div class="question-feedback" id="feedback-q30"></div>
+</div>
+
+<div class="question">
+  <p>31. The smell of the fat turned rancid is due to:</p>
+  <div class="options">
+    <label><input type="radio" name="q31" value="a"> Volatile fatty acids</label>
+    <label><input type="radio" name="q31" value="b"> Cholesterol.</label>
+    <label><input type="radio" name="q31" value="c"> Presence of vit E</label>
+    <label><input type="radio" name="q31" value="d"> Presence of quinones</label>
+    <label><input type="radio" name="q31" value="e"> Phenols</label>
+  </div>
+  <div class="question-feedback" id="feedback-q31"></div>
+</div>
+
+<div class="question">
+  <p>32. An eicosanoid acting as chemotactic agent is............</p>
+  <div class="options">
+    <label><input type="radio" name="q32" value="a"> Thromboxane</label>
+    <label><input type="radio" name="q32" value="b"> Prostaglandin</label>
+    <label><input type="radio" name="q32" value="c"> Prostacyclin</label>
+    <label><input type="radio" name="q32" value="d"> Leukotriene</label>
+    <label><input type="radio" name="q32" value="e"> Lipoxin</label>
+  </div>
+  <div class="question-feedback" id="feedback-q32"></div>
+</div>
+
+<div class="question">
+  <p>33. Bile acids are derived from...................</p>
+  <div class="options">
+    <label><input type="radio" name="q33" value="a"> Cholesterol</label>
+    <label><input type="radio" name="q33" value="b"> Glycolipids</label>
+    <label><input type="radio" name="q33" value="c"> Phospholipids</label>
+    <label><input type="radio" name="q33" value="d"> Triacylglycerol</label>
+    <label><input type="radio" name="q33" value="e"> Fatty acids</label>
+  </div>
+  <div class="question-feedback" id="feedback-q33"></div>
+</div>
+
+<div class="question">
+  <p>34. Nucleotides perform all of the following functions except:</p>
+  <div class="options">
+    <label><input type="radio" name="q34" value="a"> Components of certain coenzymes</label>
+    <label><input type="radio" name="q34" value="b"> Antimetabolites</label>
+    <label><input type="radio" name="q34" value="c"> Structural units of DNA and RNA</label>
+    <label><input type="radio" name="q34" value="d"> Catalytic in nature</label>
+    <label><input type="radio" name="q34" value="e"> Regulators of metabolic reactions</label>
+  </div>
+  <div class="question-feedback" id="feedback-q34"></div>
+</div>
+
+<div class="question">
+  <p>35. In contrast to eukaryotic m-RNA, prokaryotic m-RNA is characterised by...................</p>
+  <div class="options">
+    <label><input type="radio" name="q35" value="a"> Being synthesised with introns</label>
+    <label><input type="radio" name="q35" value="b"> Having a poly-A tail</label>
+    <label><input type="radio" name="q35" value="c"> Having 7-methyl guanosine triphosphate at the 5'-end</label>
+    <label><input type="radio" name="q35" value="d"> Being polycystronic</label>
+    <label><input type="radio" name="q35" value="e"> Being only monocystronic</label>
+  </div>
+  <div class="question-feedback" id="feedback-q35"></div>
+</div>
+
+
+
+
+    
+
+    <button type="button" class="btn" onclick="submitQuiz()">Submit</button>
+  </form>
+
+  <div class="result" id="resultBox">
+    <h3>Your Score:</h3>
+    <div class="score" id="score">0%</div>
+    <div id="answers"></div>
+  </div>
+</div>
+
+<!-- Short Essay Section (card style with sub-questions) -->
+<section id="essay-section" class="container" style="display:none;">
+  <h2 style="margin-bottom:1rem;color:var(--dark)">Short Essay Questions</h2>
+
+
+<!-- SECTION B: DESCRIPTIVE / SCENARIO-BASED QUESTIONS -->
+    <div class="card">
+  <h3>1. (i) With dilute mineral acids (0.5 to 1.0 N HCl/H₂SO₄), complex sugars hydrolysed into their constituent monosaccharides. In 12% HCl, pentoses yield the cyclic aldehyde.</h3>
+
+  <div class="subquestion">
+    <label>a) List any four pentoses in our body along with their major biological importance. (2 marks)</label>
+    <textarea id="ans1ia" placeholder="List pentoses like ribose, deoxyribose, etc., and their roles..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>b) What is the name of cyclic aldehyde formed from pentoses? (1 mark)</label>
+    <textarea id="ans1ib" placeholder="Name the dehydration product formed..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>c) What is the use of this chemical property of pentoses in biochemical laboratories? (1 mark)</label>
+    <textarea id="ans1ic" placeholder="Describe the diagnostic or colorimetric test application..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>d) Name three most common disaccharides. What are the constituent monosaccharides of respective disaccharides? (3 marks)</label>
+    <textarea id="ans1id" placeholder="List the disaccharides and their monosaccharide units..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>e) What will the respective products of 1N HCl with sucrose and starch? (2 marks)</label>
+    <textarea id="ans1ie" placeholder="Identify the hydrolysis products for both..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>f) What will the action of concentrated mineral acids with monosaccharides? (1 mark)</label>
+    <textarea id="ans1if" placeholder="Describe the dehydration reaction effect..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('1i')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answers1i" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>a)</b> 1. <b>D-Ribose:</b> Structural component of RNA and nucleotide coenzymes (ATP, NAD⁺).<br>
+       2. <b>D-Deoxyribose:</b> Structural backbone of DNA.<br>
+       3. <b>D-Ribulose:</b> Intermediate in the Pentose Phosphate Pathway (PPP).<br>
+       4. <b>D-Xylulose:</b> Intermediate in the uronic acid pathway and PPP.</p>
+    <p><b>b)</b> Furfural (or 2-furaldehyde).</p>
+    <p><b>c)</b> It is used for the qualitative and quantitative estimation of pentoses in solutions using colorimetric tests, such as <b>Bial's Test</b> (which forms a blue-green complex).</p>
+    <p><b>d)</b> 1. <b>Sucrose:</b> Glucose + Fructose<br>
+       2. <b>Lactose:</b> Glucose + Galactose<br>
+       3. <b>Maltose:</b> Glucose + Glucose</p>
+    <p><b>e)</b> 1. <b>Sucrose + 1N HCl:</b> Yields an equimolar mixture of D-glucose and D-fructose (invert sugar).<br>
+       2. <b>Starch + 1N HCl:</b> Complete hydrolysis ultimately yields D-glucose units.</p>
+    <p><b>f)</b> Concentrated mineral acids cause rapid <b>dehydration</b> of monosaccharides, removing water molecules to form furfural derivatives (furfural from pentoses, and 5-hydroxymethylfurfural from hexoses).</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>1. (ii) Indicate whether each of the following pairs of sugars consists of anomers, epimers, or an aldose-ketose pair and state how they differ from one another.</h3>
+
+  <div class="subquestion">
+    <label>a) D-glucose and D-mannose (1 mark)</label>
+    <textarea id="ans1iia" placeholder="Identify relationship and the carbon differences..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>b) &alpha;-D-glucose and &beta;-D-glucose (1 mark)</label>
+    <textarea id="ans1iib" placeholder="Identify relationship and configuration difference..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>c) D-ribose and D-ribulose (1 mark)</label>
+    <textarea id="ans1iic" placeholder="Identify functional group isomerism details..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>d) Depict any one of the above pairs (a or b or c) in structural comparison. (2 marks)</label>
+    <textarea id="ans1iid" placeholder="Provide structural description or comparison..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('1ii')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answers1ii" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>a)</b> <b>Epimers:</b> They are diastereomers that differ in configuration around only one specific chiral center. D-glucose and D-mannose specifically differ in the orientation of the hydroxyl group (-OH) at the <b>C-2</b> position.</p>
+    <p><b>b)</b> <b>Anomers:</b> They are cyclic monosaccharide isomers that differ in configuration only at the hemiacetal/carbonyl carbon (C-1). &alpha;-D-glucose has the -OH group at C-1 pointing downwards (trans to C-6), while &beta;-D-glucose has the -OH pointing upwards (cis to C-6).</p>
+    <p><b>c)</b> <b>Aldose-ketose pair:</b> They are functional isomers. D-ribose is an aldopentose containing an aldehyde functional group (-CHO) at C-1, whereas D-ribulose is a ketopentose containing a ketone functional group (-C=O) at C-2.</p>
+    <p><b>d)</b> <i>Comparison of &alpha;-D-glucose and &beta;-D-glucose (Haworth structures):</i> Both feature a six-membered pyranose ring with identical substituents at C-2, C-3, C-4, and C-5. The difference lies strictly at <b>C-1</b> (the anomeric carbon), where &alpha;-D-glucose has the hydroxyl group projected downwards, and &beta;-D-glucose features the hydroxyl group projected upwards.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>2. (i) A 60-year-old woman was referred to a hospital. She was noted to have hypertension. The plasma total cholesterol level was 300 mg/dL. An angiogram of the right carotid artery demonstrated a narrowed lumen and the concentration of LDL was elevated.</h3>
+
+  <div class="subquestion">
+    <label>a) What is your probable diagnosis? (0.5 mark)</label>
+    <textarea id="ans2ia" placeholder="State the condition indicated by high LDL and narrowed artery..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>b) What are the major risk factors (any four) for this disorder? (2 marks)</label>
+    <textarea id="ans2ib" placeholder="List four distinct clinical or lifestyle risk factors..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>c) What is the normal plasma total cholesterol level? (1 mark)</label>
+    <textarea id="ans2ic" placeholder="State the optimal physiological reference range..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>d) What is the role of LDL in lipid transport? (1 mark)</label>
+    <textarea id="ans2id" placeholder="Explain the primary transport transport function of LDL..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>e) What is the lipid and protein composition of LDL? (2 marks)</label>
+    <textarea id="ans2ie" placeholder="Detail the core lipids, surface lipids, and apolipoproteins..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>f) Why is LDL called as bad cholesterol? (1 mark)</label>
+    <textarea id="ans2if" placeholder="Explain why high levels relate to arterial plaque..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>g) What could be the possible role of LDL in this case? (1 mark)</label>
+    <textarea id="ans2ig" placeholder="Link LDL to the narrowed carotid artery lumen described..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>h) Which lipoprotein has protective effect against this disorder? (0.5 mark)</label>
+    <textarea id="ans2ih" placeholder="Name the anti-atherogenic lipoprotein..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>i) Differentiate lipoprotein from proteolipid. (1 mark)</label>
+    <textarea id="ans2ii" placeholder="Contrast structural properties and location differences..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('2i')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answers2i" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>a)</b> Atherosclerosis (or Hypercholesterolemia / Carotid Artery Stenosis).</p>
+    <p><b>b)</b> 1. Hypertension<br>2. Hyperlipidemia/High LDL levels<br>3. Advanced age (60 years old)<br>4. Sedentary lifestyle, obesity, smoking, or family history of cardiovascular disease.</p>
+    <p><b>c)</b> Less than 200 mg/dL.</p>
+    <p><b>d)</b> LDL primarily functions to transport cholesterol from the liver to the peripheral tissues for cellular usage (e.g., membrane synthesis, steroidogenesis).</p>
+    <p><b>e)</b> LDL consists of roughly 75-80% lipids and 20-25% proteins. The lipid component is predominantly cholesteryl esters and free cholesterol inside a phospholipid monolayer. The primary protein component is <b>Apolipoprotein B-100 (ApoB-100)</b>.</p>
+    <p><b>f)</b> It is termed "bad cholesterol" because excess circulating LDL can penetrate the arterial endothelial wall, become oxidized, and trigger plaque formation (atherogenesis), leading to vessel occlusion.</p>
+    <p><b>g)</b> The elevated LDL became oxidized and trapped in the subendothelial space of the right carotid artery, stimulating foam cell formation and resulting in an atherosclerotic plaque that narrowed the arterial lumen.</p>
+    <p><b>h)</b> High-Density Lipoprotein (HDL).</p>
+    <p><b>i)</b> <b>Lipoproteins</b> are water-soluble complexes designed to transport hydrophobic lipids through aqueous plasma (protein content is structural and on the shell). <b>Proteolipids</b> are hydrophobic, insoluble in water, typically found in cellular membranes (like myelin sheath), where lipid molecules are covalently attached to the protein structure.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>2. (ii) Answer the following question with reference to the figure below.</h3>
+  <img src="../ppts-3/q2-ii.jpeg">
+
+  <div class="subquestion">
+    <label>a) Niemann-Pick disease, like other neurolipidoses, presents in infancy or childhood with plateauing of development and neurologic regression. The accumulating substance is a phospholipid made in which of the steps in the figure above and which enzyme is deficient in this disease? (1 mark)</label>
+    <textarea id="ans2iia" placeholder="Identify the molecule, step, and enzyme..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>b) Farber disease, a rare epileptic disorder, presents in infancy with psychomotor and growth delay. The accumulating substance is a sphingolipid made in which of the steps in the figure above and which enzyme is deficient in this disease? (1 mark)</label>
+    <textarea id="ans2iib" placeholder="Identify the intermediate compound, step, and enzyme..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>c) Krabbe disease, like other neurolipidoses, presents in infancy or childhood with developmental delay followed by regression and cerebral atrophy and demyelination. The accumulating substance is a sphingolipid made in which of the steps in the figure above and which enzyme is deficient in this disease? (1 mark)</label>
+    <textarea id="ans2iic" placeholder="Identify the molecule, step, and enzyme..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>d) Tay-Sachs disease, like other neurolipidoses, presents in infancy or childhood with psychomotor retardation followed by regression and seizures. The accumulating substance is a sphingolipid made in which of the steps in the figure above and which enzyme is deficient in this disease? (1 mark)</label>
+    <textarea id="ans2iid" placeholder="Identify the molecule, step, and enzyme..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>e) Fabry disease, a rare inherited disorder, presents in childhood or adolescence with painful crisis involving extremities and abdomen precipitated by stress, fatigue, or exercise, growth and pubertal delay, and systems (renal, heart and lungs) failure. The accumulating substance is a sphingolipid made in which of the steps in the figure above and which enzyme is deficient in this disease? (1 mark)</label>
+    <textarea id="ans2iie" placeholder="Identify the complex lipid, step, and enzyme..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('2ii')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answers2ii" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>a)</b> The accumulating substance is <b>Sphingomyelin</b> (produced in <b>Step C</b>). The deficient enzyme is <b>Sphingomyelinase</b>.</p>
+    <p><b>b)</b> The accumulating substance is <b>Ceramide</b> (produced in <b>Step B</b>). The deficient enzyme is <b>Ceramidase</b>.</p>
+    <p><b>c)</b> The accumulating substance is <b>Galactocerebroside</b> (a type of Cerebroside produced in <b>Step D</b>). The deficient enzyme is <b>Galactocerebrosidase</b> (&beta;-galactosidase).</p>
+    <p><b>d)</b> The accumulating substance is <b>GM2 Ganglioside</b> (produced via downstream processing in <b>Step E</b>). The deficient enzyme is <b>Hexosaminidase A</b>.</p>
+    <p><b>e)</b> The accumulating substance is <b>Globotriaosylceramide</b> (Gb3) (part of the neutral glycosphingolipid/oligosaccharide chain branching in <b>Step D/E</b>). The deficient enzyme is <b>&alpha;-Galactosidase A</b>.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>2. (iii) A patient has a microcytic, hypochromic anemia. In order to ascertain the cause of the anemia, the patient's hemoglobin was isolated, and it was determined that there was much more &beta;-chain present than &alpha;-chain, indicating a &alpha;-thalassemia. To determine the genetic basis of the thalassemia, nucleic acids were isolated from the blood of the patient. During the procedure of isolating the nucleic acids, both heat and alkali treatments were required.</h3>
+
+  <div class="subquestion">
+    <label>(a) What is a nucleic acid and how many different types of nucleic acids do we have? (2 marks)</label>
+    <textarea id="ans2iiia" placeholder="Define nucleic acid and list the major natural types..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>(b) What will be the products of complete hydrolysis (breakdown) of a nucleic acid? (2 marks)</label>
+    <textarea id="ans2iiib" placeholder="List the constituent chemical components released after complete breakdown..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>(c) What will be the effect of heat and alkali treatments on nucleic acids and how would these treatments help in isolating the nucleic acid, the molecule of interest in this case? (2 marks)</label>
+    <textarea id="ans2iiic" placeholder="Explain denaturation effects of heat and alkali and how it isolates DNA vs RNA..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>(d) Which type of nucleic acids would be the molecule of interest to determine the genetic basis of the thalassemia in this case? (1 mark)</label>
+    <textarea id="ans2iiid" placeholder="Identify the primary nucleic acid responsible for the inherited genetic defect..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('2iii')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answers2iii" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>(a)</b> A <b>nucleic acid</b> is a biopolymer composed of nucleotide monomers, which store and transmit genetic information. There are <b>two</b> main types found in living cells: Deoxyribonucleic Acid (DNA) and Ribonucleic Acid (RNA).</p>
+    <p><b>(b)</b> Complete chemical hydrolysis of a nucleic acid yields three fundamental components:
+       1. Pentose sugars (D-ribose or D-2-deoxyribose)<br>
+       2. Nitrogenous bases (Purines: Adenine, Guanine; Pyrimidines: Cytosine, Thymine, or Uracil)<br>
+       3. Inorganic phosphoric acid ($H_3PO_4$).</p>
+    <p><b>(c)</b> <b>Heat treatment</b> denatures double-stranded nucleic acids by breaking hydrogen bonds between complementary bases, separating them into single strands. 
+       <b>Alkali treatment</b> causes selective degradation: RNA is hydrolyzed into ribonucleotides due to its vulnerable 2'-OH group on the ribose ring, whereas DNA remains chemically stable but fully denatured into single strands. Together, these treatments help separate, degrade contaminating molecules (like proteins or RNA), and isolate pure genomic DNA.</p>
+    <p><b>(d)</b> The molecule of interest to determine the inherited genetic basis of $\alpha$-thalassemia is <b>Genomic DNA</b> (specifically the $\alpha$-globin gene cluster located on chromosome 16).</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>3. A patient has a microcytic, hypochromic anemia. In order to ascertain the cause of the anemia, the patient's hemoglobin was isolated, and it was determined that there was much more &beta;-chain present than &alpha;-chain, indicating a &alpha;-thalassemia. To determine the genetic basis of the thalassemia, nucleic acids were isolated from the blood of the patient. During the procedure of isolating the nucleic acids, both heat and alkali treatments were required.</h3>
+
+  <div class="subquestion">
+    <label>(e) What is the basis of isolating the above nucleic acid to determine the genetic basis of the thalassemia in this case? (1 mark)</label>
+    <textarea id="ans3e" placeholder="Explain why genomic DNA must be isolated to find the root cause..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>(f) State any four unique structural features of above nucleic acid that are different from other type of nucleic acids. (2 marks)</label>
+    <textarea id="ans3f" placeholder="List four distinct structural hallmarks of DNA vs RNA..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>(g) State the important functions (at least one each) of various types of major nucleic acids. (2 marks)</label>
+    <textarea id="ans3g" placeholder="Briefly define the primary biological functions of DNA and RNA..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>(h) State whether the whole molecule of nucleic acid (the molecule of interest in this case) has to be subjected to genetic analysis in order to determine the genetic basis of the thalassemia? If yes or no, why? (2 marks)</label>
+    <textarea id="ans3h" placeholder="Explain whether the entire genome or a specific gene locus needs target analysis..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>(i) Outline the sequence of flow of genetic information in a cell. (1 mark)</label>
+    <textarea id="ans3i" placeholder="State the pathway or Central Dogma of molecular biology..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('3iiicont')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answers3iiicont" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>(e)</b> $\alpha$-thalassemia is an inherited autosomal codominant disorder caused by mutations or deletions within the $\alpha$-globin gene cluster. Isolating the genomic DNA allows investigators to directly look at the baseline hereditary blueprint (the genotype) to identify these deletions, rather than looking at transient or downstream protein expression.</p>
+    <p><b>(f)</b> Four unique structural features of DNA (compared to RNA) include:
+       1. Contains <b>2'-deoxy-D-ribose</b> sugar (lacks an -OH group at the C-2 position).<br>
+       2. Employs the pyrimidine base <b>Thymine</b> instead of Uracil.<br>
+       3. Exists stably as a <b>double-stranded helix</b> stabilized by Watson-Crick base pairing.<br>
+       4. Highly resistant to alkaline hydrolysis due to the absence of the neighboring 2'-hydroxyl group.</p>
+    <p><b>(g)</b> 
+       * <b>DNA:</b> Serves as the permanent repository of genetic information, ensuring its faithful storage and transmission across generations.<br>
+       * <b>RNA (mRNA, tRNA, rRNA):</b> Directly participates in protein synthesis. mRNA carries the genetic code from DNA, tRNA delivers specific amino acids, and rRNA forms the catalytic structural core of ribosomes.</p>
+    <p><b>(h)</b> <b>No.</b> The entire genome does not need to be comprehensively sequenced or analyzed. Instead, targeted genetic analysis (such as PCR, multiplex ligation-dependent probe amplification (MLPA), or selective gene sequencing) is focused specifically on the <b>$\alpha$-globin gene cluster</b> located on chromosome 16 to check for specific gene deletions.</p>
+    <p><b>(i)</b> The sequence follows the <b>Central Dogma of Molecular Biology</b>:<br>
+       $$\text{DNA} \xrightarrow{\text{Replication}} \text{DNA} \xrightarrow{\text{Transcription}} \text{mRNA} \xrightarrow{\text{Translation}} \text{Protein}$$</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>4. Learning metabolism without structures in biochemistry is almost as useful as memorizing only the numbers in a phone book. It is important to know the structures of biomolecules and understand their chemistry to learn metabolic pathways in biochemistry. Answer the following questions on the structures and chemistry of carbohydrates.</h3>
+
+  <div class="subquestion">
+    <label>(a) Draw the open chain form (Fischer projection) and ring forms (Fischer projection and Haworth projection) of glucose. (3 marks)</label>
+    <textarea id="ans4a" placeholder="Describe the open-chain form, cyclic Fischer glucofuranose/glucopyranose, and Haworth alpha/beta ring structures..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>(b) How many isomers can a molecule of glucose have? Name three most common isomers of glucose. (2 marks)</label>
+    <textarea id="ans4b" placeholder="Calculate total stereoisomers using 2^n and list common examples..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>(c) Name the following molecules: (2 marks)</label>
+    <label>Structure (i)</label>
+    <img src="../ppts-3/q4-c-i.jpeg">
+    <textarea id="ans4ci" placeholder="Identify the amino sugar molecule..."></textarea>
+    <label>Structure (ii)</label>
+    <img src="../ppts-3/q4-c-ii.jpeg">
+    <textarea id="ans4cii" placeholder="Identify the highly branched polysaccharide..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('4carb')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answers4carb" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>(a)</b> 
+       * <b>Open Chain (Fischer):</b> An aldohexose chain where C1 is -CHO, C2-OH is right, C3-OH is left, C4-OH is right, C5-OH is right, and C6 is -CH₂OH.<br>
+       * <b>Ring Form (Fischer):</b> An intramolecular hemiacetal link between C1 and C5, projecting the anomeric -OH right (&alpha;) or left (&beta;).<br>
+       * <b>Haworth Projection:</b> A six-membered pyranose ring where &alpha;-D-glucose has the C1 -OH pointing down, and &beta;-D-glucose has the C1 -OH pointing up.</p>
+    <p><b>(b)</b> Glucose has 4 chiral carbons, so it has $2^4 = 16$ stereoisomers (8 D-configuration and 8 L-configuration sugars). Three of the most common isomers are <b>D-Galactose</b>, <b>D-Mannose</b>, and <b>D-Fructose</b>.</p>
+    <p><b>(c)</b> 
+       * <b>Structure (i):</b> D-Glucosamine (2-Amino-2-deoxy-D-glucose).<br>
+       * <b>Structure (ii):</b> Glycogen (or Amylopectin), displaying $\alpha(1\rightarrow4)$ glycosidic bonds in the main chain and $\alpha(1\rightarrow6)$ bonds at branching points.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>5. Answer the following questions regarding the chemistry and properties of fatty acids and lipids.</h3>
+
+  <div class="subquestion">
+    <label>(d) Describe the structure of Nitric acid. (1 mark)</label>
+    <textarea id="ans5d" placeholder="Provide the chemical structure or formula..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>(e) Why are fats solid and oils are liquids at room temperature? (2 marks)</label>
+    <textarea id="ans5e" placeholder="Explain in terms of saturation, hydrocarbon chain packing, and van der Waals forces..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>(f) Which chemical properties make essential fatty acids essential to our body? (2 marks)</label>
+    <textarea id="ans5f" placeholder="Explain the lack of specific desaturase enzymes in humans..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>(g) Why does consumption of fatless diet for a long time cause/induce essential fatty acid deficiency? (0.5 mark)</label>
+    <textarea id="ans5g" placeholder="Explain the body's inability to synthesize these compounds de novo..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>(h) Name the following molecule: (0.5 mark)</label>
+    <img src="../ppts-3/q4-h.jpeg">
+    <textarea id="ans5h" placeholder="Identify the phospholipid molecule..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>(i) Draw the structure of cholesterol. (2 marks)</label>
+    <textarea id="ans5i" placeholder="Describe the fused ring system, side chains, and functional groups..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>(j) Name the following polynucleotides: (2 marks)</label>
+    <label>Structure (i)</label>
+    <img src="../ppts-3/q4-j-i.jpeg">
+    <textarea id="ans6ji" placeholder="Identify the specific nucleotide/nucleoside variant..."></textarea>
+    <label>Structure (ii)</label>
+    <img src="../ppts-3/q4-j-ii.jpeg">
+    <textarea id="ans6jii" placeholder="Identify the fully processed RNA molecule type..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>(k) Name the three unusual nucleotides present in tRNA. (1.5 marks)</label>
+    <textarea id="ans6k" placeholder="List the post-transcriptionally modified bases found in tRNA..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>(l) Draw the structure of B-DNA, showing loop, major and minor grooves, and label the parts and distance. (3.5 marks)</label>
+    <textarea id="ans6l" placeholder="Describe the double helix physical parameters (pitch, diameter, groove sizes)..."></textarea>
+  </div>
+
+  <div class="subquestion">
+    <label>(m) Draw the structure of adenosine triphosphate and label the bonds. (3 marks)</label>
+    <textarea id="ans6m" placeholder="Describe the adenosine, ribose, and triphosphate chain bonds (phosphoanhydride vs ester)..."></textarea>
+  </div>
+
+  <button class="btn" onclick="showAnswers('5lipids')"><i class="fas fa-eye"></i> View Answers</button>
+
+  <div id="answers5lipids" class="answers" aria-hidden="true">
+    <h3>Model Answers</h3>
+    <p><b>(d)</b> Nitric acid ($HNO_3$) has a planar structure consisting of a central nitrogen atom covalently bonded to three oxygen atoms, one of which is protonated via a hydroxyl group ($-\text{OH}$), with resonance delocalization across the other two terminal oxygens.</p>
+    <p><b>(e)</b> <b>Fats</b> contain predominantly saturated fatty acids with straight hydrocarbon chains that pack tightly together, maximizing van der Waals interactions and elevating the melting point above room temperature. <b>Oils</b> contain unsaturated fatty acids with one or more <i>cis</i> double bonds, which introduce sharp kinks in the chains. This prevents tight packing, weakening intermolecular forces and keeping them liquid at room temperature.</p>
+    <p><b>(f)</b> Essential fatty acids (like linoleic and $\alpha$-linolenic acid) possess <b>carbon-carbon double bonds beyond the C-9 position</b> (towards the &omega; end). The human body lacks the specific desaturase enzymes ($\Delta^{12}$ and $\Delta^{15}$ desaturases) required to introduce double bonds past the ninth carbon from the carboxyl terminal.</p>
+    <p><b>(g)</b> Since the human body cannot synthesize essential fatty acids <i>de novo</i> due to the lack of necessary desaturation machinery, they must be supplied regularly through dietary fats. A fatless diet completely removes this external supply, rapidly draining tissue stores.</p>
+    <p><b>(h)</b> Phosphatidylcholine (Lecithin).</p>
+    <p><b>(i)</b> Cholesterol features a characteristic hydrophobic core made of a <b>cyclopentanoperhydrophenanthrene (steroid) nucleus</b> composed of four fused rings (A, B, C, D). It has a polar hydroxyl ($-\text{OH}$) group at C-3, two methyl groups at C-10 and C-13, a double bond between C-5 and C-6 in the B-ring, and a branched 8-carbon hydrocarbon tail attached to C-17.</p>
+    <p><b>(j)</b> 
+       * <b>Structure (i):</b> Pseudouridine (or Thymidine/Uridine monophosphate variant depending on structural ring specifics).<br>
+       * <b>Structure (ii):</b> Eukaryotic Messenger RNA (mRNA), displaying a 5' 7-methylguanosine cap and a 3' Poly-A tail.</p>
+    <p><b>(k)</b> 1. <b>Pseudouridine ($\psi$)</b><br>2. <b>Dihydrouridine (D)</b><br>3. <b>Ribothymidine (T)</b> (or Inosine).</p>
+    <p><b>(l)</b> B-DNA is a right-handed double helix. Key structural parameters to note include:
+       * <b>Diameter:</b> 2.0 nm ($20\text{ \AA}$).<br>
+       * <b>Helix Pitch / Full Turn Loop:</b> 3.4 nm ($34\text{ \AA}$) containing roughly 10.5 base pairs.<br>
+       * <b>Distance between adjacent base pairs:</b> 0.34 nm ($3.4\text{ \AA}$).<br>
+       * <b>Grooves:</b> Alternating wide, deep <b>Major Grooves</b> and narrow, shallow <b>Minor Grooves</b> along the outer phospho-sugar backbone.</p>
+    <p><b>(m)</b> ATP consists of an adenine ring attached to the 1' position of a D-ribose sugar. The 5' position of the ribose is linked to a chain of three phosphate groups ($\alpha$, $\beta$, $\gamma$). The bond between the ribose and the $\alpha$-phosphate is a <b>phosphoester bond</b>, whereas the linkages between the $\alpha$-$\beta$ and $\beta$-$\gamma$ phosphates are high-energy <b>phosphoanhydride bonds</b>.</p>
+  </div>
+</div>
+
+
+ </section>
+
+<script>
+  // Short explanation text for each question (keyed by question id)
+const answerExplanations = {
+  q1: "The structural organization of chromosomes from smallest to largest starts at the foundational element (histone octamer), which wraps DNA to form a nucleosome, packs further into chromatin fibrils, and loops into large chromosome loops.",
+  q2: "In the architecture of glycogen, straight-chain segments are connected by &alpha;(1&rarr;4) glycosidic bonds, while branches occur at &alpha;(1&rarr;6) points. The linear linkages outnumber the branch residue points.",
+  q3: "Linoleic acid is an essential polyunsaturated fatty acid (&omega;-6) that cannot be synthesized by human tissues and must be obtained from dietary plant sources like vegetable oils.",
+  q4: "After a 12-hour fast, chylomicrons (which transport dietary lipids) are cleared from the blood. The remaining circulating lipoproteins carrying plasma cholesterol are LDL and HDL.",
+  q5: "Cellulose is the primary structural carbohydrate building block of plant cell walls, making it highly abundant in a strict vegetarian diet.",
+  q6: "Low-density lipoproteins (LDLs) function as the primary vehicle delivering cholesterol from the liver to peripheral extracellular human tissues via receptor-mediated endocytosis.",
+  q7: "Glycogenin is a specialized core protein (polypeptide) that acts as an enzyme to self-catalyze the initial primer chain of glucose units during glycogen synthesis.",
+  q8: "Glycerol is a trihydric sugar alcohol (polyol) obtained via reduction, whereas the other options are functional aldose monosaccharides possessing aldehyde groups.",
+  q9: "Sucrose is a non-reducing sugar because its anomeric carbons (C1 of glucose and C2 of fructose) are tied up in a glycosidic bond, preventing them from opening into reactive linear forms.",
+  q10: "Keratan sulfate is a major glycosaminoglycan prominently localized within the extracellular matrix of the cornea, preserving structural transparency.",
+  q11: "Keratan sulfate is unique among common glycosaminoglycans because it contains galactose instead of a uronic acid residue paired with its amino sugar.",
+  q12: "Accumulation and deposition of sugar alcohols (like sorbitol or galactitol, produced via aldose reductase pathways) create osmotic strain in the lens, resulting in cataract formation.",
+  q13: "Heparin is classified as a highly sulfated, linear glycosaminoglycan that functions endogenously to inhibit blood coagulation cascades.",
+  q14: "GLUT-4 is the specific insulin-dependent glucose transporter expressed in striated muscle tissues (myocytes) and adipose tissue that moves to the cell surface upon insulin signaling.",
+  q15: "Exogenous insulin administration drastically accelerates systemic glucose clearance by upregulating glucose transporter action and importing glucose into peripheral extrahepatic tissues.",
+  q16: "Inulin consists of fructose polymers joined by &beta;(2&rarr;1) glycosidic bonds. Human upper gastrointestinal tracts lack the specific digestive enzymes tailored to hydrolyze these &beta;-configurations.",
+  q17: "Omega-3 fatty acids (like EPA and DHA) exhibit robust cardioprotective characteristics by lowering triglycerides, reducing systemic inflammation, and preventing arrhythmias.",
+  q18: "Cholesterol is a major sterol characteristic of animal cellular membranes and is virtually absent or found only in trace amounts in plants, which instead use phytosterols.",
+  q19: "Phosphatidylinositol (specifically PIP2 in the plasma membrane) is cleaved by Phospholipase C to generate secondary messengers like IP3 and DAG.",
+  q20: "Triglycerides are storage lipids concentrated inside specialized intracellular compartments (lipid droplets) rather than structural elements of the eukaryotic plasma membrane bi-layer.",
+  q21: "At a physiological pH near neutral, the phosphodiester backbone of DNA releases hydrogen ions, giving the entire macromolecule a strong net negative charge.",
+  q22: "DNA structures are organized with a hydrophilic deoxyribose-phosphate structural backbone on the exterior, keeping the hydrophobic nitrogenous base units stacked closely along the interior core.",
+  q23: "Complementary nitrogenous base pairs on opposite strands form interstrand hydrogen bonds (two for A-T, three for G-C) that zip the double helix together.",
+  q24: "Chargaff's structural rules state that within a double-stranded DNA molecule, the amount of purines equals pyrimidines: Adenine + Guanine = Thymine + Cytosine (A+G = T+C).",
+  q25: "Because the base percentage levels closely obey the rule where %A &asymp; %T (32% to 33%) and %G &asymp; %C (18% to 17%), it can be deduced that the specimen is double-stranded DNA.",
+  q26: "G&equiv;C pairs share three hydrogen bonds and possess stronger base-stacking interactions compared to the two bonds of A=T pairs, contributing significantly to thermal stability.",
+  q27: "Alpha-amylase targets internal &alpha;(1&rarr;4) glucosidic bonds found in starches and glycogen. It cannot recognize or break down the &beta;(1&rarr;4) linkages that form cellulose chains.",
+  q28: "The capacity of a carbohydrate to behave as a reducing agent depends on the presence of a free anomeric carbon that can tautomerize into an active enediol intermediate.",
+  q29: "Infantile respiratory distress syndrome is fundamentally driven by a systemic deficiency in lung surfactant, which is composed primarily of dipalmitoyl phosphatidylcholine (lecithin).",
+  q30: "Triacylglycerols (neutral triglycerides) represent the primary storage form of concentrated chemical energy found inside mammalian depot fat cells.",
+  q31: "Oxidative breakdown or hydrolysis of lipids results in rancidity, driven by the release of short-chain, volatile fatty acids that yield distinct off-odors.",
+  q32: "Leukotrienes (specifically Leukotriene B4) operate as potent chemotactic agents that coordinate leukocyte migration toward localized regions of active tissue inflammation.",
+  q33: "Bile acids are biological detergents synthesized inside the liver through structural modifications derived directly from a core cholesterol framework.",
+  q34: "Nucleotides serve as structural elements, coenzyme precursors, and metabolic regulators, but synthetic nucleotide analogues act as antimetabolites (drugs) rather than normal physiological nucleotide functions.",
+  q35: "Prokaryotic mRNA molecules are typically polycistronic, meaning a single continuous transcript carries open reading frames translating into multiple separate proteins."
+};
+
+const correctAnswers = {
+  q1: "b", q2: "d", q3: "d", q4: "d", q5: "e", q6: "d",
+  q7: "c", q8: "a", q9: "d", q10: "c", q11: "a", q12: "a",
+  q13: "c", q14: "a", q15: "d", q16: "d", q17: "a", q18: "c",
+  q19: "c", q20: "d", q21: "d", q22: "e", q23: "d", q24: "c",
+  q25: "a", q26: "d", q27: "e", q28: "e", q29: "a", q30: "b",
+  q31: "a", q32: "d", q33: "a", q34: "b", q35: "d"
+};
+
+ 
+  function submitQuiz() {
+     let score = 0;
+     const total = Object.keys(correctAnswers).length;
+ 
+     // Clear any previous inline feedback
+     document.querySelectorAll('.question-feedback').forEach(el => el.innerHTML = '');
+ 
+     for (let key in correctAnswers) {
+       const radios = Array.from(document.querySelectorAll(`input[name="${key}"]`));
+       const selected = radios.find(r => r.checked);
+       const correct = correctAnswers[key];
+ 
+       // Score calc
+       if (selected && selected.value === correct) score++;
+ 
+       const feedbackEl = document.getElementById(`feedback-${key}`);
+       if (!feedbackEl) continue;
+ 
+       let feedbackHTML = `<div class="answer-block"><strong>Question ${key.replace(/^q/, '')}</strong><div class="answer-list">`;
+ 
+       radios.forEach(r => {
+         let label = r.parentElement;
+         let text = label ? label.textContent.trim() : r.value;
+ 
+         let classes = ['answer-item'];
+         if (r.value === correct) classes.push('answer-correct');
+         if (r.checked && r.value !== correct) classes.push('answer-wrong', 'user-choice');
+         if (r.checked && r.value === correct) classes.push('user-choice');
+ 
+         feedbackHTML += `<div class="${classes.join(' ')}">${text}${r.checked ? ' ◀' : ''}</div>`;
+       });
+ 
+       feedbackHTML += `</div>`;
+ 
+       const correctRadio = radios.find(rr => rr.value === correct);
+       const correctText = correctRadio && correctRadio.parentElement ? correctRadio.parentElement.textContent.trim() : correct;
+       const explanationText = answerExplanations[key] || '';
+ 
+       if (selected) {
+         if (selected.value === correct) {
+           feedbackHTML += `<div class="explanation">✅ Correct — ${explanationText}</div>`;
+         } else {
+           feedbackHTML += `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+         }
+       } else {
+         feedbackHTML += `<div class="explanation wrong">No answer selected. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+       }
+ 
+       feedbackHTML += `</div>`;
+       feedbackEl.innerHTML = feedbackHTML;
+     }
+ 
+     const percentage = Math.round((score / total) * 100);
+     document.getElementById("score").innerText = "0%";
+     const resultBox = document.getElementById("resultBox");
+     resultBox.style.display = "block";
+     document.getElementById("answers").innerHTML = '';
+ 
+     let start = 0;
+     const timer = setInterval(() => {
+       if (start >= percentage) clearInterval(timer);
+       document.getElementById("score").innerText = start + "%";
+       start++;
+     }, 20);
+ 
+     document.querySelectorAll('#quizForm input').forEach(i => i.disabled = true);
+   }
+ 
+   // Essay Section
+   function showEssayAnswers() {
+     document.querySelectorAll(".essay-answer").forEach(a => a.style.display = "block");
+   }
+
+   // Show/hide model answers for an essay card
+   function showAnswers(id) {
+     const el = document.getElementById('answers' + id);
+     if (!el) return;
+     const isVisible = el.classList.toggle('visible');
+     el.setAttribute('aria-hidden', !isVisible);
+     if (isVisible) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+   }
+ 
+   const mode = localStorage.getItem("examMode");
+
+    if (mode === "essay") {
+      document.getElementById("mcq-section").style.display = "none";
+      document.getElementById("essay-section").style.display = "block";
+    } 
+    else if (mode === "tf") {
+      document.getElementById("mcq-section").style.display = "none";
+      document.getElementById("tf-section").style.display = "block";
+    }
+ 
+   // Navigate to the previous page if available, otherwise fall back to index.html
+   function goBack() {
+     if (history.length > 1) {
+       history.back();
+     } else {
+       window.location.href = "index.html";
+     }
+   }
+ 
+   // header back button hookup (same behaviour)
+   const backBtn = document.getElementById('backBtn');
+   if (backBtn) backBtn.addEventListener('click', (e) => { e.preventDefault(); goBack(); });
+ </script>
+
+</body>
+</html>
