@@ -288,8 +288,7 @@
 
   <form id="quizForm">
 
-
-    <div class="question">
+        <div class="question">
       <p>1. A newly diagnosed patient with diabetes avoided table sugar because he knew he had "sugar diabetes," but he continued to consume fruits, fruit drinks, milk, honey, and vegetables, with the result being poor diabetic control. The diet the patient was following contained carbohydrates primarily in which form?</p>
       <div class="options">
         <label><input type="radio" name="q1" value="a"> (a) Sucrose</label>
@@ -1133,7 +1132,8 @@
 
 <script>
   // Short explanation text for each question (keyed by question id)
-const answerExplanations = {
+   
+      const answerExplanations = {
     q1: "Fruits, honey, and vegetables contain high concentrations of free glucose and fructose, while milk contains lactose (which breaks down into glucose). Avoiding table sugar (sucrose) alone is insufficient if these other high-glucose sources are freely consumed.",
     q2: "Severe viral gastroenteritis can cause temporary brush-border enzyme destruction, leading to secondary lactase deficiency. Lactase production typically recovers once the intestinal mucosa regenerates over a few days or weeks.",
     q3: "Malted milk balls contain maltose, which has one of the highest glycemic indices because it breaks down immediately into two free glucose molecules, causing rapid glycemic elevation.",
@@ -1198,6 +1198,7 @@ const answerExplanations = {
     q29: "b",
     q30: "d"
   };
+
  
   function submitQuiz() {
      let score = 0;
