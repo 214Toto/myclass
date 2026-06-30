@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Papers | ToToZ Collection</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../nav.css">
+  <style>
+    :root {
+      --primary: #2b7a78;
+      --accent: #3aafa9;
+      --dark: #17252a;
+      --light: #f8f9fa;
+      --radius: 12px;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #f5f7fb, #eef6f6);
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--dark));
+      color: white;
+      padding: 1.1rem 0;
+      position: fixed; /* Keeps it at the top when scrolling */
+      top: 0;          /* Added: Ensures it starts at the absolute top */
+      left: 0;         /* Added: Ensures it stretches from the left edge */
+      width: 100%;
+      z-index: 1000;   /* Added: Keeps header above all other elements */
+      box-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* Improved heading styling */
+    header h1 {
+      font-size: 1.25rem;
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: 0.35px;
+      color: #ffffff;
+      text-transform: none;
+      display: inline-block;
+      line-height: 1;
+      text-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* logo heading (keeps icon + title aligned) */
+    .logo h1 {
+      font-size: 1.25rem;
+      margin: 0 0 0 6px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 900px;
+      /* Adjust this value based on how tall your header is */
+      margin: 100px auto 0 auto; 
+      padding: 1.5rem 0;
+    }
+
+    h2 {
+      color: var(--primary);
+      margin: 0 0 0.85rem 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    /* responsive tweaks for small screens */
+    @media (max-width: 520px) {
+      header h1, .logo h1 { font-size: 1rem; }
+      h2 { font-size: 1rem; }
+    }
+
+    .question {
+      margin-bottom: 1.5rem;
+    }
+
+    .question p {
+      font-weight: 600;
+    }
+
+    .options label {
+      display: block;
+      background: #f8fafc;
+      border: 1px solid #d9e2ec;
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      margin-top: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .options label:hover {
+      background: #e0f7f6;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .result {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #f1faf9;
+      border-radius: var(--radius);
+      text-align: center;
+      display: none;
+    }
+
+    .score {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin-top: 0.5rem;
+    }
+
+    /* --- Styles for answer feedback --- */
+    .answer-list { text-align: left; margin-top: 12px; }
+    .answer-item {
+      display: block;
+      padding: 8px 10px;
+      border-radius: 8px;
+      margin: 6px 0;
+      border: 1px solid #e6eef3;
+      background: #ffffff;
+      color: var(--dark);
+      font-weight: 600;
+    }
+    .answer-correct {
+      background: #ecfdf5;       /* light green */
+      border-color: #bbf7d0;
+      color: #065f46;           /* dark green text */
+      box-shadow: 0 6px 18px rgba(16,185,129,0.06);
+    }
+    .answer-wrong {
+      background: #fff1f2;       /* light red */
+      border-color: #fca5a5;
+      color: #9f1239;           /* dark red text */
+      box-shadow: 0 6px 18px rgba(239,68,68,0.06);
+    }
+    .user-choice { outline: 2px dashed rgba(0,0,0,0.04); }
+
+    /* Essay Section */
+    textarea {
+      width: 80%;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.75rem;
+      resize: vertical;
+      min-height: 50px;
+      font-size: 1rem;
+    }
+
+    .essay-answer {
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-top: 0.75rem;
+      display: none;
+    }
+
+    .back-btn {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    /* Explanation box shown under each question in feedback */
+    .explanation {
+      margin-top: 8px;
+      padding: 10px 12px;                                                                                                                                                                                 
+      border-radius: 8px;
+      background: #363d3a;           /* subtle greenish background */
+      color: #065f46;                /* dark green text */
+      font-size: 0.95rem;
+      line-height: 1.4;
+      border: 1px solid #bbf7d0;
+    }
+
+    /* For incorrect explanation (when needed) */
+    .explanation.wrong {
+      background: #fff1f2;
+      color: #7f1d1d;
+      border-color: #fca5a5;
+    }
+
+    /* small label styling for feedback header */
+    .answer-block { color: var(--primary); margin-bottom: 12px; }
+    .answer-block strong { display:block; margin-bottom:8px; color: rgb(7, 113, 95); }
+    .question-feedback { 
+      margin-top: 14px;
+      padding: 14px 16px;
+      color: white;
+      border-radius: 12px;
+      background: #a82525;
+      border: 1px solid #d6e7eb;
+    }
+    .question-feedback .answer-list {
+      margin-top: 10px;
+    }
+
+    /* Essay card styles (compact, readable) */
+    #essay-section { padding-top: 0; }
+    #essay-section .card {
+      background: linear-gradient(180deg, #ffffff, #fbfeff);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(18,38,63,0.06);
+      border: 1px solid rgba(43,122,120,0.06);
+      max-width: 900px;
+      margin: 0 auto 1rem auto;
+    }
+    #essay-section .card h3 {
+      margin: 0 0 10px 0;
+      font-size: 1.02rem;
+      color: var(--dark);
+      font-weight: 700;
+    }
+    #essay-section .subquestion { margin-bottom: 12px; }
+    #essay-section .subquestion label {
+      display:block;
+      font-weight:700;
+      margin-bottom:6px;
+      color:var(--dark);
+    }
+    #essay-section textarea {
+      width:100%;
+      min-height:90px;
+      border-radius:8px;
+      border:1px solid #d1dbe0;
+      padding:10px;
+      resize:vertical;
+      font-family:inherit;
+    }
+
+    .mutwe {
+      max-width: 900px; 
+      margin: 0 auto; 
+      width: 92%; 
+      display:flex; 
+      align-items:center; 
+      justify-content:space-between;
+    }
+
+    #essay-section .answers {
+      display:none;
+      margin-top:14px;
+      background:#f1faf9;
+      border-radius:8px;
+      padding:12px;
+      border:1px solid #cfeee6;
+      color:var(--dark);
+    }
+    #essay-section .answers h3 { margin-top:0; }
+    #essay-section .card .btn { margin-top:8px; }
+    /* make answers visible area stand out when shown */
+    #essay-section .answers.visible { display:block; }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="mutwe">
+      <div class="logo">
+        <i class="fas fa-book-medical"></i>
+        <h1>2024 Physiology Test 1 </h1>
+      </div>
+      <button id="backBtn" class="btn"><i class="fas fa-arrow-left"></i> Back</button>
+    </div>
+  </header>
+
+<div class="container" id="mcq-section">
+  <h2>Multiple Choice Questions</h2>
+
+  <form id="quizForm">
+
+<div class="question">
+  <p>26. A resting individual has a respiratory rate of 12 breaths per minute. How much air is wasted (not involved in gas exchange) per minute?</p>
+  <div class="options">
+    <label><input type="radio" name="q26" value="a"> 500 mL/min</label>
+    <label><input type="radio" name="q26" value="b"> 1800 mL/min</label>
+    <label><input type="radio" name="q26" value="c"> 4200 mL/min</label>
+    <label><input type="radio" name="q26" value="d"> 6000 mL/min</label>
+  </div>
+  <div class="question-feedback" id="feedback-q26"></div>
+</div>
+
+<div class="question">
+  <p>27. In the hemodynamic pressure tracings below, rapid ventricular filling begins at which point or points on the figure below?</p>
+  <img src="1.jpg">
+  <div class="options">
+    <label><input type="radio" name="q27" value="a"> A</label>
+    <label><input type="radio" name="q27" value="b"> B</label>
+    <label><input type="radio" name="q27" value="c"> C and E</label>
+    <label><input type="radio" name="q27" value="d"> D</label>
+  </div>
+  <div class="question-feedback" id="feedback-q27"></div>
+</div>
+
+<div class="question">
+  <p>28. In the pressure-volume loop below, systole begins at which of the following points?</p>
+  <img src="2.jpg">
+  <div class="options">
+    <label><input type="radio" name="q28" value="a"> A</label>
+    <label><input type="radio" name="q28" value="b"> B</label>
+    <label><input type="radio" name="q28" value="c"> D</label>
+    <label><input type="radio" name="q28" value="d"> E</label>
+  </div>
+  <div class="question-feedback" id="feedback-q28"></div>
+</div>
+
+<div class="question">
+  <p>29. Ms Mwiila has a complaint of chest pain suddenly. The following are true about the ECG</p>
+  <div class="options">
+    <label><input type="radio" name="q29" value="a"> To get readings of an ECG, electrodes that are positive and negative are placed on the surface of the breast</label>
+    <label><input type="radio" name="q29" value="b"> It is possible to get readings as due to fluids being bad conductors and having the ability to bring the electrical activity to the body surface</label>
+    <label><input type="radio" name="q29" value="c"> Applying a positive electrode to the left lower limb will pick activities as though the electrode is at the apex of the heart</label>
+    <label><input type="radio" name="q29" value="d"> If electrode is placed on the left arm, it will be as though this electrode is placed on the right atrium of the heart</label>
+  </div>
+  <div class="question-feedback" id="feedback-q29"></div>
+</div>
+
+<div class="question">
+  <p>30. Reason for AV nodal delay is</p>
+  <div class="options">
+    <label><input type="radio" name="q30" value="a"> Less desmosomes</label>
+    <label><input type="radio" name="q30" value="b"> Less gap junctions</label>
+    <label><input type="radio" name="q30" value="c"> Less hemidesmosomes</label>
+    <label><input type="radio" name="q30" value="d"> More desmosomes</label>
+  </div>
+  <div class="question-feedback" id="feedback-q30"></div>
+</div>
+
+<div class="question">
+  <p>31. Right axis deviation is seen in the following:</p>
+  <div class="options">
+    <label><input type="radio" name="q31" value="a"> Right atrial hypertrophy</label>
+    <label><input type="radio" name="q31" value="b"> Left posterior fascicular block</label>
+    <label><input type="radio" name="q31" value="c"> Lateral leg muscular infarction</label>
+    <label><input type="radio" name="q31" value="d"> Inferior myocardial infarction</label>
+  </div>
+  <div class="question-feedback" id="feedback-q31"></div>
+</div>
+
+<div class="question">
+  <p>32. Functions of peripheral Chemoreceptors</p>
+  <div class="options">
+    <label><input type="radio" name="q32" value="a"> Monitors changes in pH either induced by PCO2 or independent of PCO2</label>
+    <label><input type="radio" name="q32" value="b"> Are stimulated by increase in PO2</label>
+    <label><input type="radio" name="q32" value="c"> Leads to decrease in rate and depth of respiration when pH goes down</label>
+    <label><input type="radio" name="q32" value="d"> Are stimulated by a decrease in oxygen bound to hemoglobin</label>
+  </div>
+  <div class="question-feedback" id="feedback-q32"></div>
+</div>
+
+<div class="question">
+  <p>33. _____________ are microscopic blood vessels that form an intricate network among the tissue cells.</p>
+  <div class="options">
+    <label><input type="radio" name="q33" value="a"> Arteries</label>
+    <label><input type="radio" name="q33" value="b"> Met-arterioles</label>
+    <label><input type="radio" name="q33" value="c"> Capillaries</label>
+    <label><input type="radio" name="q33" value="d"> Arterioles</label>
+  </div>
+  <div class="question-feedback" id="feedback-q33"></div>
+</div>
+
+<div class="question">
+  <p>34. _____________ in arteriole walls regulate the distribution of blood to the capillaries of organs.</p>
+  <div class="options">
+    <label><input type="radio" name="q34" value="a"> Elastic fibers</label>
+    <label><input type="radio" name="q34" value="b"> Collagen fibers</label>
+    <label><input type="radio" name="q34" value="c"> Endothelium</label>
+    <label><input type="radio" name="q34" value="d"> Smooth muscle fibers</label>
+  </div>
+  <div class="question-feedback" id="feedback-q34"></div>
+</div>
+
+<div class="question">
+  <p>35. _____________ control blood flow into branching capillaries.</p>
+  <div class="options">
+    <label><input type="radio" name="q35" value="a"> Elastic fibers</label>
+    <label><input type="radio" name="q35" value="b"> Collagen fibers</label>
+    <label><input type="radio" name="q35" value="c"> Smooth muscle fibers</label>
+    <label><input type="radio" name="q35" value="d"> Pre capillary sphincters</label>
+  </div>
+  <div class="question-feedback" id="feedback-q35"></div>
+</div>
+
+<div class="question">
+  <p>36. The _____________ pressure tends to force fluid out and its dissolved substances through the capillary pores into the interstitial spaces.</p>
+  <div class="options">
+    <label><input type="radio" name="q36" value="a"> Oncotic</label>
+    <label><input type="radio" name="q36" value="b"> Interstitial hydrostatic</label>
+    <label><input type="radio" name="q36" value="c"> Capillary blood</label>
+    <label><input type="radio" name="q36" value="d"> Capillary hydrostatic</label>
+  </div>
+  <div class="question-feedback" id="feedback-q36"></div>
+</div>
+
+<div class="question">
+  <p>37. If the sum of the Starling forces is negative, there will be a net _____________ from the interstitial spaces into the capillaries.</p>
+  <div class="options">
+    <label><input type="radio" name="q37" value="a"> Oncotic disturbance</label>
+    <label><input type="radio" name="q37" value="b"> Capillary blood diffusion</label>
+    <label><input type="radio" name="q37" value="c"> Fluid absorption</label>
+    <label><input type="radio" name="q37" value="d"> Fluid filtration</label>
+  </div>
+  <div class="question-feedback" id="feedback-q37"></div>
+</div>
+
+<div class="question">
+  <p>38. The flow of blood through the vascular system is due to the difference in _____________ at the two ends</p>
+  <div class="options">
+    <label><input type="radio" name="q38" value="a"> Blood movement</label>
+    <label><input type="radio" name="q38" value="b"> Pressure</label>
+    <label><input type="radio" name="q38" value="c"> Diameter</label>
+    <label><input type="radio" name="q38" value="d"> Radius</label>
+  </div>
+  <div class="question-feedback" id="feedback-q38"></div>
+</div>
+
+<div class="question">
+  <p>39. Major regulators of blood flow through an organ are:</p>
+  <div class="options">
+    <label><input type="radio" name="q39" value="a"> Blood and gas movement</label>
+    <label><input type="radio" name="q39" value="b"> Pressure and volume</label>
+    <label><input type="radio" name="q39" value="c"> Mean arterial pressure and resistance</label>
+    <label><input type="radio" name="q39" value="d"> Radius and pressure across</label>
+  </div>
+  <div class="question-feedback" id="feedback-q39"></div>
+</div>
+
+<div class="question">
+  <p>40. Effect of parasympathetic stimulation on external genitalia</p>
+  <div class="options">
+    <label><input type="radio" name="q40" value="a"> Vasoconstriction in skin epidermis</label>
+    <label><input type="radio" name="q40" value="b"> Vasodilation in skin dermis</label>
+    <label><input type="radio" name="q40" value="c"> Vascular resistance</label>
+    <label><input type="radio" name="q40" value="d"> Vasodilate</label>
+  </div>
+  <div class="question-feedback" id="feedback-q40"></div>
+</div>
+
+<div class="question">
+  <p>41. Which of the following statements best describes the role of endothelial nitric oxide synthase (eNOS) in arterioles and its physiological significance?</p>
+  <div class="options">
+    <label><input type="radio" name="q41" value="a"> eNOS is responsible for the production of endothelin, which causes vasodilation in arterioles.</label>
+    <label><input type="radio" name="q41" value="b"> eNOS produces nitric oxide (NO), which acts as a vasodilator, leading to increased blood flow and reduced vascular resistance.</label>
+    <label><input type="radio" name="q41" value="c"> eNOS generates reactive oxygen species (ROS) that promote vasoconstriction in arterioles.</label>
+    <label><input type="radio" name="q41" value="d"> eNOS is involved in the synthesis of prostaglandins, which primarily regulate platelet aggregation.</label>
+  </div>
+  <div class="question-feedback" id="feedback-q41"></div>
+</div>
+
+<div class="question">
+  <p>42. Which sequence of events correctly describes how acetylcholine (ACh) indirectly increases the production of nitric oxide (NO) in endothelial cells?</p>
+  <div class="options">
+    <label><input type="radio" name="q42" value="a"> ACh stimulates the opening of K+ channels, leading to hyperpolarization and decreased Ca2+ levels, which reduces NO production.</label>
+    <label><input type="radio" name="q42" value="b"> ACh binds to receptors, causing the opening of Ca2+ channels, leading to increased intracellular Ca2+, which then binds to calmodulin, activating an enzyme that produces NO.</label>
+    <label><input type="radio" name="q42" value="c"> ACh directly activates nitric oxide synthase (NOS), resulting in immediate NO production without the need for Ca2+ signaling.</label>
+    <label><input type="radio" name="q42" value="d"> ACh stimulates the release of endothelin, which causes vasodilation and increases NO levels through a secondary pathway.</label>
+  </div>
+  <div class="question-feedback" id="feedback-q42"></div>
+</div>
+
+<div class="question">
+  <p>43. Which of the following statements accurately describes the myogenic control mechanism in the regulation of cerebral blood flow?</p>
+  <div class="options">
+    <label><input type="radio" name="q43" value="a"> The myogenic response is primarily mediated by neural control, which adjusts vessel diameter in response to changes in blood pressure.</label>
+    <label><input type="radio" name="q43" value="b"> Increased systemic arterial pressure leads to the stretching of vascular smooth muscle, causing cerebral vessels to contract and maintain stable blood flow despite fluctuations in pressure.</label>
+    <label><input type="radio" name="q43" value="c"> The myogenic control mechanism relies on the release of hormones that cause vasodilation in response to increased arterial pressure.</label>
+    <label><input type="radio" name="q43" value="d"> Myogenic control is ineffective in maintaining cerebral blood flow during episodes of hypotension, leading to potential ischemia.</label>
+  </div>
+  <div class="question-feedback" id="feedback-q43"></div>
+</div>
+
+<div class="question">
+  <p>44. Which of the following best describes the physiological response of cerebral vessels to a decrease in systemic arterial pressure, and how does this relate to the stress relaxation effect?</p>
+  <div class="options">
+    <label><input type="radio" name="q44" value="a"> A decrease in systemic arterial pressure causes cerebral vessels to constrict, leading to reduced blood flow and potential ischemia in the brain.</label>
+    <label><input type="radio" name="q44" value="b"> The stress relaxation effect allows cerebral vessels to dilate in response to decreased systemic arterial pressure, thereby maintaining adequate cerebral blood flow despite lower perfusion pressures.</label>
+    <label><input type="radio" name="q44" value="c"> Cerebral vessels remain unchanged in diameter during a decrease in systemic arterial pressure, relying solely on neural mechanisms to regulate blood flow.</label>
+    <label><input type="radio" name="q44" value="d"> A decrease in systemic arterial pressure triggers the release of vasoconstrictors that cause cerebral vessels to narrow, increasing resistance and stabilizing flow.</label>
+  </div>
+  <div class="question-feedback" id="feedback-q44"></div>
+</div>
+
+<div class="question">
+  <p>45. Which of the following statements correctly describes the physiological mechanisms leading to vasodilation in response to changes in oxygen (O2) and carbon dioxide (CO2) levels?</p>
+  <div class="options">
+    <label><input type="radio" name="q45" value="a"> Vasodilation occurs primarily due to increased oxygen levels resulting from enhanced ventilation, which decreases carbon dioxide levels and promotes smooth muscle contraction.</label>
+    <label><input type="radio" name="q45" value="b"> Vasodilation is solely mediated by neural signals that respond to increased oxygen and carbon dioxide levels, independent of metabolic activity.</label>
+    <label><input type="radio" name="q45" value="c"> Increased metabolic activity leads to vasoconstriction due to the accumulation of carbon dioxide, which enhances oxygen delivery to tissues.</label>
+    <label><input type="radio" name="q45" value="d"> Decreased oxygen levels, resulting from an increased metabolic rate, lead to vasodilation, while increased carbon dioxide levels, due to decreased ventilation, also contribute to this response.</label>
+  </div>
+  <div class="question-feedback" id="feedback-q45"></div>
+</div>
+
+<div class="question">
+  <p>46. Which of the following best describes the relationship between tissue hypoxia and the production of vascular growth factors, and how does this process contribute to angiogenesis?</p>
+  <div class="options">
+    <label><input type="radio" name="q46" value="a"> Tissue hypoxia directly stimulates the release of vascular growth factors, which inhibit the formation of new blood vessels and promote vasoconstriction to reduce blood flow.</label>
+    <label><input type="radio" name="q46" value="b"> The presence of adequate tissue oxygen and nutrients suppresses the production of vascular growth factors, which are only released during periods of excess blood flow.</label>
+    <label><input type="radio" name="q46" value="c"> Tissue hypoxia or a deficiency of other essential nutrients triggers the production of vascular growth factors, such as VEGF, which stimulate the formation of new blood vessels to improve oxygen and nutrient delivery.</label>
+    <label><input type="radio" name="q46" value="d"> Vascular growth factors are constitutively produced and are not influenced by the tissue's oxygen or nutrient status, but rather by neural signals that regulate angiogenesis.</label>
+  </div>
+  <div class="question-feedback" id="feedback-q46"></div>
+</div>
+
+<div class="question">
+  <p>47. Which of the following statements accurately describes the role of collateral circulation in restoring blood supply to tissues when a major artery or vein is blocked?</p>
+  <div class="options">
+    <label><input type="radio" name="q47" value="a"> Collateral circulation develops rapidly within minutes to hours after an arterial blockage, allowing for immediate restoration of blood flow to the affected tissue.</label>
+    <label><input type="radio" name="q47" value="b"> The formation of collateral vessels is stimulated by neural signals that detect the blockage and trigger the rapid dilation of pre-existing vessels around the obstruction.</label>
+    <label><input type="radio" name="q47" value="c"> When a major artery or vein is blocked, collateral vessels gradually develop over a period of weeks to months, allowing for a partial resupply of blood to the affected tissue over the long term.</label>
+    <label><input type="radio" name="q47" value="d"> Collateral circulation is ineffective in restoring blood flow to tissues distal to a major arterial blockage, leading to tissue ischemia and necrosis.</label>
+  </div>
+  <div class="question-feedback" id="feedback-q47"></div>
+</div>
+
+<div class="question">
+  <p>48. Which of the following statements accurately describes the role of sympathetic cholinergic and β-adrenergic receptors in the vasodilation of skeletal muscles during sympathetic activation?</p>
+  <div class="options">
+    <label><input type="radio" name="q48" value="a"> Sympathetic cholinergic receptors primarily mediate vasoconstriction in skeletal muscles, while β-adrenergic receptors have no significant effect on vascular tone.</label>
+    <label><input type="radio" name="q48" value="b"> Both sympathetic cholinergic and β-adrenergic receptors contribute to vasodilation in skeletal muscles by promoting smooth muscle relaxation in response to increased sympathetic activity.</label>
+    <label><input type="radio" name="q48" value="c"> Vasodilation in skeletal muscles is solely mediated by parasympathetic cholinergic receptors, with sympathetic cholinergic and β-adrenergic receptors playing no role.</label>
+    <label><input type="radio" name="q48" value="d"> Sympathetic cholinergic receptors are responsible for vasodilation only during rest, while β-adrenergic receptors are activated exclusively during exercise to cause vasoconstriction.</label>
+  </div>
+  <div class="question-feedback" id="feedback-q48"></div>
+</div>
+
+<div class="question">
+  <p>49. Which of the following statements accurately describes the myogenic mechanism in cerebral circulation and its response to changes in blood pressure?</p>
+  <div class="options">
+    <label><input type="radio" name="q49" value="a"> The myogenic mechanism causes cerebral arterioles to constrict in response to decreased blood pressure, ensuring consistent blood flow to the brain.</label>
+    <label><input type="radio" name="q49" value="b"> In response to decreased blood pressure, the myogenic mechanism induces vasodilation of cerebral arterioles, allowing for increased blood flow to maintain adequate cerebral perfusion.</label>
+    <label><input type="radio" name="q49" value="c"> The myogenic response is solely dependent on neural regulation, with no direct influence from changes in blood pressure on vascular smooth muscle tone.</label>
+    <label><input type="radio" name="q49" value="d"> Cerebral vessels do not respond to changes in blood pressure through myogenic mechanisms, relying instead on metabolic factors to regulate blood flow.</label>
+  </div>
+  <div class="question-feedback" id="feedback-q49"></div>
+</div>
+
+<div class="question">
+  <p>50. Which of the following statements best describes the metabolic control of cerebral circulation and its response to changes in metabolic activity?</p>
+  <div class="options">
+    <label><input type="radio" name="q50" value="a"> Increased metabolic activity in specific areas of the brain leads to vasoconstriction, reducing blood flow to those areas.</label>
+    <label><input type="radio" name="q50" value="b"> Areas of the brain with high metabolic activity receive the most blood flow due to the release of vasodilatory metabolites such as K+, which promote relaxation of vascular smooth muscle.</label>
+    <label><input type="radio" name="q50" value="c"> The metabolic control of cerebral circulation is primarily mediated by sympathetic nervous system activation, which constricts blood vessels in response to increased metabolic demand.</label>
+    <label><input type="radio" name="q50" value="d"> Decreased metabolic activity in the brain results in increased oxygen levels, which causes vasodilation and enhances blood flow to all areas uniformly.</label>
+  </div>
+  <div class="question-feedback" id="feedback-q50"></div>
+</div>
+
+
+
+    
+
+    <button type="button" class="btn" onclick="submitQuiz()">Submit</button>
+  </form>
+
+  <div class="result" id="resultBox">
+    <h3>Your Score:</h3>
+    <div class="score" id="score">0%</div>
+    <div id="answers"></div>
+  </div>
+</div>
+
+<!-- Short Essay Section (card style with sub-questions) -->
+<section id="essay-section" class="container" style="display:none;">
+  <h2 style="margin-bottom:1rem;color:var(--dark)">Short Essay Questions</h2>
+
+<!-- SECTION C: SAQ -->
+
+<div class="card">
+  <h3>4. Elucidate on RAA system and write about its significance and key components [5 marks]</h3>
+  <div class="subquestion">
+    <label>RAA System</label>
+    <textarea id="ans4_secC" placeholder="Elucidate significance and key components..."></textarea>
+  </div>
+  <button class="btn" onclick="showAnswers('4_secC')"><i class="fas fa-eye"></i> View Answers</button>
+  <div id="answers4_secC" class="answers" aria-hidden="true">
+    <h3>Model Answer</h3>
+    <p>The Renin-Angiotensin-Aldosterone (RAA) system is a vital hormone system that regulates blood pressure and fluid balance. <b>Key components:</b> Renin (released by the kidneys), Angiotensinogen (liver), ACE (lungs), Angiotensin II, and Aldosterone (adrenal cortex). <b>Significance:</b> When blood pressure or volume drops, renin converts angiotensinogen to angiotensin I, which ACE converts to angiotensin II. Angiotensin II is a potent vasoconstrictor (raising BP) and stimulates the release of aldosterone, which promotes sodium and water reabsorption in the kidneys to increase blood volume.</p>
+    <img src="RAAS.jpg">
+  </div>
+</div>
+
+<div class="card">
+  <h3>5. During a medical examination, a patient suddenly exhibits signs of confusion, altered consciousness, and increased blood pressure. The physician suspects a potential ischemic event affecting the central nervous system (CNS). What physiological mechanisms are activated in the CNS ischemic response, and how do these mechanisms contribute to health. [5 marks]</h3>
+  <div class="subquestion">
+    <label>CNS Ischemic Response</label>
+    <textarea id="ans5_secC" placeholder="Explain mechanisms and health contribution..."></textarea>
+  </div>
+  <button class="btn" onclick="showAnswers('5_secC')"><i class="fas fa-eye"></i> View Answers</button>
+  <div id="answers5_secC" class="answers" aria-hidden="true">
+    <h3>Model Answer</h3>
+    <p>The CNS ischemic response is a powerful emergency reflex. When blood flow to the brain's vasomotor center is severely restricted (ischemia), there is a localized buildup of carbon dioxide and lactic acid. This directly and intensely stimulates the sympathetic vasomotor neurons. <b>Mechanism:</b> It causes profound systemic vasoconstriction, drastically elevating mean arterial blood pressure. <b>Contribution to health:</b> It acts as a "last-ditch" survival mechanism to force blood flow back into the brain to preserve vital neural tissue when systemic blood pressure falls dangerously low or intracranial pressure rises.</p>
+    <img src="Cns-ischemic.jpg">
+  </div>
+</div>
+
+<div class="card">
+  <h3>6. A student experiences a sudden drop in blood pressure after standing up quickly from a seated position in MLT. The physician/lecturer notes that the patient exhibits symptoms such as lightheadedness and fainting. What physiological processes are involved in the baroreceptor reflex, and elucidate how do these processes work to restore blood pressure following an abrupt change in posture? [5 marks]</h3>
+  <div class="subquestion">
+    <label>Baroreceptor Reflex & Posture</label>
+    <textarea id="ans6_secC" placeholder="Describe processes restoring blood pressure..."></textarea>
+  </div>
+  <button class="btn" onclick="showAnswers('6_secC')"><i class="fas fa-eye"></i> View Answers</button>
+  <div id="answers6_secC" class="answers" aria-hidden="true">
+    <h3>Model Answer</h3>
+    <p>Standing abruptly causes blood to pool in the lower extremities due to gravity, reducing venous return and stroke volume, thus dropping blood pressure. <b>Baroreceptor Reflex Processes:</b> The decreased BP reduces the stretch on baroreceptors located in the carotid sinus and aortic arch. These receptors decrease their rate of firing to the cardiovascular center in the medulla oblongata. In response, the medulla decreases parasympathetic (vagal) output and increases sympathetic output. This results in an increased heart rate, stronger myocardial contractility, and widespread vasoconstriction, which rapidly restores blood pressure to normal levels.</p>
+    <img src="baroreceptor-reflex.png">
+  </div>
+</div>
+
+<div class="card">
+  <h3>7. How does exercise regimen affect cardiac output, preload, and afterload during physical activity, and what physiological mechanisms are responsible for these changes? How might these adaptations contribute to improved cardiovascular health over time? [5 marks]</h3>
+  <div class="subquestion">
+    <label>Exercise Effects on Cardiac Function</label>
+    <textarea id="ans7_secC" placeholder="Explain effects on CO, preload, afterload and adaptations..."></textarea>
+  </div>
+  <button class="btn" onclick="showAnswers('7_secC')"><i class="fas fa-eye"></i> View Answers</button>
+  <div id="answers7_secC" class="answers" aria-hidden="true">
+    <h3>Model Answer</h3>
+    <p>During physical activity, <b>Cardiac Output (CO)</b> increases significantly due to sympathetic nervous system activation, which raises both heart rate and stroke volume. <b>Preload</b> increases because the skeletal muscle pump and respiratory pump strongly push blood back to the heart (increased venous return). <b>Afterload</b> generally decreases in the working skeletal muscles due to local metabolic vasodilation, making it easier for the heart to pump blood to those areas. <b>Over time</b>, regular exercise induces physiological hypertrophy of the heart, resulting in a higher resting stroke volume, a lower resting heart rate, and improved endothelial function, vastly reducing the risk of cardiovascular diseases.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>8. Elucidate the physiological mechanisms that link atherosclerosis to the development of hypertension in Sarah mumba, a 55-year-old woman with elevated blood pressure and a family history of cardiovascular disease? How do factors such as endothelial dysfunction, inflammation, and the presence of atherosclerotic plaques influence vascular resistance and contribute to increased blood pressure? [5 marks]</h3>
+  <div class="subquestion">
+    <label>Atherosclerosis and Hypertension</label>
+    <textarea id="ans8_secC" placeholder="Explain mechanisms linking atherosclerosis to hypertension..."></textarea>
+  </div>
+  <button class="btn" onclick="showAnswers('8_secC')"><i class="fas fa-eye"></i> View Answers</button>
+  <div id="answers8_secC" class="answers" aria-hidden="true">
+    <h3>Model Answer</h3>
+    <p>Atherosclerosis heavily contributes to hypertension through several mechanisms that increase total peripheral resistance. <b>Endothelial dysfunction:</b> The damaged vascular lining produces less nitric oxide (a potent vasodilator) and more endothelin (a vasoconstrictor), leading to increased resting vascular tone. <b>Atherosclerotic plaques:</b> These physical fatty buildups narrow the arterial lumen, creating direct physical resistance to blood flow. <b>Arterial stiffness:</b> Plaque buildup and calcification cause arteries to lose their elasticity. Stiff arteries cannot effectively expand to accommodate stroke volume during systole, severely elevating systolic blood pressure. <b>Inflammation:</b> Chronic localized inflammation exacerbates endothelial damage and promotes oxidative stress, perpetuating the cycle of arterial stiffening and elevated vascular resistance.</p>
+  </div>
+</div>
+
+ </section>
+
+<script>
+  // Short explanation text for each question (keyed by question id)
+const answerExplanations = {
+  q26: "Normal anatomical dead space is roughly 150 mL. At 12 breaths/min, 150 mL x 12 = 1800 mL/min of wasted air.",
+  q27: "Rapid ventricular filling begins when the atrioventricular valves open, which occurs when ventricular pressure falls below atrial pressure.",
+  q28: "Systole begins with isovolumetric contraction, which corresponds to the closing of the mitral valve at the bottom right of the pressure-volume loop.",
+  q29: "Applying a positive electrode to the left lower limb (as in Lead II or aVF) aligns with the heart's electrical axis pointing toward the apex.",
+  q30: "The AV node has fewer gap junctions and smaller fiber diameters, which slows the electrical conduction velocity, creating a delay.",
+  q31: "Left posterior fascicular block shifts the electrical axis of the heart to the right, causing right axis deviation.",
+  q32: "Peripheral chemoreceptors are sensitive to decreases in PO2, but also respond to increases in PCO2 and decreases in pH.",
+  q33: "Capillaries form an intricate microscopic network among tissue cells optimized for the exchange of gases, nutrients, and waste.",
+  q34: "Smooth muscle fibers in the walls of arterioles contract and relax to control vessel diameter, regulating blood distribution.",
+  q35: "Pre-capillary sphincters are localized rings of smooth muscle that control blood flow directly into the branching capillaries.",
+  q36: "Capillary hydrostatic pressure is the primary force that drives fluid and dissolved substances out of the capillaries into the interstitial space.",
+  q37: "A negative sum of Starling forces indicates that inward-driving pressures exceed outward-driving pressures, favoring net fluid absorption.",
+  q38: "Blood flows continuously down a pressure gradient, moving from areas of higher pressure to areas of lower pressure.",
+  q39: "Mean arterial pressure (driving force) and vascular resistance (impedance) are the major regulators of blood flow (Flow = Pressure / Resistance).",
+  q40: "Parasympathetic stimulation causes vasodilation in the external genitalia, which leads to engorgement.",
+  q41: "eNOS produces nitric oxide (NO), a potent vasodilator that relaxes vascular smooth muscle, increases blood flow, and reduces resistance.",
+  q42: "ACh increases intracellular Ca2+, which binds to calmodulin and activates NOS to catalyze the production of NO.",
+  q43: "The myogenic mechanism involves smooth muscle contracting when stretched (by increased pressure) to maintain stable flow.",
+  q44: "Decreased pressure reduces stretch on the vessel wall, allowing cerebral vessels to dilate and maintain adequate flow.",
+  q45: "Metabolic vasodilation is primarily triggered by decreased oxygen levels and the localized accumulation of carbon dioxide and other metabolites.",
+  q46: "Tissue hypoxia acts as a primary trigger for the release of vascular growth factors (like VEGF) to stimulate the growth of new blood vessels.",
+  q47: "Collateral circulation typically develops gradually over weeks to months in response to a chronic blockage or narrowing.",
+  q48: "During sympathetic activation, both cholinergic and beta-adrenergic receptors can promote vasodilation in skeletal muscle beds.",
+  q49: "In response to decreased blood pressure, the myogenic mechanism induces vasodilation to prevent ischemia and maintain cerebral perfusion.",
+  q50: "High metabolic activity in the brain releases vasodilatory metabolites (like K+ and adenosine) that relax smooth muscle and increase local blood flow."
+};
+
+const correctAnswers = {
+  q26: "b", q27: "c", q28: "d", q29: "c", q30: "b", q31: "b",
+  q32: "a", q33: "c", q34: "d", q35: "d", q36: "d", q37: "c",
+  q38: "b", q39: "c", q40: "d", q41: "b", q42: "b", q43: "b",
+  q44: "b", q45: "d", q46: "c", q47: "c", q48: "b", q49: "b", q50: "b"
+};
+
+ 
+  function submitQuiz() {
+     let score = 0;
+     const total = Object.keys(correctAnswers).length;
+ 
+     // Clear any previous inline feedback
+     document.querySelectorAll('.question-feedback').forEach(el => el.innerHTML = '');
+ 
+     for (let key in correctAnswers) {
+       const radios = Array.from(document.querySelectorAll(`input[name="${key}"]`));
+       const selected = radios.find(r => r.checked);
+       const correct = correctAnswers[key];
+ 
+       // Score calc
+       if (selected && selected.value === correct) score++;
+ 
+       const feedbackEl = document.getElementById(`feedback-${key}`);
+       if (!feedbackEl) continue;
+ 
+       let feedbackHTML = `<div class="answer-block"><strong>Question ${key.replace(/^q/, '')}</strong><div class="answer-list">`;
+ 
+       radios.forEach(r => {
+         let label = r.parentElement;
+         let text = label ? label.textContent.trim() : r.value;
+ 
+         let classes = ['answer-item'];
+         if (r.value === correct) classes.push('answer-correct');
+         if (r.checked && r.value !== correct) classes.push('answer-wrong', 'user-choice');
+         if (r.checked && r.value === correct) classes.push('user-choice');
+ 
+         feedbackHTML += `<div class="${classes.join(' ')}">${text}${r.checked ? ' ◀' : ''}</div>`;
+       });
+ 
+       feedbackHTML += `</div>`;
+ 
+       const correctRadio = radios.find(rr => rr.value === correct);
+       const correctText = correctRadio && correctRadio.parentElement ? correctRadio.parentElement.textContent.trim() : correct;
+       const explanationText = answerExplanations[key] || '';
+ 
+       if (selected) {
+         if (selected.value === correct) {
+           feedbackHTML += `<div class="explanation">✅ Correct — ${explanationText}</div>`;
+         } else {
+           feedbackHTML += `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+         }
+       } else {
+         feedbackHTML += `<div class="explanation wrong">No answer selected. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+       }
+ 
+       feedbackHTML += `</div>`;
+       feedbackEl.innerHTML = feedbackHTML;
+     }
+ 
+     const percentage = Math.round((score / total) * 100);
+     document.getElementById("score").innerText = "0%";
+     const resultBox = document.getElementById("resultBox");
+     resultBox.style.display = "block";
+     document.getElementById("answers").innerHTML = '';
+ 
+     let start = 0;
+     const timer = setInterval(() => {
+       if (start >= percentage) clearInterval(timer);
+       document.getElementById("score").innerText = start + "%";
+       start++;
+     }, 20);
+ 
+     document.querySelectorAll('#quizForm input').forEach(i => i.disabled = true);
+   }
+ 
+   // Essay Section
+   function showEssayAnswers() {
+     document.querySelectorAll(".essay-answer").forEach(a => a.style.display = "block");
+   }
+
+   // Show/hide model answers for an essay card
+   function showAnswers(id) {
+     const el = document.getElementById('answers' + id);
+     if (!el) return;
+     const isVisible = el.classList.toggle('visible');
+     el.setAttribute('aria-hidden', !isVisible);
+     if (isVisible) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+   }
+ 
+   const mode = localStorage.getItem("examMode");
+
+    if (mode === "essay") {
+      document.getElementById("mcq-section").style.display = "none";
+      document.getElementById("essay-section").style.display = "block";
+    } 
+    else if (mode === "tf") {
+      document.getElementById("mcq-section").style.display = "none";
+      document.getElementById("tf-section").style.display = "block";
+    }
+ 
+   // Navigate to the previous page if available, otherwise fall back to index.html
+   function goBack() {
+     if (history.length > 1) {
+       history.back();
+     } else {
+       window.location.href = "index.html";
+     }
+   }
+ 
+   // header back button hookup (same behaviour)
+   const backBtn = document.getElementById('backBtn');
+   if (backBtn) backBtn.addEventListener('click', (e) => { e.preventDefault(); goBack(); });
+ </script>
+
+</body>
+</html>
