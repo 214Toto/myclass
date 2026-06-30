@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Papers | ToToZ Collection</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../nav.css">
+  <style>
+    :root {
+      --primary: #2b7a78;
+      --accent: #3aafa9;
+      --dark: #17252a;
+      --light: #f8f9fa;
+      --radius: 12px;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #f5f7fb, #eef6f6);
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--dark));
+      color: white;
+      padding: 1.1rem 0;
+      position: fixed; /* Keeps it at the top when scrolling */
+      top: 0;          /* Added: Ensures it starts at the absolute top */
+      left: 0;         /* Added: Ensures it stretches from the left edge */
+      width: 100%;
+      z-index: 1000;   /* Added: Keeps header above all other elements */
+      box-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* Improved heading styling */
+    header h1 {
+      font-size: 1.25rem;
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: 0.35px;
+      color: #ffffff;
+      text-transform: none;
+      display: inline-block;
+      line-height: 1;
+      text-shadow: 0 6px 18px rgba(11,36,36,0.12);
+    }
+
+    /* logo heading (keeps icon + title aligned) */
+    .logo h1 {
+      font-size: 1.25rem;
+      margin: 0 0 0 6px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 900px;
+      /* Adjust this value based on how tall your header is */
+      margin: 100px auto 0 auto; 
+      padding: 1.5rem 0;
+    }
+
+    h2 {
+      color: var(--primary);
+      margin: 0 0 0.85rem 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    /* responsive tweaks for small screens */
+    @media (max-width: 520px) {
+      header h1, .logo h1 { font-size: 1rem; }
+      h2 { font-size: 1rem; }
+    }
+
+    .question {
+      margin-bottom: 1.5rem;
+    }
+
+    .question p {
+      font-weight: 600;
+    }
+
+    .options label {
+      display: block;
+      background: #f8fafc;
+      border: 1px solid #d9e2ec;
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      margin-top: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .options label:hover {
+      background: #e0f7f6;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .result {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #f1faf9;
+      border-radius: var(--radius);
+      text-align: center;
+      display: none;
+    }
+
+    .score {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin-top: 0.5rem;
+    }
+
+    /* --- Styles for answer feedback --- */
+    .answer-list { text-align: left; margin-top: 12px; }
+    .answer-item {
+      display: block;
+      padding: 8px 10px;
+      border-radius: 8px;
+      margin: 6px 0;
+      border: 1px solid #e6eef3;
+      background: #ffffff;
+      color: var(--dark);
+      font-weight: 600;
+    }
+    .answer-correct {
+      background: #ecfdf5;       /* light green */
+      border-color: #bbf7d0;
+      color: #065f46;           /* dark green text */
+      box-shadow: 0 6px 18px rgba(16,185,129,0.06);
+    }
+    .answer-wrong {
+      background: #fff1f2;       /* light red */
+      border-color: #fca5a5;
+      color: #9f1239;           /* dark red text */
+      box-shadow: 0 6px 18px rgba(239,68,68,0.06);
+    }
+    .user-choice { outline: 2px dashed rgba(0,0,0,0.04); }
+
+    /* Essay Section */
+    textarea {
+      width: 80%;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.75rem;
+      resize: vertical;
+      min-height: 50px;
+      font-size: 1rem;
+    }
+
+    .essay-answer {
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-top: 0.75rem;
+      display: none;
+    }
+
+    .back-btn {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    /* Explanation box shown under each question in feedback */
+    .explanation {
+      margin-top: 8px;
+      padding: 10px 12px;                                                                                                                                                                                 
+      border-radius: 8px;
+      background: #363d3a;           /* subtle greenish background */
+      color: #065f46;                /* dark green text */
+      font-size: 0.95rem;
+      line-height: 1.4;
+      border: 1px solid #bbf7d0;
+    }
+
+    /* For incorrect explanation (when needed) */
+    .explanation.wrong {
+      background: #fff1f2;
+      color: #7f1d1d;
+      border-color: #fca5a5;
+    }
+
+    /* small label styling for feedback header */
+    .answer-block { color: var(--primary); margin-bottom: 12px; }
+    .answer-block strong { display:block; margin-bottom:8px; color: rgb(7, 113, 95); }
+    .question-feedback { 
+      margin-top: 14px;
+      padding: 14px 16px;
+      color: white;
+      border-radius: 12px;
+      background: #a82525;
+      border: 1px solid #d6e7eb;
+    }
+    .question-feedback .answer-list {
+      margin-top: 10px;
+    }
+
+    /* Essay card styles (compact, readable) */
+    #essay-section { padding-top: 0; }
+    #essay-section .card {
+      background: linear-gradient(180deg, #ffffff, #fbfeff);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(18,38,63,0.06);
+      border: 1px solid rgba(43,122,120,0.06);
+      max-width: 900px;
+      margin: 0 auto 1rem auto;
+    }
+    #essay-section .card h3 {
+      margin: 0 0 10px 0;
+      font-size: 1.02rem;
+      color: var(--dark);
+      font-weight: 700;
+    }
+    #essay-section .subquestion { margin-bottom: 12px; }
+    #essay-section .subquestion label {
+      display:block;
+      font-weight:700;
+      margin-bottom:6px;
+      color:var(--dark);
+    }
+    #essay-section textarea {
+      width:100%;
+      min-height:90px;
+      border-radius:8px;
+      border:1px solid #d1dbe0;
+      padding:10px;
+      resize:vertical;
+      font-family:inherit;
+    }
+
+    .mutwe {
+      max-width: 900px; 
+      margin: 0 auto; 
+      width: 92%; 
+      display:flex; 
+      align-items:center; 
+      justify-content:space-between;
+    }
+
+    #essay-section .answers {
+      display:none;
+      margin-top:14px;
+      background:#f1faf9;
+      border-radius:8px;
+      padding:12px;
+      border:1px solid #cfeee6;
+      color:var(--dark);
+    }
+    #essay-section .answers h3 { margin-top:0; }
+    #essay-section .card .btn { margin-top:8px; }
+    /* make answers visible area stand out when shown */
+    #essay-section .answers.visible { display:block; }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="mutwe">
+      <div class="logo">
+        <i class="fas fa-book-medical"></i>
+        <h1>2024 Physiology Test 1 </h1>
+      </div>
+      <button id="backBtn" class="btn"><i class="fas fa-arrow-left"></i> Back</button>
+    </div>
+  </header>
+
+<div class="container" id="mcq-section">
+  <h2>Multiple Choice Questions</h2>
+
+  <form id="quizForm">
+
+<div class="question">
+  <p>1. The principal determinants of mean arterial pressure are:</p>
+  <div class="options">
+    <label><input type="radio" name="q1" value="a"> Cardiac output and peripheral resistance</label>
+    <label><input type="radio" name="q1" value="b"> Arterial and venous capacitance</label>
+    <label><input type="radio" name="q1" value="c"> Cardiac output and arterial capacitance</label>
+    <label><input type="radio" name="q1" value="d"> Peripheral resistance and arterial capacitance</label>
+    <label><input type="radio" name="q1" value="e"> Cardiac output and venous capacitance</label>
+  </div>
+  <div class="question-feedback" id="feedback-q1"></div>
+</div>
+
+<div class="question">
+  <p>2. The increase in the arterial pulse pressure usually observed in an elderly hypertensive person is produced mainly by:</p>
+  <div class="options">
+    <label><input type="radio" name="q2" value="a"> An increase stroke volume</label>
+    <label><input type="radio" name="q2" value="b"> An increased heart rate</label>
+    <label><input type="radio" name="q2" value="c"> A decreased cardiac output</label>
+    <label><input type="radio" name="q2" value="d"> An increase vagal activity</label>
+    <label><input type="radio" name="q2" value="e"> A decreased arterial compliance</label>
+  </div>
+  <div class="question-feedback" id="feedback-q2"></div>
+</div>
+
+<div class="question">
+  <p>3. The formula for MCV is :</p>
+  <div class="options">
+    <label><input type="radio" name="q3" value="a"> Hct*10/WBC</label>
+    <label><input type="radio" name="q3" value="b"> Hct*12/RBC</label>
+    <label><input type="radio" name="q3" value="c"> Hct*10/RBC</label>
+    <label><input type="radio" name="q3" value="d"> Hct*20/WBC</label>
+    <label><input type="radio" name="q3" value="e"> Printed on calculator keys</label>
+  </div>
+  <div class="question-feedback" id="feedback-q3"></div>
+</div>
+
+<div class="question">
+  <p>4. The circulatory variable that is maintained relative constant by the baroreceptor reflex is:</p>
+  <div class="options">
+    <label><input type="radio" name="q4" value="a"> Heart rate</label>
+    <label><input type="radio" name="q4" value="b"> Stroke volume</label>
+    <label><input type="radio" name="q4" value="c"> Peripheral resistance</label>
+    <label><input type="radio" name="q4" value="d"> Velocity of blood flow</label>
+    <label><input type="radio" name="q4" value="e"> Arterial blood pressure</label>
+  </div>
+  <div class="question-feedback" id="feedback-q4"></div>
+</div>
+
+<div class="question">
+  <p>5. The medullary vasomotor centre is stimulated most effectively by:</p>
+  <div class="options">
+    <label><input type="radio" name="q5" value="a"> Decreased arterial blood oxygen tension</label>
+    <label><input type="radio" name="q5" value="b"> Decreased arterial blood hydrogen ion concentration</label>
+    <label><input type="radio" name="q5" value="c"> Increased arterial blood adenosine concentration</label>
+    <label><input type="radio" name="q5" value="d"> Increased arterial blood carbon dioxide tension</label>
+    <label><input type="radio" name="q5" value="e"> Increase/decrease in arterial blood pressure</label>
+  </div>
+  <div class="question-feedback" id="feedback-q5"></div>
+</div>
+
+<div class="question">
+  <p>6. ______________ lymph Node is the lymph node where the lymph of the organ or part of the body drained to at first place.</p>
+  <div class="options">
+    <label><input type="radio" name="q6" value="a"> Thorasic</label>
+    <label><input type="radio" name="q6" value="b"> Abdominal</label>
+    <label><input type="radio" name="q6" value="c"> Regional</label>
+    <label><input type="radio" name="q6" value="d"> Anatomical</label>
+    <label><input type="radio" name="q6" value="e"> Pelvic</label>
+  </div>
+  <div class="question-feedback" id="feedback-q6"></div>
+</div>
+
+<div class="question">
+  <p>7. Fluid flow through the circulatory system is in many respects similar to fluid flow through a tube, in that:</p>
+  <div class="options">
+    <label><input type="radio" name="q7" value="a"> Flow rate is faster near the centre of flow</label>
+    <label><input type="radio" name="q7" value="b"> It is directly proportional to the square of the diameter of the tube</label>
+    <label><input type="radio" name="q7" value="c"> It is always characterized by laminar flow</label>
+    <label><input type="radio" name="q7" value="d"> Flow rate is directly proportional to length of the tube</label>
+    <label><input type="radio" name="q7" value="e"> A and C are correct</label>
+  </div>
+  <div class="question-feedback" id="feedback-q7"></div>
+</div>
+
+<div class="question">
+  <p>8. All the following statements related to blood volume are correct EXCEPT for:</p>
+  <div class="options">
+    <label><input type="radio" name="q8" value="a"> Blood volume is about 5 litres</label>
+    <label><input type="radio" name="q8" value="b"> Plasma volume is about 3 litres</label>
+    <label><input type="radio" name="q8" value="c"> Veins contain about 40% of blood volume</label>
+    <label><input type="radio" name="q8" value="d"> Arteries and arterioles contain about 15% of blood volume</label>
+    <label><input type="radio" name="q8" value="e"> Heart contains about 7% of blood volume</label>
+  </div>
+  <div class="question-feedback" id="feedback-q8"></div>
+</div>
+
+<div class="question">
+  <p>9. A young male aged 18 has been diagnosed with MONKEY POX at a hospital in Switzerland and is lying down flat. All of the following statements are correct EXCEPT:</p>
+  <div class="options">
+    <label><input type="radio" name="q9" value="a"> Systolic blood pressure declines during systole</label>
+    <label><input type="radio" name="q9" value="b"> The pressure during systole is DBP</label>
+    <label><input type="radio" name="q9" value="c"> The pressure during diastole is SBP</label>
+    <label><input type="radio" name="q9" value="d"> The pressure in the left ventricle is 120/80 mm Hg</label>
+    <label><input type="radio" name="q9" value="e"> The pressure in the right atrium is 120/80 mm Hg</label>
+  </div>
+  <div class="question-feedback" id="feedback-q9"></div>
+</div>
+
+<div class="question">
+  <p>10. A pulse generator is a small metal case that contains electronic circuitry with a small computer and a battery that regulate the impulses sent to the heart. Propagation of an action potential through the heart is fastest in the</p>
+  <div class="options">
+    <label><input type="radio" name="q10" value="a"> SA node</label>
+    <label><input type="radio" name="q10" value="b"> Atrial muscle</label>
+    <label><input type="radio" name="q10" value="c"> AV node</label>
+    <label><input type="radio" name="q10" value="d"> Purkinje fibres</label>
+    <label><input type="radio" name="q10" value="e"> Ventricular muscle</label>
+  </div>
+  <div class="question-feedback" id="feedback-q10"></div>
+</div>
+
+<div class="question">
+  <p>11. At birth, changes that occur in the foetal (Rh) blood circulation due to Rh incompatibility can be corrected by</p>
+  <div class="options">
+    <label><input type="radio" name="q11" value="a"> Increased systemic arterial pressure</label>
+    <label><input type="radio" name="q11" value="b"> Increased pulmonary vascular resistance</label>
+    <label><input type="radio" name="q11" value="c"> Increased pulmonary arterial pressure</label>
+    <label><input type="radio" name="q11" value="d"> Exchange blood transfusion with Rh -ve</label>
+    <label><input type="radio" name="q11" value="e"> Exchange blood transfusion with Rh +ve</label>
+  </div>
+  <div class="question-feedback" id="feedback-q11"></div>
+</div>
+
+<div class="question">
+  <p>12. An increased preload on left ventricle can be caused by;</p>
+  <div class="options">
+    <label><input type="radio" name="q12" value="a"> Decreased venous return</label>
+    <label><input type="radio" name="q12" value="b"> Decreased blood pressure</label>
+    <label><input type="radio" name="q12" value="c"> Increased venous return</label>
+    <label><input type="radio" name="q12" value="d"> Atherosclerosis</label>
+    <label><input type="radio" name="q12" value="e"> Arteriosclerosis</label>
+  </div>
+  <div class="question-feedback" id="feedback-q12"></div>
+</div>
+
+<div class="question">
+  <p>13. Conduction of impulses between the atria and the ventricles is channeled through (responsible for delay);</p>
+  <div class="options">
+    <label><input type="radio" name="q13" value="a"> AV node</label>
+    <label><input type="radio" name="q13" value="b"> Annulus fibrosus</label>
+    <label><input type="radio" name="q13" value="c"> SA node</label>
+    <label><input type="radio" name="q13" value="d"> Bundle of His</label>
+    <label><input type="radio" name="q13" value="e"> Hirkens fibres</label>
+  </div>
+  <div class="question-feedback" id="feedback-q13"></div>
+</div>
+
+<div class="question">
+  <p>14. The prevalence of congestive heart failure based on clinical criteria is 2%. These estimates suggest that between 1 and 2 million adults are affected. In congestive heart failure, the following is correct</p>
+  <div class="options">
+    <label><input type="radio" name="q14" value="a"> The ventricular tissue is dead</label>
+    <label><input type="radio" name="q14" value="b"> The atrial tissue is dead</label>
+    <label><input type="radio" name="q14" value="c"> The pericardium is dead</label>
+    <label><input type="radio" name="q14" value="d"> Heart chambers are not pumping efficiently</label>
+    <label><input type="radio" name="q14" value="e"> None of the above are true</label>
+  </div>
+  <div class="question-feedback" id="feedback-q14"></div>
+</div>
+
+<div class="question">
+  <p>15. Human heart is unique structure that can create its own voltage signals. The cardiac excitation -conduction system shows the following characteristics;</p>
+  <div class="options">
+    <label><input type="radio" name="q15" value="a"> The AV node is the auto rhythmic discharger of the upper portion of the heart</label>
+    <label><input type="radio" name="q15" value="b"> The nodal delay allow the ventricle to contract before the atria</label>
+    <label><input type="radio" name="q15" value="c"> The purkinje fibres show the slowest rate of transmission</label>
+    <label><input type="radio" name="q15" value="d"> The SA node is the pacemaker</label>
+    <label><input type="radio" name="q15" value="e"> All the above are true</label>
+  </div>
+  <div class="question-feedback" id="feedback-q15"></div>
+</div>
+
+<div class="question">
+  <p>16. Which of the following parts on the ECG has the mitral valve close?</p>
+  <div class="options">
+    <label><input type="radio" name="q16" value="a"> A</label>
+    <label><input type="radio" name="q16" value="b"> B</label>
+    <label><input type="radio" name="q16" value="c"> C</label>
+    <label><input type="radio" name="q16" value="d"> D</label>
+    <label><input type="radio" name="q16" value="e"> E</label>
+  </div>
+  <div class="question-feedback" id="feedback-q16"></div>
+</div>
+
+
+
+    
+
+    <button type="button" class="btn" onclick="submitQuiz()">Submit</button>
+  </form>
+
+  <div class="result" id="resultBox">
+    <h3>Your Score:</h3>
+    <div class="score" id="score">0%</div>
+    <div id="answers"></div>
+  </div>
+</div>
+
+<!-- Short Essay Section (card style with sub-questions) -->
+<section id="essay-section" class="container" style="display:none;">
+  <h2 style="margin-bottom:1rem;color:var(--dark)">Short Essay Questions</h2>
+
+<div class="card">
+  <h3>1. Specify two functional differences between Basophils and Eosinophils [2 marks]</h3>
+  <div class="subquestion">
+    <label>Basophils vs Eosinophils</label>
+    <textarea id="ans1" placeholder="Specify functional differences..."></textarea>
+  </div>
+  <button class="btn" onclick="showAnswers('1')"><i class="fas fa-eye"></i> View Answers</button>
+  <div id="answers1" class="answers" aria-hidden="true">
+    <h3>Model Answer</h3>
+    <p><b>Basophils</b> release chemical mediators like histamine and heparin to trigger and mediate inflammatory and allergic responses. <b>Eosinophils</b> are primarily responsible for fighting parasitic infections and modulating the allergic inflammatory response.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>2. Discuss succinctly your understanding on phenomenon of Rh incompatibility with emphasis on Erythroblastosis foetalis? How to prevent it? [6 marks]</h3>
+  <div class="subquestion">
+    <label>Rh Incompatibility & Prevention</label>
+    <textarea id="ans2" placeholder="Discuss the phenomenon and its prevention..."></textarea>
+  </div>
+  <button class="btn" onclick="showAnswers('2')"><i class="fas fa-eye"></i> View Answers</button>
+  <div id="answers2" class="answers" aria-hidden="true">
+    <h3>Model Answer</h3>
+    <p><b>Rh Incompatibility</b> occurs when an Rh-negative mother is exposed to Rh-positive fetal red blood cells, leading to maternal antibody production. In subsequent pregnancies with an Rh-positive fetus, these antibodies cross the placenta and destroy fetal RBCs, a condition called <b>Erythroblastosis foetalis</b> (Hemolytic Disease of the Newborn). It is <b>prevented</b> by administering anti-D immunoglobulin (RhoGAM) to the mother during and after pregnancy to neutralize any fetal antigens before sensitization occurs.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>3. Explain the physio pharmacological basis for action of Epinephrine and Norepinephrine in the cardiac muscle [4 marks]</h3>
+  <div class="subquestion">
+    <label>Epinephrine & Norepinephrine Action</label>
+    <textarea id="ans3" placeholder="Explain the basis for action..."></textarea>
+  </div>
+  <button class="btn" onclick="showAnswers('3')"><i class="fas fa-eye"></i> View Answers</button>
+  <div id="answers3" class="answers" aria-hidden="true">
+    <h3>Model Answer</h3>
+    <p>Epinephrine and norepinephrine bind to <b>beta-1 adrenergic receptors</b> on the cardiac muscle cells, activating the sympathetic nervous system pathway. This increases intracellular cyclic AMP (cAMP), which opens calcium channels. The influx of calcium increases both the heart rate (positive chronotropic effect) and the force of contraction (positive inotropic effect), ultimately increasing cardiac output.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>4. Describe the physiological significance of cytometric classification of Anemia? Specify with EXAMPLES [4 marks]</h3>
+  <div class="subquestion">
+    <label>Cytometric Classification of Anemia</label>
+    <textarea id="ans4" placeholder="Describe significance and give examples..."></textarea>
+  </div>
+  <button class="btn" onclick="showAnswers('4')"><i class="fas fa-eye"></i> View Answers</button>
+  <div id="answers4" class="answers" aria-hidden="true">
+    <h3>Model Answer</h3>
+    <p>The cytometric classification organizes anemias based on red blood cell indices, specifically size (MCV) and hemoglobin concentration (MCH). Its significance lies in helping diagnose the specific underlying cause of the anemia. <i>Examples:</i> <b>Microcytic hypochromic anemia</b> (caused by iron deficiency) and <b>Macrocytic normochromic anemia</b> (caused by Vitamin B12 or folate deficiency).</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>5. Discuss succinctly the concept of Hemostasis and its clinical application [4 marks]</h3>
+  <div class="subquestion">
+    <label>Concept of Hemostasis</label>
+    <textarea id="ans5" placeholder="Discuss hemostasis and clinical applications..."></textarea>
+  </div>
+  <button class="btn" onclick="showAnswers('5')"><i class="fas fa-eye"></i> View Answers</button>
+  <div id="answers5" class="answers" aria-hidden="true">
+    <h3>Model Answer</h3>
+    <p><b>Hemostasis</b> is the physiological sequence of events that stops bleeding from a damaged blood vessel. It involves three main steps: vascular spasm, platelet plug formation, and blood coagulation (fibrin clot). <b>Clinical applications</b> include the management of hemorrhages, diagnosing clotting disorders (like hemophilia), and using anticoagulant therapies to prevent pathological thrombosis.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>6. Explain briefly the intracellular mechanism underlying the therapeutic application of Digitalis in the management of congestive heart failure [2 marks]</h3>
+  <div class="subquestion">
+    <label>Digitalis Mechanism</label>
+    <textarea id="ans6" placeholder="Explain the intracellular mechanism..."></textarea>
+  </div>
+  <button class="btn" onclick="showAnswers('6')"><i class="fas fa-eye"></i> View Answers</button>
+  <div id="answers6" class="answers" aria-hidden="true">
+    <h3>Model Answer</h3>
+    <p>Digitalis inhibits the <b>Na+/K+ ATPase pump</b> on the cardiac myocyte membrane, causing an accumulation of intracellular sodium. This buildup reduces the activity of the Na+/Ca2+ exchanger, preventing calcium from leaving the cell. The resulting increase in intracellular calcium enhances the force of myocardial contraction (positive inotropy), which improves cardiac output in congestive heart failure.</p>
+  </div>
+</div>
+
+<div class="card">
+  <img src="Complex.jpg">
+  <h3>7. a. For the labels P,Q,R,S and T in the ECG diagram, specify the significance for each with REASONS [3 marks] <br> b. How can you make a possible diagnosis of MYOCARDIAL INFARCTION based on ECG wave changes? Give EXAMPLES with reasons. [2 Marks]</h3>
+  <div class="subquestion">
+    <label>ECG Waves & Myocardial Infarction</label>
+    <textarea id="ans7" placeholder="Specify wave significance and MI diagnosis..."></textarea>
+  </div>
+  <button class="btn" onclick="showAnswers('7')"><i class="fas fa-eye"></i> View Answers</button>
+  <div id="answers7" class="answers" aria-hidden="true">
+    <h3>Model Answer</h3>
+    <p><b>A.</b> <b>P wave:</b> Atrial depolarization (triggers atrial contraction). <b>QRS complex (Q,R,S):</b> Ventricular depolarization (triggers ventricular contraction; masks atrial repolarization). <b>T wave:</b> Ventricular repolarization (ventricular relaxation).<br><b>B.</b> A Myocardial Infarction can be diagnosed by looking for abnormalities in specific segments. <i>Example:</i> <b>ST-segment elevation (STEMI)</b> indicates acute transmural ischemia and muscle injury, while pathological <b>deep Q waves</b> indicate established myocardial tissue necrosis (cell death) preventing electrical signaling in that area.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>8. Discuss succinctly the concept of Baro receptor reflex and its application (orthostatic hypotension) while measuring standing blood pressure using sphygmomanometer in clinical physiology lab. [5 marks]</h3>
+  <div class="subquestion">
+    <label>Baroreceptor Reflex</label>
+    <textarea id="ans8" placeholder="Discuss the concept and orthostatic hypotension application..."></textarea>
+  </div>
+  <button class="btn" onclick="showAnswers('8')"><i class="fas fa-eye"></i> View Answers</button>
+  <div id="answers8" class="answers" aria-hidden="true">
+    <h3>Model Answer</h3>
+    <p>The <b>baroreceptor reflex</b> is a rapid, short-term negative feedback mechanism that regulates blood pressure. Baroreceptors in the aortic arch and carotid sinus detect stretch. When standing up quickly, blood pools in the lower extremities, decreasing venous return, stroke volume, and blood pressure. Baroreceptors detect this drop and signal the medulla to increase sympathetic firing, which increases heart rate and causes vasoconstriction to normalize BP and prevent <b>orthostatic hypotension</b>. In the lab, a sphygmomanometer is used to measure and compare BP while the patient is supine versus standing to assess if this reflex is intact.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>Integrated Essay - Context: Ms Chilufya Marvellous is an 87-year-old retired coiffeur from FINLAND, complaining of severe fatigue, occasional chest pain, and shortness of breath on exertion. BP is 120/85. Stroke volume = 40 ml/beat, Pulse = 90/minute. History revealed poor dental hygiene.<br><br>A. What is meant by cardiac output? Calculate for Ms C. Marvellous. [3 Marks]</h3>
+  <div class="subquestion">
+    <label>Cardiac Output Calculation</label>
+    <textarea id="ans9" placeholder="Define and calculate..."></textarea>
+  </div>
+  <button class="btn" onclick="showAnswers('9')"><i class="fas fa-eye"></i> View Answers</button>
+  <div id="answers9" class="answers" aria-hidden="true">
+    <h3>Model Answer</h3>
+    <p><b>Cardiac output (CO)</b> is the total volume of blood pumped out by each ventricle of the heart per minute. It is the product of Stroke Volume (SV) and Heart Rate (HR). <br><i>Calculation:</i> CO = SV x HR. <br>CO = 40 ml/beat x 90 beats/min = <b>3600 ml/min</b> (or 3.6 L/min).</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>B. Specify various factors that affect her stroke volume and cardiac output, with special EMPHASIS on "Frank starling's law". [5 Marks]</h3>
+  <div class="subquestion">
+    <label>Factors Affecting SV & CO / Frank-Starling Law</label>
+    <textarea id="ans10" placeholder="Specify factors and emphasize Frank-Starling's law..."></textarea>
+  </div>
+  <button class="btn" onclick="showAnswers('10')"><i class="fas fa-eye"></i> View Answers</button>
+  <div id="answers10" class="answers" aria-hidden="true">
+    <h3>Model Answer</h3>
+    <p>Factors affecting stroke volume and cardiac output include <b>Preload</b> (venous return), <b>Contractility</b> (force of muscle contraction), and <b>Afterload</b> (resistance the heart must overcome). The <b>Frank-Starling Law of the Heart</b> states that the stroke volume of the heart increases in response to an increase in the volume of blood filling the heart (end-diastolic volume) when all other factors remain constant. Essentially, the greater the stretch of the ventricular muscle fibers during diastole (preload), the stronger the force of contraction during systole.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>C. How can dental hygiene affect cardiovascular health? Give EXAMPLE with REASONS. [2 Marks]</h3>
+  <div class="subquestion">
+    <label>Dental Hygiene & Cardiovascular Health</label>
+    <textarea id="ans11" placeholder="Explain the link and give an example..."></textarea>
+  </div>
+  <button class="btn" onclick="showAnswers('11')"><i class="fas fa-eye"></i> View Answers</button>
+  <div id="answers11" class="answers" aria-hidden="true">
+    <h3>Model Answer</h3>
+    <p>Poor dental hygiene can lead to gum disease (periodontitis), allowing oral bacteria to enter the bloodstream (bacteremia) through bleeding gums. <i>Example:</i> Bacteria such as <i>Streptococcus</i> can travel to the heart and adhere to damaged heart valves or tissue, causing a severe infection known as <b>infective endocarditis</b>. Systemic inflammation from oral bacteria can also contribute to plaque buildup in arteries (atherosclerosis).</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>D. What volume of her resting cardiac output is being supplied to the skeletal muscles? Specify REASONS [2 Marks]</h3>
+  <div class="subquestion">
+    <label>Resting Cardiac Output to Skeletal Muscles</label>
+    <textarea id="ans12" placeholder="State volume and reasons..."></textarea>
+  </div>
+  <button class="btn" onclick="showAnswers('12')"><i class="fas fa-eye"></i> View Answers</button>
+  <div id="answers12" class="answers" aria-hidden="true">
+    <h3>Model Answer</h3>
+    <p>At rest, approximately <b>15% to 20%</b> of the total cardiac output is supplied to skeletal muscles (which would be roughly 540 ml to 720 ml/min for this patient). <i>Reasons:</i> At rest, the metabolic demand of skeletal muscles is very low compared to active exercise. The majority of the resting cardiac output is instead distributed to organs with high continuous metabolic needs and filtering duties, such as the liver, kidneys, and brain.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>2. Scenario Context: Mr PP came to dental clinic with swollen gums. After surgical procedure, he started bleeding that subsided with coagulant medications.<br><br>Draw a labelled flow chart of extrinsic and intrinsic pathway of clotting mechanisms. Mention various catalysts involved in the process. [8 Marks]</h3>
+  <div class="subquestion">
+    <label>Clotting Cascade Flowchart & Catalysts</label>
+    <textarea id="ans13" placeholder="Describe the pathways and catalysts..."></textarea>
+  </div>
+  <button class="btn" onclick="showAnswers('13')"><i class="fas fa-eye"></i> View Answers</button>
+  <div id="answers13" class="answers" aria-hidden="true">
+    <h3>Model Answer</h3>
+    <p><b>Intrinsic Pathway:</b> Initiated by blood trauma (Factor XII -> XI -> IX -> VIII). <br><b>Extrinsic Pathway:</b> Initiated by tissue trauma (Tissue Factor + Factor VII). <br>Both pathways converge on the <b>Common Pathway:</b> Factor X activates, binding with Factor V to convert Prothrombin (Factor II) into Thrombin (Factor IIa). Thrombin then converts soluble Fibrinogen (Factor I) into insoluble Fibrin (Factor Ia) strands to form a clot. <br><b>Catalysts:</b> <b>Calcium ions (Ca2+)</b> are vital catalysts/cofactors required for almost all steps of the cascade, acting as a "glue" for the clotting factors on phospholipid surfaces.</p>
+  </div>
+</div>
+
+
+ </section>
+
+<script>
+  // Short explanation text for each question (keyed by question id)
+const answerExplanations = {
+  q1: "Mean arterial pressure is calculated as the product of Cardiac Output (CO) and Total Peripheral Resistance (TPR).",
+  q2: "As individuals age, large arteries like the aorta become stiffer (decreased compliance). This lack of elasticity causes systolic pressure to rise sharply with each heartbeat, widening the pulse pressure.",
+  q3: "Mean Corpuscular Volume (MCV) is calculated by multiplying the hematocrit (in percent) by 10, then dividing by the red blood cell count (in millions per microliter).",
+  q4: "Baroreceptors are mechanoreceptors located in the carotid sinus and aortic arch that detect changes in stretch to strictly regulate and maintain mean arterial blood pressure.",
+  q5: "Central chemoreceptors in the medulla are highly sensitive to increases in arterial PCO2 (which diffuses into the CSF and lowers pH), potently stimulating the vasomotor and respiratory centers.",
+  q6: "A regional lymph node (or more specifically, a sentinel lymph node) is the first anatomical location where lymphatic fluid from a specific organ or region drains.",
+  q7: "Due to the principles of laminar flow in a smooth tube (and most healthy blood vessels), fluid velocity is highest in the center and lowest at the edges due to friction against the vessel walls.",
+  q8: "Veins are the body's primary capacitance vessels, acting as a blood reservoir that normally holds around 60% to 70% of the total blood volume, not 40%.",
+  q9: "Normal pressure in the right atrium is extremely low (typically 0 to 8 mm Hg) to allow for venous return; it is certainly not 120/80 mm Hg, which represents normal systemic arterial pressure.",
+  q10: "To ensure the ventricles contract synchronously and efficiently, action potentials propagate fastest through the Purkinje fibers (up to 4 m/s).",
+  q11: "In severe cases of Rh incompatibility causing hemolytic disease of the newborn, an exchange transfusion with Rh-negative blood is used to remove harmful maternal antibodies and damaged red blood cells.",
+  q12: "Preload represents the volume and stretch of the ventricles at the end of diastole, which is directly increased by a higher volume of blood returning to the heart (venous return).",
+  q13: "The AV node inherently conducts impulses slower than the rest of the conducting system, providing a critical delay that allows the atria to fully empty into the ventricles before they contract.",
+  q14: "Congestive heart failure is defined clinically by the inability of the heart chambers to pump blood efficiently enough to meet the metabolic demands of the body.",
+  q15: "The Sinoatrial (SA) node has the fastest intrinsic rate of spontaneous depolarization, establishing it as the primary pacemaker of the normal human heart.",
+  q16: "The mitral valve closes when left ventricular pressure abruptly exceeds left atrial pressure. This marks the onset of ventricular systole, which corresponds to the QRS complex (specifically the R wave, labeled C) on an ECG."
+};
+
+const correctAnswers = {
+  q1: "a", q2: "e", q3: "c", q4: "e", q5: "d", q6: "c",
+  q7: "a", q8: "c", q9: "e", q10: "d", q11: "d", q12: "c",
+  q13: "a", q14: "d", q15: "d", q16: "c"
+};
+
+
+ 
+  function submitQuiz() {
+     let score = 0;
+     const total = Object.keys(correctAnswers).length;
+ 
+     // Clear any previous inline feedback
+     document.querySelectorAll('.question-feedback').forEach(el => el.innerHTML = '');
+ 
+     for (let key in correctAnswers) {
+       const radios = Array.from(document.querySelectorAll(`input[name="${key}"]`));
+       const selected = radios.find(r => r.checked);
+       const correct = correctAnswers[key];
+ 
+       // Score calc
+       if (selected && selected.value === correct) score++;
+ 
+       const feedbackEl = document.getElementById(`feedback-${key}`);
+       if (!feedbackEl) continue;
+ 
+       let feedbackHTML = `<div class="answer-block"><strong>Question ${key.replace(/^q/, '')}</strong><div class="answer-list">`;
+ 
+       radios.forEach(r => {
+         let label = r.parentElement;
+         let text = label ? label.textContent.trim() : r.value;
+ 
+         let classes = ['answer-item'];
+         if (r.value === correct) classes.push('answer-correct');
+         if (r.checked && r.value !== correct) classes.push('answer-wrong', 'user-choice');
+         if (r.checked && r.value === correct) classes.push('user-choice');
+ 
+         feedbackHTML += `<div class="${classes.join(' ')}">${text}${r.checked ? ' ◀' : ''}</div>`;
+       });
+ 
+       feedbackHTML += `</div>`;
+ 
+       const correctRadio = radios.find(rr => rr.value === correct);
+       const correctText = correctRadio && correctRadio.parentElement ? correctRadio.parentElement.textContent.trim() : correct;
+       const explanationText = answerExplanations[key] || '';
+ 
+       if (selected) {
+         if (selected.value === correct) {
+           feedbackHTML += `<div class="explanation">✅ Correct — ${explanationText}</div>`;
+         } else {
+           feedbackHTML += `<div class="explanation wrong">❌ Incorrect. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+         }
+       } else {
+         feedbackHTML += `<div class="explanation wrong">No answer selected. Correct answer: <strong>${correctText}</strong>. ${explanationText}</div>`;
+       }
+ 
+       feedbackHTML += `</div>`;
+       feedbackEl.innerHTML = feedbackHTML;
+     }
+ 
+     const percentage = Math.round((score / total) * 100);
+     document.getElementById("score").innerText = "0%";
+     const resultBox = document.getElementById("resultBox");
+     resultBox.style.display = "block";
+     document.getElementById("answers").innerHTML = '';
+ 
+     let start = 0;
+     const timer = setInterval(() => {
+       if (start >= percentage) clearInterval(timer);
+       document.getElementById("score").innerText = start + "%";
+       start++;
+     }, 20);
+ 
+     document.querySelectorAll('#quizForm input').forEach(i => i.disabled = true);
+   }
+ 
+   // Essay Section
+   function showEssayAnswers() {
+     document.querySelectorAll(".essay-answer").forEach(a => a.style.display = "block");
+   }
+
+   // Show/hide model answers for an essay card
+   function showAnswers(id) {
+     const el = document.getElementById('answers' + id);
+     if (!el) return;
+     const isVisible = el.classList.toggle('visible');
+     el.setAttribute('aria-hidden', !isVisible);
+     if (isVisible) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+   }
+ 
+   const mode = localStorage.getItem("examMode");
+
+    if (mode === "essay") {
+      document.getElementById("mcq-section").style.display = "none";
+      document.getElementById("essay-section").style.display = "block";
+    } 
+    else if (mode === "tf") {
+      document.getElementById("mcq-section").style.display = "none";
+      document.getElementById("tf-section").style.display = "block";
+    }
+ 
+   // Navigate to the previous page if available, otherwise fall back to index.html
+   function goBack() {
+     if (history.length > 1) {
+       history.back();
+     } else {
+       window.location.href = "index.html";
+     }
+   }
+ 
+   // header back button hookup (same behaviour)
+   const backBtn = document.getElementById('backBtn');
+   if (backBtn) backBtn.addEventListener('click', (e) => { e.preventDefault(); goBack(); });
+ </script>
+
+</body>
+</html>
+           
+           
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
